@@ -15,7 +15,8 @@
 # - Now supports FTP with optional path option
 # - Now supports scp - jayemdaet
 # - Now supports ssh/sftp - emorrp1
-#
+# - github test, sorry!
+
 
 import sys
 
