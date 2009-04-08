@@ -1,0 +1,84 @@
+msgid "Checking space on the service..."
+msgstr "Controllo spazio nel servizio..."
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "giorni"
+
+msgid "Service ready. Space available."
+msgstr "Servizio pronto. Spazio disponibile."
+
+msgid "File too big or not enough space on the service."
+msgstr "File troppo grande o spazio insufficiente nel servizio."
+
+msgid "Could not connect to the service."
+msgstr "Impossibile connettersi al servizio."
+
+msgid "Connecting to the service..."
+msgstr "Connessione al servizio..."
+
+msgid "Uploading the file..."
+msgstr "Caricamento del file in corso..."
+
+msgid "File uploaded successfully."
+msgstr "Caricamento del file riuscito."
+
+msgid "Upload failed."
+msgstr "Caricamento fallito."
+
+msgid "Upload a file"
+msgstr "Carica un file"
+
+msgid "Upload and share a file"
+msgstr "Carica e condividi un file"
+
+msgid "Upload service"
+msgstr "Servizio di caricamento"
+
+msgid "Local file"
+msgstr "File locale"
+
+msgid "Remote file"
+msgstr "File remoto"
+
+msgid "Name:"
+msgstr "Nome:"
+
+msgid "Free space:"
+msgstr "Spazio libero:"
+
+msgid "Max file size:"
+msgstr "Massima dimensione del file:"
+
+msgid "Persistence:"
+msgstr "Durata:"
+
+msgid "Path:"
+msgstr "Percorso:"
+
+msgid "Size:"
+msgstr "Dimensione:"
+
+msgid "Upload progress:"
+msgstr "Avanzamento dell'upload:"
+
+msgid "URL:"
+msgstr "Indirizzo:"
+
+msgid "FTP service selected"
+msgstr "Selezionato servizio FTP"
+
+msgid "N/A"
+msgstr "Non disponibile"
+

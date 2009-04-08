@@ -1,0 +1,84 @@
+msgid "Checking space on the service..."
+msgstr "Comprovant l'espai disponible al servei..."
+
+msgid "B"
+msgstr "b"
+
+msgid "KB"
+msgstr "Kb"
+
+msgid "MB"
+msgstr "Mb"
+
+msgid "GB"
+msgstr "Gb"
+
+msgid "days"
+msgstr "dies"
+
+msgid "Service ready. Space available."
+msgstr "Servei preparat. Espai disponible."
+
+msgid "File too big or not enough space on the service."
+msgstr "Arxiu massa gran o espai insuficient al servei."
+
+msgid "Could not connect to the service."
+msgstr "No s'ha pogut connectar al servei."
+
+msgid "Connecting to the service..."
+msgstr "Connectant al servei..."
+
+msgid "Uploading the file..."
+msgstr "Carregant l'arxiu..."
+
+msgid "File uploaded successfully."
+msgstr "Arxiu carregat amb èxit."
+
+msgid "Upload failed."
+msgstr "Càrrega fallida"
+
+msgid "Upload a file"
+msgstr "Pujar un arxiu"
+
+msgid "Upload and share a file"
+msgstr "Pujar i compartir un arxiu"
+
+msgid "Upload service"
+msgstr "Servei de càrrega"
+
+msgid "Local file"
+msgstr "Arxiu local"
+
+msgid "Remote file"
+msgstr "Arxiu remot"
+
+msgid "Name:"
+msgstr "Nom:"
+
+msgid "Free space:"
+msgstr "Espai lliure:"
+
+msgid "Max file size:"
+msgstr "Mida màxima d'arxiu:"
+
+msgid "Persistence:"
+msgstr "Persistència:"
+
+msgid "Path:"
+msgstr "Ruta:"
+
+msgid "Size:"
+msgstr "Mida:"
+
+msgid "Upload progress:"
+msgstr "Progrés de la càrrega:"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "FTP service selected"
+msgstr "Servei FTP seleccionat"
+
+msgid "N/A"
+msgstr "N/A"
+

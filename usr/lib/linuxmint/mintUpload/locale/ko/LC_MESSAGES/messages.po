@@ -1,0 +1,84 @@
+msgid "Checking space on the service..."
+msgstr "사용 가능한 용량을 확인하고 있습니다..."
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "일"
+
+msgid "Service ready. Space available."
+msgstr "준비 완료. 사용 가능합니다."
+
+msgid "File too big or not enough space on the service."
+msgstr "파일이 너무 크거나 남은 용량이 부족합니다."
+
+msgid "Could not connect to the service."
+msgstr "서비스에 연결할 수 없습니다."
+
+msgid "Connecting to the service..."
+msgstr "서비스에 연결중..."
+
+msgid "Uploading the file..."
+msgstr "파일 전송중..."
+
+msgid "File uploaded successfully."
+msgstr "성공적으로 전송되었습니다."
+
+msgid "Upload failed."
+msgstr "전송 실패."
+
+msgid "Upload a file"
+msgstr "파일 전송"
+
+msgid "Upload and share a file"
+msgstr "파일을 전송하고 공유"
+
+msgid "Upload service"
+msgstr "전송 서비스"
+
+msgid "Local file"
+msgstr "로컬 파일"
+
+msgid "Remote file"
+msgstr "원격지 파일"
+
+msgid "Name:"
+msgstr "이름:"
+
+msgid "Free space:"
+msgstr "남은 용량:"
+
+msgid "Max file size:"
+msgstr "파일 최대 크기:"
+
+msgid "Persistence:"
+msgstr "유효기간:"
+
+msgid "Path:"
+msgstr "경로:"
+
+msgid "Size:"
+msgstr "크기:"
+
+msgid "Upload progress:"
+msgstr "전송 진행률:"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "FTP service selected"
+msgstr "FTP 서비스가 선택됨"
+
+msgid "N/A"
+msgstr "N/A"
+

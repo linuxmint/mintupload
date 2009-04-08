@@ -1,0 +1,84 @@
+msgid "Checking space on the service..."
+msgstr "Servisteki alan denetleniyor..."
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "gün"
+
+msgid "Service ready. Space available."
+msgstr "Servis hazır. Alan erişilebilir."
+
+msgid "File too big or not enough space on the service."
+msgstr "Dosya çok büyük veya serviste yeterli alan yok."
+
+msgid "Could not connect to the service."
+msgstr "Servise erişilemedi."
+
+msgid "Connecting to the service..."
+msgstr "Servise bağlanılıyor..."
+
+msgid "Uploading the file..."
+msgstr "Dosya yükleniyor..."
+
+msgid "File uploaded successfully."
+msgstr "Dosya başarı ile yüklendi."
+
+msgid "Upload failed."
+msgstr "Yükleme başarısız oldu."
+
+msgid "Upload a file"
+msgstr "Bir dosya yükleyin"
+
+msgid "Upload and share a file"
+msgstr "Bir dosya yükleyip paylaşın"
+
+msgid "Upload service"
+msgstr "Yükleme servisi"
+
+msgid "Local file"
+msgstr "Yerel dosya"
+
+msgid "Remote file"
+msgstr "Yüklenen dosya"
+
+msgid "Name:"
+msgstr "Adı:"
+
+msgid "Free space:"
+msgstr "Boş alan:"
+
+msgid "Max file size:"
+msgstr "En büyük dosya boyutu:"
+
+msgid "Persistence:"
+msgstr "Yazma İzni:"
+
+msgid "Path:"
+msgstr "Dosya Yolu:"
+
+msgid "Size:"
+msgstr "Büyüklüğü:"
+
+msgid "Upload progress:"
+msgstr "Yükleme İşlemi:"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "FTP service selected"
+msgstr "FTP hizmeti seçildi"
+
+msgid "N/A"
+msgstr "Erişilebilir değil"
+

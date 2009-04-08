@@ -1,0 +1,84 @@
+msgid "Checking space on the service..."
+msgstr "التأكد من المساحة في الخدمة..."
+
+msgid "B"
+msgstr "بايت"
+
+msgid "KB"
+msgstr "كيلو بايت"
+
+msgid "MB"
+msgstr "ميجا بايت"
+
+msgid "GB"
+msgstr "جيجا بايت"
+
+msgid "days"
+msgstr "يوم"
+
+msgid "Service ready. Space available."
+msgstr "الخدمة جاهزة. المساحة متوفرة."
+
+msgid "File too big or not enough space on the service."
+msgstr "الملف كبير جدأ أو لا توجد مساحة كافية في الخدمة"
+
+msgid "Could not connect to the service."
+msgstr "لم يتمكن من الاتصال بالخدمة"
+
+msgid "Connecting to the service..."
+msgstr "يتم الاتصال بالخدمة"
+
+msgid "Uploading the file..."
+msgstr "يتم رفع الملف ..."
+
+msgid "File uploaded successfully."
+msgstr "تم رفع الملف بنجاح"
+
+msgid "Upload failed."
+msgstr "فشل رفع الملف"
+
+msgid "Upload a file"
+msgstr "أرفع ملف"
+
+msgid "Upload and share a file"
+msgstr "أرفع و شارك ملف"
+
+msgid "Upload service"
+msgstr "خدمة الرفع"
+
+msgid "Local file"
+msgstr "الملف المحلي"
+
+msgid "Remote file"
+msgstr "الملف البعيد"
+
+msgid "Name:"
+msgstr "الاسم:"
+
+msgid "Free space:"
+msgstr "المساحة الحرة:"
+
+msgid "Max file size:"
+msgstr "أقصى حجم للملف:"
+
+msgid "Persistence:"
+msgstr "الاستمرارية"
+
+msgid "Path:"
+msgstr "المسار:"
+
+msgid "Size:"
+msgstr "الحجم:"
+
+msgid "Upload progress:"
+msgstr "تقدم الرفع:"
+
+msgid "URL:"
+msgstr "الرابط"
+
+msgid "FTP service selected"
+msgstr "خدمة FTP المختارة"
+
+msgid "N/A"
+msgstr "غير معروف"
+

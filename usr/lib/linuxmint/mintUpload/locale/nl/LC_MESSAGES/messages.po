@@ -1,0 +1,84 @@
+msgid "Checking space on the service..."
+msgstr "Ruimte berekenen op de service..."
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "dagen"
+
+msgid "Service ready. Space available."
+msgstr "Service gereed. Ruimte beschikbaar."
+
+msgid "File too big or not enough space on the service."
+msgstr "Bestand te groot, of nie genoeg ruimte op de service."
+
+msgid "Could not connect to the service."
+msgstr "Kon niet verbinden met de service."
+
+msgid "Connecting to the service..."
+msgstr "Bezig met verbinden..."
+
+msgid "Uploading the file..."
+msgstr "Bestand aan het uploaden..."
+
+msgid "File uploaded successfully."
+msgstr "Bestand succesvol upgeload."
+
+msgid "Upload failed."
+msgstr "Upload gefaald."
+
+msgid "Upload a file"
+msgstr "Upload een bestand"
+
+msgid "Upload and share a file"
+msgstr "Upload en deel een bestand"
+
+msgid "Upload service"
+msgstr "Upload service"
+
+msgid "Local file"
+msgstr "Lokaal bestand"
+
+msgid "Remote file"
+msgstr "Bestand op afstand"
+
+msgid "Name:"
+msgstr "Naam:"
+
+msgid "Free space:"
+msgstr "Vrije ruimte:"
+
+msgid "Max file size:"
+msgstr "Maximale bestandsgroote:"
+
+msgid "Persistence:"
+msgstr "Aanwezigheid:"
+
+msgid "Path:"
+msgstr "Pad:"
+
+msgid "Size:"
+msgstr "Groote:"
+
+msgid "Upload progress:"
+msgstr "Voortgang van het uploaden:"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "FTP service selected"
+msgstr "FTP service geselecteerd"
+
+msgid "N/A"
+msgstr "Niet Beschikbaar"
+

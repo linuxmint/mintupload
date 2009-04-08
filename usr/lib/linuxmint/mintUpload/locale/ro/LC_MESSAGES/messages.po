@@ -1,0 +1,84 @@
+msgid "Checking space on the service..."
+msgstr "Verific spațiu disponibil..."
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "zile"
+
+msgid "Service ready. Space available."
+msgstr "Serviciu gata. Spațiu disponibil."
+
+msgid "File too big or not enough space on the service."
+msgstr "Fișier prea mare sau spațiu insuficient pe server."
+
+msgid "Could not connect to the service."
+msgstr "Nu s-a reușit conectarea la server."
+
+msgid "Connecting to the service..."
+msgstr "Se stabilește conexiunea la server..."
+
+msgid "Uploading the file..."
+msgstr "Se încarcă fișiereul..."
+
+msgid "File uploaded successfully."
+msgstr "Încărcarea fișierului reușită."
+
+msgid "Upload failed."
+msgstr "Încărcare eșuată."
+
+msgid "Upload a file"
+msgstr "Încarcă un fișier"
+
+msgid "Upload and share a file"
+msgstr "Încarcă și partajează un fișier"
+
+msgid "Upload service"
+msgstr "Serviciu de stocare a datelor"
+
+msgid "Local file"
+msgstr "Fișier local"
+
+msgid "Remote file"
+msgstr "Fișier la distanță"
+
+msgid "Name:"
+msgstr "Nume:"
+
+msgid "Free space:"
+msgstr "Spațiu disponibil:"
+
+msgid "Max file size:"
+msgstr "Mărimea maximă a fișierului:"
+
+msgid "Persistence:"
+msgstr "Persistență:"
+
+msgid "Path:"
+msgstr "Cale:"
+
+msgid "Size:"
+msgstr "Mărime:"
+
+msgid "Upload progress:"
+msgstr "Progresul încărcării:"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "FTP service selected"
+msgstr "Serviciul FTP selectat"
+
+msgid "N/A"
+msgstr "N/A"
+

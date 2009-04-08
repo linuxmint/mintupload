@@ -1,0 +1,84 @@
+msgid "Checking space on the service..."
+msgstr "サービスの空き容量をチェックしています..."
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "日"
+
+msgid "Service ready. Space available."
+msgstr "空き容量あり。アップロードできます。"
+
+msgid "File too big or not enough space on the service."
+msgstr "ファイルが大きすぎるか、サービスに十分な空き容量がありません。"
+
+msgid "Could not connect to the service."
+msgstr "サービスに接続できませんでした。"
+
+msgid "Connecting to the service..."
+msgstr "サービスに接続しています..."
+
+msgid "Uploading the file..."
+msgstr "ファイルをアップロードしています..."
+
+msgid "File uploaded successfully."
+msgstr "ファイルのアップロードに成功しました。"
+
+msgid "Upload failed."
+msgstr "アップロードに失敗しました。"
+
+msgid "Upload a file"
+msgstr "ファイルのアップロード"
+
+msgid "Upload and share a file"
+msgstr "ファイルをアップロードし、共有します"
+
+msgid "Upload service"
+msgstr "アップロードサービス"
+
+msgid "Local file"
+msgstr "ローカルファイル"
+
+msgid "Remote file"
+msgstr "リモートファイル"
+
+msgid "Name:"
+msgstr "名前:"
+
+msgid "Free space:"
+msgstr "空き容量:"
+
+msgid "Max file size:"
+msgstr "最大ファイルサイズ:"
+
+msgid "Persistence:"
+msgstr "保存期間:"
+
+msgid "Path:"
+msgstr "パス:"
+
+msgid "Size:"
+msgstr "サイズ:"
+
+msgid "Upload progress:"
+msgstr "アップロード進捗:"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "FTP service selected"
+msgstr "FTPサービスが選択されました"
+
+msgid "N/A"
+msgstr "N/A"
+

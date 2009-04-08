@@ -1,0 +1,84 @@
+msgid "Checking space on the service..."
+msgstr "Checker plads på servicen..."
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "Dage"
+
+msgid "Service ready. Space available."
+msgstr "Servicen er klar. Brugbar plads."
+
+msgid "File too big or not enough space on the service."
+msgstr "Filen er for stor eller ikke nok plads på servicen"
+
+msgid "Could not connect to the service."
+msgstr "Kunne ikke connecte til servicen."
+
+msgid "Connecting to the service..."
+msgstr "Connecter til servicen..."
+
+msgid "Uploading the file..."
+msgstr "Uploader filen..."
+
+msgid "File uploaded successfully."
+msgstr "Fil upload lykkes. "
+
+msgid "Upload failed."
+msgstr "Uploading fejlede."
+
+msgid "Upload a file"
+msgstr "Upload en fil"
+
+msgid "Upload and share a file"
+msgstr "Upload og del fil"
+
+msgid "Upload service"
+msgstr "Upload service"
+
+msgid "Local file"
+msgstr "Lokal fil"
+
+msgid "Remote file"
+msgstr "Fjern fil"
+
+msgid "Name:"
+msgstr "Navn:"
+
+msgid "Free space:"
+msgstr "Frit plads:"
+
+msgid "Max file size:"
+msgstr "Max filstørrelse:"
+
+msgid "Persistence:"
+msgstr "udholdenhed:"
+
+msgid "Path:"
+msgstr "Sti:"
+
+msgid "Size:"
+msgstr "Størrelse:"
+
+msgid "Upload progress:"
+msgstr "Upload fremskridt:"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "FTP service selected"
+msgstr "FTP service valgt"
+
+msgid "N/A"
+msgstr "N/A"
+

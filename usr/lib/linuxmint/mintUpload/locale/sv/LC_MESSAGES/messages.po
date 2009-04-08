@@ -1,0 +1,84 @@
+msgid "Checking space on the service..."
+msgstr "Kontrollerar utrymmet...."
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "Dagar"
+
+msgid "Service ready. Space available."
+msgstr "Färdig. Tillräckligt utrymme finns."
+
+msgid "File too big or not enough space on the service."
+msgstr "Filen är for stor eller utrymmet är otillräckligt."
+
+msgid "Could not connect to the service."
+msgstr "Kan inte ansluta till tjänsten."
+
+msgid "Connecting to the service..."
+msgstr "Ansluter till tjänsten..."
+
+msgid "Uploading the file..."
+msgstr "Överför filen..."
+
+msgid "File uploaded successfully."
+msgstr "Överföringen lyckades. "
+
+msgid "Upload failed."
+msgstr "Överföringen misslyckades."
+
+msgid "Upload a file"
+msgstr "Ladda upp en fil"
+
+msgid "Upload and share a file"
+msgstr "Ladda upp och dela en fil"
+
+msgid "Upload service"
+msgstr "Uppladdningstjänst"
+
+msgid "Local file"
+msgstr "Lokal fil"
+
+msgid "Remote file"
+msgstr "Fjärrfil"
+
+msgid "Name:"
+msgstr "Namn:"
+
+msgid "Free space:"
+msgstr "Fritt utrymme:"
+
+msgid "Max file size:"
+msgstr "Max filstorlek:"
+
+msgid "Persistence:"
+msgstr "Tålighet:"
+
+msgid "Path:"
+msgstr "Sökväg:"
+
+msgid "Size:"
+msgstr "Storlek:"
+
+msgid "Upload progress:"
+msgstr "Uppladdningsstatus:"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "FTP service selected"
+msgstr "FTP tjänst vald"
+
+msgid "N/A"
+msgstr "N/A"
+

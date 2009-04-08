@@ -1,0 +1,51 @@
+# type: Type of upload service, one of Mint, ftp, ssh, sftp, scp
+# default = Mint
+
+# name: Name of the upload service
+# defaults to the config file's name
+
+# host: Hostname or IP address
+# default = mint-space.com
+host=linuxmint.com
+
+# port: Remote port to connect to
+# default depends on service type:
+#	Mint/ftp is 21, otherwise 22
+
+# format: Timestamp format (strftime)
+# default = %Y%m%d%H%M%S
+
+# user: Username
+# defaults to the system user
+user=sef0i34vppp
+
+# pass: Password
+# default effect depends on service type
+#	ftp will use the null string
+#	ssh/sftp will try private keys from ~/.ssh
+#	scp will connect password-less
+pass=F873uioweBV
+
+# path: Directory to upload to
+# <TIMESTAMP> will be replaced with the current timestamp, as in format
+# default = .
+path=<TIMESTAMP>
+
+# space: URL defining the free available space
+# default = N/A
+space=http://files.mint-space.com/getfreespace.php
+
+# url: URL defining where the file can be downloaded from
+# <TIMESTAMP> will be replaced with the current timestamp, as in format
+# <FILE> will be replaced with the uploaded filename
+# <PATH> will be replaced with the contents of the path config
+# default = N/A
+url=http://files.mint-space.com/getfile,<TIMESTAMP>,<FILE>.html
+
+# maxsize: Maximum size in bytes allowed by the service
+# default = N/A
+maxsize=10000000
+
+# persistence: Number of days the file is guaranteed to stay on the service
+# default = N/A
+persistence=2

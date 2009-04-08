@@ -1,0 +1,84 @@
+msgid "Checking space on the service..."
+msgstr "Provjeravam prostor na servisu"
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "dana"
+
+msgid "Service ready. Space available."
+msgstr "Servis spreman. Prostor dostupan"
+
+msgid "File too big or not enough space on the service."
+msgstr "Datoteka je prevelika ili nema dovoljno prostora na servisu"
+
+msgid "Could not connect to the service."
+msgstr "Nije se moguće spojiti na servis"
+
+msgid "Connecting to the service..."
+msgstr "Spajanje na servis"
+
+msgid "Uploading the file..."
+msgstr "Upload datoteke"
+
+msgid "File uploaded successfully."
+msgstr "Datoteka uspješno uploadovana"
+
+msgid "Upload failed."
+msgstr "Upload neuspio"
+
+msgid "Upload a file"
+msgstr "Upload datoteke"
+
+msgid "Upload and share a file"
+msgstr "Upload i dijeljenje datoteke"
+
+msgid "Upload service"
+msgstr "Upload servis"
+
+msgid "Local file"
+msgstr "Mjesna datoteka"
+
+msgid "Remote file"
+msgstr "Udaljena datoteka"
+
+msgid "Name:"
+msgstr "Ime"
+
+msgid "Free space:"
+msgstr "Slobodan prostor"
+
+msgid "Max file size:"
+msgstr "Maks. veličina datoteke"
+
+msgid "Persistence:"
+msgstr "Upornost"
+
+msgid "Path:"
+msgstr "Putanja"
+
+msgid "Size:"
+msgstr "Veličina"
+
+msgid "Upload progress:"
+msgstr "Tijek uploada"
+
+msgid "URL:"
+msgstr "URL"
+
+msgid "FTP service selected"
+msgstr "FTP servis izabran"
+
+msgid "N/A"
+msgstr "N/A"
+

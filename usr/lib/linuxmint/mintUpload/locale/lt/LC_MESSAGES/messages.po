@@ -1,0 +1,84 @@
+msgid "Checking space on the service..."
+msgstr "Tikrinama vieta serveryje..."
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "dienos/dienų"
+
+msgid "Service ready. Space available."
+msgstr "Serveris pasiruošęs. Vietos užtenka."
+
+msgid "File too big or not enough space on the service."
+msgstr "Failas yra per didelis arba neužtenka vietos serveryje."
+
+msgid "Could not connect to the service."
+msgstr "Nepavyko prisijungti prie serverio..."
+
+msgid "Connecting to the service..."
+msgstr "Jungiamasi prie serverio..."
+
+msgid "Uploading the file..."
+msgstr "Failas talpinamas"
+
+msgid "File uploaded successfully."
+msgstr "Failas sėkmingai patalpintas."
+
+msgid "Upload failed."
+msgstr "Išsiuntimas nepavyko."
+
+msgid "Upload a file"
+msgstr "Talpinti failą"
+
+msgid "Upload and share a file"
+msgstr "Patalpinkite ir dalinkitės failu"
+
+msgid "Upload service"
+msgstr "Talpinimas"
+
+msgid "Local file"
+msgstr "Failas diske"
+
+msgid "Remote file"
+msgstr "Failo talpinimas"
+
+msgid "Name:"
+msgstr "Pavadinimas:"
+
+msgid "Free space:"
+msgstr "Laisvos vietos:"
+
+msgid "Max file size:"
+msgstr "Maksimalus failo dydis:"
+
+msgid "Persistence:"
+msgstr "Gyvavimo laikas:"
+
+msgid "Path:"
+msgstr "Vieta:"
+
+msgid "Size:"
+msgstr "Dydis:"
+
+msgid "Upload progress:"
+msgstr "Išsiunčiama:"
+
+msgid "URL:"
+msgstr "Nuoroda:"
+
+msgid "FTP service selected"
+msgstr "FTP paslauga pasirinkta"
+
+msgid "N/A"
+msgstr "N/A"
+
