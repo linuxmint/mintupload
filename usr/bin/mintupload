@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/usr/lib/linuxmint/mintUpload/mintUpload.py $@
+

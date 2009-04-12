@@ -1,8 +1,32 @@
-mintupload (2.1.4~ppa4) intrepid; urgency=low
+mintupload (3.0.2) gloria; urgency=low
 
-  * another upload attempt
+  * Many little improvements suggested by Philip Morrell.
 
- -- Philip Morrell <ubuntu.emorrp1@mamber.net>  Tue,  07 Apr 2009 15:39:25 +0100
+ -- Clement Lefebvre <root@linuxmint.com>  Sat,  11 Apr 2009 9:36:00 +0000
+
+mintupload (3.0.1) gloria; urgency=low
+
+  * New GUI to edit services
+  * About dialog use APT to know version number
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri,  10 Apr 2009 18:38:00 +0000
+
+mintupload (2.1.5) gloria; urgency=low
+
+  * Removed copy button
+  * Made Mint-Space related fields only appear when mint service is selected
+  * Changed GUI style from Mint-Style to Gnome
+  * Made progress information only appear when upload starts.
+  * Made url info only appear when upload finished for a mint service.
+  * Made window resize automatically.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri,  10 Apr 2009 13:09:00 +0000
+
+mintupload (2.1.4) gloria; urgency=low
+
+  * Added /usr/bin/mintupload
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri,  10 Apr 2009 11:40:00 +0000
 
 mintupload (2.1.3) felicia; urgency=low
 

@@ -82,4 +82,77 @@ msgstr "Service FTP sélectionné"
 msgid "N/A"
 msgstr "--"
 
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_Fichier"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "_Edit"
+msgstr "_Edition"
+
+msgid "Services"
+msgstr "Services"
+
+msgid "New service"
+msgstr "Nouveau service"
+
+msgid "Edit service"
+msgstr "Modification du service"
+
+msgid "System-wide services"
+msgstr "Services système"
+
+msgid "_Help"
+msgstr "_Aide"
+
+msgid "About"
+msgstr "À propos"
+
+msgid "File uploader for Linux Mint"
+msgstr "Outil d'upload pour Linux Mint"
+
+msgid "Type:"
+msgstr "Type :"
+
+msgid "Hostname:"
+msgstr "Hôte :"
+
+msgid "Port:"
+msgstr "Port :"
+
+msgid "Username:"
+msgstr "Identifiant :"
+
+msgid "Password:"
+msgstr "Mot de passe :"
+
+msgid "Timestamp:"
+msgstr "Timestamp :"
+
+msgid "Path: "
+msgstr "Chemin :"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Hôte ou adresse IP, par défaut: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Port, par défaut: 21 pour FTP, 22 pour SFTP et SCP"
+
+msgid "Username, defaults to your local username"
+msgstr "Identifiant, par défaut votre identifiant local"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Mote de passe, par défaut: pas de mot de passe pour SCP, valeur null pour FTP, clés ~/.ssh pour SFTP"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Format du timestamp (strftime). Par défault:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "Chemin distant. <TIMESTAMP> est remplacé par la valeur du timestamp. Par défaut: ."
+
+msgid "connection successfully established"
+msgstr "connexion établie avec succès"
 

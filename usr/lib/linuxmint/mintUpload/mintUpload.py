@@ -8,15 +8,6 @@
 # as published by the Free Software Foundation; Version 2
 # of the License.
 #
-# Changelog
-# =========
-#
-# - Uses /etc/ for the services
-# - Now supports FTP with optional path option
-# - Now supports scp - jayemdaet
-# - Now supports ssh/sftp - emorrp1
-# - github test, sorry!
-
 
 import sys
 
@@ -37,6 +28,8 @@ try:
 	import gettext
 	import paramiko
 	import pexpect
+	from user import home
+	from configobj import ConfigObj
 except:
 	print "You do not have all the dependencies!"
 	sys.exit(1)
@@ -76,12 +69,18 @@ class spaceChecker(threading.Thread):
 		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 		self.ready = True
 
+		wTree.get_widget("frame_progress").hide()
+
 		try:
 			# Get the file's persistence on the service
 			if selected_service['persistence']:
 				wTree.get_widget("txt_persistence").set_label(selected_service['persistence'] + " " + _("days"))
+				wTree.get_widget("txt_persistence").show()
+				wTree.get_widget("lbl_persistence").show()
 			else:
 				wTree.get_widget("txt_persistence").set_label(_("N/A"))
+				wTree.get_widget("txt_persistence").hide()
+				wTree.get_widget("lbl_persistence").hide()
 
 			# Get the maximum allowed filesize on the service
 			if selected_service['maxsize']:
@@ -90,8 +89,12 @@ class spaceChecker(threading.Thread):
 					self.ready = False
 				maxsizeStr = sizeStr(maxsize)
 				wTree.get_widget("txt_maxsize").set_label(maxsizeStr)
+				wTree.get_widget("txt_maxsize").show()
+				wTree.get_widget("lbl_maxsize").show()
 			else:
 				wTree.get_widget("txt_maxsize").set_label(_("N/A"))
+				wTree.get_widget("txt_maxsize").hide()
+				wTree.get_widget("lbl_maxsize").hide()
 
 			# Get the available space left on the service
 			if selected_service['space']:
@@ -103,8 +106,12 @@ class spaceChecker(threading.Thread):
 				pctSpace = spaceAvailable / spaceTotal * 100
 				pctSpaceStr = sizeStr(spaceAvailable) + " (" + str(int(pctSpace)) + "%)"
 				wTree.get_widget("txt_space").set_label(pctSpaceStr)
+				wTree.get_widget("txt_space").show()
+				wTree.get_widget("lbl_space").show()
 			else:
 				wTree.get_widget("txt_space").set_label(_("N/A"))
+				wTree.get_widget("txt_space").hide()
+				wTree.get_widget("lbl_space").hide()
 
 			# Activate the upload button if the space is OK
 			if self.ready:
@@ -115,6 +122,7 @@ class spaceChecker(threading.Thread):
 				statusbar.push(context_id, "<span color='red'>" + _("File too big or not enough space on the service.") + "</span>")
 			label = statusbar.get_children()[0].get_children()[0]
 			label.set_use_markup(True)
+			wTree.get_widget("main_window").window.set_cursor(None)
 
 		except Exception, detail:
 			print detail
@@ -126,6 +134,8 @@ class spaceChecker(threading.Thread):
 		finally:
 			wTree.get_widget("main_window").window.set_cursor(None)
 			wTree.get_widget("combo").set_sensitive(True)
+			wTree.get_widget("main_window").resize(*wTree.get_widget("main_window").size_request())
+
 
 class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
@@ -146,6 +156,8 @@ class mintUploader(threading.Thread):
 		statusbar.push(context_id, _("Connecting to the service..."))
 		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 
+		wTree.get_widget("frame_progress").show()
+
 		try:
 			so_far = 0
 			progressbar.set_fraction(0)
@@ -155,22 +167,21 @@ class mintUploader(threading.Thread):
 			supported_services = {
 				'MINT': self._ftp, # For backwards compatiblity
 				'FTP' : self._ftp,
-				'SSH' : self._sftp,
 				'SFTP': self._sftp,
 				'SCP' : self._scp}[selected_service['type']]()
 
 			# Report success
 			progressbar.set_fraction(1)
 			progressbar.set_text("100%")
-			if selected_service['url']:
-				wTree.get_widget("txt_url").set_text(selected_service['url'])
-				wTree.get_widget("copy_button").set_sensitive(True)
-			else:
-				wTree.get_widget("txt_url").set_text(_("N/A"))
-				wTree.get_widget("copy_button").set_sensitive(False)
 			statusbar.push(context_id, "<span color='green'>" + _("File uploaded successfully.") + "</span>")
 			label = statusbar.get_children()[0].get_children()[0]
 			label.set_use_markup(True)
+
+			#If service is Mint then show the URL
+			if selected_service['url']:			
+				wTree.get_widget("txt_url").set_text(selected_service['url'])
+				wTree.get_widget("txt_url").show()						
+				wTree.get_widget("lbl_url").show()
 
 		except Exception, detail:
 			print detail
@@ -217,14 +228,14 @@ class mintUploader(threading.Thread):
 
 	def getPrivateKey(self):
 		'''Find a private key in ~/.ssh'''
-		key_files = ['~/.ssh/id_rsa','~/.ssh/id_dsa']
+		key_files = [home + '/.ssh/id_rsa', home + '/.ssh/id_dsa']
 		for f in key_files:
 			f = os.path.expanduser(f)
 			if os.path.exists(f):
 				return paramiko.RSAKey.from_private_key_file(f)
 
 	def _sftp(self):
-		'''Connection process for SSH/SFTP services'''
+		'''Connection process for SFTP services'''
 
 		if not selected_service['pass']:
 			rsa_key = self.getPrivateKey()
@@ -297,7 +308,7 @@ class mintUploader(threading.Thread):
 		progressbar.set_fraction(pct)
 		pct = int(pct * 100)
 		progressbar.set_text(str(pct) + "%")
-		print "so far:", pct, "%"
+		#print "so far:", pct, "%"
 		return
 
 class mintUploadWindow:
@@ -316,28 +327,57 @@ class mintUploadWindow:
 		wTree = gtk.glade.XML(self.gladefile,"main_window")
 
 		wTree.get_widget("main_window").connect("destroy", gtk.main_quit)
+		wTree.get_widget("main_window").set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
 
 		# i18n
-		wTree.get_widget("txt_name").set_label("<big><b>" + _("Upload a file") + "</b></big>")
-		wTree.get_widget("txt_guidance").set_label("<i>" + _("Upload and share a file") + "</i>")
 		wTree.get_widget("label2").set_label("<b>" + _("Upload service") + "</b>")
 		wTree.get_widget("label3").set_label("<b>" + _("Local file") + "</b>")
 		wTree.get_widget("label4").set_label("<b>" + _("Remote file") + "</b>")
 		wTree.get_widget("label187").set_label(_("Name:"))
-		wTree.get_widget("label188").set_label(_("Free space:"))
-		wTree.get_widget("label196").set_label(_("Max file size:"))
-		wTree.get_widget("label198").set_label(_("Persistence:"))
+		wTree.get_widget("lbl_space").set_label(_("Free space:"))
+		wTree.get_widget("lbl_maxsize").set_label(_("Max file size:"))
+		wTree.get_widget("lbl_persistence").set_label(_("Persistence:"))
 		wTree.get_widget("label195").set_label(_("Path:"))
 		wTree.get_widget("label193").set_label(_("Size:"))
 		wTree.get_widget("label190").set_label(_("Upload progress:"))
-		wTree.get_widget("label191").set_label(_("URL:"))
+		wTree.get_widget("lbl_url").set_label(_("URL:"))
+
+		fileMenu = gtk.MenuItem(_("_File"))
+		fileSubmenu = gtk.Menu()
+		fileMenu.set_submenu(fileSubmenu)
+		closeMenuItem = gtk.ImageMenuItem(gtk.STOCK_CLOSE)
+		closeMenuItem.get_child().set_text(_("Close"))
+		closeMenuItem.connect("activate", gtk.main_quit)
+		fileSubmenu.append(closeMenuItem)
+
+		helpMenu = gtk.MenuItem(_("_Help"))
+		helpSubmenu = gtk.Menu()
+		helpMenu.set_submenu(helpSubmenu)
+		aboutMenuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
+		aboutMenuItem.get_child().set_text(_("About"))
+		aboutMenuItem.connect("activate", self.open_about)
+		helpSubmenu.append(aboutMenuItem)
+
+		editMenu = gtk.MenuItem(_("_Edit"))
+		editSubmenu = gtk.Menu()
+		editMenu.set_submenu(editSubmenu)
+		prefsMenuItem = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
+		prefsMenuItem.get_child().set_text(_("Services"))
+		prefsMenuItem.connect("activate", self.open_services, wTree.get_widget("combo"))
+		editSubmenu.append(prefsMenuItem)
+
+		wTree.get_widget("menubar1").append(fileMenu)
+		wTree.get_widget("menubar1").append(editMenu)
+		wTree.get_widget("menubar1").append(helpMenu)	
+		wTree.get_widget("menubar1").show_all()
 
 		services = self.read_services()
 		for service in services:
-			wTree.get_widget("combo").append_text(service['name'])
+			sname = service['name'].replace('_', ' ')
+			wTree.get_widget("combo").append_text(sname)
+
 		wTree.get_widget("combo").connect("changed", self.comboChanged)
 		wTree.get_widget("upload_button").connect("clicked", self.upload)
-		wTree.get_widget("copy_button").connect("clicked", self.copy)
 		wTree.get_widget("cancel_button").connect("clicked", gtk.main_quit)
 
 		# Print the name of the file in the GUI
@@ -346,6 +386,240 @@ class mintUploadWindow:
 		# Calculate the size of the file
 		filesize = os.path.getsize(self.filename)
 		wTree.get_widget("txt_size").set_label(sizeStr(filesize))
+
+		if len(services) == 1:
+			wTree.get_widget("combo").set_active(0)
+			self.comboChanged(None)
+
+
+	def reload_services(self, combo):
+		model = gtk.TreeStore(str)
+		combo.set_model(model)		
+		services = self.read_services()
+		for service in services:
+			iter = model.insert_before(None, None)
+			sname = service['name'].replace('_', ' ')
+			model.set_value(iter, 0, sname)		
+		del model		
+
+	def open_about(self, widget):
+		dlg = gtk.AboutDialog()
+		dlg.set_title(_("About") + " - mintUpload")
+		try: 
+			import apt
+			cache = apt.Cache()	
+			pkg = cache["mintupload"]
+			dlg.set_version(pkg.installedVersion)
+		except Exception, detail:
+			print detail
+		dlg.set_program_name("mintUpload")
+		dlg.set_comments(_("File uploader for Linux Mint"))
+		try:
+		    h = open('/usr/lib/linuxmint/mintSystem/GPL.txt','r')
+		    s = h.readlines()
+		    gpl = ""
+		    for line in s:
+		    	gpl += line
+		    h.close()
+		    dlg.set_license(gpl)
+		except Exception, detail:
+		    print detail
+		    		
+		dlg.set_authors(["Clement Lefebvre <root@linuxmint.com>", "Philip Morrell <ubuntu.emorrp1@xoxy.net>", "Manuel Sandoval <manuel@slashvar.com>"]) 
+		dlg.set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
+		dlg.set_logo(gtk.gdk.pixbuf_new_from_file("/usr/lib/linuxmint/mintSystem/icon.png"))
+		def close(w, res):
+		    if res == gtk.RESPONSE_CANCEL:
+		        w.hide()
+		dlg.connect("response", close)
+		dlg.show()
+
+	def open_services(self, widget, combo):		
+		wTree = gtk.glade.XML(self.gladefile, "services_window")		
+		treeview_services = wTree.get_widget("treeview_services")
+		treeview_services_system = wTree.get_widget("treeview_services_system")
+
+		wTree.get_widget("services_window").set_title(_("Services") + " - mintUpload")
+		wTree.get_widget("services_window").set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
+		wTree.get_widget("services_window").show()
+
+		wTree.get_widget("button_close").connect("clicked", self.close_window, wTree.get_widget("services_window"), combo)
+		wTree.get_widget("services_window").connect("destroy", self.close_window, wTree.get_widget("services_window"), combo)
+		wTree.get_widget("toolbutton_add").connect("clicked", self.add_service, treeview_services)
+		wTree.get_widget("toolbutton_edit").connect("clicked", self.edit_service_toolbutton, treeview_services)
+		wTree.get_widget("toolbutton_remove").connect("clicked", self.remove_service, treeview_services)
+
+		column1 = gtk.TreeViewColumn(_("Services"), gtk.CellRendererText(), text=0)
+		column1.set_sort_column_id(0)
+		column1.set_resizable(True)
+		treeview_services.append_column(column1)
+		treeview_services.set_headers_clickable(True)
+		treeview_services.set_reorderable(False)
+		treeview_services.show()
+		column1 = gtk.TreeViewColumn(_("System-wide services"), gtk.CellRendererText(), text=0)
+		treeview_services_system.append_column(column1)
+		treeview_services_system.show()
+		self.load_services(treeview_services, treeview_services_system)
+		treeview_services.connect("row-activated", self.edit_service);
+
+	def load_services(self, treeview_services, treeview_services_system):
+		model = gtk.TreeStore(str)
+		model.set_sort_column_id( 0, gtk.SORT_ASCENDING )
+		treeview_services.set_model(model)
+		
+		#Get the list of user services		
+		for file in os.listdir(home + "/.linuxmint/mintUpload/services"):
+			file = str.strip(file)	
+			file = file.replace('_', ' ')					
+			iter = model.insert_before(None, None)
+			model.set_value(iter, 0, file)		
+		del model
+
+		model = gtk.TreeStore(str)
+		model.set_sort_column_id( 0, gtk.SORT_ASCENDING )
+		treeview_services_system.set_model(model)
+		
+		#Get the list of user services		
+		for file in os.listdir("/etc/linuxmint/mintUpload/services"):
+			file = str.strip(file)						
+			iter = model.insert_before(None, None)
+			model.set_value(iter, 0, file)		
+		del model
+
+	def close_window(self, widget, window, combo=None):		
+		window.hide()
+		if (combo != None):
+			self.reload_services(combo)
+
+	def add_service(self, widget, treeview_services):		
+		wTree = gtk.glade.XML(self.gladefile, "dialog_add_service")		
+		wTree.get_widget("dialog_add_service").set_title(_("New service"))
+		wTree.get_widget("dialog_add_service").set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
+		wTree.get_widget("dialog_add_service").show()
+		wTree.get_widget("lbl_name").set_label(_("Name:"))
+		wTree.get_widget("button_ok").connect("clicked", self.new_service, wTree.get_widget("dialog_add_service"), wTree.get_widget("txt_name"), treeview_services)
+		wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_add_service"))
+
+	def new_service(self, widget, window, entry, treeview_services):
+		sname = entry.get_text()
+		fname = sname.replace(' ', '_')	
+		if sname != '':
+			model = treeview_services.get_model()
+			iter = model.insert_before(None, None)
+			model.set_value(iter, 0, sname)
+			os.system("cp /usr/lib/linuxmint/mintUpload/sample.service " + home + "/.linuxmint/mintUpload/services/" + fname)	
+		self.close_window(None, window)
+		self.edit_service(treeview_services, model.get_path(iter), 0)
+
+	def edit_service_toolbutton(self, widget, treeview_services):
+		selection = treeview_services.get_selection()
+		(model, iter) = selection.get_selected()
+		self.edit_service(treeview_services, model.get_path(iter), 0)
+
+	def edit_service(self,widget, path, column):
+		model=widget.get_model()
+		iter = model.get_iter(path)
+		sname = model.get_value(iter, 0)
+		fname = sname.replace(' ', '_')	
+		file = home + "/.linuxmint/mintUpload/services/" + fname
+		
+		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")		
+		wTree.get_widget("dialog_edit_service").set_title(_("Edit service"))
+		wTree.get_widget("dialog_edit_service").set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
+		wTree.get_widget("dialog_edit_service").show()
+		wTree.get_widget("button_ok").connect("clicked", self.modify_service, wTree.get_widget("dialog_edit_service"), wTree, file)
+		wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_edit_service"))
+		
+		#i18n
+		wTree.get_widget("lbl_type").set_label(_("Type:"))
+		wTree.get_widget("lbl_hostname").set_label(_("Hostname:"))
+		wTree.get_widget("lbl_port").set_label(_("Port:"))
+		wTree.get_widget("lbl_username").set_label(_("Username:"))
+		wTree.get_widget("lbl_password").set_label(_("Password:"))
+		wTree.get_widget("lbl_timestamp").set_label(_("Timestamp:"))
+		wTree.get_widget("lbl_path").set_label(_("Path:"))
+
+		wTree.get_widget("lbl_hostname").set_tooltip_text(_("Hostname or IP address, default: mint-space.com"))
+		wTree.get_widget("txt_hostname").set_tooltip_text(_("Hostname or IP address, default: mint-space.com"))
+
+		wTree.get_widget("lbl_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
+		wTree.get_widget("txt_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
+
+		wTree.get_widget("lbl_username").set_tooltip_text(_("Username, defaults to your local username"))
+		wTree.get_widget("txt_username").set_tooltip_text(_("Username, defaults to your local username"))
+
+		wTree.get_widget("lbl_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
+		wTree.get_widget("txt_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
+
+		wTree.get_widget("lbl_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + "%Y%m%d%H%M%S")
+		wTree.get_widget("txt_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + "%Y%m%d%H%M%S")
+
+		wTree.get_widget("lbl_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
+		wTree.get_widget("txt_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
+
+		try:			
+			config = ConfigObj(file)
+			try:
+				model = wTree.get_widget("combo_type").get_model()
+				iter = model.get_iter_first()
+				while (iter != None and model.get_value(iter, 0) != config['type']):
+					iter = model.iter_next(iter)
+				wTree.get_widget("combo_type").set_active_iter(iter)
+			except: 
+				pass
+			try:
+				wTree.get_widget("txt_hostname").set_text(config['host'])
+			except:
+				wTree.get_widget("txt_hostname").set_text("")
+			try:
+				wTree.get_widget("txt_port").set_text(config['port'])
+			except:
+				wTree.get_widget("txt_port").set_text("")
+			try:
+				wTree.get_widget("txt_username").set_text(config['user'])
+			except:
+				wTree.get_widget("txt_username").set_text("")
+			try:
+				wTree.get_widget("txt_password").set_text(config['pass'])
+			except:
+				wTree.get_widget("txt_password").set_text("")
+			try:
+				wTree.get_widget("txt_timestamp").set_text(config['format'])
+			except:
+				wTree.get_widget("txt_timestamp").set_text("")
+			try:
+				wTree.get_widget("txt_path").set_text(config['path'])
+			except:
+				wTree.get_widget("txt_path").set_text("")
+		except Exception, detail:
+			print detail
+
+	def modify_service(self, widget, window, wTree, file):
+		try:			
+			config = ConfigObj(file)
+			model = wTree.get_widget("combo_type").get_model()	
+			iter = 	wTree.get_widget("combo_type").get_active_iter()
+			type_value = model.get_value(iter, 0)
+			config['type'] = type_value
+			config['host'] = wTree.get_widget("txt_hostname").get_text()
+			config['port'] = wTree.get_widget("txt_port").get_text()
+			config['user'] = wTree.get_widget("txt_username").get_text()
+			config['pass'] = wTree.get_widget("txt_password").get_text()
+			config['format'] = wTree.get_widget("txt_timestamp").get_text()
+			config['path'] = wTree.get_widget("txt_path").get_text()
+			config.write()
+		except Exception, detail:
+			print detail
+		window.hide()
+
+	def remove_service(self, widget, treeview_services):
+		selection = treeview_services.get_selection()
+		(model, iter) = selection.get_selected()
+		if (iter != None):
+			service = model.get_value(iter, 0)
+			fname = service.replace(' ', '_')	
+			os.system("rm " + home + "/.linuxmint/mintUpload/services/" + fname)
+			model.remove(iter)
 
 	def comboChanged(self, widget):
 		'''Change the selected service'''
@@ -369,8 +643,9 @@ class mintUploadWindow:
 
 		services = self.read_services()
 		for service in services:
+			selectedService = selectedService.replace(' ', '_')
 			if service['name'] == selectedService:
-				selected_service = service
+				selected_service = service			
 				spacecheck = spaceChecker()
 				spacecheck.start()
 				return True
@@ -379,15 +654,15 @@ class mintUploadWindow:
 		'''Get all defined services'''
 
 		services = []
-		config_paths = ["/etc/linuxmint/mintUpload/services/", "~/.linuxmint/mintUpload/services/"]
+		config_paths = ["/etc/linuxmint/mintUpload/services/", home + "/.linuxmint/mintUpload/services/"]
 		for path in config_paths:
 			path = os.path.expanduser(path)
 			os.system("mkdir -p " + path)
 			for file in os.listdir(path):
-				if file[0] != "." and file[-1:] != "~" and file[-4:] != ".bak":
-					# Ignore config files causing errors
-					try:	services.append(self.read_service(path + file))
-					except:	pass
+				try:						
+					services.append(self.read_service(path + file))
+				except:	
+					pass
 		return services
 
 	def read_service(self, path):
@@ -468,12 +743,6 @@ class mintUploadWindow:
 		uploader.start()
 		return True
 
-	def copy(self, widget):
-		'''Copy the url to the clipboard'''
-
-		clipboard = gtk.clipboard_get()
-		clipboard.set_text(wTree.get_widget("txt_url").get_text())
-		clipboard.store()
 
 def my_storbinary(self, cmd, fp, blocksize=8192, callback=None):
 	'''Store a file in binary mode.'''

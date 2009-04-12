@@ -1,0 +1,33 @@
+# type: Type of upload service, one of Mint, ftp, sftp, scp
+# default = Mint
+type=ftp
+
+# host: Hostname or IP address
+# default = mint-space.com
+host=hostname.com
+
+# port: Remote port to connect to
+# default depends on service type:
+#	Mint/ftp is 21, otherwise 22
+port=21
+
+# format: Timestamp format (strftime)
+# default = %Y%m%d%H%M%S
+format=%Y%m%d%H%M%S
+
+# user: Username
+# defaults to the system user
+user=username
+
+# pass: Password
+# default effect depends on service type
+#	ftp will use the null string
+#	ssh/sftp will try private keys from ~/.ssh
+#	scp will connect password-less
+pass=password
+
+# path: Directory to upload to
+# <TIMESTAMP> will be replaced with the current timestamp, as in format
+# default = .
+path=.
+
