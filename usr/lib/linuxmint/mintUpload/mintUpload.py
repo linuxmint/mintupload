@@ -5,7 +5,7 @@
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; Version 2
+# AS PUBLISHED BY THE fREE sOFTWARE fOUNDATION; vERSION 2
 # of the License.
 #
 
@@ -40,8 +40,18 @@ gtk.gdk.threads_init()
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 
-class ConnectionError(Exception):
-	'''Custom error to raise for errors during connections'''
+class CustomError(Exception):
+	'''All custom defined errors'''
+
+	def __init__(self, detail):
+		print self.__class__.__name__ + ': ' + detail
+
+class ConnectionError(CustomError):
+	'''Raised when an error has occured with an external connection'''
+	pass
+
+class FilesizeError(CustomError):
+	'''Raised when the file is too large or too small'''
 	pass
 
 def sizeStr(size, acc=1, factor=1000):
@@ -56,87 +66,29 @@ def sizeStr(size, acc=1, factor=1000):
 	return str(int(size)) + thresholds[0]
 
 class spaceChecker(threading.Thread):
-	'''Checks that the filesize is fine'''
+	'''Checks that the filesize is ok'''
 
 	def run(self):
-		global statusbar
-		global context_id
-		global wTree
 		global selected_service
+		global filesize
 
-		wTree.get_widget("combo").set_sensitive(False)
-		wTree.get_widget("upload_button").set_sensitive(False)
-		statusbar.push(context_id, _("Checking space on the service..."))
-		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
-		self.ready = True
+		# Get the maximum allowed filesize on the service
+		if selected_service["maxsize"]:
+			if filesize > int(selected_service["maxsize"]):
+				raise FilesizeError(_("File larger than service's maximum"))
 
-		wTree.get_widget("frame_progress").hide()
+		# Get the available space left on the service
+		if selected_service["space"]:
+			try:
+				spaceInfo = urllib.urlopen(selected_service["space"]).read()
+			except:
+				raise ConnectionError(_("Could not get available space"))
 
-		try:
-			# Get the file's persistence on the service
-			if selected_service['persistence']:
-				wTree.get_widget("txt_persistence").set_label(selected_service['persistence'] + " " + _("days"))
-				wTree.get_widget("txt_persistence").show()
-				wTree.get_widget("lbl_persistence").show()
-			else:
-				wTree.get_widget("txt_persistence").set_label(_("N/A"))
-				wTree.get_widget("txt_persistence").hide()
-				wTree.get_widget("lbl_persistence").hide()
-
-			# Get the maximum allowed filesize on the service
-			if selected_service['maxsize']:
-				maxsize = float(selected_service['maxsize'])
-				if filesize > maxsize:
-					self.ready = False
-				maxsizeStr = sizeStr(maxsize)
-				wTree.get_widget("txt_maxsize").set_label(maxsizeStr)
-				wTree.get_widget("txt_maxsize").show()
-				wTree.get_widget("lbl_maxsize").show()
-			else:
-				wTree.get_widget("txt_maxsize").set_label(_("N/A"))
-				wTree.get_widget("txt_maxsize").hide()
-				wTree.get_widget("lbl_maxsize").hide()
-
-			# Get the available space left on the service
-			if selected_service['space']:
-				spaceInfo = urllib.urlopen(selected_service['space']).read().split('/')
-				spaceAvailable = float(spaceInfo[0])
-				spaceTotal = float(spaceInfo[1])
-				if spaceAvailable < filesize:
-					self.ready = False
-				pctSpace = spaceAvailable / spaceTotal * 100
-				pctSpaceStr = sizeStr(spaceAvailable) + " (" + str(int(pctSpace)) + "%)"
-				wTree.get_widget("txt_space").set_label(pctSpaceStr)
-				wTree.get_widget("txt_space").show()
-				wTree.get_widget("lbl_space").show()
-			else:
-				wTree.get_widget("txt_space").set_label(_("N/A"))
-				wTree.get_widget("txt_space").hide()
-				wTree.get_widget("lbl_space").hide()
-
-			# Activate the upload button if the space is OK
-			if self.ready:
-				wTree.get_widget("upload_button").set_sensitive(True)
-				statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
-			else:
-				wTree.get_widget("upload_button").set_sensitive(False)
-				statusbar.push(context_id, "<span color='red'>" + _("File too big or not enough space on the service.") + "</span>")
-			label = statusbar.get_children()[0].get_children()[0]
-			label.set_use_markup(True)
-			wTree.get_widget("main_window").window.set_cursor(None)
-
-		except Exception, detail:
-			print detail
-			statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
-			label = statusbar.get_children()[0].get_children()[0]
-			label.set_use_markup(True)
-			wTree.get_widget("upload_button").set_sensitive(False)
-
-		finally:
-			wTree.get_widget("main_window").window.set_cursor(None)
-			wTree.get_widget("combo").set_sensitive(True)
-			wTree.get_widget("main_window").resize(*wTree.get_widget("main_window").size_request())
-
+			spaceInfo = spaceInfo.split("/")
+			self.available = int(spaceInfo[0])
+			self.total = int(spaceInfo[1])
+			if filesize > self.available:
+				raise FilesizeError(_("File larger than service's available space"))
 
 class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
@@ -649,9 +601,84 @@ class mintUploadWindow:
 			selectedService = selectedService.replace(' ', '_')
 			if service['name'] == selectedService:
 				selected_service = service
-				spacecheck = spaceChecker()
-				spacecheck.start()
+
+				# Get the file's persistence on the service
+				if selected_service['persistence']:
+					wTree.get_widget("txt_persistence").set_label(selected_service['persistence'] + " " + _("days"))
+					wTree.get_widget("txt_persistence").show()
+					wTree.get_widget("lbl_persistence").show()
+				else:
+					wTree.get_widget("txt_persistence").set_label(_("N/A"))
+					wTree.get_widget("txt_persistence").hide()
+					wTree.get_widget("lbl_persistence").hide()
+
+				# Get the maximum allowed filesize on the service
+				if selected_service['maxsize']:
+					maxsizeStr = sizeStr(selected_service['maxsize'])
+					wTree.get_widget("txt_maxsize").set_label(maxsizeStr)
+					wTree.get_widget("txt_maxsize").show()
+					wTree.get_widget("lbl_maxsize").show()
+				else:
+					wTree.get_widget("txt_maxsize").set_label(_("N/A"))
+					wTree.get_widget("txt_maxsize").hide()
+					wTree.get_widget("lbl_maxsize").hide()
+
+				if not selected_service['space']:
+					wTree.get_widget("txt_space").set_label(_("N/A"))
+					wTree.get_widget("txt_space").hide()
+					wTree.get_widget("lbl_space").hide()
+					if not selected_service['maxsize']:
+						return True
+
+				self.check_space()
 				return True
+	
+	def check_space(self):
+		'''Checks for available space on the service'''
+
+		global statusbar
+		global context_id
+		global wTree
+		global selected_service
+
+		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
+		wTree.get_widget("combo").set_sensitive(False)
+		wTree.get_widget("upload_button").set_sensitive(False)
+		statusbar.push(context_id, _("Checking space on the service..."))
+
+		wTree.get_widget("frame_progress").hide()
+
+		# Check the filesize
+		try:
+			spacecheck = spaceChecker()
+			spacecheck.start()
+			spacecheck.join()
+
+		except ConnectionError:
+			statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
+
+		except FilesizeError:
+			statusbar.push(context_id, "<span color='red'>" + _("File too big or not enough space on the service.") + "</span>")
+
+		else:
+			# Display the available space left on the service
+			if selected_service['space']:
+				pctSpace = float(spacecheck.available) / float(spacecheck.total) * 100
+				pctSpaceStr = sizeStr(spacecheck.available) + " (" + str(int(pctSpace)) + "%)"
+				wTree.get_widget("txt_space").set_label(pctSpaceStr)
+				wTree.get_widget("txt_space").show()
+				wTree.get_widget("lbl_space").show()
+
+			# Activate upload button
+			statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
+			wTree.get_widget("upload_button").set_sensitive(True)
+
+		finally:
+			label = statusbar.get_children()[0].get_children()[0]
+			label.set_use_markup(True)
+			wTree.get_widget("combo").set_sensitive(True)
+			wTree.get_widget("main_window").window.set_cursor(None)
+			wTree.get_widget("main_window").resize(*wTree.get_widget("main_window").size_request())
 
 	def read_services(self):
 		'''Get all defined services'''
