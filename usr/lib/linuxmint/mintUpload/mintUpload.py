@@ -67,26 +67,27 @@ def sizeStr(size, acc=1, factor=1000):
 class spaceChecker(threading.Thread):
 	'''Checks that the filesize is ok'''
 
-	def run(self):
-		global selected_service
-		global filesize
+	def __init__(self, service, filesize):
+		self.service = service
+		self.filesize = filesize
 
-		# Get the maximum allowed filesize on the service
-		if selected_service["maxsize"]:
-			if filesize > int(selected_service["maxsize"]):
+	def run(self):
+		# Get the maximum allowed self.filesize on the service
+		if self.service["maxsize"]:
+			if self.filesize > int(self.service["maxsize"]):
 				raise FilesizeError(_("File larger than service's maximum"))
 
 		# Get the available space left on the service
-		if selected_service["space"]:
+		if self.service["space"]:
 			try:
-				spaceInfo = urllib.urlopen(selected_service["space"]).read()
+				spaceInfo = urllib.urlopen(self.service["space"]).read()
 			except:
 				raise ConnectionError(_("Could not get available space"))
 
 			spaceInfo = spaceInfo.split("/")
 			self.available = int(spaceInfo[0])
 			self.total = int(spaceInfo[1])
-			if filesize > self.available:
+			if self.filesize > self.available:
 				raise FilesizeError(_("File larger than service's available space"))
 
 class mintUploader(threading.Thread):
@@ -639,6 +640,7 @@ class mintUploadWindow:
 		global context_id
 		global wTree
 		global selected_service
+		global filesize
 
 		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 		wTree.get_widget("combo").set_sensitive(False)
@@ -649,7 +651,7 @@ class mintUploadWindow:
 
 		# Check the filesize
 		try:
-			spacecheck = spaceChecker()
+			spacecheck = spaceChecker(selected_service, filesize)
 			spacecheck.start()
 			spacecheck.join()
 
