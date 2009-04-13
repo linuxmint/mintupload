@@ -5,9 +5,8 @@
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
-# AS PUBLISHED BY THE fREE sOFTWARE fOUNDATION; vERSION 2
+# as published by the Free Software Foundation; Version 2
 # of the License.
-#
 
 import sys
 
