@@ -70,6 +70,7 @@ class spaceChecker(threading.Thread):
 	def __init__(self, service, filesize):
 		self.service = service
 		self.filesize = filesize
+		threading.Thread.__init__(self)
 
 	def run(self):
 		# Get the maximum allowed self.filesize on the service
