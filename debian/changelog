@@ -1,6 +1,14 @@
+mintupload (3.0.3) gloria; urgency=low
+
+  * About dialog use "mint-apt-version"
+  * Added Dennis Schwertel to credits
+  * Changed main combo to normal combobox widget as opposed to comboboxentry widget
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sat,  11 Apr 2009 9:36:00 +0000
+
 mintupload (3.0.2) gloria; urgency=low
 
-  * Many little improvements suggested by Philip Morrell. 
+  * Many little improvements suggested by Philip Morrell.
 
  -- Clement Lefebvre <root@linuxmint.com>  Sat,  11 Apr 2009 9:36:00 +0000
 

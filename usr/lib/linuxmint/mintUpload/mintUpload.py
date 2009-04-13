@@ -28,6 +28,7 @@ try:
 	import gettext
 	import paramiko
 	import pexpect
+	import commands
 	from user import home
 	from configobj import ConfigObj
 except:
@@ -229,8 +230,7 @@ class mintUploader(threading.Thread):
 	def getPrivateKey(self):
 		'''Find a private key in ~/.ssh'''
 		key_files = [home + '/.ssh/id_rsa', home + '/.ssh/id_dsa']
-		for f in key_files:
-			f = os.path.expanduser(f)
+		for f in key_files:			
 			if os.path.exists(f):
 				return paramiko.RSAKey.from_private_key_file(f)
 
@@ -372,9 +372,17 @@ class mintUploadWindow:
 		wTree.get_widget("menubar1").show_all()
 
 		services = self.read_services()
+		model = gtk.TreeStore(str)
+		wTree.get_widget("combo").set_model(model)
 		for service in services:
+			iter = model.insert_before(None, None)
 			sname = service['name'].replace('_', ' ')
-			wTree.get_widget("combo").append_text(sname)
+			model.set_value(iter, 0, sname)		
+		del model
+		
+		cell = gtk.CellRendererText()
+		wTree.get_widget("combo").pack_start(cell)
+		wTree.get_widget("combo").add_attribute(cell,'text',0)	
 
 		wTree.get_widget("combo").connect("changed", self.comboChanged)
 		wTree.get_widget("upload_button").connect("clicked", self.upload)
@@ -404,14 +412,9 @@ class mintUploadWindow:
 
 	def open_about(self, widget):
 		dlg = gtk.AboutDialog()
-		dlg.set_title(_("About") + " - mintUpload")
-		try: 
-			import apt
-			cache = apt.Cache()	
-			pkg = cache["mintupload"]
-			dlg.set_version(pkg.installedVersion)
-		except Exception, detail:
-			print detail
+		dlg.set_title(_("About") + " - mintUpload")	
+		version = commands.getoutput("mint-apt-version mintupload")
+		dlg.set_version(version)
 		dlg.set_program_name("mintUpload")
 		dlg.set_comments(_("File uploader for Linux Mint"))
 		try:
@@ -425,7 +428,7 @@ class mintUploadWindow:
 		except Exception, detail:
 		    print detail
 		    		
-		dlg.set_authors(["Clement Lefebvre <root@linuxmint.com>", "Philip Morrell <ubuntu.emorrp1@xoxy.net>", "Manuel Sandoval <manuel@slashvar.com>"]) 
+		dlg.set_authors(["Clement Lefebvre <root@linuxmint.com>", "Philip Morrell <ubuntu.emorrp1@xoxy.net>", "Manuel Sandoval <manuel@slashvar.com>", "Dennis Schwertel <s@digitalkultur.net>"]) 
 		dlg.set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
 		dlg.set_logo(gtk.gdk.pixbuf_new_from_file("/usr/lib/linuxmint/mintSystem/icon.png"))
 		def close(w, res):
@@ -656,7 +659,6 @@ class mintUploadWindow:
 		services = []
 		config_paths = ["/etc/linuxmint/mintUpload/services/", home + "/.linuxmint/mintUpload/services/"]
 		for path in config_paths:
-			path = os.path.expanduser(path)
 			os.system("mkdir -p " + path)
 			for file in os.listdir(path):
 				try:						
