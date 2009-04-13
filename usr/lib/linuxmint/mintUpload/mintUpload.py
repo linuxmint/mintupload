@@ -670,8 +670,6 @@ class mintUploadWindow:
 	def read_service(self, path):
 		'''Get the details of an individual service'''
 
-		from configobj import ConfigObj
-
 		config = ConfigObj(path)
 		service = {}
 
