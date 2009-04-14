@@ -772,6 +772,73 @@ class mintUploadWindow:
 		uploader.start()
 		return True
 
+defaults = ConfigObj({
+	'type':'MINT',
+	'host':'mint-space.com',
+	'user':os.environ['LOGNAME'],
+	'format':'%Y%m%d%H%M%S',
+	'path':'',
+	'pass':'',
+	'port':'',
+	'maxsize':'',
+	'persistence':'',
+	'space':'',
+	'url':''
+})
+
+class Service(ConfigObj):
+	'''Object representing an upload service'''
+
+	def __init__(self, *args):
+		'''Get the details of an individual service'''
+
+		ConfigObj.__init__(self, *args)
+
+		for k,v in self.iteritems():
+			if type(v) is list:
+				self[k] = ','.join(v)
+
+		if self.has_key('type'):
+			self['type'] = self['type'].upper()
+
+		if self.has_key('host'):
+			h = self['host']
+			if h.find(':') >= 0:
+				h = h.split(':')
+				self['host'] = h[0]
+				self['port'] = h[1]
+
+		ints = ['port', 'maxsize', 'persistence']
+		for k in ints:
+			if self.has_key(k):
+				self[k] = int(k)
+
+	def upload(self, file):
+		'''Upload a file to the service'''
+
+		s = defaults
+		s.merge(self)
+
+		timestamp = datetime.datetime.utcnow().strftime(s['format'])
+		s['path'] = s['path'].replace('<TIMESTAMP>',timestamp)
+
+		# Replace placeholders in url
+		url_replace = {
+			'<TIMESTAMP>':timestamp,
+			'<FILE>':os.path.basename(file),
+			'<PATH>':s['path']
+		}
+		url = s['url']
+		for k,v in url_replace.iteritems():
+			url = url.replace(k,v)
+		s['url'] = url
+
+		# Ensure trailing '/', after url <PATH> replace
+		if s['path']:
+			s['path'] = os.path.normpath(s['path'])
+		else:
+			s['path'] = os.curdir
+		s['path'] += os.sep
 
 def my_storbinary(self, cmd, fp, blocksize=8192, callback=None):
 	'''Store a file in binary mode.'''
