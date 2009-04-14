@@ -1,3 +1,9 @@
+mintupload (3.0.4) gloria; urgency=low
+
+  * Fix for selected services containing underscores.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon,  13 Apr 2009 21:25:00 +0000
+
 mintupload (3.0.3) gloria; urgency=low
 
   * About dialog use "mint-apt-version"

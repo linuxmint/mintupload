@@ -139,7 +139,7 @@ class mintUploader(threading.Thread):
 
 		except Exception, detail:
 			print detail
-			statusbar.push(context_id, "<span color='red'>" + _("Upload failed.") + "</span> -- " + str(detail).encode("ascii", "ignore"))
+			statusbar.push(context_id, "<span color='red'>" + _("Upload failed.") + "</span>")
 			label = statusbar.get_children()[0].get_children()[0]
 			label.set_use_markup(True)
 
@@ -599,7 +599,7 @@ class mintUploadWindow:
 
 		self.read_services()
 		for service in self.services:
-			if service['name'] == selectedService:
+			if service['name'].replace(' ', '_') == selectedService:
 				selected_service = service
 
 				# Get the file's persistence on the service
