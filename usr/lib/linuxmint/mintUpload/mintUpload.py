@@ -74,12 +74,12 @@ class spaceChecker(threading.Thread):
 
 	def run(self):
 		# Get the maximum allowed self.filesize on the service
-		if self.service["maxsize"]:
-			if self.filesize > int(self.service["maxsize"]):
+		if self.service.has_key("maxsize"):
+			if self.filesize > self.service["maxsize"]:
 				raise FilesizeError(_("File larger than service's maximum"))
 
 		# Get the available space left on the service
-		if self.service["space"]:
+		if self.service.has_key("space"):
 			try:
 				spaceInfo = urllib.urlopen(self.service["space"]).read()
 			except:
