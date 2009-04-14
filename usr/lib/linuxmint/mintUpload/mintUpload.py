@@ -274,13 +274,14 @@ class mintUploadWindow:
 
 		self.filename = filename
 		name = os.path.basename(filename)
+		self.iconfile = "/usr/lib/linuxmint/mintSystem/icon.png"
 
 		# Set the Glade file
 		self.gladefile = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
 		wTree = gtk.glade.XML(self.gladefile,"main_window")
 
 		wTree.get_widget("main_window").connect("destroy", gtk.main_quit)
-		wTree.get_widget("main_window").set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
+		wTree.get_widget("main_window").set_icon_from_file(self.iconfile)
 
 		# i18n
 		wTree.get_widget("label2").set_label("<b>" + _("Upload service") + "</b>")
@@ -374,8 +375,8 @@ class mintUploadWindow:
 		    print detail
 
 		dlg.set_authors(["Clement Lefebvre <root@linuxmint.com>", "Philip Morrell <ubuntu.emorrp1@xoxy.net>", "Manuel Sandoval <manuel@slashvar.com>", "Dennis Schwertel <s@digitalkultur.net>"])
-		dlg.set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
-		dlg.set_logo(gtk.gdk.pixbuf_new_from_file("/usr/lib/linuxmint/mintSystem/icon.png"))
+		dlg.set_icon_from_file(self.iconfile)
+		dlg.set_logo(gtk.gdk.pixbuf_new_from_file(self.iconfile))
 		def close(w, res):
 		    if res == gtk.RESPONSE_CANCEL:
 		        w.hide()
@@ -388,7 +389,7 @@ class mintUploadWindow:
 		treeview_services_system = wTree.get_widget("treeview_services_system")
 
 		wTree.get_widget("services_window").set_title(_("Services") + " - mintUpload")
-		wTree.get_widget("services_window").set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
+		wTree.get_widget("services_window").set_icon_from_file(self.iconfile)
 		wTree.get_widget("services_window").show()
 
 		wTree.get_widget("button_close").connect("clicked", self.close_window, wTree.get_widget("services_window"), combo)
@@ -439,7 +440,7 @@ class mintUploadWindow:
 	def add_service(self, widget, treeview_services):
 		wTree = gtk.glade.XML(self.gladefile, "dialog_add_service")
 		wTree.get_widget("dialog_add_service").set_title(_("New service"))
-		wTree.get_widget("dialog_add_service").set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
+		wTree.get_widget("dialog_add_service").set_icon_from_file(self.iconfile)
 		wTree.get_widget("dialog_add_service").show()
 		wTree.get_widget("lbl_name").set_label(_("Name:"))
 		wTree.get_widget("button_ok").connect("clicked", self.new_service, wTree.get_widget("dialog_add_service"), wTree.get_widget("txt_name"), treeview_services)
@@ -470,7 +471,7 @@ class mintUploadWindow:
 
 		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
 		wTree.get_widget("dialog_edit_service").set_title(_("Edit service"))
-		wTree.get_widget("dialog_edit_service").set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
+		wTree.get_widget("dialog_edit_service").set_icon_from_file(self.iconfile)
 		wTree.get_widget("dialog_edit_service").show()
 		wTree.get_widget("button_ok").connect("clicked", self.modify_service, wTree.get_widget("dialog_edit_service"), wTree, file)
 		wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_edit_service"))
