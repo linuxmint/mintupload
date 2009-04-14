@@ -509,7 +509,7 @@ class mintUploadWindow:
 		wTree.get_widget("txt_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
 
 		try:
-			config = ConfigObj(file)
+			config = Service(file)
 			try:
 				model = wTree.get_widget("combo_type").get_model()
 				iter = model.get_iter_first()
@@ -547,18 +547,26 @@ class mintUploadWindow:
 
 	def modify_service(self, widget, window, wTree, file):
 		try:
-			config = ConfigObj(file)
 			model = wTree.get_widget("combo_type").get_model()
 			iter = 	wTree.get_widget("combo_type").get_active_iter()
-			type_value = model.get_value(iter, 0)
-			config['type'] = type_value
+
+			# Get configuration
+			config = {}
+			config['type'] = model.get_value(iter, 0)
 			config['host'] = wTree.get_widget("txt_hostname").get_text()
 			config['port'] = wTree.get_widget("txt_port").get_text()
 			config['user'] = wTree.get_widget("txt_username").get_text()
 			config['pass'] = wTree.get_widget("txt_password").get_text()
 			config['format'] = wTree.get_widget("txt_timestamp").get_text()
 			config['path'] = wTree.get_widget("txt_path").get_text()
-			config.write()
+			for k in config.iterkeys():
+				if not config[k]:
+					config.pop(k)
+
+			# Write to service's config file
+			s = Service(file)
+			s.merge(config)
+			s.write()
 		except Exception, detail:
 			print detail
 		window.hide()
@@ -720,6 +728,16 @@ class Service(ConfigObj):
 		'''Get the details of an individual service'''
 
 		ConfigObj.__init__(self, *args)
+		self.fix()
+
+	def merge(self, *args):
+		'''Merge configuration with another'''
+
+		ConfigObj.merge(self, *args)
+		self.fix()
+
+	def _fix(self):
+		'''Format values correctly'''
 
 		for k,v in self.iteritems():
 			if type(v) is list:
