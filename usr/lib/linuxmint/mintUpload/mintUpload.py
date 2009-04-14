@@ -132,7 +132,7 @@ class mintUploader(threading.Thread):
 			label.set_use_markup(True)
 
 			#If service is Mint then show the URL
-			if selected_service['url']:
+			if selected_service.has_key('url'):
 				wTree.get_widget("txt_url").set_text(selected_service['url'])
 				wTree.get_widget("txt_url").show()
 				wTree.get_widget("lbl_url").show()
@@ -151,7 +151,7 @@ class mintUploader(threading.Thread):
 	def _ftp(self):
 		'''Connection process for FTP services'''
 
-		if not selected_service['port']:
+		if not selected_service.has_key('port'):
 			selected_service['port'] = 21
 		try:
 			# Attempting to connect
@@ -161,7 +161,7 @@ class mintUploader(threading.Thread):
 			statusbar.push(context_id, selected_service['type'] + _(" connection successfully established"))
 
 			# Create full path
-			for dir in selected_service['path'].split("/"):
+			for dir in selected_service['path'].split(os.sep):
 				try:	ftp.mkd(dir)
 				except:	pass
 				ftp.cwd(dir)
@@ -193,7 +193,7 @@ class mintUploader(threading.Thread):
 		if not selected_service['pass']:
 			rsa_key = self.getPrivateKey()
 			if not rsa_key:	raise ConnectionError("Connection requires a password or private key!")
-		if not selected_service['port']:
+		if not selected_service.has_key('port'):
 			selected_service['port'] = 22
 		try:
 			# Attempting to connect
@@ -700,14 +700,9 @@ defaults = ConfigObj({
 	'type':'MINT',
 	'host':'mint-space.com',
 	'user':os.environ['LOGNAME'],
-	'format':'%Y%m%d%H%M%S',
 	'path':'',
 	'pass':'',
-	'port':'',
-	'maxsize':'',
-	'persistence':'',
-	'space':'',
-	'url':''
+	'format':'%Y%m%d%H%M%S',
 })
 
 class Service(ConfigObj):
