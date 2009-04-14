@@ -186,7 +186,7 @@ class mintUploader(threading.Thread):
 
 		except Exception, detail:
 			print detail
-			statusbar.push(context_id, "<span color='red'>" + _("Upload failed.") + "</span> -- " + str(detail).encode("ascii", "ignore"))
+			statusbar.push(context_id, "<span color='red'>" + _("Upload failed.") + "</span>")
 			label = statusbar.get_children()[0].get_children()[0]
 			label.set_use_markup(True)
 
@@ -646,9 +646,9 @@ class mintUploadWindow:
 
 		services = self.read_services()
 		for service in services:
-			selectedService = selectedService.replace(' ', '_')
-			if service['name'] == selectedService:
-				selected_service = service
+			selectedService = selectedService.replace(' ', '_')						
+			if service['name'].replace(' ', '_') == selectedService:
+				selected_service = service			
 				spacecheck = spaceChecker()
 				spacecheck.start()
 				return True
