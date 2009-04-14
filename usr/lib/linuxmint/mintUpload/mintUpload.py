@@ -652,7 +652,7 @@ class mintUploadWindow:
 
 		else:
 			# Display the available space left on the service
-			if selected_service['space']:
+			if selected_service.has_key('space'):
 				pctSpace = float(spacecheck.available) / float(spacecheck.total) * 100
 				pctSpaceStr = sizeStr(spacecheck.available) + " (" + str(int(pctSpace)) + "%)"
 				wTree.get_widget("txt_space").set_label(pctSpaceStr)
