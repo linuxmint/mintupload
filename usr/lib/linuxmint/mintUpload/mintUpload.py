@@ -690,9 +690,11 @@ class mintUploadWindow:
 		'''Start the upload process'''
 
 		global wTree
+		global selected_service
 
 		wTree.get_widget("upload_button").set_sensitive(False)
 		wTree.get_widget("combo").set_sensitive(False)
+		selected_service = selected_service.for_upload(self.filename)
 		uploader = mintUploader()
 		uploader.start()
 		return True
@@ -736,7 +738,7 @@ class Service(ConfigObj):
 			if self.has_key(k):
 				self[k] = int(self[k])
 
-	def upload(self, file):
+	def for_upload(self, file):
 		'''Upload a file to the service'''
 
 		s = defaults
@@ -762,6 +764,8 @@ class Service(ConfigObj):
 		else:
 			s['path'] = os.curdir
 		s['path'] += os.sep
+
+		return s
 
 def my_storbinary(self, cmd, fp, blocksize=8192, callback=None):
 	'''Store a file in binary mode.'''
