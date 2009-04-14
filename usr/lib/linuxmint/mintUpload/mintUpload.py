@@ -352,8 +352,7 @@ class mintUploadWindow:
 		self.read_services()
 		for service in self.services:
 			iter = model.insert_before(None, None)
-			sname = service['name'].replace('_', ' ')
-			model.set_value(iter, 0, sname)
+			model.set_value(iter, 0, service['name'])
 		del model
 
 	def open_about(self, widget):
@@ -431,8 +430,7 @@ class mintUploadWindow:
 		self.read_services()
 		for service in self.services:
 			iter = models[service['loc']].insert_before(None, None)
-			sname = service['name'].replace('_', ' ')
-			models[service['loc']].set_value(iter, 0, sname)
+			models[service['loc']].set_value(iter, 0, service['name'])
 
 		del usermodel
 		del sysmodel
@@ -452,13 +450,14 @@ class mintUploadWindow:
 		wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_add_service"))
 
 	def new_service(self, widget, window, entry, treeview_services):
+		service = ConfigObj('/usr/lib/linuxmint/mintUpload/sample.service')
 		sname = entry.get_text()
-		fname = sname.replace(' ', '_')
-		if sname != '':
+		if sname:
 			model = treeview_services.get_model()
 			iter = model.insert_before(None, None)
 			model.set_value(iter, 0, sname)
-			os.system("cp /usr/lib/linuxmint/mintUpload/sample.service " + home + "/.linuxmint/mintUpload/services/" + fname)
+			service.filename = home + "/.linuxmint/mintUpload/services/" + sname
+			service.write()
 		self.close_window(None, window)
 		self.edit_service(treeview_services, model.get_path(iter), 0)
 
@@ -471,8 +470,7 @@ class mintUploadWindow:
 		model=widget.get_model()
 		iter = model.get_iter(path)
 		sname = model.get_value(iter, 0)
-		fname = sname.replace(' ', '_')
-		file = home + "/.linuxmint/mintUpload/services/" + fname
+		file = home + "/.linuxmint/mintUpload/services/" + sname
 
 		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
 		wTree.get_widget("dialog_edit_service").set_title(_("Edit service"))
@@ -569,12 +567,10 @@ class mintUploadWindow:
 		window.hide()
 
 	def remove_service(self, widget, treeview_services):
-		selection = treeview_services.get_selection()
-		(model, iter) = selection.get_selected()
+		(model, iter) = treeview_services.get_selection().get_selected()
 		if (iter != None):
-			service = model.get_value(iter, 0)
-			fname = service.replace(' ', '_')
-			os.system("rm " + home + "/.linuxmint/mintUpload/services/" + fname)
+			service = model.get_value(iter, 0).replace(' ', '\ ')
+			os.system("rm " + home + "/.linuxmint/mintUpload/services/" + service)
 			model.remove(iter)
 
 	def comboChanged(self, widget):
@@ -595,11 +591,11 @@ class mintUploadWindow:
 		active = wTree.get_widget("combo").get_active()
 		if active < 0:
 			return
-		selectedService = model[active][0].replace(' ', '_')
+		selectedService = model[active][0]
 
 		self.read_services()
 		for service in self.services:
-			if service['name'].replace(' ', '_') == selectedService:
+			if service['name'] == selectedService:
 				selected_service = service
 
 				# Get the file's persistence on the service
