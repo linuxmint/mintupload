@@ -681,7 +681,7 @@ class mintUploadWindow:
 
 		self.services = []
 		config_paths = {'system':"/etc/linuxmint/mintUpload/services/", 'user':home + "/.linuxmint/mintUpload/services/"}
-		for loc, path in config_paths:
+		for loc, path in config_paths.iteritems():
 			os.system("mkdir -p " + path)
 			for file in os.listdir(path):
 				try:
