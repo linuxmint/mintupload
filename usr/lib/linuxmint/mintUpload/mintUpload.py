@@ -617,12 +617,10 @@ class mintUploadWindow:
 		window.hide()
 
 	def remove_service(self, widget, treeview_services):
-		selection = treeview_services.get_selection()
-		(model, iter) = selection.get_selected()
+		(model, iter) = treeview_services.get_selection().get_selected()
 		if (iter != None):
-			service = model.get_value(iter, 0)
-			fname = service.replace(' ', '\ ')
-			os.system("rm " + home + "/.linuxmint/mintUpload/services/" + fname)
+			service = model.get_value(iter, 0).replace(' ', '\ ')
+			os.system("rm " + home + "/.linuxmint/mintUpload/services/" + service)
 			model.remove(iter)
 
 	def comboChanged(self, widget):
