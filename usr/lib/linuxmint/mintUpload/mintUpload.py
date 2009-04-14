@@ -377,8 +377,7 @@ class mintUploadWindow:
 		wTree.get_widget("combo").set_model(model)
 		for service in services:
 			iter = model.insert_before(None, None)
-			sname = service['name'].replace('_', ' ')
-			model.set_value(iter, 0, sname)
+			model.set_value(iter, 0, service['name'])
 		del model
 
 		cell = gtk.CellRendererText()
@@ -407,8 +406,7 @@ class mintUploadWindow:
 		services = self.read_services()
 		for service in services:
 			iter = model.insert_before(None, None)
-			sname = service['name'].replace('_', ' ')
-			model.set_value(iter, 0, sname)
+			model.set_value(iter, 0, service['name'])
 		del model
 
 	def open_about(self, widget):
@@ -479,7 +477,6 @@ class mintUploadWindow:
 		#Get the list of user services
 		for file in os.listdir(home + "/.linuxmint/mintUpload/services"):
 			file = str.strip(file)
-			file = file.replace('_', ' ')
 			iter = model.insert_before(None, None)
 			model.set_value(iter, 0, file)
 		del model
