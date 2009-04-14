@@ -559,9 +559,6 @@ class mintUploadWindow:
 			config['pass'] = wTree.get_widget("txt_password").get_text()
 			config['format'] = wTree.get_widget("txt_timestamp").get_text()
 			config['path'] = wTree.get_widget("txt_path").get_text()
-			for k in config.iterkeys():
-				if not config[k]:
-					config.pop(k)
 
 			# Write to service's config file
 			s = Service(file)
@@ -728,20 +725,23 @@ class Service(ConfigObj):
 		'''Get the details of an individual service'''
 
 		ConfigObj.__init__(self, *args)
-		self.fix()
+		self._fix()
 
 	def merge(self, *args):
 		'''Merge configuration with another'''
 
 		ConfigObj.merge(self, *args)
-		self.fix()
+		self._fix()
 
 	def _fix(self):
 		'''Format values correctly'''
 
 		for k,v in self.iteritems():
-			if type(v) is list:
-				self[k] = ','.join(v)
+			if v:
+				if type(v) is list:
+					self[k] = ','.join(v)
+			else:
+				self.pop(k)
 
 		if self.filename:
 			self['name'] = os.path.basename(self.filename)
