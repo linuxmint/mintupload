@@ -351,7 +351,7 @@ class mintUploadWindow:
 		self.read_services()
 		for service in self.services:
 			iter = model.insert_before(None, None)
-			sname = service.filename.replace('_', ' ')
+			sname = service['name'].replace('_', ' ')
 			model.set_value(iter, 0, sname)
 		del model
 
@@ -411,28 +411,25 @@ class mintUploadWindow:
 		treeview_services.connect("row-activated", self.edit_service);
 
 	def load_services(self, treeview_services, treeview_services_system):
-		model = gtk.TreeStore(str)
-		model.set_sort_column_id( 0, gtk.SORT_ASCENDING )
-		treeview_services.set_model(model)
+		usermodel = gtk.TreeStore(str)
+		usermodel.set_sort_column_id( 0, gtk.SORT_ASCENDING )
+		sysmodel = gtk.TreeStore(str)
+		sysmodel.set_sort_column_id( 0, gtk.SORT_ASCENDING )
+		models = {
+			'user':usermodel,
+			'system':sysmodel
+		}
+		treeview_services.set_model(models['user'])
+		treeview_services_system.set_model(models['system'])
 
-		#Get the list of user services
-		for file in os.listdir(home + "/.linuxmint/mintUpload/services"):
-			file = str.strip(file)
-			file = file.replace('_', ' ')
-			iter = model.insert_before(None, None)
-			model.set_value(iter, 0, file)
-		del model
+		self.read_services()
+		for service in self.services:
+			iter = models[service['loc']].insert_before(None, None)
+			sname = service['name'].replace('_', ' ')
+			models[service['loc']].set_value(iter, 0, sname)
 
-		model = gtk.TreeStore(str)
-		model.set_sort_column_id( 0, gtk.SORT_ASCENDING )
-		treeview_services_system.set_model(model)
-
-		#Get the list of user services
-		for file in os.listdir("/etc/linuxmint/mintUpload/services"):
-			file = str.strip(file)
-			iter = model.insert_before(None, None)
-			model.set_value(iter, 0, file)
-		del model
+		del usermodel
+		del sysmodel
 
 	def close_window(self, widget, window, combo=None):
 		window.hide()
@@ -592,7 +589,7 @@ class mintUploadWindow:
 		self.read_services()
 		for service in self.services:
 			selectedService = selectedService.replace(' ', '_')
-			if service.filename == selectedService:
+			if service['name'] == selectedService:
 				selected_service = service
 
 				# Get the file's persistence on the service
@@ -725,6 +722,9 @@ class Service(ConfigObj):
 		for k,v in self.iteritems():
 			if type(v) is list:
 				self[k] = ','.join(v)
+
+		if self.filename:
+			self['name'] = os.path.basename(self.filename)
 
 		if self.has_key('type'):
 			self['type'] = self['type'].upper()
