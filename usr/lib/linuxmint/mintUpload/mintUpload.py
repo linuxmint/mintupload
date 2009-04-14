@@ -7,7 +7,6 @@
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; Version 2
 # of the License.
-#
 
 import sys
 
@@ -40,8 +39,18 @@ gtk.gdk.threads_init()
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 
-class ConnectionError(Exception):
-	'''Custom error to raise for errors during connections'''
+class CustomError(Exception):
+	'''All custom defined errors'''
+
+	def __init__(self, detail):
+		print self.__class__.__name__ + ': ' + detail
+
+class ConnectionError(CustomError):
+	'''Raised when an error has occured with an external connection'''
+	pass
+
+class FilesizeError(CustomError):
+	'''Raised when the file is too large or too small'''
 	pass
 
 def sizeStr(size, acc=1, factor=1000):
@@ -56,87 +65,31 @@ def sizeStr(size, acc=1, factor=1000):
 	return str(int(size)) + thresholds[0]
 
 class spaceChecker(threading.Thread):
-	'''Checks that the filesize is fine'''
+	'''Checks that the filesize is ok'''
+
+	def __init__(self, service, filesize):
+		self.service = service
+		self.filesize = filesize
+		threading.Thread.__init__(self)
 
 	def run(self):
-		global statusbar
-		global context_id
-		global wTree
-		global selected_service
+		# Get the maximum allowed self.filesize on the service
+		if self.service.has_key("maxsize"):
+			if self.filesize > self.service["maxsize"]:
+				raise FilesizeError(_("File larger than service's maximum"))
 
-		wTree.get_widget("combo").set_sensitive(False)
-		wTree.get_widget("upload_button").set_sensitive(False)
-		statusbar.push(context_id, _("Checking space on the service..."))
-		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
-		self.ready = True
+		# Get the available space left on the service
+		if self.service.has_key("space"):
+			try:
+				spaceInfo = urllib.urlopen(self.service["space"]).read()
+			except:
+				raise ConnectionError(_("Could not get available space"))
 
-		wTree.get_widget("frame_progress").hide()
-
-		try:
-			# Get the file's persistence on the service
-			if selected_service['persistence']:
-				wTree.get_widget("txt_persistence").set_label(selected_service['persistence'] + " " + _("days"))
-				wTree.get_widget("txt_persistence").show()
-				wTree.get_widget("lbl_persistence").show()
-			else:
-				wTree.get_widget("txt_persistence").set_label(_("N/A"))
-				wTree.get_widget("txt_persistence").hide()
-				wTree.get_widget("lbl_persistence").hide()
-
-			# Get the maximum allowed filesize on the service
-			if selected_service['maxsize']:
-				maxsize = float(selected_service['maxsize'])
-				if filesize > maxsize:
-					self.ready = False
-				maxsizeStr = sizeStr(maxsize)
-				wTree.get_widget("txt_maxsize").set_label(maxsizeStr)
-				wTree.get_widget("txt_maxsize").show()
-				wTree.get_widget("lbl_maxsize").show()
-			else:
-				wTree.get_widget("txt_maxsize").set_label(_("N/A"))
-				wTree.get_widget("txt_maxsize").hide()
-				wTree.get_widget("lbl_maxsize").hide()
-
-			# Get the available space left on the service
-			if selected_service['space']:
-				spaceInfo = urllib.urlopen(selected_service['space']).read().split('/')
-				spaceAvailable = float(spaceInfo[0])
-				spaceTotal = float(spaceInfo[1])
-				if spaceAvailable < filesize:
-					self.ready = False
-				pctSpace = spaceAvailable / spaceTotal * 100
-				pctSpaceStr = sizeStr(spaceAvailable) + " (" + str(int(pctSpace)) + "%)"
-				wTree.get_widget("txt_space").set_label(pctSpaceStr)
-				wTree.get_widget("txt_space").show()
-				wTree.get_widget("lbl_space").show()
-			else:
-				wTree.get_widget("txt_space").set_label(_("N/A"))
-				wTree.get_widget("txt_space").hide()
-				wTree.get_widget("lbl_space").hide()
-
-			# Activate the upload button if the space is OK
-			if self.ready:
-				wTree.get_widget("upload_button").set_sensitive(True)
-				statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
-			else:
-				wTree.get_widget("upload_button").set_sensitive(False)
-				statusbar.push(context_id, "<span color='red'>" + _("File too big or not enough space on the service.") + "</span>")
-			label = statusbar.get_children()[0].get_children()[0]
-			label.set_use_markup(True)
-			wTree.get_widget("main_window").window.set_cursor(None)
-
-		except Exception, detail:
-			print detail
-			statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
-			label = statusbar.get_children()[0].get_children()[0]
-			label.set_use_markup(True)
-			wTree.get_widget("upload_button").set_sensitive(False)
-
-		finally:
-			wTree.get_widget("main_window").window.set_cursor(None)
-			wTree.get_widget("combo").set_sensitive(True)
-			wTree.get_widget("main_window").resize(*wTree.get_widget("main_window").size_request())
-
+			spaceInfo = spaceInfo.split("/")
+			self.available = int(spaceInfo[0])
+			self.total = int(spaceInfo[1])
+			if self.filesize > self.available:
+				raise FilesizeError(_("File larger than service's available space"))
 
 class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
@@ -179,7 +132,7 @@ class mintUploader(threading.Thread):
 			label.set_use_markup(True)
 
 			#If service is Mint then show the URL
-			if selected_service['url']:
+			if selected_service.has_key('url'):
 				wTree.get_widget("txt_url").set_text(selected_service['url'])
 				wTree.get_widget("txt_url").show()
 				wTree.get_widget("lbl_url").show()
@@ -198,7 +151,7 @@ class mintUploader(threading.Thread):
 	def _ftp(self):
 		'''Connection process for FTP services'''
 
-		if not selected_service['port']:
+		if not selected_service.has_key('port'):
 			selected_service['port'] = 21
 		try:
 			# Attempting to connect
@@ -208,7 +161,7 @@ class mintUploader(threading.Thread):
 			statusbar.push(context_id, selected_service['type'] + _(" connection successfully established"))
 
 			# Create full path
-			for dir in selected_service['path'].split("/"):
+			for dir in selected_service['path'].split(os.sep):
 				try:	ftp.mkd(dir)
 				except:	pass
 				ftp.cwd(dir)
@@ -240,7 +193,7 @@ class mintUploader(threading.Thread):
 		if not selected_service['pass']:
 			rsa_key = self.getPrivateKey()
 			if not rsa_key:	raise ConnectionError("Connection requires a password or private key!")
-		if not selected_service['port']:
+		if not selected_service.has_key('port'):
 			selected_service['port'] = 22
 		try:
 			# Attempting to connect
@@ -372,14 +325,7 @@ class mintUploadWindow:
 		wTree.get_widget("menubar1").append(helpMenu)
 		wTree.get_widget("menubar1").show_all()
 
-		services = self.read_services()
-		model = gtk.TreeStore(str)
-		wTree.get_widget("combo").set_model(model)
-		for service in services:
-			iter = model.insert_before(None, None)
-			sname = service['name'].replace('_', ' ')
-			model.set_value(iter, 0, sname)
-		del model
+		self.reload_services(wTree.get_widget("combo"))
 
 		cell = gtk.CellRendererText()
 		wTree.get_widget("combo").pack_start(cell)
@@ -396,16 +342,15 @@ class mintUploadWindow:
 		filesize = os.path.getsize(self.filename)
 		wTree.get_widget("txt_size").set_label(sizeStr(filesize))
 
-		if len(services) == 1:
+		if len(self.services) == 1:
 			wTree.get_widget("combo").set_active(0)
 			self.comboChanged(None)
-
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
 		combo.set_model(model)
-		services = self.read_services()
-		for service in services:
+		self.read_services()
+		for service in self.services:
 			iter = model.insert_before(None, None)
 			sname = service['name'].replace('_', ' ')
 			model.set_value(iter, 0, sname)
@@ -472,28 +417,25 @@ class mintUploadWindow:
 		treeview_services.connect("row-activated", self.edit_service);
 
 	def load_services(self, treeview_services, treeview_services_system):
-		model = gtk.TreeStore(str)
-		model.set_sort_column_id( 0, gtk.SORT_ASCENDING )
-		treeview_services.set_model(model)
+		usermodel = gtk.TreeStore(str)
+		usermodel.set_sort_column_id( 0, gtk.SORT_ASCENDING )
+		sysmodel = gtk.TreeStore(str)
+		sysmodel.set_sort_column_id( 0, gtk.SORT_ASCENDING )
+		models = {
+			'user':usermodel,
+			'system':sysmodel
+		}
+		treeview_services.set_model(models['user'])
+		treeview_services_system.set_model(models['system'])
 
-		#Get the list of user services
-		for file in os.listdir(home + "/.linuxmint/mintUpload/services"):
-			file = str.strip(file)
-			file = file.replace('_', ' ')
-			iter = model.insert_before(None, None)
-			model.set_value(iter, 0, file)
-		del model
+		self.read_services()
+		for service in self.services:
+			iter = models[service['loc']].insert_before(None, None)
+			sname = service['name'].replace('_', ' ')
+			models[service['loc']].set_value(iter, 0, sname)
 
-		model = gtk.TreeStore(str)
-		model.set_sort_column_id( 0, gtk.SORT_ASCENDING )
-		treeview_services_system.set_model(model)
-
-		#Get the list of user services
-		for file in os.listdir("/etc/linuxmint/mintUpload/services"):
-			file = str.strip(file)
-			iter = model.insert_before(None, None)
-			model.set_value(iter, 0, file)
-		del model
+		del usermodel
+		del sysmodel
 
 	def close_window(self, widget, window, combo=None):
 		window.hide()
@@ -567,7 +509,7 @@ class mintUploadWindow:
 		wTree.get_widget("txt_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
 
 		try:
-			config = ConfigObj(file)
+			config = Service(file)
 			try:
 				model = wTree.get_widget("combo_type").get_model()
 				iter = model.get_iter_first()
@@ -605,18 +547,23 @@ class mintUploadWindow:
 
 	def modify_service(self, widget, window, wTree, file):
 		try:
-			config = ConfigObj(file)
 			model = wTree.get_widget("combo_type").get_model()
 			iter = 	wTree.get_widget("combo_type").get_active_iter()
-			type_value = model.get_value(iter, 0)
-			config['type'] = type_value
+
+			# Get configuration
+			config = {}
+			config['type'] = model.get_value(iter, 0)
 			config['host'] = wTree.get_widget("txt_hostname").get_text()
 			config['port'] = wTree.get_widget("txt_port").get_text()
 			config['user'] = wTree.get_widget("txt_username").get_text()
 			config['pass'] = wTree.get_widget("txt_password").get_text()
 			config['format'] = wTree.get_widget("txt_timestamp").get_text()
 			config['path'] = wTree.get_widget("txt_path").get_text()
-			config.write()
+
+			# Write to service's config file
+			s = Service(file)
+			s.merge(config)
+			s.write()
 		except Exception, detail:
 			print detail
 		window.hide()
@@ -648,107 +595,200 @@ class mintUploadWindow:
 		active = wTree.get_widget("combo").get_active()
 		if active < 0:
 			return
-		selectedService = model[active][0]
+		selectedService = model[active][0].replace(' ', '_')
 
-		services = self.read_services()
-		for service in services:
-			selectedService = selectedService.replace(' ', '_')						
+		self.read_services()
+		for service in self.services:
 			if service['name'].replace(' ', '_') == selectedService:
-				selected_service = service			
-				spacecheck = spaceChecker()
-				spacecheck.start()
+				selected_service = service
+
+				# Get the file's persistence on the service
+				if selected_service.has_key('persistence'):
+					wTree.get_widget("txt_persistence").set_label(str(selected_service['persistence']) + " " + _("days"))
+					wTree.get_widget("txt_persistence").show()
+					wTree.get_widget("lbl_persistence").show()
+				else:
+					wTree.get_widget("txt_persistence").set_label(_("N/A"))
+					wTree.get_widget("txt_persistence").hide()
+					wTree.get_widget("lbl_persistence").hide()
+
+				# Get the maximum allowed filesize on the service
+				if selected_service.has_key('maxsize'):
+					maxsizeStr = sizeStr(selected_service['maxsize'])
+					wTree.get_widget("txt_maxsize").set_label(maxsizeStr)
+					wTree.get_widget("txt_maxsize").show()
+					wTree.get_widget("lbl_maxsize").show()
+				else:
+					wTree.get_widget("txt_maxsize").set_label(_("N/A"))
+					wTree.get_widget("txt_maxsize").hide()
+					wTree.get_widget("lbl_maxsize").hide()
+
+				if not selected_service.has_key('space'):
+					wTree.get_widget("txt_space").set_label(_("N/A"))
+					wTree.get_widget("txt_space").hide()
+					wTree.get_widget("lbl_space").hide()
+					if not selected_service.has_key('maxsize'):
+						return True
+
+				self.check_space()
 				return True
+
+	def check_space(self):
+		'''Checks for available space on the service'''
+
+		global statusbar
+		global context_id
+		global wTree
+		global selected_service
+		global filesize
+
+		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
+		wTree.get_widget("combo").set_sensitive(False)
+		wTree.get_widget("upload_button").set_sensitive(False)
+		statusbar.push(context_id, _("Checking space on the service..."))
+
+		wTree.get_widget("frame_progress").hide()
+
+		# Check the filesize
+		try:
+			spacecheck = spaceChecker(selected_service, filesize)
+			spacecheck.start()
+			spacecheck.join()
+
+		except ConnectionError:
+			statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
+
+		except FilesizeError:
+			statusbar.push(context_id, "<span color='red'>" + _("File too big or not enough space on the service.") + "</span>")
+
+		else:
+			# Display the available space left on the service
+			if selected_service.has_key('space'):
+				pctSpace = float(spacecheck.available) / float(spacecheck.total) * 100
+				pctSpaceStr = sizeStr(spacecheck.available) + " (" + str(int(pctSpace)) + "%)"
+				wTree.get_widget("txt_space").set_label(pctSpaceStr)
+				wTree.get_widget("txt_space").show()
+				wTree.get_widget("lbl_space").show()
+
+			# Activate upload button
+			statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
+			wTree.get_widget("upload_button").set_sensitive(True)
+
+		finally:
+			label = statusbar.get_children()[0].get_children()[0]
+			label.set_use_markup(True)
+			wTree.get_widget("combo").set_sensitive(True)
+			wTree.get_widget("main_window").window.set_cursor(None)
+			wTree.get_widget("main_window").resize(*wTree.get_widget("main_window").size_request())
 
 	def read_services(self):
 		'''Get all defined services'''
 
-		services = []
-		config_paths = ["/etc/linuxmint/mintUpload/services/", home + "/.linuxmint/mintUpload/services/"]
-		for path in config_paths:
+		self.services = []
+		config_paths = {'system':"/etc/linuxmint/mintUpload/services/", 'user':home + "/.linuxmint/mintUpload/services/"}
+		for loc, path in config_paths.iteritems():
 			os.system("mkdir -p " + path)
 			for file in os.listdir(path):
 				try:
-					services.append(self.read_service(path + file))
+					s = Service(path + file)
+					s['loc'] = loc
+					self.services.append(s)
 				except:
 					pass
-		return services
-
-	def read_service(self, path):
-		'''Get the details of an individual service'''
-
-		config = ConfigObj(path)
-		service = {}
-
-		# Specify sensible defaults here for configs assumed to exist later
-		try:	service["type"] = config['type'].upper()
-		except:	service["type"] = "MINT"
-
-		try:	service["host"] = config['host']
-		except:	service["mint-space.com"]
-
-		try:	service["name"] = config['name']
-		except:	service["name"] = os.path.basename(path)
-
-		try:	service["user"] = config['user']
-		except:	service["user"] = os.environ['LOGNAME']
-
-		try:	service["format"] = config['format']
-		except:	service["format"] = "%Y%m%d%H%M%S"
-		finally: timestamp = datetime.datetime.utcnow().strftime(service["format"])
-		try:
-			service["path"] = config['path']
-			service["path"] = service["path"].replace('<TIMESTAMP>', timestamp)
-		except:
-			service["path"] = None
-
-		# Specify default as None to require test later
-		try:	service["pass"] = config['pass']
-		except:	service["pass"] = None
-
-		try:	service["port"] = int(config['port'])
-		except:	service["port"] = None
-
-		try:	service["maxsize"] = config['maxsize']
-		except:	service["maxsize"] = None
-
-		try:	service["persistence"] = config['persistence']
-		except:	service["persistence"] = None
-
-		try:	service["space"] = config['space']
-		except:	service["space"] = None
-
-		try:
-			url = config['url']
-			if type(url) is list:
-				url = ",".join(url)
-			url = url.replace('<TIMESTAMP>', timestamp)
-			url = url.replace('<FILE>', name)
-			if service["path"]:
-				url = url.replace('<PATH>', service["path"])
-			service["url"] = url
-		except:
-			service["url"] = None
-
-		# Ensure trailing '/', after url <PATH> replace
-		if service["path"]:
-			service["path"] = os.path.normpath(service["path"])
-			service["path"] += os.sep
-		else:
-			service["path"] = os.curdir + os.sep
-
-		return service
 
 	def upload(self, widget):
 		'''Start the upload process'''
 
 		global wTree
+		global selected_service
 
 		wTree.get_widget("upload_button").set_sensitive(False)
 		wTree.get_widget("combo").set_sensitive(False)
+		selected_service = selected_service.for_upload(self.filename)
 		uploader = mintUploader()
 		uploader.start()
 		return True
 
+defaults = ConfigObj({
+	'type':'MINT',
+	'host':'mint-space.com',
+	'user':os.environ['LOGNAME'],
+	'path':'',
+	'pass':'',
+	'format':'%Y%m%d%H%M%S',
+})
+
+class Service(ConfigObj):
+	'''Object representing an upload service'''
+
+	def __init__(self, *args):
+		'''Get the details of an individual service'''
+
+		ConfigObj.__init__(self, *args)
+		self._fix()
+
+	def merge(self, *args):
+		'''Merge configuration with another'''
+
+		ConfigObj.merge(self, *args)
+		self._fix()
+
+	def _fix(self):
+		'''Format values correctly'''
+
+		for k,v in self.iteritems():
+			if v:
+				if type(v) is list:
+					self[k] = ','.join(v)
+			else:
+				self.pop(k)
+
+		if self.filename:
+			self['name'] = os.path.basename(self.filename)
+
+		if self.has_key('type'):
+			self['type'] = self['type'].upper()
+
+		if self.has_key('host'):
+			h = self['host']
+			if h.find(':') >= 0:
+				h = h.split(':')
+				self['host'] = h[0]
+				self['port'] = h[1]
+
+		ints = ['port', 'maxsize', 'persistence']
+		for k in ints:
+			if self.has_key(k):
+				self[k] = int(self[k])
+
+	def for_upload(self, file):
+		'''Upload a file to the service'''
+
+		s = defaults
+		s.merge(self)
+
+		timestamp = datetime.datetime.utcnow().strftime(s['format'])
+		s['path'] = s['path'].replace('<TIMESTAMP>',timestamp)
+
+		# Replace placeholders in url
+		url_replace = {
+			'<TIMESTAMP>':timestamp,
+			'<FILE>':os.path.basename(file),
+			'<PATH>':s['path']
+		}
+		url = s['url']
+		for k,v in url_replace.iteritems():
+			url = url.replace(k,v)
+		s['url'] = url
+
+		# Ensure trailing '/', after url <PATH> replace
+		if s['path']:
+			s['path'] = os.path.normpath(s['path'])
+		else:
+			s['path'] = os.curdir
+		s['path'] += os.sep
+
+		return s
 
 def my_storbinary(self, cmd, fp, blocksize=8192, callback=None):
 	'''Store a file in binary mode.'''
