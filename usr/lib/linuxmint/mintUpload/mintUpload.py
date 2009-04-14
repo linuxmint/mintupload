@@ -565,7 +565,7 @@ class mintUploadWindow:
 			try:
 				model = wTree.get_widget("combo_type").get_model()
 				iter = model.get_iter_first()
-				while (iter != None and model.get_value(iter, 0) != config['type']):
+				while (iter != None and model.get_value(iter, 0) != config['type'].lower()):
 					iter = model.iter_next(iter)
 				wTree.get_widget("combo_type").set_active_iter(iter)
 			except:
