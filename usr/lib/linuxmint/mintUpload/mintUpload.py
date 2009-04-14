@@ -525,8 +525,7 @@ class mintUploadWindow:
 		model=widget.get_model()
 		iter = model.get_iter(path)
 		sname = model.get_value(iter, 0)
-		fname = sname.replace(' ', '_')
-		file = home + "/.linuxmint/mintUpload/services/" + fname
+		file = home + "/.linuxmint/mintUpload/services/" + sname
 
 		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
 		wTree.get_widget("dialog_edit_service").set_title(_("Edit service"))
@@ -622,7 +621,7 @@ class mintUploadWindow:
 		(model, iter) = selection.get_selected()
 		if (iter != None):
 			service = model.get_value(iter, 0)
-			fname = service.replace(' ', '_')
+			fname = service.replace(' ', '\ ')
 			os.system("rm " + home + "/.linuxmint/mintUpload/services/" + fname)
 			model.remove(iter)
 
