@@ -589,10 +589,10 @@ class mintUploadWindow:
 			return
 		selectedService = model[active][0]
 
-		services = self.read_services()
-		for service in services:
+		self.read_services()
+		for service in self.services:
 			selectedService = selectedService.replace(' ', '_')
-			if service['name'] == selectedService:
+			if service.filename == selectedService:
 				selected_service = service
 
 				# Get the file's persistence on the service
