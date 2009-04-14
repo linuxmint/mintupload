@@ -593,7 +593,7 @@ class mintUploadWindow:
 
 				# Get the file's persistence on the service
 				if selected_service.has_key('persistence'):
-					wTree.get_widget("txt_persistence").set_label(selected_service['persistence'] + " " + _("days"))
+					wTree.get_widget("txt_persistence").set_label(str(selected_service['persistence']) + " " + _("days"))
 					wTree.get_widget("txt_persistence").show()
 					wTree.get_widget("lbl_persistence").show()
 				else:
