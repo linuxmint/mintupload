@@ -691,75 +691,10 @@ class mintUploadWindow:
 			os.system("mkdir -p " + path)
 			for file in os.listdir(path):
 				try:
-					services.append(self.read_service(path + file))
+					services.append(Service(path + file))
 				except:
 					pass
 		return services
-
-	def read_service(self, path):
-		'''Get the details of an individual service'''
-
-		config = ConfigObj(path)
-		service = {}
-
-		# Specify sensible defaults here for configs assumed to exist later
-		try:	service["type"] = config['type'].upper()
-		except:	service["type"] = "MINT"
-
-		try:	service["host"] = config['host']
-		except:	service["mint-space.com"]
-
-		try:	service["name"] = config['name']
-		except:	service["name"] = os.path.basename(path)
-
-		try:	service["user"] = config['user']
-		except:	service["user"] = os.environ['LOGNAME']
-
-		try:	service["format"] = config['format']
-		except:	service["format"] = "%Y%m%d%H%M%S"
-		finally: timestamp = datetime.datetime.utcnow().strftime(service["format"])
-		try:
-			service["path"] = config['path']
-			service["path"] = service["path"].replace('<TIMESTAMP>', timestamp)
-		except:
-			service["path"] = None
-
-		# Specify default as None to require test later
-		try:	service["pass"] = config['pass']
-		except:	service["pass"] = None
-
-		try:	service["port"] = int(config['port'])
-		except:	service["port"] = None
-
-		try:	service["maxsize"] = config['maxsize']
-		except:	service["maxsize"] = None
-
-		try:	service["persistence"] = config['persistence']
-		except:	service["persistence"] = None
-
-		try:	service["space"] = config['space']
-		except:	service["space"] = None
-
-		try:
-			url = config['url']
-			if type(url) is list:
-				url = ",".join(url)
-			url = url.replace('<TIMESTAMP>', timestamp)
-			url = url.replace('<FILE>', name)
-			if service["path"]:
-				url = url.replace('<PATH>', service["path"])
-			service["url"] = url
-		except:
-			service["url"] = None
-
-		# Ensure trailing '/', after url <PATH> replace
-		if service["path"]:
-			service["path"] = os.path.normpath(service["path"])
-			service["path"] += os.sep
-		else:
-			service["path"] = os.curdir + os.sep
-
-		return service
 
 	def upload(self, widget):
 		'''Start the upload process'''
