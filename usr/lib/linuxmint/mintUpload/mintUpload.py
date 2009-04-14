@@ -678,12 +678,14 @@ class mintUploadWindow:
 		'''Get all defined services'''
 
 		self.services = []
-		config_paths = ["/etc/linuxmint/mintUpload/services/", home + "/.linuxmint/mintUpload/services/"]
-		for path in config_paths:
+		config_paths = {'system':"/etc/linuxmint/mintUpload/services/", 'user':home + "/.linuxmint/mintUpload/services/"}
+		for loc, path in config_paths:
 			os.system("mkdir -p " + path)
 			for file in os.listdir(path):
 				try:
-					self.services.append(Service(path + file))
+					s = Service(path + file)
+					s['loc'] = loc
+					self.services.append(s)
 				except:
 					pass
 
@@ -737,7 +739,7 @@ class Service(ConfigObj):
 		ints = ['port', 'maxsize', 'persistence']
 		for k in ints:
 			if self.has_key(k):
-				self[k] = int(k)
+				self[k] = int(self[k])
 
 	def upload(self, file):
 		'''Upload a file to the service'''
