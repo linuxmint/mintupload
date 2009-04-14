@@ -584,16 +584,15 @@ class mintUploadWindow:
 		active = wTree.get_widget("combo").get_active()
 		if active < 0:
 			return
-		selectedService = model[active][0]
+		selectedService = model[active][0].replace(' ', '_')
 
 		self.read_services()
 		for service in self.services:
-			selectedService = selectedService.replace(' ', '_')
 			if service['name'] == selectedService:
 				selected_service = service
 
 				# Get the file's persistence on the service
-				if selected_service['persistence']:
+				if selected_service.has_key('persistence'):
 					wTree.get_widget("txt_persistence").set_label(selected_service['persistence'] + " " + _("days"))
 					wTree.get_widget("txt_persistence").show()
 					wTree.get_widget("lbl_persistence").show()
@@ -603,7 +602,7 @@ class mintUploadWindow:
 					wTree.get_widget("lbl_persistence").hide()
 
 				# Get the maximum allowed filesize on the service
-				if selected_service['maxsize']:
+				if selected_service.has_key('maxsize'):
 					maxsizeStr = sizeStr(selected_service['maxsize'])
 					wTree.get_widget("txt_maxsize").set_label(maxsizeStr)
 					wTree.get_widget("txt_maxsize").show()
@@ -613,16 +612,16 @@ class mintUploadWindow:
 					wTree.get_widget("txt_maxsize").hide()
 					wTree.get_widget("lbl_maxsize").hide()
 
-				if not selected_service['space']:
+				if not selected_service.has_key('space'):
 					wTree.get_widget("txt_space").set_label(_("N/A"))
 					wTree.get_widget("txt_space").hide()
 					wTree.get_widget("lbl_space").hide()
-					if not selected_service['maxsize']:
+					if not selected_service.has_key('maxsize'):
 						return True
 
 				self.check_space()
 				return True
-	
+
 	def check_space(self):
 		'''Checks for available space on the service'''
 
