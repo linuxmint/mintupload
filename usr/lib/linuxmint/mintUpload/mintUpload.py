@@ -570,7 +570,10 @@ class mintUploadWindow:
 		(model, iter) = treeview_services.get_selection().get_selected()
 		if (iter != None):
 			service = model.get_value(iter, 0).replace(' ', '\ ')
-			os.system("rm " + home + "/.linuxmint/mintUpload/services/" + service)
+			for s in self.services:
+				if s['name'] == service:
+					s.remove()
+					self.services.remove(s)
 			model.remove(iter)
 
 	def comboChanged(self, widget):
