@@ -64,15 +64,13 @@ def sizeStr(size, acc=1, factor=1000):
 			return str(rounded) + thresholds[i]
 	return str(int(size)) + thresholds[0]
 
-class spaceChecker(threading.Thread):
+class spaceChecker:
 	'''Checks that the filesize is ok'''
 
 	def __init__(self, service, filesize):
 		self.service = service
 		self.filesize = filesize
-		threading.Thread.__init__(self)
 
-	def run(self):
 		# Get the maximum allowed self.filesize on the service
 		if self.service.has_key("maxsize"):
 			if self.filesize > self.service["maxsize"]:
@@ -91,7 +89,7 @@ class spaceChecker(threading.Thread):
 			if self.filesize > self.available:
 				raise FilesizeError(_("File larger than service's available space"))
 
-class mintUploader(threading.Thread):
+class mintUploader:
 	'''Uploads the file to the selected service'''
 
 	def __init__(self, service, file):
@@ -100,9 +98,7 @@ class mintUploader(threading.Thread):
 		self.name = os.path.basename(self.file)
 		self.filesize = os.path.getsize(self.file)
 		self.so_far = 0
-		threading.Thread.__init__(self)
 
-	def run(self):
 		# Switch to required connect function, depending on service
 		supported_services = {
 			'MINT': self._ftp, # For backwards compatiblity
@@ -629,8 +625,6 @@ class mintUploadWindow:
 		# Check the filesize
 		try:
 			spacecheck = spaceChecker(selected_service, filesize)
-			spacecheck.start()
-			spacecheck.join()
 
 		except ConnectionError:
 			statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
@@ -680,9 +674,7 @@ class mintUploadWindow:
 		progressbar.set_text("0%")
 
 		try:
-			uploader = mintUploader(selected_service, self.filename)
-			uploader.start()
-			uploader.join()
+			mintUploader(selected_service, self.filename)
 
 		except Exception, detail:
 			statusbar.push(context_id, "<span color='red'>" + _("Upload failed.") + "</span>")
