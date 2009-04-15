@@ -690,7 +690,7 @@ class mintUploadWindow:
 		uploader.start()
 		return True
 
-def read_services(self):
+def read_services():
 	'''Get all defined services'''
 
 	services = []
