@@ -98,6 +98,7 @@ class mintUploader(threading.Thread):
 		self.service = service
 		self.file = file
 		self.name = os.path.basename(self.file)
+		self.filesize = os.path.getsize(self.file)
 		self.so_far = 0
 		threading.Thread.__init__(self)
 
@@ -222,6 +223,10 @@ class mintUploader(threading.Thread):
 		print message
 
 	def asciicallback(self, buffer):
+		self.so_far += len(buffer)-1
+		pct = float(self.so_far)/self.filesize
+		pct = int(pct * 100)
+		print _("so far:"), pct, "%"
 		pass
 
 def myprogress(self, message):
@@ -231,14 +236,12 @@ def myprogress(self, message):
 
 def myasciicallback(self, buffer):
 	global progressbar
-	global filesize
 
 	self.so_far += len(buffer)-1
-	pct = float(self.so_far)/filesize
+	pct = float(self.so_far)/self.filesize
+	pctStr = str(int(pct * 100))
 	progressbar.set_fraction(pct)
-	pct = int(pct * 100)
-	progressbar.set_text(str(pct) + "%")
-	#print "so far:", pct, "%"
+	progressbar.set_text(pctStr + "%")
 	return
 
 mintUploader.asciicallback = myasciicallback
