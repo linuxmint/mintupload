@@ -64,13 +64,15 @@ def sizeStr(size, acc=1, factor=1000):
 			return str(rounded) + thresholds[i]
 	return str(int(size)) + thresholds[0]
 
-class spaceChecker:
+class spaceChecker(threading.Thread):
 	'''Checks that the filesize is ok'''
 
 	def __init__(self, service, filesize):
 		self.service = service
 		self.filesize = filesize
+		threading.Thread.__init__(self)
 
+	def run(self):
 		# Get the maximum allowed self.filesize on the service
 		if self.service.has_key("maxsize"):
 			if self.filesize > self.service["maxsize"]:
@@ -89,57 +91,94 @@ class spaceChecker:
 			if self.filesize > self.available:
 				raise FilesizeError(_("File larger than service's available space"))
 
-class mintUploader:
+class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
 
-	def __init__(self, service, file):
-		self.service = service
-		self.file = file
-		self.name = os.path.basename(self.file)
-		self.filesize = os.path.getsize(self.file)
-		self.so_far = 0
+	def run(self):
+		global so_far
+		global filesize
+		global progressbar
+		global statusbar
+		global selected_service
+		global filename
+		global wTree
+		global url
+		global name
 
-		# Switch to required connect function, depending on service
-		supported_services = {
-			'MINT': self._ftp, # For backwards compatiblity
-			'FTP' : self._ftp,
-			'SFTP': self._sftp,
-			'SCP' : self._scp}[self.service['type']]()
+		wTree.get_widget("combo").set_sensitive(False)
+		wTree.get_widget("upload_button").set_sensitive(False)
+		statusbar.push(context_id, _("Connecting to the service..."))
+		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
+
+		wTree.get_widget("frame_progress").show()
+
+		try:
+			so_far = 0
+			progressbar.set_fraction(0)
+			progressbar.set_text("0%")
+
+			# Switch to required connect function, depending on service
+			supported_services = {
+				'MINT': self._ftp, # For backwards compatiblity
+				'FTP' : self._ftp,
+				'SFTP': self._sftp,
+				'SCP' : self._scp}[selected_service['type']]()
+
+			# Report success
+			progressbar.set_fraction(1)
+			progressbar.set_text("100%")
+			statusbar.push(context_id, "<span color='green'>" + _("File uploaded successfully.") + "</span>")
+			label = statusbar.get_children()[0].get_children()[0]
+			label.set_use_markup(True)
+
+			#If service is Mint then show the URL
+			if selected_service.has_key('url'):
+				wTree.get_widget("txt_url").set_text(selected_service['url'])
+				wTree.get_widget("txt_url").show()
+				wTree.get_widget("lbl_url").show()
+
+		except Exception, detail:
+			print detail
+			statusbar.push(context_id, "<span color='red'>" + _("Upload failed.") + "</span>")
+			label = statusbar.get_children()[0].get_children()[0]
+			label.set_use_markup(True)
+
+		finally:
+			wTree.get_widget("main_window").window.set_cursor(None)
+			wTree.get_widget("combo").set_sensitive(False)
+			wTree.get_widget("upload_button").set_sensitive(False)
 
 	def _ftp(self):
 		'''Connection process for FTP services'''
 
-		if not self.service.has_key('port'):
-			self.service['port'] = 21
+		if not selected_service.has_key('port'):
+			selected_service['port'] = 21
 		try:
 			# Attempting to connect
 			ftp = ftplib.FTP()
-			ftp.connect(self.service['host'], self.service['port'])
-			ftp.login(self.service['user'], self.service['pass'])
-		except:
-			raise ConnectionError(_("Could not connect to the service."))
+			ftp.connect(selected_service['host'], selected_service['port'])
+			ftp.login(selected_service['user'], selected_service['pass'])
+			statusbar.push(context_id, selected_service['type'] + _(" connection successfully established"))
 
-		else:
-			self.progress(self.service['type'] + _(" connection successfully established"))
 			# Create full path
-			for dir in self.service['path'].split(os.sep):
+			for dir in selected_service['path'].split(os.sep):
 				try:	ftp.mkd(dir)
 				except:	pass
 				ftp.cwd(dir)
 
-			try:
-				f = open(self.file, "rb")
-				self.progress(_("Uploading the file..."))
-				ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.asciicallback)
-			except:
-				raise ConnectionError(_("Could not upload file"))
+			f = open(filename, "rb")
+			statusbar.push(context_id, _("Uploading the file..."))
+			ftp.storbinary('STOR ' + name, f, 1024, callback=self.asciicallback)
+			f.close()
+			ftp.quit()
 
-		finally:
-			# Close any open connections
+		except:
+			# Close any open connections before raising error
 			try:	f.close()
 			except:	pass
 			try:	ftp.quit()
 			except:	pass
+			raise
 
 	def getPrivateKey(self):
 		'''Find a private key in ~/.ssh'''
@@ -151,97 +190,79 @@ class mintUploader:
 	def _sftp(self):
 		'''Connection process for SFTP services'''
 
-		if not self.service['pass']:
+		if not selected_service['pass']:
 			rsa_key = self.getPrivateKey()
-			if not rsa_key:	raise ConnectionError(_("Connection requires a password or private key!"))
-		if not self.service.has_key('port'):
-			self.service['port'] = 22
+			if not rsa_key:	raise ConnectionError("Connection requires a password or private key!")
+		if not selected_service.has_key('port'):
+			selected_service['port'] = 22
 		try:
 			# Attempting to connect
-			transport = paramiko.Transport((self.service['host'], self.service['port']))
-			if self.service['pass']:
-				transport.connect(username = self.service['user'], password = self.service['pass'])
+			transport = paramiko.Transport((selected_service['host'], selected_service['port']))
+			if selected_service['pass']:
+				transport.connect(username = selected_service['user'], password = selected_service['pass'])
 			else:
-				transport.connect(username = self.service['user'], pkey = rsa_key)
-		except:
-			raise ConnectionError(_("Could not connect to the service."))
+				transport.connect(username = selected_service['user'], pkey = rsa_key)
+			statusbar.push(context_id, selected_service['type'] + _(" connection successfully established"))
 
-		else:
-			self.progress(self.service['type'] + _(" connection successfully established"))
 			# Create full remote path
-			path = self.service['path']
+			path = selected_service['path']
 			try:	transport.open_session().exec_command('mkdir -p ' + path)
 			except:	pass
 
-			try:
-				sftp = paramiko.SFTPClient.from_transport(transport)
-				self.progress(_("Uploading the file..."))
-				sftp.put(self.file, path + self.name)
-			except:
-				raise ConnectionError(_("Could not upload file"))
+			sftp = paramiko.SFTPClient.from_transport(transport)
+			statusbar.push(context_id, _("Uploading the file..."))
+			sftp.put(filename, path + name)
+			sftp.close()
+			transport.close()
 
-		finally:
-			# Close any open connections
+		except:
+			# Close any open connections before raising error
 			try:	sftp.close()
 			except:	pass
 			try:	transport.close()
 			except:	pass
+			raise
 
 	def _scp(self):
 		'''Connection process for SCP services'''
 
 		try:
 			# Attempting to connect
-			scp_cmd = "scp " + self.file + " " + self.service['user'] + "@" + self.service['host'] + ':' + self.service['path']
+			scp_cmd = "scp " + filename + " " + selected_service['user'] + "@" + selected_service['host'] + ':' + selected_service['path']
 			scp = pexpect.spawn(scp_cmd)
 
-			if self.service['pass']:
+			if selected_service['pass']:
 				scp.expect('.*password:*')
-				scp.sendline(self.service['pass'])
-		except:
-			raise ConnectionError(_("Could not connect to the service."))
+				scp.sendline(selected_service['pass'])
 
-		else:
-			self.progress(self.service['type'] + _(" connection successfully established"))
+			statusbar.push(context_id, selected_service['type'] + _(" connection successfully established"))
 
 			scp.timeout = None
 			received = scp.expect(['.*100\%.*','.*password:.*',pexpect.EOF])
 			if received == 1:
 				scp.sendline(' ')
-				raise ConnectionError(_("Connection requires a password!"))
+				raise ConnectionError("Connection requires a password!")
 
-		finally:
-			# Close any open connections
+			scp.close()
+
+		except:
+			# Close any open connections before raising error
 			try:	scp.close()
 			except:	pass
-
-	def progress(self, message):
-		print message
+			raise
 
 	def asciicallback(self, buffer):
-		self.so_far += len(buffer)-1
-		pct = float(self.so_far)/self.filesize
+		global so_far
+		global progressbar
+		global filesize
+
+		so_far = so_far+len(buffer)-1
+		pct = float(so_far)/filesize
+		progressbar.set_fraction(pct)
 		pct = int(pct * 100)
-		print _("so far:"), pct, "%"
+		progressbar.set_text(str(pct) + "%")
+		#print "so far:", pct, "%"
 		return
-
-def myprogress(self, message):
-	global statusbar
-	global context_id
-	statusbar.push(context_id, message)
-
-def myasciicallback(self, buffer):
-	global progressbar
-
-	self.so_far += len(buffer)-1
-	pct = float(self.so_far)/self.filesize
-	pctStr = str(int(pct * 100))
-	progressbar.set_fraction(pct)
-	progressbar.set_text(pctStr + "%")
-	return
-
-mintUploader.asciicallback = myasciicallback
-mintUploader.progress = myprogress
 
 class mintUploadWindow:
 	"""This is the main class for the application"""
@@ -249,8 +270,10 @@ class mintUploadWindow:
 	def __init__(self, filename):
 		global filesize
 		global wTree
+		global name
 
 		self.filename = filename
+		name = os.path.basename(filename)
 		self.iconfile = "/usr/lib/linuxmint/mintSystem/icon.png"
 
 		# Set the Glade file
@@ -625,6 +648,8 @@ class mintUploadWindow:
 		# Check the filesize
 		try:
 			spacecheck = spaceChecker(selected_service, filesize)
+			spacecheck.start()
+			spacecheck.join()
 
 		except ConnectionError:
 			statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
@@ -657,48 +682,12 @@ class mintUploadWindow:
 
 		global wTree
 		global selected_service
-		global progressbar
-		global statusbar
-		global url
-		global context_id
 
+		wTree.get_widget("upload_button").set_sensitive(False)
+		wTree.get_widget("combo").set_sensitive(False)
 		selected_service = selected_service.for_upload(self.filename)
-
-		wTree.get_widget("combo").set_sensitive(False)
-		wTree.get_widget("upload_button").set_sensitive(False)
-		statusbar.push(context_id, _("Connecting to the service..."))
-		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
-		wTree.get_widget("frame_progress").show()
-
-		progressbar.set_fraction(0)
-		progressbar.set_text("0%")
-
-		try:
-			mintUploader(selected_service, self.filename)
-
-		except Exception, detail:
-			statusbar.push(context_id, "<span color='red'>" + _("Upload failed.") + "</span>")
-			label = statusbar.get_children()[0].get_children()[0]
-			label.set_use_markup(True)
-
-		else:
-			# Report success
-			progressbar.set_fraction(1)
-			progressbar.set_text("100%")
-			statusbar.push(context_id, "<span color='green'>" + _("File uploaded successfully.") + "</span>")
-			label = statusbar.get_children()[0].get_children()[0]
-			label.set_use_markup(True)
-
-			#If service is Mint then show the URL
-			if selected_service.has_key('url'):
-				wTree.get_widget("txt_url").set_text(selected_service['url'])
-				wTree.get_widget("txt_url").show()
-				wTree.get_widget("lbl_url").show()
-
-		wTree.get_widget("main_window").window.set_cursor(None)
-		wTree.get_widget("combo").set_sensitive(False)
-		wTree.get_widget("upload_button").set_sensitive(False)
-
+		uploader = mintUploader()
+		uploader.start()
 		return True
 
 def read_services():
