@@ -349,7 +349,7 @@ class mintUploadWindow:
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
 		combo.set_model(model)
-		self.read_services()
+		self.services = read_services()
 		for service in self.services:
 			iter = model.insert_before(None, None)
 			model.set_value(iter, 0, service['name'])
@@ -427,7 +427,7 @@ class mintUploadWindow:
 		treeview_services.set_model(models['user'])
 		treeview_services_system.set_model(models['system'])
 
-		self.read_services()
+		self.services = read_services()
 		for service in self.services:
 			iter = models[service['loc']].insert_before(None, None)
 			models[service['loc']].set_value(iter, 0, service['name'])
@@ -596,7 +596,7 @@ class mintUploadWindow:
 			return
 		selectedService = model[active][0]
 
-		self.read_services()
+		self.services = read_services()
 		for service in self.services:
 			if service['name'] == selectedService:
 				selected_service = service
@@ -680,21 +680,6 @@ class mintUploadWindow:
 			wTree.get_widget("main_window").window.set_cursor(None)
 			wTree.get_widget("main_window").resize(*wTree.get_widget("main_window").size_request())
 
-	def read_services(self):
-		'''Get all defined services'''
-
-		self.services = []
-		config_paths = {'system':"/etc/linuxmint/mintUpload/services/", 'user':home + "/.linuxmint/mintUpload/services/"}
-		for loc, path in config_paths.iteritems():
-			os.system("mkdir -p " + path)
-			for file in os.listdir(path):
-				try:
-					s = Service(path + file)
-					s['loc'] = loc
-					self.services.append(s)
-				except:
-					pass
-
 	def upload(self, widget):
 		'''Start the upload process'''
 
@@ -707,6 +692,23 @@ class mintUploadWindow:
 		uploader = mintUploader()
 		uploader.start()
 		return True
+
+def read_services():
+	'''Get all defined services'''
+
+	services = []
+	config_paths = {'system':"/etc/linuxmint/mintUpload/services/", 'user':home + "/.linuxmint/mintUpload/services/"}
+	for loc, path in config_paths.iteritems():
+		os.system("mkdir -p " + path)
+		for file in os.listdir(path):
+			try:
+				s = Service(path + file)
+			except:
+				pass
+			else:
+				s['loc'] = loc
+				services.append(s)
+	return services
 
 defaults = ConfigObj({
 	'type':'MINT',
