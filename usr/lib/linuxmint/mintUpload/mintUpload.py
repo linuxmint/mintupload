@@ -95,7 +95,6 @@ class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
 
 	def run(self):
-		global filesize
 		global progressbar
 		global statusbar
 		global selected_service
@@ -113,6 +112,7 @@ class mintUploader(threading.Thread):
 
 		try:
 			self.so_far = 0
+			self.filesize = os.path.getsize(filename)
 			progressbar.set_fraction(0)
 			progressbar.set_text("0%")
 
@@ -252,10 +252,9 @@ class mintUploader(threading.Thread):
 
 	def asciicallback(self, buffer):
 		global progressbar
-		global filesize
 
 		self.so_far = self.so_far+len(buffer)-1
-		pct = float(self.so_far)/filesize
+		pct = float(self.so_far)/self.filesize
 		progressbar.set_fraction(pct)
 		pct = int(pct * 100)
 		progressbar.set_text(str(pct) + "%")
@@ -266,7 +265,6 @@ class mintUploadWindow:
 	"""This is the main class for the application"""
 
 	def __init__(self, filename):
-		global filesize
 		global wTree
 		global name
 
@@ -337,8 +335,8 @@ class mintUploadWindow:
 		wTree.get_widget("txt_file").set_label(self.filename)
 
 		# Calculate the size of the file
-		filesize = os.path.getsize(self.filename)
-		wTree.get_widget("txt_size").set_label(sizeStr(filesize))
+		self.filesize = os.path.getsize(self.filename)
+		wTree.get_widget("txt_size").set_label(sizeStr(self.filesize))
 
 		if len(self.services) == 1:
 			wTree.get_widget("combo").set_active(0)
@@ -634,7 +632,6 @@ class mintUploadWindow:
 		global context_id
 		global wTree
 		global selected_service
-		global filesize
 
 		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 		wTree.get_widget("combo").set_sensitive(False)
@@ -645,7 +642,7 @@ class mintUploadWindow:
 
 		# Check the filesize
 		try:
-			spacecheck = spaceChecker(selected_service, filesize)
+			spacecheck = spaceChecker(selected_service, self.filesize)
 			spacecheck.start()
 			spacecheck.join()
 
