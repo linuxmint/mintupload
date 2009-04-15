@@ -227,6 +227,7 @@ class mintUploader(threading.Thread):
 		pct = float(self.so_far)/self.filesize
 		pct = int(pct * 100)
 		print _("so far:"), pct, "%"
+		return
 
 def myprogress(self, message):
 	global statusbar
