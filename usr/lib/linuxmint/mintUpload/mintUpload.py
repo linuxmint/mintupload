@@ -126,7 +126,8 @@ class mintUploader(threading.Thread):
 			self.success()
 
 		except:
-			pass
+			try:    raise CustomError(_("Upload failed."))
+			except: pass
 
 		finally:
 			label = statusbar.get_children()[0].get_children()[0]
