@@ -53,6 +53,13 @@ class FilesizeError(CustomError):
 	'''Raised when the file is too large or too small'''
 	pass
 
+def myCustomError(self, detail):
+	global statusbar
+	message = "<span color='red'>" + detail + "</span>"
+	statusbar.push(context_id, message)
+
+CustomError.__init__ = myCustomError
+
 def sizeStr(size, acc=1, factor=1000):
 	'''Converts integer filesize in bytes to textual repr'''
 
@@ -118,13 +125,12 @@ class mintUploader(threading.Thread):
 
 			self.success()
 
-		except Exception, detail:
-			print detail
-			statusbar.push(context_id, "<span color='red'>" + _("Upload failed.") + "</span>")
-			label = statusbar.get_children()[0].get_children()[0]
-			label.set_use_markup(True)
+		except:
+			pass
 
 		finally:
+			label = statusbar.get_children()[0].get_children()[0]
+			label.set_use_markup(True)
 			wTree.get_widget("main_window").window.set_cursor(None)
 			wTree.get_widget("combo").set_sensitive(False)
 			wTree.get_widget("upload_button").set_sensitive(False)
@@ -256,8 +262,6 @@ def mysuccess(self):
 	progressbar.set_fraction(1)
 	progressbar.set_text("100%")
 	statusbar.push(context_id, "<span color='green'>" + _("File uploaded successfully.") + "</span>")
-	label = statusbar.get_children()[0].get_children()[0]
-	label.set_use_markup(True)
 
 	#If service is Mint then show the URL
 	if self.service.has_key('url'):
@@ -289,6 +293,7 @@ class mintUploadWindow:
 	def __init__(self, filename):
 		global wTree
 		global name
+		global statusbar
 
 		self.filename = filename
 		name = os.path.basename(filename)
@@ -363,6 +368,8 @@ class mintUploadWindow:
 		if len(self.services) == 1:
 			wTree.get_widget("combo").set_active(0)
 			self.comboChanged(None)
+
+		statusbar = wTree.get_widget("statusbar")
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
