@@ -124,7 +124,7 @@ class mintUploader(threading.Thread):
 			raise ConnectionError(_("Could not connect to the service."))
 
 		else:
-			progress(self.service['type'] + _(" connection successfully established"))
+			self.progress(self.service['type'] + _(" connection successfully established"))
 			# Create full path
 			for dir in self.service['path'].split(os.sep):
 				try:	ftp.mkd(dir)
@@ -133,7 +133,7 @@ class mintUploader(threading.Thread):
 
 			try:
 				f = open(self.file, "rb")
-				progress(_("Uploading the file..."))
+				self.progress(_("Uploading the file..."))
 				ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.asciicallback)
 			except:
 				raise ConnectionError(_("Could not upload file"))
@@ -171,7 +171,7 @@ class mintUploader(threading.Thread):
 			raise ConnectionError(_("Could not connect to the service."))
 
 		else:
-			progress(self.service['type'] + _(" connection successfully established"))
+			self.progress(self.service['type'] + _(" connection successfully established"))
 			# Create full remote path
 			path = self.service['path']
 			try:	transport.open_session().exec_command('mkdir -p ' + path)
@@ -179,7 +179,7 @@ class mintUploader(threading.Thread):
 
 			try:
 				sftp = paramiko.SFTPClient.from_transport(transport)
-				progress(_("Uploading the file..."))
+				self.progress(_("Uploading the file..."))
 				sftp.put(self.file, path + self.name)
 			except:
 				raise ConnectionError(_("Could not upload file"))
@@ -206,7 +206,7 @@ class mintUploader(threading.Thread):
 			raise ConnectionError(_("Could not connect to the service."))
 
 		else:
-			progress(self.service['type'] + _(" connection successfully established"))
+			self.progress(self.service['type'] + _(" connection successfully established"))
 
 			scp.timeout = None
 			received = scp.expect(['.*100\%.*','.*password:.*',pexpect.EOF])
