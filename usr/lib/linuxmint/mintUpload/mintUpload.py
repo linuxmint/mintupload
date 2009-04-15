@@ -163,26 +163,29 @@ class mintUploader(threading.Thread):
 				transport.connect(username = selected_service['user'], password = selected_service['pass'])
 			else:
 				transport.connect(username = selected_service['user'], pkey = rsa_key)
-			progress(selected_service['type'] + _(" connection successfully established"))
+		except:
+			raise ConnectionError(_("Could not connect to the service."))
 
+		else:
+			progress(selected_service['type'] + _(" connection successfully established"))
 			# Create full remote path
 			path = selected_service['path']
 			try:	transport.open_session().exec_command('mkdir -p ' + path)
 			except:	pass
 
-			sftp = paramiko.SFTPClient.from_transport(transport)
-			progress(_("Uploading the file..."))
-			sftp.put(filename, path + name)
-			sftp.close()
-			transport.close()
+			try:
+				sftp = paramiko.SFTPClient.from_transport(transport)
+				progress(_("Uploading the file..."))
+				sftp.put(filename, path + name)
+			except:
+				raise ConnectionError(_("Could not upload file"))
 
-		except:
-			# Close any open connections before raising error
+		finally:
+			# Close any open connections
 			try:	sftp.close()
 			except:	pass
 			try:	transport.close()
 			except:	pass
-			raise
 
 	def _scp(self):
 		'''Connection process for SCP services'''
