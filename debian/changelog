@@ -1,18 +1,3 @@
-mintupload (3.0.4.1~ppa2) intrepid; urgency=low
-
-  * implementation of Service configuration
-  * deals with spaces in filenames
-  * large amounts of gui abstraction
-  * changed maintainer
-
- -- Philip Morrell <ubuntu.emorrp1@mamber.net>  Wed, 15 Apr 2009 01:03:16 +0100
- 
-mintupload (3.0.4.1~ppa1) intrepid; urgency=low
-
-  * repackaged for ppa
-
- -- Philip Morrell <ubuntu.emorrp1@mamber.net>  Wed,  15 Apr 2009 00:58:00 +0100
-
 mintupload (3.0.4) gloria; urgency=low
 
   * Fix for selected services containing underscores.

@@ -1,5 +1,5 @@
 msgid "Checking space on the service..."
-msgstr "Überprüfe freien Speicher des Dienstes..."
+msgstr "Überprüfe mögliche Speichergröße des Dienstes..."
 
 msgid "B"
 msgstr "B"
