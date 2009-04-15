@@ -157,7 +157,7 @@ class mintUploader(threading.Thread):
 			ftp = ftplib.FTP()
 			ftp.connect(selected_service['host'], selected_service['port'])
 			ftp.login(selected_service['user'], selected_service['pass'])
-			statusbar.push(context_id, selected_service['type'] + _(" connection successfully established"))
+			self.progress(selected_service['type'] + _(" connection successfully established"))
 
 			# Create full path
 			for dir in selected_service['path'].split(os.sep):
@@ -166,7 +166,7 @@ class mintUploader(threading.Thread):
 				ftp.cwd(dir)
 
 			f = open(filename, "rb")
-			statusbar.push(context_id, _("Uploading the file..."))
+			self.progress(_("Uploading the file..."))
 			ftp.storbinary('STOR ' + name, f, 1024, callback=self.asciicallback)
 			f.close()
 			ftp.quit()
@@ -201,7 +201,7 @@ class mintUploader(threading.Thread):
 				transport.connect(username = selected_service['user'], password = selected_service['pass'])
 			else:
 				transport.connect(username = selected_service['user'], pkey = rsa_key)
-			statusbar.push(context_id, selected_service['type'] + _(" connection successfully established"))
+			self.progress(selected_service['type'] + _(" connection successfully established"))
 
 			# Create full remote path
 			path = selected_service['path']
@@ -209,7 +209,7 @@ class mintUploader(threading.Thread):
 			except:	pass
 
 			sftp = paramiko.SFTPClient.from_transport(transport)
-			statusbar.push(context_id, _("Uploading the file..."))
+			self.progress(_("Uploading the file..."))
 			sftp.put(filename, path + name)
 			sftp.close()
 			transport.close()
@@ -234,7 +234,7 @@ class mintUploader(threading.Thread):
 				scp.expect('.*password:*')
 				scp.sendline(selected_service['pass'])
 
-			statusbar.push(context_id, selected_service['type'] + _(" connection successfully established"))
+			self.progress(selected_service['type'] + _(" connection successfully established"))
 
 			scp.timeout = None
 			received = scp.expect(['.*100\%.*','.*password:.*',pexpect.EOF])
@@ -250,12 +250,19 @@ class mintUploader(threading.Thread):
 			except:	pass
 			raise
 
+	def progress(self, message):
+		print message
+
 	def asciicallback(self, buffer):
 		self.so_far = self.so_far+len(buffer)-1
 		pct = float(self.so_far)/self.filesize
 		pct = int(pct * 100)
 		print "so far:", pct, "%"
 		return
+
+def myprogress(self, message):
+	global statusbar
+	statusbar.push(context_id, message)
 
 def myasciicallback(self, buffer):
 	global progressbar
@@ -267,6 +274,7 @@ def myasciicallback(self, buffer):
 	progressbar.set_text(pctStr + "%")
 	return
 
+mintUploader.progress = myprogress
 mintUploader.asciicallback = myasciicallback
 
 class mintUploadWindow:
