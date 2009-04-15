@@ -142,7 +142,6 @@ class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
 
 	def run(self):
-		global so_far
 		global filesize
 		global progressbar
 		global statusbar
@@ -160,7 +159,7 @@ class mintUploader(threading.Thread):
 		wTree.get_widget("frame_progress").show()
 
 		try:
-			so_far = 0
+			self.so_far = 0
 			progressbar.set_fraction(0)
 			progressbar.set_text("0%")
 
@@ -299,12 +298,11 @@ class mintUploader(threading.Thread):
 			raise
 
 	def asciicallback(self, buffer):
-		global so_far
 		global progressbar
 		global filesize
 
-		so_far = so_far+len(buffer)-1
-		pct = float(so_far)/filesize
+		self.so_far = self.so_far+len(buffer)-1
+		pct = float(self.so_far)/filesize
 		progressbar.set_fraction(pct)
 		pct = int(pct * 100)
 		progressbar.set_text(str(pct) + "%")
