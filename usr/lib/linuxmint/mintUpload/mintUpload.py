@@ -95,12 +95,10 @@ class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
 
 	def run(self):
-		global progressbar
 		global statusbar
 		global selected_service
 		global filename
 		global wTree
-		global url
 		global name
 
 		try:
@@ -114,18 +112,7 @@ class mintUploader(threading.Thread):
 				'SFTP': self._sftp,
 				'SCP' : self._scp}[selected_service['type']]()
 
-			# Report success
-			progressbar.set_fraction(1)
-			progressbar.set_text("100%")
-			statusbar.push(context_id, "<span color='green'>" + _("File uploaded successfully.") + "</span>")
-			label = statusbar.get_children()[0].get_children()[0]
-			label.set_use_markup(True)
-
-			#If service is Mint then show the URL
-			if selected_service.has_key('url'):
-				wTree.get_widget("txt_url").set_text(selected_service['url'])
-				wTree.get_widget("txt_url").show()
-				wTree.get_widget("lbl_url").show()
+			self.success()
 
 		except Exception, detail:
 			print detail
@@ -251,6 +238,31 @@ class mintUploader(threading.Thread):
 		print "so far:", pct, "%"
 		return
 
+	def success(self):
+		global selected_service
+		print _("File uploaded successfully")
+		if selected_service.has_key('url'):
+			print selected_service['url']
+
+def mysuccess(self):
+	global progressbar
+	global statusbar
+	global wTree
+	global selected_service
+
+	# Report success
+	progressbar.set_fraction(1)
+	progressbar.set_text("100%")
+	statusbar.push(context_id, "<span color='green'>" + _("File uploaded successfully.") + "</span>")
+	label = statusbar.get_children()[0].get_children()[0]
+	label.set_use_markup(True)
+
+	#If service is Mint then show the URL
+	if selected_service.has_key('url'):
+		wTree.get_widget("txt_url").set_text(selected_service['url'])
+		wTree.get_widget("txt_url").show()
+		wTree.get_widget("lbl_url").show()
+
 def myprogress(self, message):
 	global statusbar
 	statusbar.push(context_id, message)
@@ -265,6 +277,7 @@ def myasciicallback(self, buffer):
 	progressbar.set_text(pctStr + "%")
 	return
 
+mintUploader.success = mysuccess
 mintUploader.progress = myprogress
 mintUploader.asciicallback = myasciicallback
 
