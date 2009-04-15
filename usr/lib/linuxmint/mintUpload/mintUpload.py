@@ -94,23 +94,27 @@ class spaceChecker(threading.Thread):
 class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
 
+	def __init__(self, service, file):
+		self.service = service
+		self.file = file
+
+		self.name = os.path.basename(self.file)
+		self.filesize = os.path.getsize(self.file)
+		self.so_far = 0
+
+		threading.Thread.__init__(self)
+
 	def run(self):
 		global statusbar
-		global selected_service
-		global filename
 		global wTree
-		global name
 
 		try:
-			self.so_far = 0
-			self.filesize = os.path.getsize(filename)
-
 			# Switch to required connect function, depending on service
 			supported_services = {
 				'MINT': self._ftp, # For backwards compatiblity
 				'FTP' : self._ftp,
 				'SFTP': self._sftp,
-				'SCP' : self._scp}[selected_service['type']]()
+				'SCP' : self._scp}[self.service['type']]()
 
 			self.success()
 
@@ -128,24 +132,24 @@ class mintUploader(threading.Thread):
 	def _ftp(self):
 		'''Connection process for FTP services'''
 
-		if not selected_service.has_key('port'):
-			selected_service['port'] = 21
+		if not self.service.has_key('port'):
+			self.service['port'] = 21
 		try:
 			# Attempting to connect
 			ftp = ftplib.FTP()
-			ftp.connect(selected_service['host'], selected_service['port'])
-			ftp.login(selected_service['user'], selected_service['pass'])
-			self.progress(selected_service['type'] + _(" connection successfully established"))
+			ftp.connect(self.service['host'], self.service['port'])
+			ftp.login(self.service['user'], self.service['pass'])
+			self.progress(self.service['type'] + _(" connection successfully established"))
 
 			# Create full path
-			for dir in selected_service['path'].split(os.sep):
+			for dir in self.service['path'].split(os.sep):
 				try:	ftp.mkd(dir)
 				except:	pass
 				ftp.cwd(dir)
 
-			f = open(filename, "rb")
+			f = open(self.file, "rb")
 			self.progress(_("Uploading the file..."))
-			ftp.storbinary('STOR ' + name, f, 1024, callback=self.asciicallback)
+			ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.asciicallback)
 			f.close()
 			ftp.quit()
 
@@ -167,28 +171,28 @@ class mintUploader(threading.Thread):
 	def _sftp(self):
 		'''Connection process for SFTP services'''
 
-		if not selected_service['pass']:
+		if not self.service['pass']:
 			rsa_key = self.getPrivateKey()
 			if not rsa_key:	raise ConnectionError(_("Connection requires a password or private key!"))
-		if not selected_service.has_key('port'):
-			selected_service['port'] = 22
+		if not self.service.has_key('port'):
+			self.service['port'] = 22
 		try:
 			# Attempting to connect
-			transport = paramiko.Transport((selected_service['host'], selected_service['port']))
-			if selected_service['pass']:
-				transport.connect(username = selected_service['user'], password = selected_service['pass'])
+			transport = paramiko.Transport((self.service['host'], self.service['port']))
+			if self.service['pass']:
+				transport.connect(username = self.service['user'], password = self.service['pass'])
 			else:
-				transport.connect(username = selected_service['user'], pkey = rsa_key)
-			self.progress(selected_service['type'] + _(" connection successfully established"))
+				transport.connect(username = self.service['user'], pkey = rsa_key)
+			self.progress(self.service['type'] + _(" connection successfully established"))
 
 			# Create full remote path
-			path = selected_service['path']
+			path = self.service['path']
 			try:	transport.open_session().exec_command('mkdir -p ' + path)
 			except:	pass
 
 			sftp = paramiko.SFTPClient.from_transport(transport)
 			self.progress(_("Uploading the file..."))
-			sftp.put(filename, path + name)
+			sftp.put(self.file, path + self.name)
 			sftp.close()
 			transport.close()
 
@@ -205,14 +209,14 @@ class mintUploader(threading.Thread):
 
 		try:
 			# Attempting to connect
-			scp_cmd = "scp " + filename + " " + selected_service['user'] + "@" + selected_service['host'] + ':' + selected_service['path']
+			scp_cmd = "scp " + self.file + " " + self.service['user'] + "@" + self.service['host'] + ':' + self.service['path']
 			scp = pexpect.spawn(scp_cmd)
 
-			if selected_service['pass']:
+			if self.service['pass']:
 				scp.expect('.*password:*')
-				scp.sendline(selected_service['pass'])
+				scp.sendline(self.service['pass'])
 
-			self.progress(selected_service['type'] + _(" connection successfully established"))
+			self.progress(self.service['type'] + _(" connection successfully established"))
 
 			scp.timeout = None
 			received = scp.expect(['.*100\%.*','.*password:.*',pexpect.EOF])
@@ -239,16 +243,16 @@ class mintUploader(threading.Thread):
 		return
 
 	def success(self):
-		global selected_service
+		global self.service
 		print _("File uploaded successfully")
-		if selected_service.has_key('url'):
-			print selected_service['url']
+		if self.service.has_key('url'):
+			print self.service['url']
 
 def mysuccess(self):
 	global progressbar
 	global statusbar
 	global wTree
-	global selected_service
+	global self.service
 
 	# Report success
 	progressbar.set_fraction(1)
@@ -258,8 +262,8 @@ def mysuccess(self):
 	label.set_use_markup(True)
 
 	#If service is Mint then show the URL
-	if selected_service.has_key('url'):
-		wTree.get_widget("txt_url").set_text(selected_service['url'])
+	if self.service.has_key('url'):
+		wTree.get_widget("txt_url").set_text(self.service['url'])
 		wTree.get_widget("txt_url").show()
 		wTree.get_widget("lbl_url").show()
 
@@ -713,7 +717,7 @@ class mintUploadWindow:
 		progressbar.set_fraction(0)
 		progressbar.set_text("0%")
 
-		uploader = mintUploader()
+		uploader = mintUploader(selected_service, self.filename)
 		uploader.start()
 		return True
 
