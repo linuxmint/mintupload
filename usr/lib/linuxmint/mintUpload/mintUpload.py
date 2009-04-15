@@ -43,7 +43,7 @@ class CustomError(Exception):
 	'''All custom defined errors'''
 
 	def __init__(self, detail):
-		print self.__class__.__name__ + ': ' + detail
+		sys.stderr.write(os.linesep + self.__class__.__name__ + ': ' + detail + os.linesep*2)
 
 class ConnectionError(CustomError):
 	'''Raised when an error has occured with an external connection'''
