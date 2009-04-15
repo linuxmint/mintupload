@@ -729,6 +729,10 @@ class Service(ConfigObj):
 		ConfigObj.merge(self, *args)
 		self._fix()
 
+	def remove(self):
+		'''Deletes the configuration file'''
+		os.system("rm " + self.filename)
+		
 	def _fix(self):
 		'''Format values correctly'''
 
