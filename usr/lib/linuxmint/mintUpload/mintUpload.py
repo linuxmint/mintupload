@@ -103,18 +103,9 @@ class mintUploader(threading.Thread):
 		global url
 		global name
 
-		wTree.get_widget("combo").set_sensitive(False)
-		wTree.get_widget("upload_button").set_sensitive(False)
-		statusbar.push(context_id, _("Connecting to the service..."))
-		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
-
-		wTree.get_widget("frame_progress").show()
-
 		try:
 			self.so_far = 0
 			self.filesize = os.path.getsize(filename)
-			progressbar.set_fraction(0)
-			progressbar.set_text("0%")
 
 			# Switch to required connect function, depending on service
 			supported_services = {
@@ -693,10 +684,22 @@ class mintUploadWindow:
 
 		global wTree
 		global selected_service
+		global statusbar
+		global progressbar
 
 		wTree.get_widget("upload_button").set_sensitive(False)
 		wTree.get_widget("combo").set_sensitive(False)
 		selected_service = selected_service.for_upload(self.filename)
+
+		wTree.get_widget("combo").set_sensitive(False)
+		wTree.get_widget("upload_button").set_sensitive(False)
+		statusbar.push(context_id, _("Connecting to the service..."))
+		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
+
+		wTree.get_widget("frame_progress").show()
+		progressbar.set_fraction(0)
+		progressbar.set_text("0%")
+
 		uploader = mintUploader()
 		uploader.start()
 		return True
