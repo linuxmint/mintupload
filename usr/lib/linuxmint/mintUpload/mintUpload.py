@@ -116,27 +116,30 @@ class mintUploader(threading.Thread):
 			ftp = ftplib.FTP()
 			ftp.connect(selected_service['host'], selected_service['port'])
 			ftp.login(selected_service['user'], selected_service['pass'])
-			progress(selected_service['type'] + _(" connection successfully established"))
+		except:
+			raise ConnectionError(_("Could not connect to the service."))
 
+		else:
+			progress(selected_service['type'] + _(" connection successfully established"))
 			# Create full path
 			for dir in selected_service['path'].split(os.sep):
 				try:	ftp.mkd(dir)
 				except:	pass
 				ftp.cwd(dir)
 
-			f = open(filename, "rb")
-			progress(_("Uploading the file..."))
-			ftp.storbinary('STOR ' + name, f, 1024, callback=self.asciicallback)
-			f.close()
-			ftp.quit()
+			try:
+				f = open(filename, "rb")
+				progress(_("Uploading the file..."))
+				ftp.storbinary('STOR ' + name, f, 1024, callback=self.asciicallback)
+			except:
+				raise ConnectionError(_("Could not upload file"))
 
-		except:
-			# Close any open connections before raising error
+		finally:
+			# Close any open connections
 			try:	f.close()
 			except:	pass
 			try:	ftp.quit()
 			except:	pass
-			raise
 
 	def getPrivateKey(self):
 		'''Find a private key in ~/.ssh'''
@@ -678,7 +681,6 @@ class mintUploadWindow:
 			uploader.join()
 
 		except Exception, detail:
-			print detail
 			statusbar.push(context_id, "<span color='red'>" + _("Upload failed.") + "</span>")
 			label = statusbar.get_children()[0].get_children()[0]
 			label.set_use_markup(True)
