@@ -1,3 +1,11 @@
+mintupload (3.0.4.1~ppa3) intrepid; urgency=low
+
+  * minimum gui abstraction complete
+  * tweaks
+  * bugfixes
+
+ -- Philip Morrell <ubuntu.emorrp1@mamber.net>  Wed,  15 Apr 2009 23:54:01 +0100
+
 mintupload (3.0.4.1~ppa2) intrepid; urgency=low
 
   * implementation of Service configuration
