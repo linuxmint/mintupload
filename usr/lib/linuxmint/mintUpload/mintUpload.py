@@ -251,15 +251,23 @@ class mintUploader(threading.Thread):
 			raise
 
 	def asciicallback(self, buffer):
-		global progressbar
-
 		self.so_far = self.so_far+len(buffer)-1
 		pct = float(self.so_far)/self.filesize
-		progressbar.set_fraction(pct)
 		pct = int(pct * 100)
-		progressbar.set_text(str(pct) + "%")
-		#print "so far:", pct, "%"
+		print "so far:", pct, "%"
 		return
+
+def myasciicallback(self, buffer):
+	global progressbar
+
+	self.so_far = self.so_far+len(buffer)-1
+	pct = float(self.so_far)/self.filesize
+	pctStr = str(int(pct * 100))
+	progressbar.set_fraction(pct)
+	progressbar.set_text(pctStr + "%")
+	return
+
+mintUploader.asciicallback = myasciicallback
 
 class mintUploadWindow:
 	"""This is the main class for the application"""
