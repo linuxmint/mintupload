@@ -104,7 +104,7 @@ class spaceChecker(threading.Thread):
 	def has_space(self):
 		pass
 
-def myhas_space(self)
+def myhas_space(self):
 	global wTree
 	global statusbar
 
