@@ -95,58 +95,16 @@ class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
 
 	def run(self):
-		global so_far
-		global filesize
-		global progressbar
-		global statusbar
+		global name
 		global selected_service
 		global filename
-		global wTree
-		global url
-		global name
 
-		wTree.get_widget("combo").set_sensitive(False)
-		wTree.get_widget("upload_button").set_sensitive(False)
-		statusbar.push(context_id, _("Connecting to the service..."))
-		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
-
-		wTree.get_widget("frame_progress").show()
-
-		try:
-			so_far = 0
-			progressbar.set_fraction(0)
-			progressbar.set_text("0%")
-
-			# Switch to required connect function, depending on service
-			supported_services = {
-				'MINT': self._ftp, # For backwards compatiblity
-				'FTP' : self._ftp,
-				'SFTP': self._sftp,
-				'SCP' : self._scp}[selected_service['type']]()
-
-			# Report success
-			progressbar.set_fraction(1)
-			progressbar.set_text("100%")
-			statusbar.push(context_id, "<span color='green'>" + _("File uploaded successfully.") + "</span>")
-			label = statusbar.get_children()[0].get_children()[0]
-			label.set_use_markup(True)
-
-			#If service is Mint then show the URL
-			if selected_service.has_key('url'):
-				wTree.get_widget("txt_url").set_text(selected_service['url'])
-				wTree.get_widget("txt_url").show()
-				wTree.get_widget("lbl_url").show()
-
-		except Exception, detail:
-			print detail
-			statusbar.push(context_id, "<span color='red'>" + _("Upload failed.") + "</span>")
-			label = statusbar.get_children()[0].get_children()[0]
-			label.set_use_markup(True)
-
-		finally:
-			wTree.get_widget("main_window").window.set_cursor(None)
-			wTree.get_widget("combo").set_sensitive(False)
-			wTree.get_widget("upload_button").set_sensitive(False)
+		# Switch to required connect function, depending on service
+		supported_services = {
+			'MINT': self._ftp, # For backwards compatiblity
+			'FTP' : self._ftp,
+			'SFTP': self._sftp,
+			'SCP' : self._scp}[selected_service['type']]()
 
 	def _ftp(self):
 		'''Connection process for FTP services'''
@@ -158,7 +116,7 @@ class mintUploader(threading.Thread):
 			ftp = ftplib.FTP()
 			ftp.connect(selected_service['host'], selected_service['port'])
 			ftp.login(selected_service['user'], selected_service['pass'])
-			statusbar.push(context_id, selected_service['type'] + _(" connection successfully established"))
+			progress(selected_service['type'] + _(" connection successfully established"))
 
 			# Create full path
 			for dir in selected_service['path'].split(os.sep):
@@ -167,7 +125,7 @@ class mintUploader(threading.Thread):
 				ftp.cwd(dir)
 
 			f = open(filename, "rb")
-			statusbar.push(context_id, _("Uploading the file..."))
+			progress(_("Uploading the file..."))
 			ftp.storbinary('STOR ' + name, f, 1024, callback=self.asciicallback)
 			f.close()
 			ftp.quit()
@@ -202,7 +160,7 @@ class mintUploader(threading.Thread):
 				transport.connect(username = selected_service['user'], password = selected_service['pass'])
 			else:
 				transport.connect(username = selected_service['user'], pkey = rsa_key)
-			statusbar.push(context_id, selected_service['type'] + _(" connection successfully established"))
+			progress(selected_service['type'] + _(" connection successfully established"))
 
 			# Create full remote path
 			path = selected_service['path']
@@ -210,7 +168,7 @@ class mintUploader(threading.Thread):
 			except:	pass
 
 			sftp = paramiko.SFTPClient.from_transport(transport)
-			statusbar.push(context_id, _("Uploading the file..."))
+			progress(_("Uploading the file..."))
 			sftp.put(filename, path + name)
 			sftp.close()
 			transport.close()
@@ -235,7 +193,7 @@ class mintUploader(threading.Thread):
 				scp.expect('.*password:*')
 				scp.sendline(selected_service['pass'])
 
-			statusbar.push(context_id, selected_service['type'] + _(" connection successfully established"))
+			progress(selected_service['type'] + _(" connection successfully established"))
 
 			scp.timeout = None
 			received = scp.expect(['.*100\%.*','.*password:.*',pexpect.EOF])
@@ -251,18 +209,32 @@ class mintUploader(threading.Thread):
 			except:	pass
 			raise
 
-	def asciicallback(self, buffer):
-		global so_far
-		global progressbar
-		global filesize
+	def progress(self, message):
+		print message
 
-		so_far = so_far+len(buffer)-1
-		pct = float(so_far)/filesize
-		progressbar.set_fraction(pct)
-		pct = int(pct * 100)
-		progressbar.set_text(str(pct) + "%")
-		#print "so far:", pct, "%"
-		return
+	def asciicallback(self, buffer):
+		pass
+
+def myprogress(self, message):
+	global statusbar
+	global context_id
+	statusbar.push(context_id, message)
+
+def myasciicallback(self, buffer):
+	global so_far
+	global progressbar
+	global filesize
+
+	so_far = so_far+len(buffer)-1
+	pct = float(so_far)/filesize
+	progressbar.set_fraction(pct)
+	pct = int(pct * 100)
+	progressbar.set_text(str(pct) + "%")
+	#print "so far:", pct, "%"
+	return
+
+mintUploader.asciicallback = myasciicallback
+mintUploader.progress = myprogress
 
 class mintUploadWindow:
 	"""This is the main class for the application"""
@@ -682,12 +654,53 @@ class mintUploadWindow:
 
 		global wTree
 		global selected_service
+		global so_far
+		global progressbar
+		global statusbar
+		global url
+		global context_id
 
-		wTree.get_widget("upload_button").set_sensitive(False)
-		wTree.get_widget("combo").set_sensitive(False)
 		selected_service = selected_service.for_upload(self.filename)
-		uploader = mintUploader()
-		uploader.start()
+
+		wTree.get_widget("combo").set_sensitive(False)
+		wTree.get_widget("upload_button").set_sensitive(False)
+		statusbar.push(context_id, _("Connecting to the service..."))
+		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
+		wTree.get_widget("frame_progress").show()
+
+		so_far = 0
+		progressbar.set_fraction(0)
+		progressbar.set_text("0%")
+
+		try:
+			uploader = mintUploader()
+			uploader.start()
+			uploader.join()
+
+		except Exception, detail:
+			print detail
+			statusbar.push(context_id, "<span color='red'>" + _("Upload failed.") + "</span>")
+			label = statusbar.get_children()[0].get_children()[0]
+			label.set_use_markup(True)
+
+		else:
+			# Report success
+			progressbar.set_fraction(1)
+			progressbar.set_text("100%")
+			statusbar.push(context_id, "<span color='green'>" + _("File uploaded successfully.") + "</span>")
+			label = statusbar.get_children()[0].get_children()[0]
+			label.set_use_markup(True)
+
+			#If service is Mint then show the URL
+			if selected_service.has_key('url'):
+				wTree.get_widget("txt_url").set_text(selected_service['url'])
+				wTree.get_widget("txt_url").show()
+				wTree.get_widget("lbl_url").show()
+
+		wTree.get_widget("main_window").window.set_cursor(None)
+		wTree.get_widget("combo").set_sensitive(False)
+		wTree.get_widget("upload_button").set_sensitive(False)
+
 		return True
 
 def read_services():
