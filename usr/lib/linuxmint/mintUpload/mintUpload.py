@@ -98,6 +98,7 @@ class mintUploader(threading.Thread):
 		self.service = service
 		self.file = file
 		self.name = os.path.basename(self.file)
+		self.so_far = 0
 		threading.Thread.__init__(self)
 
 	def run(self):
@@ -229,12 +230,11 @@ def myprogress(self, message):
 	statusbar.push(context_id, message)
 
 def myasciicallback(self, buffer):
-	global so_far
 	global progressbar
 	global filesize
 
-	so_far = so_far+len(buffer)-1
-	pct = float(so_far)/filesize
+	self.so_far += len(buffer)-1
+	pct = float(self.so_far)/filesize
 	progressbar.set_fraction(pct)
 	pct = int(pct * 100)
 	progressbar.set_text(str(pct) + "%")
@@ -660,7 +660,6 @@ class mintUploadWindow:
 
 		global wTree
 		global selected_service
-		global so_far
 		global progressbar
 		global statusbar
 		global url
@@ -674,7 +673,6 @@ class mintUploadWindow:
 		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 		wTree.get_widget("frame_progress").show()
 
-		so_far = 0
 		progressbar.set_fraction(0)
 		progressbar.set_text("0%")
 
