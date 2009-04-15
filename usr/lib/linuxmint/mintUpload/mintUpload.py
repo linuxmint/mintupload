@@ -243,7 +243,6 @@ class mintUploader(threading.Thread):
 		return
 
 	def success(self):
-		global self.service
 		print _("File uploaded successfully")
 		if self.service.has_key('url'):
 			print self.service['url']
@@ -252,7 +251,6 @@ def mysuccess(self):
 	global progressbar
 	global statusbar
 	global wTree
-	global self.service
 
 	# Report success
 	progressbar.set_fraction(1)
