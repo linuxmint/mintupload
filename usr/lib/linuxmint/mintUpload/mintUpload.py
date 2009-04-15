@@ -113,9 +113,6 @@ class mintUploader(threading.Thread):
 		threading.Thread.__init__(self)
 
 	def run(self):
-		global statusbar
-		global wTree
-
 		try:
 			# Switch to required connect function, depending on service
 			supported_services = {
@@ -131,11 +128,7 @@ class mintUploader(threading.Thread):
 			except: pass
 
 		finally:
-			label = statusbar.get_children()[0].get_children()[0]
-			label.set_use_markup(True)
-			wTree.get_widget("main_window").window.set_cursor(None)
-			wTree.get_widget("combo").set_sensitive(False)
-			wTree.get_widget("upload_button").set_sensitive(False)
+			self.final()
 
 	def _ftp(self):
 		'''Connection process for FTP services'''
@@ -254,6 +247,13 @@ class mintUploader(threading.Thread):
 		print _("File uploaded successfully")
 		if self.service.has_key('url'):
 			print self.service['url']
+	
+	def final(self):
+		pass
+
+def myfinal(self):
+	global wTree
+	wTree.get_widget("main_window").window.set_cursor(None)
 
 def mysuccess(self):
 	global progressbar
@@ -264,6 +264,7 @@ def mysuccess(self):
 	progressbar.set_fraction(1)
 	progressbar.set_text("100%")
 	statusbar.push(context_id, "<span color='green'>" + _("File uploaded successfully.") + "</span>")
+	statusbar.get_children()[0].get_children()[0].set_use_markup(True)
 
 	#If service is Mint then show the URL
 	if self.service.has_key('url'):
@@ -285,6 +286,7 @@ def myasciicallback(self, buffer):
 	progressbar.set_text(pctStr + "%")
 	return
 
+mintUploader.final = myfinal
 mintUploader.success = mysuccess
 mintUploader.progress = myprogress
 mintUploader.asciicallback = myasciicallback
@@ -715,8 +717,6 @@ class mintUploadWindow:
 		wTree.get_widget("combo").set_sensitive(False)
 		selected_service = selected_service.for_upload(self.filename)
 
-		wTree.get_widget("combo").set_sensitive(False)
-		wTree.get_widget("upload_button").set_sensitive(False)
 		statusbar.push(context_id, _("Connecting to the service..."))
 		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 
