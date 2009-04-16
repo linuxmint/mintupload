@@ -1,5 +1,5 @@
 msgid "Checking space on the service..."
-msgstr "Revisando espacio en el servicio"
+msgstr "Verificando espacio en el servicio..."
 
 msgid "B"
 msgstr "B"
@@ -8,7 +8,7 @@ msgid "KB"
 msgstr "KB"
 
 msgid "MB"
-msgstr "KB"
+msgstr "MB"
 
 msgid "GB"
 msgstr "GB"
@@ -20,34 +20,34 @@ msgid "Service ready. Space available."
 msgstr "Servicio listo. Espacio disponible."
 
 msgid "File too big or not enough space on the service."
-msgstr "Archivo demasiado grande o insuficiente espacio en el servicio."
+msgstr "Archivo muy grande o no hay suficiente espacio en el servicio."
 
 msgid "Could not connect to the service."
-msgstr "No se pudo conectar al servicio."
+msgstr "No se puede conectar al servicio."
 
 msgid "Connecting to the service..."
-msgstr "Conectando al servicio."
+msgstr "Conectando al servicio..."
 
 msgid "Uploading the file..."
-msgstr "Enviando el archivo"
+msgstr "Subiendo el archivo..."
 
 msgid "File uploaded successfully."
-msgstr "Archivo enviado con éxito."
+msgstr "Archivo subido con éxito."
 
 msgid "Upload failed."
-msgstr "Falla de envió."
+msgstr "Subida fallida."
 
 msgid "Upload a file"
-msgstr "Enviar un archivo"
+msgstr "Subir un archivo"
 
 msgid "Upload and share a file"
-msgstr "Enviar y compartir un archivo."
+msgstr "Subir y compartir un archivo"
 
 msgid "Upload service"
-msgstr "Enviar servicio"
+msgstr "Subir servicio"
 
 msgid "Local file"
-msgstr "Archivo local."
+msgstr "Archivo local"
 
 msgid "Remote file"
 msgstr "Archivo remoto"
@@ -59,26 +59,25 @@ msgid "Free space:"
 msgstr "Espacio disponible:"
 
 msgid "Max file size:"
-msgstr "Tamaño máximo del archivo:"
+msgstr "Tamaño máximo de archivo:"
 
 msgid "Persistence:"
 msgstr "Persistencia:"
 
 msgid "Path:"
-msgstr "Camino:"
+msgstr "Ruta:"
 
 msgid "Size:"
 msgstr "Tamaño:"
 
 msgid "Upload progress:"
-msgstr "Progreso del envió:"
+msgstr "Progreso de la subida:"
 
 msgid "URL:"
 msgstr "URL:"
 
 msgid "FTP service selected"
-msgstr "Servicio FTP seleccionado:"
+msgstr "Servicio FTP seleccionado"
 
 msgid "N/A"
-msgstr "N/D"
-
+msgstr "N/A"

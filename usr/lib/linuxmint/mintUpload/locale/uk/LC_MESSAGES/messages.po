@@ -1,0 +1,83 @@
+msgid "Checking space on the service..."
+msgstr "Перевірка місця на сервері..."
+
+msgid "B"
+msgstr "Б"
+
+msgid "KB"
+msgstr "КБ"
+
+msgid "MB"
+msgstr "МБ"
+
+msgid "GB"
+msgstr "ГБ"
+
+msgid "days"
+msgstr "днів"
+
+msgid "Service ready. Space available."
+msgstr "Служба готова. Місця достатньо."
+
+msgid "File too big or not enough space on the service."
+msgstr "Файл занадто великий або недостатньо місця на сервері."
+
+msgid "Could not connect to the service."
+msgstr "Невдалося з’єднатись з сервером."
+
+msgid "Connecting to the service..."
+msgstr "З’єднання з сервером..."
+
+msgid "Uploading the file..."
+msgstr "Завантаження файлу..."
+
+msgid "File uploaded successfully."
+msgstr "Файл успішно завантажений."
+
+msgid "Upload failed."
+msgstr "Завантаження не вдалося."
+
+msgid "Upload a file"
+msgstr "Завантажити файл"
+
+msgid "Upload and share a file"
+msgstr "Завантажити та дозволити доступ до файлу"
+
+msgid "Upload service"
+msgstr "Служба завантаження"
+
+msgid "Local file"
+msgstr "Локальний файл"
+
+msgid "Remote file"
+msgstr "Віддалений файл"
+
+msgid "Name:"
+msgstr "Назва:"
+
+msgid "Free space:"
+msgstr "Вільне місце:"
+
+msgid "Max file size:"
+msgstr "Максимальний розмір файлу"
+
+msgid "Persistence:"
+msgstr "Тривалість:"
+
+msgid "Path:"
+msgstr "Шлях:"
+
+msgid "Size:"
+msgstr "Розмір:"
+
+msgid "Upload progress:"
+msgstr "Перебіг завантаження:"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "FTP service selected"
+msgstr "Обрано FTP службу"
+
+msgid "N/A"
+msgstr "Недоступно"

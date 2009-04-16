@@ -163,7 +163,7 @@ class mintUploader(threading.Thread):
 			ftp = ftplib.FTP()
 			ftp.connect(self.service['host'], self.service['port'])
 			ftp.login(self.service['user'], self.service['pass'])
-			self.progress(self.service['type'] + _(" connection successfully established"))
+			self.progress(self.service['type'] + " " + _("connection successfully established"))
 
 			# Create full path
 			for dir in self.service['path'].split(os.sep):
@@ -207,7 +207,7 @@ class mintUploader(threading.Thread):
 				transport.connect(username = self.service['user'], password = self.service['pass'])
 			else:
 				transport.connect(username = self.service['user'], pkey = rsa_key)
-			self.progress(self.service['type'] + _(" connection successfully established"))
+			self.progress(self.service['type'] + " " + _("connection successfully established"))
 
 			# Create full remote path
 			path = self.service['path']
@@ -240,7 +240,7 @@ class mintUploader(threading.Thread):
 				scp.expect('.*password:*')
 				scp.sendline(self.service['pass'])
 
-			self.progress(self.service['type'] + _(" connection successfully established"))
+			self.progress(self.service['type'] + " " + _("connection successfully established"))
 
 			scp.timeout = None
 			received = scp.expect(['.*100\%.*','.*password:.*',pexpect.EOF])
