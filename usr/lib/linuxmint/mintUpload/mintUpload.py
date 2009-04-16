@@ -267,7 +267,7 @@ class mintUploader(threading.Thread):
 		return
 
 	def success(self):
-		print _("File uploaded successfully")
+		print _("File uploaded successfully.")
 		if self.service.has_key('url'):
 			print self.service['url']
 	
