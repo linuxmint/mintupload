@@ -179,9 +179,9 @@ class mintUploader(threading.Thread):
 			label.set_use_markup(True)
 
 			#If service is Mint then show the URL
-			if selected_service['url']:			
+			if selected_service['url']:
 				wTree.get_widget("txt_url").set_text(selected_service['url'])
-				wTree.get_widget("txt_url").show()						
+				wTree.get_widget("txt_url").show()
 				wTree.get_widget("lbl_url").show()
 
 		except Exception, detail:
@@ -230,7 +230,7 @@ class mintUploader(threading.Thread):
 	def getPrivateKey(self):
 		'''Find a private key in ~/.ssh'''
 		key_files = [home + '/.ssh/id_rsa', home + '/.ssh/id_dsa']
-		for f in key_files:			
+		for f in key_files:
 			if os.path.exists(f):
 				return paramiko.RSAKey.from_private_key_file(f)
 
@@ -368,7 +368,7 @@ class mintUploadWindow:
 
 		wTree.get_widget("menubar1").append(fileMenu)
 		wTree.get_widget("menubar1").append(editMenu)
-		wTree.get_widget("menubar1").append(helpMenu)	
+		wTree.get_widget("menubar1").append(helpMenu)
 		wTree.get_widget("menubar1").show_all()
 
 		services = self.read_services()
@@ -377,12 +377,12 @@ class mintUploadWindow:
 		for service in services:
 			iter = model.insert_before(None, None)
 			sname = service['name'].replace('_', ' ')
-			model.set_value(iter, 0, sname)		
+			model.set_value(iter, 0, sname)
 		del model
-		
+
 		cell = gtk.CellRendererText()
 		wTree.get_widget("combo").pack_start(cell)
-		wTree.get_widget("combo").add_attribute(cell,'text',0)	
+		wTree.get_widget("combo").add_attribute(cell,'text',0)
 
 		wTree.get_widget("combo").connect("changed", self.comboChanged)
 		wTree.get_widget("upload_button").connect("clicked", self.upload)
@@ -402,17 +402,17 @@ class mintUploadWindow:
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
-		combo.set_model(model)		
+		combo.set_model(model)
 		services = self.read_services()
 		for service in services:
 			iter = model.insert_before(None, None)
 			sname = service['name'].replace('_', ' ')
-			model.set_value(iter, 0, sname)		
-		del model		
+			model.set_value(iter, 0, sname)
+		del model
 
 	def open_about(self, widget):
 		dlg = gtk.AboutDialog()
-		dlg.set_title(_("About") + " - mintUpload")	
+		dlg.set_title(_("About") + " - mintUpload")
 		version = commands.getoutput("mint-apt-version mintupload")
 		dlg.set_version(version)
 		dlg.set_program_name("mintUpload")
@@ -427,8 +427,8 @@ class mintUploadWindow:
 		    dlg.set_license(gpl)
 		except Exception, detail:
 		    print detail
-		    		
-		dlg.set_authors(["Clement Lefebvre <root@linuxmint.com>", "Philip Morrell <ubuntu.emorrp1@xoxy.net>", "Manuel Sandoval <manuel@slashvar.com>", "Dennis Schwertel <s@digitalkultur.net>"]) 
+
+		dlg.set_authors(["Clement Lefebvre <root@linuxmint.com>", "Philip Morrell <ubuntu.emorrp1@xoxy.net>", "Manuel Sandoval <manuel@slashvar.com>", "Dennis Schwertel <s@digitalkultur.net>"])
 		dlg.set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
 		dlg.set_logo(gtk.gdk.pixbuf_new_from_file("/usr/lib/linuxmint/mintSystem/icon.png"))
 		def close(w, res):
@@ -437,8 +437,8 @@ class mintUploadWindow:
 		dlg.connect("response", close)
 		dlg.show()
 
-	def open_services(self, widget, combo):		
-		wTree = gtk.glade.XML(self.gladefile, "services_window")		
+	def open_services(self, widget, combo):
+		wTree = gtk.glade.XML(self.gladefile, "services_window")
 		treeview_services = wTree.get_widget("treeview_services")
 		treeview_services_system = wTree.get_widget("treeview_services_system")
 
@@ -469,33 +469,33 @@ class mintUploadWindow:
 		model = gtk.TreeStore(str)
 		model.set_sort_column_id( 0, gtk.SORT_ASCENDING )
 		treeview_services.set_model(model)
-		
-		#Get the list of user services		
+
+		#Get the list of user services
 		for file in os.listdir(home + "/.linuxmint/mintUpload/services"):
-			file = str.strip(file)	
-			file = file.replace('_', ' ')					
+			file = str.strip(file)
+			file = file.replace('_', ' ')
 			iter = model.insert_before(None, None)
-			model.set_value(iter, 0, file)		
+			model.set_value(iter, 0, file)
 		del model
 
 		model = gtk.TreeStore(str)
 		model.set_sort_column_id( 0, gtk.SORT_ASCENDING )
 		treeview_services_system.set_model(model)
-		
-		#Get the list of user services		
+
+		#Get the list of user services
 		for file in os.listdir("/etc/linuxmint/mintUpload/services"):
-			file = str.strip(file)						
+			file = str.strip(file)
 			iter = model.insert_before(None, None)
-			model.set_value(iter, 0, file)		
+			model.set_value(iter, 0, file)
 		del model
 
-	def close_window(self, widget, window, combo=None):		
+	def close_window(self, widget, window, combo=None):
 		window.hide()
 		if (combo != None):
 			self.reload_services(combo)
 
-	def add_service(self, widget, treeview_services):		
-		wTree = gtk.glade.XML(self.gladefile, "dialog_add_service")		
+	def add_service(self, widget, treeview_services):
+		wTree = gtk.glade.XML(self.gladefile, "dialog_add_service")
 		wTree.get_widget("dialog_add_service").set_title(_("New service"))
 		wTree.get_widget("dialog_add_service").set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
 		wTree.get_widget("dialog_add_service").show()
@@ -505,12 +505,12 @@ class mintUploadWindow:
 
 	def new_service(self, widget, window, entry, treeview_services):
 		sname = entry.get_text()
-		fname = sname.replace(' ', '_')	
+		fname = sname.replace(' ', '_')
 		if sname != '':
 			model = treeview_services.get_model()
 			iter = model.insert_before(None, None)
 			model.set_value(iter, 0, sname)
-			os.system("cp /usr/lib/linuxmint/mintUpload/sample.service " + home + "/.linuxmint/mintUpload/services/" + fname)	
+			os.system("cp /usr/lib/linuxmint/mintUpload/sample.service " + home + "/.linuxmint/mintUpload/services/" + fname)
 		self.close_window(None, window)
 		self.edit_service(treeview_services, model.get_path(iter), 0)
 
@@ -523,16 +523,16 @@ class mintUploadWindow:
 		model=widget.get_model()
 		iter = model.get_iter(path)
 		sname = model.get_value(iter, 0)
-		fname = sname.replace(' ', '_')	
+		fname = sname.replace(' ', '_')
 		file = home + "/.linuxmint/mintUpload/services/" + fname
-		
-		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")		
+
+		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
 		wTree.get_widget("dialog_edit_service").set_title(_("Edit service"))
 		wTree.get_widget("dialog_edit_service").set_icon_from_file("/usr/lib/linuxmint/mintSystem/icon.png")
 		wTree.get_widget("dialog_edit_service").show()
 		wTree.get_widget("button_ok").connect("clicked", self.modify_service, wTree.get_widget("dialog_edit_service"), wTree, file)
 		wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_edit_service"))
-		
+
 		#i18n
 		wTree.get_widget("lbl_type").set_label(_("Type:"))
 		wTree.get_widget("lbl_hostname").set_label(_("Hostname:"))
@@ -560,7 +560,7 @@ class mintUploadWindow:
 		wTree.get_widget("lbl_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
 		wTree.get_widget("txt_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
 
-		try:			
+		try:
 			config = ConfigObj(file)
 			try:
 				model = wTree.get_widget("combo_type").get_model()
@@ -568,7 +568,7 @@ class mintUploadWindow:
 				while (iter != None and model.get_value(iter, 0) != config['type'].lower()):
 					iter = model.iter_next(iter)
 				wTree.get_widget("combo_type").set_active_iter(iter)
-			except: 
+			except:
 				pass
 			try:
 				wTree.get_widget("txt_hostname").set_text(config['host'])
@@ -598,9 +598,9 @@ class mintUploadWindow:
 			print detail
 
 	def modify_service(self, widget, window, wTree, file):
-		try:			
+		try:
 			config = ConfigObj(file)
-			model = wTree.get_widget("combo_type").get_model()	
+			model = wTree.get_widget("combo_type").get_model()
 			iter = 	wTree.get_widget("combo_type").get_active_iter()
 			type_value = model.get_value(iter, 0)
 			config['type'] = type_value
@@ -620,7 +620,7 @@ class mintUploadWindow:
 		(model, iter) = selection.get_selected()
 		if (iter != None):
 			service = model.get_value(iter, 0)
-			fname = service.replace(' ', '_')	
+			fname = service.replace(' ', '_')
 			os.system("rm " + home + "/.linuxmint/mintUpload/services/" + fname)
 			model.remove(iter)
 
@@ -646,9 +646,9 @@ class mintUploadWindow:
 
 		services = self.read_services()
 		for service in services:
-			selectedService = selectedService.replace(' ', '_')						
+			selectedService = selectedService.replace(' ', '_')
 			if service['name'].replace(' ', '_') == selectedService:
-				selected_service = service			
+				selected_service = service
 				spacecheck = spaceChecker()
 				spacecheck.start()
 				return True
@@ -661,9 +661,9 @@ class mintUploadWindow:
 		for path in config_paths:
 			os.system("mkdir -p " + path)
 			for file in os.listdir(path):
-				try:						
+				try:
 					services.append(self.read_service(path + file))
-				except:	
+				except:
 					pass
 		return services
 
