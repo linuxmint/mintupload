@@ -1,11 +1,11 @@
 msgid "Checking space on the service..."
-msgstr "Kontroluji prostor potřebný pro tuto službu..."
+msgstr "Kontrola prostoru pro službu..."
 
 msgid "B"
 msgstr "B"
 
 msgid "KB"
-msgstr "KB"
+msgstr "kB"
 
 msgid "MB"
 msgstr "MB"
@@ -17,25 +17,25 @@ msgid "days"
 msgstr "dní"
 
 msgid "Service ready. Space available."
-msgstr "Prostoru je dostatek, služba je připravena."
+msgstr "Prostor je k dispozici, služba je připravena."
 
 msgid "File too big or not enough space on the service."
-msgstr "Příliš velký soubor."
+msgstr "Příliš velký soubor nebo málo prostoru pro službu."
 
 msgid "Could not connect to the service."
 msgstr "Služba není dostupná."
 
 msgid "Connecting to the service..."
-msgstr "Připojuji se..."
+msgstr "Připojení ke službě..."
 
 msgid "Uploading the file..."
-msgstr "Nahrávám soubor..."
+msgstr "Nahrávání souboru..."
 
 msgid "File uploaded successfully."
 msgstr "Soubor byl úspěšně nahrán."
 
 msgid "Upload failed."
-msgstr "Nepovedlo se nahrát soubor."
+msgstr "Nepodařilo se nahrát soubor."
 
 msgid "Upload a file"
 msgstr "Nahrát soubor"
@@ -44,7 +44,7 @@ msgid "Upload and share a file"
 msgstr "Nahrát a sdílet soubor"
 
 msgid "Upload service"
-msgstr "Upload služba"
+msgstr "Služba nahrávání"
 
 msgid "Local file"
 msgstr "Místní soubor"
@@ -53,16 +53,16 @@ msgid "Remote file"
 msgstr "Vzdálený soubor"
 
 msgid "Name:"
-msgstr "Jméno:"
+msgstr "Název:"
 
 msgid "Free space:"
-msgstr "VOlné místo:"
+msgstr "Volné místo:"
 
 msgid "Max file size:"
-msgstr "Max velikost souboru:"
+msgstr "Max. velikost souboru:"
 
 msgid "Persistence:"
-msgstr "Živostnost:"
+msgstr "Životnost:"
 
 msgid "Path:"
 msgstr "Cesta:"
@@ -81,4 +81,3 @@ msgstr "Vybrána FTP služba"
 
 msgid "N/A"
 msgstr "N/A"
-
