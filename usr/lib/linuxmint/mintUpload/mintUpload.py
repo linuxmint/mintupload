@@ -645,8 +645,7 @@ class mintUploadWindow:
 
 		services = self.read_services()
 		for service in services:
-			selectedService = selectedService.replace(' ', '_')
-			if service['name'].replace(' ', '_') == selectedService:
+			if service['name'] == selectedService:
 				selected_service = service
 				spacecheck = spaceChecker()
 				spacecheck.start()
