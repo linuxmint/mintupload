@@ -40,9 +40,27 @@ gtk.gdk.threads_init()
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 
-class ConnectionError(Exception):
-	'''Custom error to raise for errors during connections'''
+class CustomError(Exception):
+	'''All custom defined errors'''
+
+	def __init__(self, detail):
+		sys.stderr.write(os.linesep + self.__class__.__name__ + ': ' + detail + os.linesep*2)
+
+class ConnectionError(CustomError):
+	'''Raised when an error has occured with an external connection'''
 	pass
+
+class FilesizeError(CustomError):
+	'''Raised when the file is too large or too small'''
+	pass
+
+def myCustomError(self, detail):
+	global statusbar
+	message = "<span color='red'>" + detail + "</span>"
+	statusbar.push(context_id, message)
+	statusbar.get_children()[0].get_children()[0].set_use_markup(True)
+
+CustomError.__init__ = myCustomError
 
 def sizeStr(size, acc=1, factor=1000):
 	'''Converts integer filesize in bytes to textual repr'''
