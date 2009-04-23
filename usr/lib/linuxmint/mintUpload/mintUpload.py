@@ -483,7 +483,7 @@ class mintUploadWindow:
 		treeview_services.set_model(model)
 
 		#Get the list of user services
-		for file in os.listdir(home + "/.linuxmint/mintUpload/services"):
+		for file in os.listdir(config_paths['user']):
 			file = str.strip(file)
 			iter = model.insert_before(None, None)
 			model.set_value(iter, 0, file)
@@ -494,7 +494,7 @@ class mintUploadWindow:
 		treeview_services_system.set_model(model)
 
 		#Get the list of user services
-		for file in os.listdir("/etc/linuxmint/mintUpload/services"):
+		for file in os.listdir(config_paths['system']):
 			file = str.strip(file)
 			iter = model.insert_before(None, None)
 			model.set_value(iter, 0, file)
@@ -521,7 +521,7 @@ class mintUploadWindow:
 			model = treeview_services.get_model()
 			iter = model.insert_before(None, None)
 			model.set_value(iter, 0, sname)
-			service.filename = home + "/.linuxmint/mintUpload/services/" + sname
+			service.filename = config_paths['user'] + sname
 			service.write()
 		self.close_window(None, window)
 		self.edit_service(treeview_services, model.get_path(iter), 0)
@@ -535,7 +535,7 @@ class mintUploadWindow:
 		model=widget.get_model()
 		iter = model.get_iter(path)
 		sname = model.get_value(iter, 0)
-		file = home + "/.linuxmint/mintUpload/services/" + sname
+		file = config_paths['user'] + sname
 
 		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
 		wTree.get_widget("dialog_edit_service").set_title(_("Edit service"))
@@ -635,7 +635,7 @@ class mintUploadWindow:
 		(model, iter) = treeview_services.get_selection().get_selected()
 		if (iter != None):
 			service = model.get_value(iter, 0).replace(' ', '\ ')
-			os.system("rm " + home + "/.linuxmint/mintUpload/services/" + service)
+			os.system("rm " + config_paths['user'] + service)
 			model.remove(iter)
 
 	def comboChanged(self, widget):
@@ -670,8 +670,7 @@ class mintUploadWindow:
 		'''Get all defined services'''
 
 		self.services = []
-		config_paths = ["/etc/linuxmint/mintUpload/services/", home + "/.linuxmint/mintUpload/services/"]
-		for path in config_paths:
+		for loc, path in config_paths.iteritems():
 			os.system("mkdir -p " + path)
 			for file in os.listdir(path):
 				try:
@@ -755,6 +754,7 @@ class mintUploadWindow:
 		uploader.start()
 		return True
 
+config_paths = {'system':"/etc/linuxmint/mintUpload/services/", 'user':home + "/.linuxmint/mintUpload/services/"}
 defaults = ConfigObj({
 	'type':'MINT',
 	'host':'mint-space.com',
