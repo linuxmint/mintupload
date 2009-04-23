@@ -519,7 +519,7 @@ class mintUploadWindow:
 		wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_add_service"))
 
 	def new_service(self, widget, window, entry, treeview_services):
-		service = ConfigObj('/usr/lib/linuxmint/mintUpload/sample.service')
+		service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
 		sname = entry.get_text()
 		if sname:
 			model = treeview_services.get_model()
