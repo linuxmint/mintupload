@@ -508,7 +508,7 @@ class mintUploadWindow:
 			model = treeview_services.get_model()
 			iter = model.insert_before(None, None)
 			model.set_value(iter, 0, sname)
-			service.filename = home + "/.linuxmint/mintUpload/services/" + sname
+			service.filename = config_paths['user'] + sname
 			service.write()
 		self.close_window(None, window)
 		self.edit_service(treeview_services, model.get_path(iter), 0)
@@ -522,7 +522,7 @@ class mintUploadWindow:
 		model=widget.get_model()
 		iter = model.get_iter(path)
 		sname = model.get_value(iter, 0)
-		file = home + "/.linuxmint/mintUpload/services/" + sname
+		file = config_paths['user'] + sname
 
 		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
 		wTree.get_widget("dialog_edit_service").set_title(_("Edit service"))
@@ -552,8 +552,8 @@ class mintUploadWindow:
 		wTree.get_widget("lbl_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
 		wTree.get_widget("txt_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
 
-		wTree.get_widget("lbl_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + "%Y%m%d%H%M%S")
-		wTree.get_widget("txt_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + "%Y%m%d%H%M%S")
+		wTree.get_widget("lbl_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
+		wTree.get_widget("txt_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
 
 		wTree.get_widget("lbl_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
 		wTree.get_widget("txt_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
@@ -745,7 +745,6 @@ def read_services():
 	'''Get all defined services'''
 
 	services = []
-	config_paths = {'system':"/etc/linuxmint/mintUpload/services/", 'user':home + "/.linuxmint/mintUpload/services/"}
 	for loc, path in config_paths.iteritems():
 		os.system("mkdir -p " + path)
 		for file in os.listdir(path):
@@ -758,6 +757,7 @@ def read_services():
 				services.append(s)
 	return services
 
+config_paths = {'system':"/etc/linuxmint/mintUpload/services/", 'user':home + "/.linuxmint/mintUpload/services/"}
 defaults = ConfigObj({
 	'type':'MINT',
 	'host':'mint-space.com',
@@ -785,7 +785,7 @@ class Service(ConfigObj):
 	def remove(self):
 		'''Deletes the configuration file'''
 		os.system("rm " + self.filename)
-		
+
 	def _fix(self):
 		'''Format values correctly'''
 
