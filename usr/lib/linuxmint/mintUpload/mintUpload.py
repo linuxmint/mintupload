@@ -390,10 +390,10 @@ class mintUploadWindow:
 		wTree.get_widget("menubar1").append(helpMenu)
 		wTree.get_widget("menubar1").show_all()
 
-		services = self.read_services()
+		self.read_services()
 		model = gtk.TreeStore(str)
 		wTree.get_widget("combo").set_model(model)
-		for service in services:
+		for service in self.services:
 			iter = model.insert_before(None, None)
 			model.set_value(iter, 0, service['name'])
 		del model
@@ -413,7 +413,7 @@ class mintUploadWindow:
 		filesize = os.path.getsize(self.filename)
 		wTree.get_widget("txt_size").set_label(sizeStr(filesize))
 
-		if len(services) == 1:
+		if len(self.services) == 1:
 			wTree.get_widget("combo").set_active(0)
 			self.comboChanged(None)
 
@@ -422,8 +422,8 @@ class mintUploadWindow:
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
 		combo.set_model(model)
-		services = self.read_services()
-		for service in services:
+		self.read_services()
+		for service in self.services:
 			iter = model.insert_before(None, None)
 			model.set_value(iter, 0, service['name'])
 		del model
@@ -659,8 +659,8 @@ class mintUploadWindow:
 			return
 		selectedService = model[active][0]
 
-		services = self.read_services()
-		for service in services:
+		self.read_services()
+		for service in self.services:
 			if service['name'] == selectedService:
 				selected_service = service
 				spacecheck = spaceChecker()
@@ -670,16 +670,15 @@ class mintUploadWindow:
 	def read_services(self):
 		'''Get all defined services'''
 
-		services = []
+		self.services = []
 		config_paths = ["/etc/linuxmint/mintUpload/services/", home + "/.linuxmint/mintUpload/services/"]
 		for path in config_paths:
 			os.system("mkdir -p " + path)
 			for file in os.listdir(path):
 				try:
-					services.append(self.read_service(path + file))
+					self.services.append(self.read_service(path + file))
 				except:
 					pass
-		return services
 
 	def read_service(self, path):
 		'''Get the details of an individual service'''
