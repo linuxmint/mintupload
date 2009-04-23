@@ -427,7 +427,12 @@ class mintUploadWindow:
 		except Exception, detail:
 		    print detail
 
-		dlg.set_authors(["Clement Lefebvre <root@linuxmint.com>", "Philip Morrell <ubuntu.emorrp1@xoxy.net>", "Manuel Sandoval <manuel@slashvar.com>", "Dennis Schwertel <s@digitalkultur.net>"])
+		dlg.set_authors([
+			"Clement Lefebvre <root@linuxmint.com>",
+			"Philip Morrell <ubuntu.emorrp1@xoxy.net>",
+			"Manuel Sandoval <manuel@slashvar.com>",
+			"Dennis Schwertel <s@digitalkultur.net>"
+		])
 		dlg.set_icon_from_file(self.iconfile)
 		dlg.set_logo(gtk.gdk.pixbuf_new_from_file(self.iconfile))
 		def close(w, res):
