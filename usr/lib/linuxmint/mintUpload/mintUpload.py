@@ -572,7 +572,7 @@ class mintUploadWindow:
 		wTree.get_widget("txt_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
 
 		try:
-			config = ConfigObj(file)
+			config = Service(file)
 			try:
 				model = wTree.get_widget("combo_type").get_model()
 				iter = model.get_iter_first()
