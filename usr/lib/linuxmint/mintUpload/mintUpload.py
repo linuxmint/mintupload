@@ -278,7 +278,7 @@ class mintUploader(threading.Thread):
 			scp_cmd = "scp " + filename + " " + selected_service['user'] + "@" + selected_service['host'] + ':' + selected_service['path']
 			scp = pexpect.spawn(scp_cmd)
 
-			if selected_service['pass']:
+			if selected_service['pass'] and len(selected_service['pass']) > 0:
 				scp.expect('.*password:*')
 				scp.sendline(selected_service['pass'])
 
