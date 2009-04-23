@@ -621,7 +621,7 @@ class mintUploadWindow:
 	def remove_service(self, widget, treeview_services):
 		(model, iter) = treeview_services.get_selection().get_selected()
 		if (iter != None):
-			service = model.get_value(iter, 0).replace(' ', '\ ')
+			service = model.get_value(iter, 0)
 			for s in self.services:
 				if s['name'] == service:
 					s.remove()
