@@ -335,6 +335,7 @@ class mintUploadWindow:
 		global filesize
 		global wTree
 		global name
+		global statusbar
 
 		self.filename = filename
 		name = os.path.basename(filename)
@@ -416,6 +417,7 @@ class mintUploadWindow:
 			wTree.get_widget("combo").set_active(0)
 			self.comboChanged(None)
 
+		statusbar = wTree.get_widget("statusbar")
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
