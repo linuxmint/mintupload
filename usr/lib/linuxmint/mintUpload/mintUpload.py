@@ -610,18 +610,23 @@ class mintUploadWindow:
 
 	def modify_service(self, widget, window, wTree, file):
 		try:
-			config = ConfigObj(file)
 			model = wTree.get_widget("combo_type").get_model()
 			iter = 	wTree.get_widget("combo_type").get_active_iter()
-			type_value = model.get_value(iter, 0)
-			config['type'] = type_value
+
+			# Get configuration
+			config = {}
+			config['type'] = model.get_value(iter, 0)
 			config['host'] = wTree.get_widget("txt_hostname").get_text()
 			config['port'] = wTree.get_widget("txt_port").get_text()
 			config['user'] = wTree.get_widget("txt_username").get_text()
 			config['pass'] = wTree.get_widget("txt_password").get_text()
 			config['format'] = wTree.get_widget("txt_timestamp").get_text()
 			config['path'] = wTree.get_widget("txt_path").get_text()
-			config.write()
+
+			# Write to service's config file
+			s = Service(file)
+			s.merge(config)
+			s.write()
 		except Exception, detail:
 			print detail
 		window.hide()
@@ -777,7 +782,7 @@ class Service(ConfigObj):
 	def remove(self):
 		'''Deletes the configuration file'''
 		os.system("rm " + self.filename)
-		
+
 	def _fix(self):
 		'''Format values correctly'''
 
