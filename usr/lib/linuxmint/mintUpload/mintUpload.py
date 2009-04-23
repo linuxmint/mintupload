@@ -390,13 +390,7 @@ class mintUploadWindow:
 		wTree.get_widget("menubar1").append(helpMenu)
 		wTree.get_widget("menubar1").show_all()
 
-		self.read_services()
-		model = gtk.TreeStore(str)
-		wTree.get_widget("combo").set_model(model)
-		for service in self.services:
-			iter = model.insert_before(None, None)
-			model.set_value(iter, 0, service['name'])
-		del model
+		self.reload_services(wTree.get_widget("combo"))
 
 		cell = gtk.CellRendererText()
 		wTree.get_widget("combo").pack_start(cell)
