@@ -91,8 +91,8 @@ class spaceChecker(threading.Thread):
 
 		try:
 			# Get the file's persistence on the service
-			if selected_service['persistence']:
-				wTree.get_widget("txt_persistence").set_label(selected_service['persistence'] + " " + _("days"))
+			if selected_service.has_key('persistence'):
+				wTree.get_widget("txt_persistence").set_label(str(selected_service['persistence']) + " " + _("days"))
 				wTree.get_widget("txt_persistence").show()
 				wTree.get_widget("lbl_persistence").show()
 			else:
@@ -101,8 +101,8 @@ class spaceChecker(threading.Thread):
 				wTree.get_widget("lbl_persistence").hide()
 
 			# Get the maximum allowed filesize on the service
-			if selected_service['maxsize']:
-				maxsize = float(selected_service['maxsize'])
+			if selected_service.has_key('maxsize'):
+				maxsize = selected_service['maxsize']
 				if filesize > maxsize:
 					self.ready = False
 				maxsizeStr = sizeStr(maxsize)
@@ -115,7 +115,7 @@ class spaceChecker(threading.Thread):
 				wTree.get_widget("lbl_maxsize").hide()
 
 			# Get the available space left on the service
-			if selected_service['space']:
+			if selected_service.has_key('space'):
 				spaceInfo = urllib.urlopen(selected_service['space']).read().split('/')
 				spaceAvailable = float(spaceInfo[0])
 				spaceTotal = float(spaceInfo[1])
@@ -153,7 +153,6 @@ class spaceChecker(threading.Thread):
 			wTree.get_widget("main_window").window.set_cursor(None)
 			wTree.get_widget("combo").set_sensitive(True)
 			wTree.get_widget("main_window").resize(*wTree.get_widget("main_window").size_request())
-
 
 class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
@@ -196,7 +195,7 @@ class mintUploader(threading.Thread):
 			label.set_use_markup(True)
 
 			#If service is Mint then show the URL
-			if selected_service['url']:
+			if selected_service.has_key('url'):
 				wTree.get_widget("txt_url").set_text(selected_service['url'])
 				wTree.get_widget("txt_url").show()
 				wTree.get_widget("lbl_url").show()
@@ -215,7 +214,7 @@ class mintUploader(threading.Thread):
 	def _ftp(self):
 		'''Connection process for FTP services'''
 
-		if not selected_service['port']:
+		if not selected_service.has_key('port'):
 			selected_service['port'] = 21
 		try:
 			# Attempting to connect
@@ -257,7 +256,7 @@ class mintUploader(threading.Thread):
 		if not selected_service['pass']:
 			rsa_key = self.getPrivateKey()
 			if not rsa_key:	raise ConnectionError(_("Connection requires a password or private key!"))
-		if not selected_service['port']:
+		if not selected_service.has_key('port'):
 			selected_service['port'] = 22
 		try:
 			# Attempting to connect
@@ -639,8 +638,11 @@ class mintUploadWindow:
 	def remove_service(self, widget, treeview_services):
 		(model, iter) = treeview_services.get_selection().get_selected()
 		if (iter != None):
-			service = model.get_value(iter, 0).replace(' ', '\ ')
-			os.system("rm " + config_paths['user'] + service)
+			service = model.get_value(iter, 0)
+			for s in self.services:
+				if s['name'] == service:
+					s.remove()
+					self.services.remove(s)
 			model.remove(iter)
 
 	def comboChanged(self, widget):
@@ -679,80 +681,17 @@ class mintUploadWindow:
 			os.system("mkdir -p " + path)
 			for file in os.listdir(path):
 				try:
-					self.services.append(self.read_service(path + file))
+					self.services.append(Service(path + file))
 				except:
 					pass
-
-	def read_service(self, path):
-		'''Get the details of an individual service'''
-
-		config = ConfigObj(path)
-		service = {}
-
-		# Specify sensible defaults here for configs assumed to exist later
-		try:	service["type"] = config['type'].upper()
-		except:	service["type"] = "MINT"
-
-		try:	service["host"] = config['host']
-		except:	service["mint-space.com"]
-
-		try:	service["name"] = config['name']
-		except:	service["name"] = os.path.basename(path)
-
-		try:	service["user"] = config['user']
-		except:	service["user"] = os.environ['LOGNAME']
-
-		try:	service["format"] = config['format']
-		except:	service["format"] = "%Y%m%d%H%M%S"
-		finally: timestamp = datetime.datetime.utcnow().strftime(service["format"])
-		try:
-			service["path"] = config['path']
-			service["path"] = service["path"].replace('<TIMESTAMP>', timestamp)
-		except:
-			service["path"] = None
-
-		# Specify default as None to require test later
-		try:	service["pass"] = config['pass']
-		except:	service["pass"] = None
-
-		try:	service["port"] = int(config['port'])
-		except:	service["port"] = None
-
-		try:	service["maxsize"] = config['maxsize']
-		except:	service["maxsize"] = None
-
-		try:	service["persistence"] = config['persistence']
-		except:	service["persistence"] = None
-
-		try:	service["space"] = config['space']
-		except:	service["space"] = None
-
-		try:
-			url = config['url']
-			if type(url) is list:
-				url = ",".join(url)
-			url = url.replace('<TIMESTAMP>', timestamp)
-			url = url.replace('<FILE>', name)
-			if service["path"]:
-				url = url.replace('<PATH>', service["path"])
-			service["url"] = url
-		except:
-			service["url"] = None
-
-		# Ensure trailing '/', after url <PATH> replace
-		if service["path"]:
-			service["path"] = os.path.normpath(service["path"])
-			service["path"] += os.sep
-		else:
-			service["path"] = os.curdir + os.sep
-
-		return service
 
 	def upload(self, widget):
 		'''Start the upload process'''
 
 		global wTree
+		global selected_service
 
+		selected_service = selected_service.for_upload(self.filename)
 		wTree.get_widget("upload_button").set_sensitive(False)
 		wTree.get_widget("combo").set_sensitive(False)
 		uploader = mintUploader()
