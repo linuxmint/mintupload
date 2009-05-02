@@ -79,7 +79,7 @@ class spaceChecker:
 		self.service = service
 		self.filesize = filesize
 
-	def check(self):
+	def checkspace(self):
 		# Get the maximum allowed self.filesize on the service
 		if self.service.has_key("maxsize"):
 			if self.filesize > self.service["maxsize"]:
@@ -151,7 +151,7 @@ class gtkspaceChecker(threading.Thread, spaceChecker):
 
 			# Check the filesize
 			try:
-				self.check()
+				self.checkspace()
 
 			except ConnectionError:
 				statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
