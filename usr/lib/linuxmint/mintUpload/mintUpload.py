@@ -129,9 +129,8 @@ spaceChecker.has_space = myhas_space
 class gtkspaceChecker(threading.Thread):
 	'''Checks for available space on the service'''
 
-	def __init__(self, service, filesize):
+	def __init__(self, filesize):
 		threading.Thread.__init__(self)
-		self.service = service
 		self.filesize = filesize
 		self.check = True
 
@@ -721,12 +720,9 @@ class mintUploadWindow:
 		for service in self.services:
 			if service['name'] == selectedService:
 				selected_service = service
-
-				self.check_space()
+				checker = gtkspaceChecker(self.filesize)
+				checker.start()
 				return True
-
-	def check_space(self):
-		'''Checks for available space on the service'''
 
 	def upload(self, widget):
 		'''Start the upload process'''
