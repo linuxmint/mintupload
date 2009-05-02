@@ -125,7 +125,7 @@ spaceChecker.has_space = myhas_space
 class mintUploader:
 	'''Uploads the file to the selected service'''
 
-	def __init__(self, service, file):
+	def __init__(self, service, file, progress=None, asciicallback=None):
 		self.service = service
 		self.file = file
 		self.name = os.path.basename(self.file)
@@ -138,6 +138,12 @@ class mintUploader:
 			'FTP' : self._ftp,
 			'SFTP': self._sftp,
 			'SCP' : self._scp}[self.service['type']]
+
+		# Override reporting functions if given
+		if progress:
+			self.progress = progress
+		if asciicallback:
+			self.asciicallback = asciicallback
 
 	def _ftp(self):
 		'''Connection process for FTP services'''
