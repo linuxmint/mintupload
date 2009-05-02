@@ -133,8 +133,14 @@ class gtkspaceChecker(threading.Thread):
 		threading.Thread.__init__(self)
 		self.service = service
 		self.filesize = filesize
+		self.check = True
 
 	def run(self):
+		global statusbar
+		global context_id
+		global wTree
+		global selected_service
+
 		# Get the file's persistence on the service
 		if selected_service.has_key('persistence'):
 			wTree.get_widget("txt_persistence").set_label(str(selected_service['persistence']) + " " + _("days"))
@@ -162,6 +168,33 @@ class gtkspaceChecker(threading.Thread):
 			wTree.get_widget("lbl_space").hide()
 			if not selected_service.has_key('maxsize'):
 				self.check=False
+
+		if self.check:
+			wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
+			wTree.get_widget("combo").set_sensitive(False)
+			wTree.get_widget("upload_button").set_sensitive(False)
+			statusbar.push(context_id, _("Checking space on the service..."))
+
+			wTree.get_widget("frame_progress").hide()
+
+			# Check the filesize
+			try:
+				spacecheck = spaceChecker(selected_service, self.filesize)
+				spacecheck.start()
+				spacecheck.join()
+
+			except ConnectionError:
+				statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
+
+			except FilesizeError:
+				statusbar.push(context_id, "<span color='red'>" + _("File too big or not enough space on the service.") + "</span>")
+
+			finally:
+				label = statusbar.get_children()[0].get_children()[0]
+				label.set_use_markup(True)
+				wTree.get_widget("combo").set_sensitive(True)
+				wTree.get_widget("main_window").window.set_cursor(None)
+				wTree.get_widget("main_window").resize(*wTree.get_widget("main_window").size_request())
 
 class mintUploader:
 	'''Uploads the file to the selected service'''
@@ -694,37 +727,6 @@ class mintUploadWindow:
 
 	def check_space(self):
 		'''Checks for available space on the service'''
-
-		global statusbar
-		global context_id
-		global wTree
-		global selected_service
-
-		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
-		wTree.get_widget("combo").set_sensitive(False)
-		wTree.get_widget("upload_button").set_sensitive(False)
-		statusbar.push(context_id, _("Checking space on the service..."))
-
-		wTree.get_widget("frame_progress").hide()
-
-		# Check the filesize
-		try:
-			spacecheck = spaceChecker(selected_service, self.filesize)
-			spacecheck.start()
-			spacecheck.join()
-
-		except ConnectionError:
-			statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
-
-		except FilesizeError:
-			statusbar.push(context_id, "<span color='red'>" + _("File too big or not enough space on the service.") + "</span>")
-
-		finally:
-			label = statusbar.get_children()[0].get_children()[0]
-			label.set_use_markup(True)
-			wTree.get_widget("combo").set_sensitive(True)
-			wTree.get_widget("main_window").window.set_cursor(None)
-			wTree.get_widget("main_window").resize(*wTree.get_widget("main_window").size_request())
 
 	def upload(self, widget):
 		'''Start the upload process'''
