@@ -328,6 +328,16 @@ class gtkUploader(threading.Thread):
 		global statusbar
 		global wTree
 
+		wTree.get_widget("upload_button").set_sensitive(False)
+		wTree.get_widget("combo").set_sensitive(False)
+		service = service.for_upload(self.filename)
+
+		statusbar.push(context_id, _("Connecting to the service..."))
+		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
+		wTree.get_widget("frame_progress").show()
+		progressbar.set_fraction(0)
+		progressbar.set_text("0%")
+
 		uploader = mintUploader(self.service, self.file, self.progress, self.asciicallback)
 
 		try:
@@ -710,22 +720,6 @@ class mintUploadWindow:
 
 	def upload(self, widget):
 		'''Start the upload process'''
-
-		global wTree
-		global selected_service
-		global statusbar
-		global progressbar
-
-		wTree.get_widget("upload_button").set_sensitive(False)
-		wTree.get_widget("combo").set_sensitive(False)
-		selected_service = selected_service.for_upload(self.filename)
-
-		statusbar.push(context_id, _("Connecting to the service..."))
-		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
-
-		wTree.get_widget("frame_progress").show()
-		progressbar.set_fraction(0)
-		progressbar.set_text("0%")
 
 		uploader = gtkUploader(selected_service, self.filename)
 		uploader.start()
