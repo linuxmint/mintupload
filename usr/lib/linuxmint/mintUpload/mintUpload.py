@@ -70,15 +70,15 @@ class gtkSpaceChecker(mintSpaceChecker):
 			wTree.get_widget("txt_maxsize").hide()
 			wTree.get_widget("lbl_maxsize").hide()
 
-		self.needsCheck = True
+		needsCheck = True
 		if not self.service.has_key('space'):
 			wTree.get_widget("txt_space").set_label(_("N/A"))
 			wTree.get_widget("txt_space").hide()
 			wTree.get_widget("lbl_space").hide()
 			if not self.service.has_key('maxsize'):
-				self.needsCheck=False
+				needsCheck=False
 
-		if self.needsCheck:
+		if needsCheck:
 			wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 			wTree.get_widget("combo").set_sensitive(False)
 			wTree.get_widget("upload_button").set_sensitive(False)
