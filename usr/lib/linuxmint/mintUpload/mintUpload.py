@@ -98,11 +98,12 @@ class spaceChecker:
 			if self.filesize > self.available:
 				raise FilesizeError(_("File larger than service's available space"))
 
-class gtkspaceChecker(threading.Thread):
+class gtkspaceChecker(threading.Thread, spaceChecker):
 	'''Checks for available space on the service'''
 
 	def __init__(self, filesize):
 		threading.Thread.__init__(self)
+		spaceChecker.__init__(self, selected_service, filesize)
 		self.filesize = filesize
 		self.check = True
 
@@ -148,10 +149,9 @@ class gtkspaceChecker(threading.Thread):
 
 			wTree.get_widget("frame_progress").hide()
 
-			spacecheck = spaceChecker(selected_service, self.filesize)
 			# Check the filesize
 			try:
-				spacecheck.check()
+				self.check()
 
 			except ConnectionError:
 				statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
@@ -162,8 +162,8 @@ class gtkspaceChecker(threading.Thread):
 			else:
 				# Display the available space left on the service
 				if selected_service.has_key('space'):
-					pctSpace = float(spacecheck.available) / float(spacecheck.total) * 100
-					pctSpaceStr = sizeStr(spacecheck.available) + " (" + str(int(pctSpace)) + "%)"
+					pctSpace = float(self.available) / float(self.total) * 100
+					pctSpaceStr = sizeStr(self.available) + " (" + str(int(pctSpace)) + "%)"
 					wTree.get_widget("txt_space").set_label(pctSpaceStr)
 					wTree.get_widget("txt_space").show()
 					wTree.get_widget("lbl_space").show()
