@@ -72,19 +72,14 @@ def sizeStr(size, acc=1, factor=1000):
 			return str(rounded) + thresholds[i]
 	return str(int(size)) + thresholds[0]
 
-class spaceChecker(threading.Thread):
+class spaceChecker:
 	'''Checks that the filesize is ok'''
 
-	def __init__(self, service, filesize, has_space=None):
-		threading.Thread.__init__(self)
+	def __init__(self, service, filesize):
 		self.service = service
 		self.filesize = filesize
 
-		# Override success mechanism if given
-		if has_space:
-			self.has_space = has_space
-
-	def run(self):
+	def check(self):
 		# Get the maximum allowed self.filesize on the service
 		if self.service.has_key("maxsize"):
 			if self.filesize > self.service["maxsize"]:
@@ -102,13 +97,6 @@ class spaceChecker(threading.Thread):
 			self.total = int(spaceInfo[1])
 			if self.filesize > self.available:
 				raise FilesizeError(_("File larger than service's available space"))
-
-		self.has_space()
-	
-	def has_space(self):
-		pass
-
-spaceChecker.has_space = myhas_space
 
 class gtkspaceChecker(threading.Thread):
 	'''Checks for available space on the service'''
@@ -160,11 +148,10 @@ class gtkspaceChecker(threading.Thread):
 
 			wTree.get_widget("frame_progress").hide()
 
+			spacecheck = spaceChecker(selected_service, self.filesize)
 			# Check the filesize
 			try:
-				spacecheck = spaceChecker(selected_service, self.filesize)
-				spacecheck.start()
-				spacecheck.join()
+				spacecheck.check()
 
 			except ConnectionError:
 				statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
