@@ -75,10 +75,14 @@ def sizeStr(size, acc=1, factor=1000):
 class spaceChecker(threading.Thread):
 	'''Checks that the filesize is ok'''
 
-	def __init__(self, service, filesize):
+	def __init__(self, service, filesize, has_space=None):
+		threading.Thread.__init__(self)
 		self.service = service
 		self.filesize = filesize
-		threading.Thread.__init__(self)
+
+		# Override success mechanism if given
+		if has_space:
+			self.has_space = has_space
 
 	def run(self):
 		# Get the maximum allowed self.filesize on the service
