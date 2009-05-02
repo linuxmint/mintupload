@@ -79,10 +79,12 @@ class mintSpaceChecker(threading.Thread):
 			if self.filesize > self.available:
 				raise FilesizeError(_("File larger than service's available space"))
 
-class mintUploader:
+class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
 
 	def __init__(self, service, file):
+		threading.Thread.__init__(self)
+		service = service.for_upload(file)
 		self.service = service
 		self.file = file
 		self.name = os.path.basename(self.file)
@@ -95,6 +97,9 @@ class mintUploader:
 			'FTP' : self._ftp,
 			'SFTP': self._sftp,
 			'SCP' : self._scp}[self.service['type']]
+
+	def run(self):
+		self.upload()
 
 	def _ftp(self):
 		'''Connection process for FTP services'''

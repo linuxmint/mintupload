@@ -122,15 +122,8 @@ class gtkSpaceChecker(mintSpaceChecker):
 				wTree.get_widget("main_window").window.set_cursor(None)
 				wTree.get_widget("main_window").resize(*wTree.get_widget("main_window").size_request())
 
-class gtkUploader(threading.Thread, mintUploader):
+class gtkUploader(mintUploader):
 	'''Wrapper for the gtk management of mintUploader'''
-
-	def __init__(self, service, file):
-		threading.Thread.__init__(self)
-		service = service.for_upload(file)
-		mintUploader.__init__(self, service, file)
-		self.service = service
-		self.file = file
 
 	def run(self):
 		global progressbar
