@@ -134,6 +134,35 @@ class gtkspaceChecker(threading.Thread):
 		self.service = service
 		self.filesize = filesize
 
+	def run(self):
+		# Get the file's persistence on the service
+		if selected_service.has_key('persistence'):
+			wTree.get_widget("txt_persistence").set_label(str(selected_service['persistence']) + " " + _("days"))
+			wTree.get_widget("txt_persistence").show()
+			wTree.get_widget("lbl_persistence").show()
+		else:
+			wTree.get_widget("txt_persistence").set_label(_("N/A"))
+			wTree.get_widget("txt_persistence").hide()
+			wTree.get_widget("lbl_persistence").hide()
+
+		# Get the maximum allowed filesize on the service
+		if selected_service.has_key('maxsize'):
+			maxsizeStr = sizeStr(selected_service['maxsize'])
+			wTree.get_widget("txt_maxsize").set_label(maxsizeStr)
+			wTree.get_widget("txt_maxsize").show()
+			wTree.get_widget("lbl_maxsize").show()
+		else:
+			wTree.get_widget("txt_maxsize").set_label(_("N/A"))
+			wTree.get_widget("txt_maxsize").hide()
+			wTree.get_widget("lbl_maxsize").hide()
+
+		if not selected_service.has_key('space'):
+			wTree.get_widget("txt_space").set_label(_("N/A"))
+			wTree.get_widget("txt_space").hide()
+			wTree.get_widget("lbl_space").hide()
+			if not selected_service.has_key('maxsize'):
+				self.check=False
+
 class mintUploader:
 	'''Uploads the file to the selected service'''
 
@@ -659,34 +688,6 @@ class mintUploadWindow:
 		for service in self.services:
 			if service['name'] == selectedService:
 				selected_service = service
-
-				# Get the file's persistence on the service
-				if selected_service.has_key('persistence'):
-					wTree.get_widget("txt_persistence").set_label(str(selected_service['persistence']) + " " + _("days"))
-					wTree.get_widget("txt_persistence").show()
-					wTree.get_widget("lbl_persistence").show()
-				else:
-					wTree.get_widget("txt_persistence").set_label(_("N/A"))
-					wTree.get_widget("txt_persistence").hide()
-					wTree.get_widget("lbl_persistence").hide()
-
-				# Get the maximum allowed filesize on the service
-				if selected_service.has_key('maxsize'):
-					maxsizeStr = sizeStr(selected_service['maxsize'])
-					wTree.get_widget("txt_maxsize").set_label(maxsizeStr)
-					wTree.get_widget("txt_maxsize").show()
-					wTree.get_widget("lbl_maxsize").show()
-				else:
-					wTree.get_widget("txt_maxsize").set_label(_("N/A"))
-					wTree.get_widget("txt_maxsize").hide()
-					wTree.get_widget("lbl_maxsize").hide()
-
-				if not selected_service.has_key('space'):
-					wTree.get_widget("txt_space").set_label(_("N/A"))
-					wTree.get_widget("txt_space").hide()
-					wTree.get_widget("lbl_space").hide()
-					if not selected_service.has_key('maxsize'):
-						return True
 
 				self.check_space()
 				return True
