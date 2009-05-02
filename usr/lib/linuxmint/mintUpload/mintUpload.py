@@ -33,22 +33,22 @@ gtk.gdk.threads_init()
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 
-def myCustomError(self, detail):
+def gtkCustomError(self, detail):
 	global statusbar
 	message = "<span color='red'>" + detail + "</span>"
 	statusbar.push(context_id, message)
 	statusbar.get_children()[0].get_children()[0].set_use_markup(True)
 
-CustomError.__init__ = myCustomError
+CustomError.__init__ = gtkCustomError
 
-class gtkspaceChecker(threading.Thread, spaceChecker):
+class gtkSpaceChecker(threading.Thread, mintSpaceChecker):
 	'''Checks for available space on the service'''
 
 	def __init__(self, filesize):
 		threading.Thread.__init__(self)
-		spaceChecker.__init__(self, selected_service, filesize)
+		mintSpaceChecker.__init__(self, selected_service, filesize)
 		self.filesize = filesize
-		self.check = True
+		self.needsCheck = True
 
 	def run(self):
 		global statusbar
@@ -82,9 +82,9 @@ class gtkspaceChecker(threading.Thread, spaceChecker):
 			wTree.get_widget("txt_space").hide()
 			wTree.get_widget("lbl_space").hide()
 			if not selected_service.has_key('maxsize'):
-				self.check=False
+				self.needsCheck=False
 
-		if self.check:
+		if self.needsCheck:
 			wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 			wTree.get_widget("combo").set_sensitive(False)
 			wTree.get_widget("upload_button").set_sensitive(False)
@@ -94,7 +94,7 @@ class gtkspaceChecker(threading.Thread, spaceChecker):
 
 			# Check the filesize
 			try:
-				self.checkspace()
+				self.check()
 
 			except ConnectionError:
 				statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
@@ -520,7 +520,7 @@ class mintUploadWindow:
 		for service in self.services:
 			if service['name'] == selectedService:
 				selected_service = service
-				checker = gtkspaceChecker(self.filesize)
+				checker = gtkSpaceChecker(self.filesize)
 				checker.start()
 				return True
 

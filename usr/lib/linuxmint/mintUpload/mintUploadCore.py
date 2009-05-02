@@ -45,14 +45,14 @@ def sizeStr(size, acc=1, factor=1000):
 			return str(rounded) + thresholds[i]
 	return str(int(size)) + thresholds[0]
 
-class spaceChecker:
+class mintSpaceChecker:
 	'''Checks that the filesize is ok'''
 
 	def __init__(self, service, filesize):
 		self.service = service
 		self.filesize = filesize
 
-	def checkspace(self):
+	def check(self):
 		# Get the maximum allowed self.filesize on the service
 		if self.service.has_key("maxsize"):
 			if self.filesize > self.service["maxsize"]:
