@@ -26,3 +26,16 @@ except:
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 
+class CustomError(Exception):
+	'''All custom defined errors'''
+	def __init__(self, detail):
+		sys.stderr.write(os.linesep + self.__class__.__name__ + ': ' + detail + os.linesep*2)
+
+class ConnectionError(CustomError):
+	'''Raised when an error has occured with an external connection'''
+	pass
+
+class FilesizeError(CustomError):
+	'''Raised when the file is too large or too small'''
+	pass
+
