@@ -45,12 +45,20 @@ def sizeStr(size, acc=1, factor=1000):
 			return str(rounded) + thresholds[i]
 	return str(int(size)) + thresholds[0]
 
-class mintSpaceChecker:
+class mintSpaceChecker(threading.Thread):
 	'''Checks that the filesize is ok'''
 
 	def __init__(self, service, filesize):
+		threading.Thread.__init__(self)
 		self.service = service
 		self.filesize = filesize
+	
+	def run(self):
+		try:
+			self.check()
+			return true
+		except FilesizeError:
+			return false
 
 	def check(self):
 		# Get the maximum allowed self.filesize on the service

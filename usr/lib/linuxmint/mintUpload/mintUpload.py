@@ -41,13 +41,13 @@ def gtkCustomError(self, detail):
 
 CustomError.__init__ = gtkCustomError
 
-class gtkSpaceChecker(threading.Thread, mintSpaceChecker):
+class gtkSpaceChecker(mintSpaceChecker):
 	'''Checks for available space on the service'''
 
 	def __init__(self, filesize):
-		threading.Thread.__init__(self)
+		global selected_service
+
 		mintSpaceChecker.__init__(self, selected_service, filesize)
-		self.filesize = filesize
 		self.needsCheck = True
 
 	def run(self):
