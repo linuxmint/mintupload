@@ -132,37 +132,6 @@ class mintUploader:
 		self.filesize = os.path.getsize(self.file)
 		self.so_far = 0
 
-class gtkUploader(threading.Thread):
-	'''Wrapper for the gtk management of mintUploader'''
-
-	def __init__(self, service, file):
-		self.service = service
-		self.file = file
-
-		self.name = os.path.basename(self.file)
-		self.filesize = os.path.getsize(self.file)
-		self.so_far = 0
-
-		threading.Thread.__init__(self)
-
-	def run(self):
-		try:
-			# Switch to required connect function, depending on service
-			supported_services = {
-				'MINT': self._ftp, # For backwards compatiblity
-				'FTP' : self._ftp,
-				'SFTP': self._sftp,
-				'SCP' : self._scp}[self.service['type']]()
-
-			self.success()
-
-		except:
-			try:    raise CustomError(_("Upload failed."))
-			except: pass
-
-		finally:
-			self.final()
-
 	def _ftp(self):
 		'''Connection process for FTP services'''
 
@@ -275,6 +244,37 @@ class gtkUploader(threading.Thread):
 		pct = int(pct * 100)
 		print "so far:", pct, "%"
 		return
+
+class gtkUploader(threading.Thread):
+	'''Wrapper for the gtk management of mintUploader'''
+
+	def __init__(self, service, file):
+		self.service = service
+		self.file = file
+
+		self.name = os.path.basename(self.file)
+		self.filesize = os.path.getsize(self.file)
+		self.so_far = 0
+
+		threading.Thread.__init__(self)
+
+	def run(self):
+		try:
+			# Switch to required connect function, depending on service
+			supported_services = {
+				'MINT': self._ftp, # For backwards compatiblity
+				'FTP' : self._ftp,
+				'SFTP': self._sftp,
+				'SCP' : self._scp}[self.service['type']]()
+
+			self.success()
+
+		except:
+			try:    raise CustomError(_("Upload failed."))
+			except: pass
+
+		finally:
+			self.final()
 
 	def success(self):
 		print _("File uploaded successfully.")
