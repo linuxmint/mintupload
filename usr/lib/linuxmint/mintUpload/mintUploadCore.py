@@ -206,3 +206,105 @@ class mintUploader:
 		print "so far:", pct, "%"
 		return
 
+def read_services():
+	'''Get all defined services'''
+
+	services = []
+	for loc, path in config_paths.iteritems():
+		os.system("mkdir -p " + path)
+		for file in os.listdir(path):
+			try:
+				s = Service(path + file)
+			except:
+				pass
+			else:
+				s['loc'] = loc
+				services.append(s)
+	return services
+
+config_paths = {'system':"/etc/linuxmint/mintUpload/services/", 'user':home + "/.linuxmint/mintUpload/services/"}
+defaults = ConfigObj({
+	'type':'MINT',
+	'host':'mint-space.com',
+	'user':os.environ['LOGNAME'],
+	'path':'',
+	'pass':'',
+	'format':'%Y%m%d%H%M%S',
+})
+
+class Service(ConfigObj):
+	'''Object representing an upload service'''
+
+	def __init__(self, *args):
+		'''Get the details of an individual service'''
+
+		ConfigObj.__init__(self, *args)
+		self._fix()
+
+	def merge(self, *args):
+		'''Merge configuration with another'''
+
+		ConfigObj.merge(self, *args)
+		self._fix()
+
+	def remove(self):
+		'''Deletes the configuration file'''
+		os.system("rm " + self.filename)
+
+	def _fix(self):
+		'''Format values correctly'''
+
+		for k,v in self.iteritems():
+			if v:
+				if type(v) is list:
+					self[k] = ','.join(v)
+			else:
+				self.pop(k)
+
+		if self.filename:
+			self['name'] = os.path.basename(self.filename)
+
+		if self.has_key('type'):
+			self['type'] = self['type'].upper()
+
+		if self.has_key('host'):
+			h = self['host']
+			if h.find(':') >= 0:
+				h = h.split(':')
+				self['host'] = h[0]
+				self['port'] = h[1]
+
+		ints = ['port', 'maxsize', 'persistence']
+		for k in ints:
+			if self.has_key(k):
+				self[k] = int(self[k])
+
+	def for_upload(self, file):
+		'''Upload a file to the service'''
+
+		s = defaults
+		s.merge(self)
+
+		timestamp = datetime.datetime.utcnow().strftime(s['format'])
+		s['path'] = s['path'].replace('<TIMESTAMP>',timestamp)
+
+		# Replace placeholders in url
+		url_replace = {
+			'<TIMESTAMP>':timestamp,
+			'<FILE>':os.path.basename(file),
+			'<PATH>':s['path']
+		}
+		url = s['url']
+		for k,v in url_replace.iteritems():
+			url = url.replace(k,v)
+		s['url'] = url
+
+		# Ensure trailing '/', after url <PATH> replace
+		if s['path']:
+			s['path'] = os.path.normpath(s['path'])
+		else:
+			s['path'] = os.curdir
+		s['path'] += os.sep
+
+		return s
+
