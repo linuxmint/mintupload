@@ -182,7 +182,7 @@ class gtkspaceChecker(threading.Thread, spaceChecker):
 class mintUploader:
 	'''Uploads the file to the selected service'''
 
-	def __init__(self, service, file, progress=None, asciicallback=None):
+	def __init__(self, service, file):
 		self.service = service
 		self.file = file
 		self.name = os.path.basename(self.file)
@@ -315,11 +315,12 @@ class mintUploader:
 		print "so far:", pct, "%"
 		return
 
-class gtkUploader(threading.Thread):
+class gtkUploader(threading.Thread, mintUploader):
 	'''Wrapper for the gtk management of mintUploader'''
 
 	def __init__(self, service, file):
 		threading.Thread.__init__(self)
+		mintUploader.__init__(self, service, file)
 		self.service = service
 		self.file = file
 
@@ -338,10 +339,8 @@ class gtkUploader(threading.Thread):
 		progressbar.set_fraction(0)
 		progressbar.set_text("0%")
 
-		uploader = mintUploader(self.service, self.file, self.progress, self.asciicallback)
-
 		try:
-			uploader.upload()
+			self.upload()
 		except:
 			try:    raise CustomError(_("Upload failed."))
 			except: pass
