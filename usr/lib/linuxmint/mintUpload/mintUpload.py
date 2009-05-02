@@ -44,21 +44,14 @@ CustomError.__init__ = gtkCustomError
 class gtkSpaceChecker(mintSpaceChecker):
 	'''Checks for available space on the service'''
 
-	def __init__(self, filesize):
-		global selected_service
-
-		mintSpaceChecker.__init__(self, selected_service, filesize)
-		self.needsCheck = True
-
 	def run(self):
 		global statusbar
 		global context_id
 		global wTree
-		global selected_service
 
 		# Get the file's persistence on the service
-		if selected_service.has_key('persistence'):
-			wTree.get_widget("txt_persistence").set_label(str(selected_service['persistence']) + " " + _("days"))
+		if self.service.has_key('persistence'):
+			wTree.get_widget("txt_persistence").set_label(str(self.service['persistence']) + " " + _("days"))
 			wTree.get_widget("txt_persistence").show()
 			wTree.get_widget("lbl_persistence").show()
 		else:
@@ -67,8 +60,8 @@ class gtkSpaceChecker(mintSpaceChecker):
 			wTree.get_widget("lbl_persistence").hide()
 
 		# Get the maximum allowed filesize on the service
-		if selected_service.has_key('maxsize'):
-			maxsizeStr = sizeStr(selected_service['maxsize'])
+		if self.service.has_key('maxsize'):
+			maxsizeStr = sizeStr(self.service['maxsize'])
 			wTree.get_widget("txt_maxsize").set_label(maxsizeStr)
 			wTree.get_widget("txt_maxsize").show()
 			wTree.get_widget("lbl_maxsize").show()
@@ -77,11 +70,12 @@ class gtkSpaceChecker(mintSpaceChecker):
 			wTree.get_widget("txt_maxsize").hide()
 			wTree.get_widget("lbl_maxsize").hide()
 
-		if not selected_service.has_key('space'):
+		self.needsCheck = True
+		if not self.service.has_key('space'):
 			wTree.get_widget("txt_space").set_label(_("N/A"))
 			wTree.get_widget("txt_space").hide()
 			wTree.get_widget("lbl_space").hide()
-			if not selected_service.has_key('maxsize'):
+			if not self.service.has_key('maxsize'):
 				self.needsCheck=False
 
 		if self.needsCheck:
@@ -104,7 +98,7 @@ class gtkSpaceChecker(mintSpaceChecker):
 
 			else:
 				# Display the available space left on the service
-				if selected_service.has_key('space'):
+				if self.service.has_key('space'):
 					pctSpace = float(self.available) / float(self.total) * 100
 					pctSpaceStr = sizeStr(self.available) + " (" + str(int(pctSpace)) + "%)"
 					wTree.get_widget("txt_space").set_label(pctSpaceStr)
@@ -513,7 +507,7 @@ class mintUploadWindow:
 		for service in self.services:
 			if service['name'] == selectedService:
 				selected_service = service
-				checker = gtkSpaceChecker(self.filesize)
+				checker = gtkSpaceChecker(selected_service, self.filesize)
 				checker.start()
 				return True
 
