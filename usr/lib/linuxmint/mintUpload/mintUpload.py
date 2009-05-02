@@ -271,7 +271,7 @@ class gtkUploader(threading.Thread):
 		global statusbar
 		global wTree
 
-		uploader = mintUploader(service, file, self.progress, self.asciicallback)
+		uploader = mintUploader(self.service, self.file, self.progress, self.asciicallback)
 
 		try:
 			uploader.upload()
