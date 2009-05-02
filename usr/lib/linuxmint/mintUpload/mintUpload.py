@@ -30,7 +30,7 @@ try:
 	import commands
 	from user import home
 	from configobj import ConfigObj
-	import mintUploadCore
+	from mintUploadCore import *
 except:
 	print "You do not have all the dependencies!"
 	sys.exit(1)
