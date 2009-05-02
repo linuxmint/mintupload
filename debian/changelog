@@ -1,3 +1,9 @@
+mintupload (3.1) gloria; urgency=low
+
+  * Fix for passwordless SCP profiles
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed,  22 Apr 2009 18:24:00 +0000
+
 mintupload (3.0.4.1~ppa3) intrepid; urgency=low
 
   * minimum gui abstraction complete
