@@ -171,7 +171,8 @@ class mintUploader:
 			scp_cmd = "scp " + self.file + " " + self.service['user'] + "@" + self.service['host'] + ':' + self.service['path']
 			scp = pexpect.spawn(scp_cmd)
 
-			if self.service['pass'] and len(selected_service['pass']) > 0:
+			# If password is not defined, or is the empty string, use password-less scp
+			if self.service['pass']:
 				scp.expect('.*password:*')
 				scp.sendline(self.service['pass'])
 
