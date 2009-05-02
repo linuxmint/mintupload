@@ -258,23 +258,6 @@ class mintUploader:
 		print "so far:", pct, "%"
 		return
 
-def myprogress(self, message):
-	global statusbar
-	statusbar.push(context_id, message)
-
-def myasciicallback(self, buffer):
-	global progressbar
-
-	self.so_far = self.so_far+len(buffer)-1
-	pct = float(self.so_far)/self.filesize
-	pctStr = str(int(pct * 100))
-	progressbar.set_fraction(pct)
-	progressbar.set_text(pctStr + "%")
-	return
-
-mintUploader.progress = myprogress
-mintUploader.asciicallback = myasciicallback
-
 class gtkUploader(threading.Thread):
 	'''Wrapper for the gtk management of mintUploader'''
 
@@ -288,7 +271,7 @@ class gtkUploader(threading.Thread):
 		global statusbar
 		global wTree
 
-		uploader = mintUploader(service, file)
+		uploader = mintUploader(service, file, self.gtkprogress, self.gtkasciicallback)
 
 		try:
 			uploader.upload()
@@ -311,6 +294,20 @@ class gtkUploader(threading.Thread):
 
 		finally:
 			wTree.get_widget("main_window").window.set_cursor(None)
+
+	def gtkprogress(self, message):
+		global statusbar
+		statusbar.push(context_id, message)
+
+	def gtkasciicallback(self, buffer):
+		global progressbar
+
+		self.so_far = self.so_far+len(buffer)-1
+		pct = float(self.so_far)/self.filesize
+		pctStr = str(int(pct * 100))
+		progressbar.set_fraction(pct)
+		progressbar.set_text(pctStr + "%")
+		return
 
 class mintUploadWindow:
 	"""This is the main class for the application"""
