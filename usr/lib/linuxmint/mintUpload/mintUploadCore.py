@@ -50,3 +50,29 @@ def sizeStr(size, acc=1, factor=1000):
 			return str(rounded) + thresholds[i]
 	return str(int(size)) + thresholds[0]
 
+class spaceChecker:
+	'''Checks that the filesize is ok'''
+
+	def __init__(self, service, filesize):
+		self.service = service
+		self.filesize = filesize
+
+	def checkspace(self):
+		# Get the maximum allowed self.filesize on the service
+		if self.service.has_key("maxsize"):
+			if self.filesize > self.service["maxsize"]:
+				raise FilesizeError(_("File larger than service's maximum"))
+
+		# Get the available space left on the service
+		if self.service.has_key("space"):
+			try:
+				spaceInfo = urllib.urlopen(self.service["space"]).read()
+			except:
+				raise ConnectionError(_("Could not get available space"))
+
+			spaceInfo = spaceInfo.split("/")
+			self.available = int(spaceInfo[0])
+			self.total = int(spaceInfo[1])
+			if self.filesize > self.available:
+				raise FilesizeError(_("File larger than service's available space"))
+
