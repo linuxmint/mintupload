@@ -37,7 +37,7 @@ def gtkCustomError(self, detail):
 	message = "<span color='red'>" + detail + "</span>"
 	statusbar.push(context_id, message)
 	statusbar.get_children()[0].get_children()[0].set_use_markup(True)
-	CustomError.error(detail)
+	CustomError.error(self, detail)
 
 CustomError.__init__ = gtkCustomError
 
