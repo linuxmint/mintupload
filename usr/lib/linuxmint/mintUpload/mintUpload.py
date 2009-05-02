@@ -20,7 +20,6 @@ try:
 	import gtk
 	import gtk.glade
 	import os
-	import threading
 	import gettext
 	import commands
 	from mintUploadCore import *
