@@ -303,3 +303,36 @@ class Service(ConfigObj):
 
 		return s
 
+def my_storbinary(self, cmd, fp, blocksize=8192, callback=None):
+	'''Store a file in binary mode.'''
+
+	self.voidcmd('TYPE I')
+	conn = self.transfercmd(cmd)
+	while 1:
+		buf = fp.read(blocksize)
+		if not buf: break
+		conn.sendall(buf)
+		if callback: callback(buf)
+	conn.close()
+	return self.voidresp()
+
+def my_storlines(self, cmd, fp, callback=None):
+	'''Store a file in line mode.'''
+
+	self.voidcmd('TYPE A')
+	conn = self.transfercmd(cmd)
+	while 1:
+		buf = fp.readline()
+		if not buf: break
+		if buf[-2:] != CRLF:
+			if buf[-1] in CRLF: buf = buf[:-1]
+			buf = buf + CRLF
+		conn.sendall(buf)
+		if callback: callback(buf)
+	conn.close()
+	return self.voidresp()
+
+# Use the patched versions
+ftplib.FTP.storbinary = my_storbinary
+ftplib.FTP.storlines = my_storlines
+
