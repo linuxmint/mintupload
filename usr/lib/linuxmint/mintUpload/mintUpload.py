@@ -320,6 +320,7 @@ class gtkUploader(threading.Thread, mintUploader):
 
 	def __init__(self, service, file):
 		threading.Thread.__init__(self)
+		service = service.for_upload(file)
 		mintUploader.__init__(self, service, file)
 		self.service = service
 		self.file = file
@@ -331,7 +332,6 @@ class gtkUploader(threading.Thread, mintUploader):
 
 		wTree.get_widget("upload_button").set_sensitive(False)
 		wTree.get_widget("combo").set_sensitive(False)
-		service = service.for_upload(self.filename)
 
 		statusbar.push(context_id, _("Connecting to the service..."))
 		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
