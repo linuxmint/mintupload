@@ -204,7 +204,7 @@ class mintUploader(threading.Thread):
 		self.so_far = self.so_far+len(buffer)-1
 		pct = float(self.so_far)/self.filesize
 		pct = int(pct * 100)
-		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(self.so_far))
+		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(self.so_far) + "     ")
 		sys.stdout.flush()
 		return
 
