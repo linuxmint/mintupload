@@ -109,16 +109,13 @@ class mintUploader:
 			f = open(self.file, "rb")
 			self.progress(_("Uploading the file..."))
 			ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.asciicallback)
-			f.close()
-			ftp.quit()
 
-		except:
-			# Close any open connections before raising error
+		finally:
+			# Close any open connections
 			try:	f.close()
 			except:	pass
 			try:	ftp.quit()
 			except:	pass
-			raise
 
 	def getPrivateKey(self):
 		'''Find a private key in ~/.ssh'''
@@ -152,16 +149,13 @@ class mintUploader:
 			sftp = paramiko.SFTPClient.from_transport(transport)
 			self.progress(_("Uploading the file..."))
 			sftp.put(self.file, path + self.name)
-			sftp.close()
-			transport.close()
 
-		except:
-			# Close any open connections before raising error
+		finally:
+			# Close any open connections
 			try:	sftp.close()
 			except:	pass
 			try:	transport.close()
 			except:	pass
-			raise
 
 	def _scp(self):
 		'''Connection process for SCP services'''
@@ -184,13 +178,10 @@ class mintUploader:
 				scp.sendline(' ')
 				raise ConnectionError(_("Connection requires a password!"))
 
-			scp.close()
-
-		except:
-			# Close any open connections before raising error
+		finally:
+			# Close any open connections
 			try:	scp.close()
 			except:	pass
-			raise
 
 	def progress(self, message):
 		print message
