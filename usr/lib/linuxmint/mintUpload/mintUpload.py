@@ -122,6 +122,16 @@ def myhas_space(self):
 
 spaceChecker.has_space = myhas_space
 
+class mintUploader:
+	'''Uploads the file to the selected service'''
+
+	def __init__(self, service, file):
+		self.service = service
+		self.file = file
+		self.name = os.path.basename(self.file)
+		self.filesize = os.path.getsize(self.file)
+		self.so_far = 0
+
 class gtkUploader(threading.Thread):
 	'''Wrapper for the gtk management of mintUploader'''
 
