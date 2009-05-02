@@ -104,6 +104,10 @@ class mintUploader(threading.Thread):
 
 	def run(self):
 		self.upload()
+		print "\r 100% [" + 50*"=" + ">] " + sizeStr(self.filesize) + "     "
+		print _("File uploaded successfully.")
+		if self.service.has_key('url'):
+			print _("URL:") + " " self.service['url']
 
 	def _ftp(self):
 		'''Connection process for FTP services'''
