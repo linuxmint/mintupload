@@ -122,8 +122,8 @@ def myhas_space(self):
 
 spaceChecker.has_space = myhas_space
 
-class mintUploader(threading.Thread):
-	'''Uploads the file to the selected service'''
+class gtkUploader(threading.Thread):
+	'''Wrapper for the gtk management of mintUploader'''
 
 	def __init__(self, service, file):
 		self.service = service
@@ -309,10 +309,10 @@ def myasciicallback(self, buffer):
 	progressbar.set_text(pctStr + "%")
 	return
 
-mintUploader.final = myfinal
-mintUploader.success = mysuccess
-mintUploader.progress = myprogress
-mintUploader.asciicallback = myasciicallback
+gtkUploader.final = myfinal
+gtkUploader.success = mysuccess
+gtkUploader.progress = myprogress
+gtkUploader.asciicallback = myasciicallback
 
 class mintUploadWindow:
 	"""This is the main class for the application"""
@@ -737,7 +737,7 @@ class mintUploadWindow:
 		progressbar.set_fraction(0)
 		progressbar.set_text("0%")
 
-		uploader = mintUploader(selected_service, self.filename)
+		uploader = gtkUploader(selected_service, self.filename)
 		uploader.start()
 		return True
 
