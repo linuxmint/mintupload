@@ -271,7 +271,7 @@ class gtkUploader(threading.Thread):
 		global statusbar
 		global wTree
 
-		uploader = mintUploader(service, file, self.gtkprogress, self.gtkasciicallback)
+		uploader = mintUploader(service, file, self.progress, self.asciicallback)
 
 		try:
 			uploader.upload()
@@ -295,11 +295,11 @@ class gtkUploader(threading.Thread):
 		finally:
 			wTree.get_widget("main_window").window.set_cursor(None)
 
-	def gtkprogress(self, message):
+	def progress(self, message):
 		global statusbar
 		statusbar.push(context_id, message)
 
-	def gtkasciicallback(self, buffer):
+	def asciicallback(self, buffer):
 		global progressbar
 
 		self.so_far = self.so_far+len(buffer)-1
