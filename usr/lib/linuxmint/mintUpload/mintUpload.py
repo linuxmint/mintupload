@@ -108,22 +108,6 @@ class spaceChecker(threading.Thread):
 	def has_space(self):
 		pass
 
-def myhas_space(self):
-	global wTree
-	global statusbar
-
-	# Display the available space left on the service
-	if self.service.has_key('space'):
-		pctSpace = float(self.available) / float(self.total) * 100
-		pctSpaceStr = sizeStr(self.available) + " (" + str(int(pctSpace)) + "%)"
-		wTree.get_widget("txt_space").set_label(pctSpaceStr)
-		wTree.get_widget("txt_space").show()
-		wTree.get_widget("lbl_space").show()
-
-	# Activate upload button
-	statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
-	wTree.get_widget("upload_button").set_sensitive(True)
-
 spaceChecker.has_space = myhas_space
 
 class gtkspaceChecker(threading.Thread):
@@ -187,6 +171,19 @@ class gtkspaceChecker(threading.Thread):
 
 			except FilesizeError:
 				statusbar.push(context_id, "<span color='red'>" + _("File too big or not enough space on the service.") + "</span>")
+
+			else:
+				# Display the available space left on the service
+				if selected_service.has_key('space'):
+					pctSpace = float(spacecheck.available) / float(spacecheck.total) * 100
+					pctSpaceStr = sizeStr(spacecheck.available) + " (" + str(int(pctSpace)) + "%)"
+					wTree.get_widget("txt_space").set_label(pctSpaceStr)
+					wTree.get_widget("txt_space").show()
+					wTree.get_widget("lbl_space").show()
+
+				# Activate upload button
+				statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
+				wTree.get_widget("upload_button").set_sensitive(True)
 
 			finally:
 				label = statusbar.get_children()[0].get_children()[0]
