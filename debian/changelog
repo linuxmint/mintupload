@@ -1,3 +1,13 @@
+mintupload (3.1.1~ppa1) jaunty; urgency=low
+
+  * Achieved reasonable gui abstraction
+  * removed clem's scp fix in favour of a comment
+  * more v2 translations - german, spanish, czech, ukrainian
+  * numerous bugfixes
+  * repackaging for ppa
+
+ -- Philip Morrell <ubuntu.emorrp1@mamber.net>  Sat,  02 May 2009 13:54:15 +0100
+
 mintupload (3.1) gloria; urgency=low
 
   * Fix for passwordless SCP profiles
