@@ -126,6 +126,14 @@ def myhas_space(self):
 
 spaceChecker.has_space = myhas_space
 
+class gtkspaceChecker(threading.Thread):
+	'''Checks for available space on the service'''
+
+	def __init__(self, service, filesize):
+		threading.Thread.__init__(self)
+		self.service = service
+		self.filesize = filesize
+
 class mintUploader:
 	'''Uploads the file to the selected service'''
 
