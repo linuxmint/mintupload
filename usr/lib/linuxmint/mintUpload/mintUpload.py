@@ -278,42 +278,33 @@ class gtkUploader(threading.Thread):
 		self.file = file
 
 	def run(self):
+		global progressbar
+		global statusbar
+		global wTree
 
 		uploader = mintUploader(service, file)
+
 		try:
 			uploader.upload()
 		except:
 			try:    raise CustomError(_("Upload failed."))
 			except: pass
+
 		else:
-			self.success()
+			# Report success
+			progressbar.set_fraction(1)
+			progressbar.set_text("100%")
+			statusbar.push(context_id, "<span color='green'>" + _("File uploaded successfully.") + "</span>")
+			statusbar.get_children()[0].get_children()[0].set_use_markup(True)
+
+			#If service is Mint then show the URL
+			if self.service.has_key('url'):
+				wTree.get_widget("txt_url").set_text(self.service['url'])
+				wTree.get_widget("txt_url").show()
+				wTree.get_widget("lbl_url").show()
+
 		finally:
-			global wTree
 			wTree.get_widget("main_window").window.set_cursor(None)
-
-	def success(self):
-		print _("File uploaded successfully.")
-		if self.service.has_key('url'):
-			print self.service['url']
-
-def mysuccess(self):
-	global progressbar
-	global statusbar
-	global wTree
-
-	# Report success
-	progressbar.set_fraction(1)
-	progressbar.set_text("100%")
-	statusbar.push(context_id, "<span color='green'>" + _("File uploaded successfully.") + "</span>")
-	statusbar.get_children()[0].get_children()[0].set_use_markup(True)
-
-	#If service is Mint then show the URL
-	if self.service.has_key('url'):
-		wTree.get_widget("txt_url").set_text(self.service['url'])
-		wTree.get_widget("txt_url").show()
-		wTree.get_widget("lbl_url").show()
-
-gtkUploader.success = mysuccess
 
 class mintUploadWindow:
 	"""This is the main class for the application"""
