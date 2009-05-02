@@ -288,19 +288,13 @@ class gtkUploader(threading.Thread):
 		else:
 			self.success()
 		finally:
-			self.final()
+			global wTree
+			wTree.get_widget("main_window").window.set_cursor(None)
 
 	def success(self):
 		print _("File uploaded successfully.")
 		if self.service.has_key('url'):
 			print self.service['url']
-	
-	def final(self):
-		pass
-
-def myfinal(self):
-	global wTree
-	wTree.get_widget("main_window").window.set_cursor(None)
 
 def mysuccess(self):
 	global progressbar
@@ -319,7 +313,6 @@ def mysuccess(self):
 		wTree.get_widget("txt_url").show()
 		wTree.get_widget("lbl_url").show()
 
-gtkUploader.final = myfinal
 gtkUploader.success = mysuccess
 
 class mintUploadWindow:
