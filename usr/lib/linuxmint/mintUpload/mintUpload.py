@@ -168,6 +168,9 @@ class gtkUploader(mintUploader):
 		pctStr = str(int(pct * 100))
 		progressbar.set_fraction(pct)
 		progressbar.set_text(pctStr + "%")
+
+		# Output cli for debugging, bugfix
+		self.so_far = self.so_far-len(buffer)+1
 		mintUploader.asciicallback(self, buffer)
 		return
 
