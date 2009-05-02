@@ -37,6 +37,7 @@ def gtkCustomError(self, detail):
 	message = "<span color='red'>" + detail + "</span>"
 	statusbar.push(context_id, message)
 	statusbar.get_children()[0].get_children()[0].set_use_markup(True)
+	CustomError.error(detail)
 
 CustomError.__init__ = gtkCustomError
 
@@ -157,6 +158,7 @@ class gtkUploader(mintUploader):
 	def progress(self, message):
 		global statusbar
 		statusbar.push(context_id, message)
+		mintUploader.progress(self, message)
 
 	def asciicallback(self, buffer):
 		global progressbar
@@ -166,6 +168,7 @@ class gtkUploader(mintUploader):
 		pctStr = str(int(pct * 100))
 		progressbar.set_fraction(pct)
 		progressbar.set_text(pctStr + "%")
+		mintUploader.asciicallback(self, buffer)
 		return
 
 class mintUploadWindow:

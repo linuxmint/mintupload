@@ -25,6 +25,9 @@ gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 class CustomError(Exception):
 	'''All custom defined errors'''
 	def __init__(self, detail):
+		self.error(detail)
+
+	def error(self, detail):
 		sys.stderr.write(os.linesep + self.__class__.__name__ + ': ' + detail + os.linesep*2)
 
 class ConnectionError(CustomError):
