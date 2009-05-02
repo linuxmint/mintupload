@@ -19,17 +19,10 @@ except:
 try:
 	import gtk
 	import gtk.glade
-	import urllib
-	import ftplib
 	import os
 	import threading
-	import datetime
 	import gettext
-	import paramiko
-	import pexpect
 	import commands
-	from user import home
-	from configobj import ConfigObj
 	from mintUploadCore import *
 except:
 	print "You do not have all the dependencies!"
