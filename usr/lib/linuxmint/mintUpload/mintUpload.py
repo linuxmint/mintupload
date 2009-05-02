@@ -196,12 +196,6 @@ class mintUploader:
 			'SFTP': self._sftp,
 			'SCP' : self._scp}[self.service['type']]
 
-		# Override reporting functions if given
-		if progress:
-			self.progress = progress
-		if asciicallback:
-			self.asciicallback = asciicallback
-
 	def _ftp(self):
 		'''Connection process for FTP services'''
 
