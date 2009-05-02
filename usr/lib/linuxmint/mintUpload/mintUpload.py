@@ -249,14 +249,9 @@ class gtkUploader(threading.Thread):
 	'''Wrapper for the gtk management of mintUploader'''
 
 	def __init__(self, service, file):
+		threading.Thread.__init__(self)
 		self.service = service
 		self.file = file
-
-		self.name = os.path.basename(self.file)
-		self.filesize = os.path.getsize(self.file)
-		self.so_far = 0
-
-		threading.Thread.__init__(self)
 
 	def run(self):
 		try:
