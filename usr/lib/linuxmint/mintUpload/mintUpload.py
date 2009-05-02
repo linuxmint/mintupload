@@ -278,14 +278,15 @@ class gtkUploader(threading.Thread):
 		self.file = file
 
 	def run(self):
+
+		uploader = mintUploader(service, file)
 		try:
-
-			self.success()
-
+			uploader.upload()
 		except:
 			try:    raise CustomError(_("Upload failed."))
 			except: pass
-
+		else:
+			self.success()
 		finally:
 			self.final()
 
