@@ -60,9 +60,9 @@ class mintSpaceChecker(threading.Thread):
 	def run(self):
 		try:
 			self.check()
-			return true
+			return True
 		except FilesizeError:
-			return false
+			return False
 
 	def check(self):
 		# Get the maximum allowed self.filesize on the service
