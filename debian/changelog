@@ -1,5 +1,6 @@
-mintupload (3.1.1~ppa1) jaunty; urgency=low
+mintupload (3.3.1~ppa1) jaunty; urgency=low
 
+  * Updating to upstream base - changes ConnectionError messages
   * Achieved reasonable gui abstraction
   * removed clem's scp fix in favour of a comment
   * more v2 translations - german, spanish, czech, ukrainian
@@ -7,6 +8,19 @@ mintupload (3.1.1~ppa1) jaunty; urgency=low
   * repackaging for ppa
 
  -- Philip Morrell <ubuntu.emorrp1@mamber.net>  Sat,  02 May 2009 13:54:15 +0100
+
+mintupload (3.3) gloria; urgency=low
+
+  * Localized hardcoded string line #291
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed,  6 May 2009 15:59:00 +0000
+
+mintupload (3.2) gloria; urgency=low
+
+  * Localized hardcoded messages when SCP fails to find password/key
+  * Moved space char out of localization for successful connection messsages. 
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed,  6 May 2009 15:27:00 +0000
 
 mintupload (3.1) gloria; urgency=low
 

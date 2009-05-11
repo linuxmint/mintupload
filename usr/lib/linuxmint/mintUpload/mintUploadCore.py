@@ -150,7 +150,7 @@ class mintUploader(threading.Thread):
 
 		if not self.service['pass']:
 			rsa_key = self.getPrivateKey()
-			if not rsa_key:	raise ConnectionError(_("Connection requires a password or private key!"))
+			if not rsa_key:	raise ConnectionError(_("This service requires a password or private key."))
 		if not self.service.has_key('port'):
 			self.service['port'] = 22
 		try:
@@ -197,7 +197,7 @@ class mintUploader(threading.Thread):
 			received = scp.expect(['.*100\%.*','.*password:.*',pexpect.EOF])
 			if received == 1:
 				scp.sendline(' ')
-				raise ConnectionError(_("Connection requires a password!"))
+				raise ConnectionError(_("This service requires a password."))
 
 		finally:
 			# Close any open connections
