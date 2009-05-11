@@ -288,7 +288,7 @@ class mintUploader(threading.Thread):
 			received = scp.expect(['.*100\%.*','.*password:.*',pexpect.EOF])
 			if received == 1:
 				scp.sendline(' ')
-				raise ConnectionError("Connection requires a password!")
+				raise ConnectionError(_("This service requires a password."))
 
 			scp.close()
 
