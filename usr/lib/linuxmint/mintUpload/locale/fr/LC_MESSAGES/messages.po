@@ -156,3 +156,6 @@ msgstr "Chemin distant. <TIMESTAMP> est remplacé par la valeur du timestamp. Pa
 msgid "connection successfully established"
 msgstr "connexion établie avec succès"
 
+msgid "This service requires a password or a private key."
+msgstr "Ce service nécessite un mot de passe ou un clef privée."
+
