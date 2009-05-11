@@ -239,7 +239,7 @@ class mintUploader(threading.Thread):
 
 		if not selected_service['pass']:
 			rsa_key = self.getPrivateKey()
-			if not rsa_key:	raise ConnectionError("Connection requires a password or private key!")
+			if not rsa_key:	raise ConnectionError(_("This service requires a password or a private key."))
 		if not selected_service['port']:
 			selected_service['port'] = 22
 		try:
