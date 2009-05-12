@@ -232,6 +232,8 @@ def read_services():
 	return services
 
 config = ConfigObj('/etc/linuxmint/mintUpload.conf')
+if os.path.exists(home + '/.linuxmint/mintUpload.conf'):
+	config.merge(ConfigObj(home + '/.linuxmint/mintUpload.conf'))
 
 config_paths = config['paths']
 config_paths['user'] = config_paths['user'].replace('<HOME>',home)
