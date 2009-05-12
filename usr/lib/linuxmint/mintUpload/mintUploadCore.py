@@ -299,6 +299,7 @@ class Service(ConfigObj):
 
 		# Replace placeholders in url
 		url_replace = {
+			' ':'%20',
 			'<TIMESTAMP>':timestamp,
 			'<FILE>':os.path.basename(file),
 			'<PATH>':s['path']
