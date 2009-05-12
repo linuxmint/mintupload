@@ -38,9 +38,13 @@ class FilesizeError(CustomError):
 	'''Raised when the file is too large or too small'''
 	pass
 
-def sizeStr(size, acc=1, factor=1000):
+def sizeStr(size, acc=None, factor=None):
 	'''Converts integer filesize in bytes to textual repr'''
 
+	if not factor:
+		factor = int(config['filesize']['factor'])
+	if not acc:
+		acc = int(config['filesize']['accuracy'])
 	thresholds = [_("B"),_("KB"),_("MB"),_("GB")]
 	size = float(size)
 	for i in reversed(range(1,len(thresholds))):
