@@ -235,11 +235,12 @@ config_paths = {'system':"/etc/linuxmint/mintUpload/services/", 'user':home + "/
 defaults = ConfigObj({
 	'type':'MINT',
 	'host':'mint-space.com',
-	'user':os.environ['LOGNAME'],
+	'user':'<USER>',
 	'path':'',
 	'pass':'',
 	'format':'%Y%m%d%H%M%S',
 })
+defaults['user'] = defaults['user'].replace('<USER>',os.environ['LOGNAME'])
 
 class Service(ConfigObj):
 	'''Object representing an upload service'''
