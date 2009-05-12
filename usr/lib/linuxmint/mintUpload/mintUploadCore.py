@@ -231,8 +231,11 @@ def read_services():
 				services.append(s)
 	return services
 
-config_paths = {'system':"/etc/linuxmint/mintUpload/services/", 'user':home + "/.linuxmint/mintUpload/services/"}
 config = ConfigObj('/etc/linuxmint/mintUpload.conf')
+
+config_paths = config['paths']
+config_paths['user'] = config_paths['user'].replace('<HOME>',home)
+
 defaults = config['defaults']
 defaults['user'] = defaults['user'].replace('<USER>',os.environ['LOGNAME'])
 
