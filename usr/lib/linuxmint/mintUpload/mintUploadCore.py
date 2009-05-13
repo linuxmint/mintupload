@@ -45,7 +45,7 @@ def sizeStr(size, acc=None, factor=None):
 		factor = int(config['filesize']['factor'])
 	if not acc:
 		acc = int(config['filesize']['accuracy'])
-	if config['filesize']['binary_prefixes'] == "True":
+	if config['filesize']['binary_units'] == "True":
 		thresholds = [_("B"),_("KiB"),_("MiB"),_("GiB")]
 	else:
 		thresholds = [_("B"),_("KB"),_("MB"),_("GB")]
