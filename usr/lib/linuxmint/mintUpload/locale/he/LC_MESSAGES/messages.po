@@ -1,0 +1,163 @@
+msgid "Checking space on the service..."
+msgstr "...בדיקת מקום פנוי בשרת"
+
+msgid "B"
+msgstr "בתים"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "ימים"
+
+msgid "Service ready. Space available."
+msgstr ".השרת מוכן. יש מספיק מקום פנוי"
+
+msgid "File too big or not enough space on the service."
+msgstr ".הקובץ גדול מדי או אין מספיק מקום פנוי על השרת"
+
+msgid "Could not connect to the service."
+msgstr ".לא ניתן להתחבר לשרת"
+
+msgid "Connecting to the service..."
+msgstr "...התחברות לשרת"
+
+msgid "Uploading the file..."
+msgstr "...העלאה לשרת"
+
+msgid "File uploaded successfully."
+msgstr ".הקובץ הועלה בהצלחה"
+
+msgid "Upload failed."
+msgstr ".העלאה נכשלה"
+
+msgid "Upload a file"
+msgstr ".העלאת קובץ"
+
+msgid "Upload and share a file"
+msgstr ".העלאה ושיתוף קובץ"
+
+msgid "Upload service"
+msgstr ".שרת העלה"
+
+msgid "Local file"
+msgstr "קובץ מקומי"
+
+msgid "Remote file"
+msgstr "קובץ מרוחק"
+
+msgid "Name:"
+msgstr ":שם"
+
+msgid "Free space:"
+msgstr ":מקום פנוי"
+
+msgid "Max file size:"
+msgstr ":גודל קובץ מקסימלי"
+
+msgid "Persistence:"
+msgstr ":התמדה"
+
+msgid "Path:"
+msgstr ":נתיב"
+
+msgid "Size:"
+msgstr ":גודל"
+
+msgid "Upload progress:"
+msgstr ":התקדמות העלאה"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "FTP service selected"
+msgstr "FTP נבחר שירות"
+
+msgid "N/A"
+msgstr "לא קיים"
+
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "קובץ_"
+
+msgid "Close"
+msgstr "סגירה"
+
+msgid "_Edit"
+msgstr "עריכה_"
+
+msgid "Services"
+msgstr "שירותים"
+
+msgid "New service"
+msgstr "שירות חדש"
+
+msgid "Edit service"
+msgstr "עריכת שירות"
+
+msgid "System-wide services"
+msgstr "שירותי מערכת"
+
+msgid "_Help"
+msgstr "עזרה_"
+
+msgid "About"
+msgstr "אודות"
+
+msgid "File uploader for Linux Mint"
+msgstr "העלאת קבצים ללינוקס מנתה"
+
+msgid "Type:"
+msgstr ":סוג"
+
+msgid "Hostname:"
+msgstr ":שם שרת"
+
+msgid "Port:"
+msgstr ":פורט"
+
+msgid "Username:"
+msgstr ":שם משתמשת"
+
+msgid "Password:"
+msgstr ":ססמא"
+
+msgid "Timestamp:"
+msgstr ":זמן"
+
+msgid "Path: "
+msgstr ":נתיב"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "mint-space.com :שם מתחם או כתובת איפי, ברירת מחדל"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "(SFTP, SCP) 22,(FTP) פורט, בררת המחדל: 21"
+
+msgid "Username, defaults to your local username"
+msgstr "שם משתמשת, ברירת מחדל: משתמשת מקומית"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "(SFTP + ~/.ssh keys) חיבור עם ססמא ,(SCP, FTP) ססמא, ברירת מחדל: חיבור ללא ססמא"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr ":ברירת מחדל .(strftime) צורת הצגת הזמן"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr ":יוחלף בזמן הנוכחי, לאחר מכן תכנס לשימוש צורת הצגת הזמן שנבחרה. ברירת מחדל .<TIMESTAMP> ספריה להעלות אליה"
+
+msgid "connection successfully established"
+msgstr "החיבור הצליח"
+
+msgid "This service requires a password."
+msgstr "שרת זה דורש ססמא"
+
+msgid "This service requires a password or a private key."
+msgstr "שרת זה דורש ססמא או מפתח פרטי"

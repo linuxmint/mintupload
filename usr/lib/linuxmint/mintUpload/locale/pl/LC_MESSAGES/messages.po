@@ -1,0 +1,163 @@
+msgid "Checking space on the service..."
+msgstr "Weryfikacja dostępnego miejsca w usłudze..."
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "dni"
+
+msgid "Service ready. Space available."
+msgstr "Serwer gotowy. Miejsce jest dostępne."
+
+msgid "File too big or not enough space on the service."
+msgstr "Plik za duży lub brak miejsca na serwerze."
+
+msgid "Could not connect to the service."
+msgstr "Nie udało się połączyć z serwerem."
+
+msgid "Connecting to the service..."
+msgstr "Łączenie z serwerem..."
+
+msgid "Uploading the file..."
+msgstr "Przesyłanie pliku..."
+
+msgid "File uploaded successfully."
+msgstr "Plik przesłany z powodzeniem."
+
+msgid "Upload failed."
+msgstr "Błąd podczas przesyłania."
+
+msgid "Upload a file"
+msgstr "Prześlij plik"
+
+msgid "Upload and share a file"
+msgstr "Prześlij i dziel się plikiem"
+
+msgid "Upload service"
+msgstr "Prześlij serwer"
+
+msgid "Local file"
+msgstr "Plik lokalny"
+
+msgid "Remote file"
+msgstr "Plik na serwerze"
+
+msgid "Name:"
+msgstr "Nazwa:"
+
+msgid "Free space:"
+msgstr "Wolna przestrzeń:"
+
+msgid "Max file size:"
+msgstr "Maksymalny rozmiar pliku:"
+
+msgid "Persistence:"
+msgstr "Stałość:"
+
+msgid "Path:"
+msgstr "Ścieżka:"
+
+msgid "Size:"
+msgstr "Rozmiar:"
+
+msgid "Upload progress:"
+msgstr "Postęp przesyłąnia:"
+
+msgid "URL:"
+msgstr "Adres:"
+
+msgid "FTP service selected"
+msgstr "Serwer FTP wybrany"
+
+msgid "N/A"
+msgstr "N/A"
+
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_Plik"
+
+msgid "Close"
+msgstr "Zamknij"
+
+msgid "_Edit"
+msgstr "_Edycja"
+
+msgid "Services"
+msgstr "Serwery"
+
+msgid "New service"
+msgstr "Nowe serwery"
+
+msgid "Edit service"
+msgstr "Edytuj serwer"
+
+msgid "System-wide services"
+msgstr "Serwery systemowe"
+
+msgid "_Help"
+msgstr "_Pomoc"
+
+msgid "About"
+msgstr "O programie"
+
+msgid "File uploader for Linux Mint"
+msgstr "Przesył plików dla Linux Mint"
+
+msgid "Type:"
+msgstr "Typ:"
+
+msgid "Hostname:"
+msgstr "Nazwa źródła:"
+
+msgid "Port:"
+msgstr "Port:"
+
+msgid "Username:"
+msgstr "Nazwa użytkownika:"
+
+msgid "Password:"
+msgstr "Hasło:"
+
+msgid "Timestamp:"
+msgstr "Data:"
+
+msgid "Path: "
+msgstr "Ścieżka:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Nazwa źródła lub adres IP, domyślnie: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Zdalny port, domyślnie 21 dla FTP, 22 dla SFTP oraz SCP"
+
+msgid "Username, defaults to your local username"
+msgstr "Nazwa użytkownika, domyślnie lokalna nazwa użytkownika"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Hasło, domyślnie: połączenie SCP bez hasła, połączenie FTP z pustym ciągiem znaków, klucze ~/.shh użyte dla połączeń SFTP"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Format daty (strftime). Domyślnie:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "Katalog docelowy. <TIMESTAMP> zostanie zastąpiony aktualną datą, zgodnie z domyślnym formatem daty. Domyślnie: ."
+
+msgid "connection successfully established"
+msgstr "nawiązano połączenie"
+
+msgid "This service requires a password."
+msgstr "Ten serwer wymaga hasła."
+
+msgid "This service requires a password or a private key."
+msgstr "Ten serwer wymaga hasła lub klucza prytawnego."
