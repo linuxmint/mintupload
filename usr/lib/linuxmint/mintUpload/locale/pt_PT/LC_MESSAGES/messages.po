@@ -1,17 +1,17 @@
 msgid "Checking space on the service..."
-msgstr "Verificando espaço no serviço..."
+msgstr "Verificando o espaço no serviço..."
 
 msgid "B"
-msgstr "B"
+msgstr "Bytes"
 
 msgid "KB"
-msgstr "KB"
+msgstr "Kb"
 
 msgid "MB"
-msgstr "MB"
+msgstr "Mb"
 
 msgid "GB"
-msgstr "GB"
+msgstr "Gb"
 
 msgid "days"
 msgstr "dias"
@@ -20,31 +20,31 @@ msgid "Service ready. Space available."
 msgstr "Serviço pronto. Espaço disponível."
 
 msgid "File too big or not enough space on the service."
-msgstr "Ficheiro muito grande ou sem espaço no serviço."
+msgstr "Ficheiro demasiado grande ou sem espaço no serviço."
 
 msgid "Could not connect to the service."
-msgstr "Não foi possível ligar ao serviço."
+msgstr "Impossível ligar-se ao serviço."
 
 msgid "Connecting to the service..."
 msgstr "Ligando ao serviço..."
 
 msgid "Uploading the file..."
-msgstr "Enviando ficheiro..."
+msgstr "Enviando o ficheiro..."
 
 msgid "File uploaded successfully."
-msgstr "Ficheiro enviado com sucesso"
+msgstr "Ficheiro enviado com sucesso."
 
 msgid "Upload failed."
-msgstr "Falha no envio."
+msgstr "Erro no envio."
 
 msgid "Upload a file"
-msgstr "Enviar ficheiro"
+msgstr "Enviar um ficheiro"
 
 msgid "Upload and share a file"
-msgstr "Enviar e partilhar ficheiro"
+msgstr "Enviar e partilhar um ficheiro"
 
 msgid "Upload service"
-msgstr "Enviar serviço"
+msgstr "Enviar um serviço"
 
 msgid "Local file"
 msgstr "Ficheiro local"
@@ -56,13 +56,13 @@ msgid "Name:"
 msgstr "Nome:"
 
 msgid "Free space:"
-msgstr "Espaço livre:"
+msgstr "Espaço livre :"
 
 msgid "Max file size:"
-msgstr "Tamanho máximo do ficheiro:"
+msgstr "Tamanho máximo :"
 
 msgid "Persistence:"
-msgstr "Persistência:"
+msgstr "Persistente :"
 
 msgid "Path:"
 msgstr "Caminho:"
@@ -71,14 +71,93 @@ msgid "Size:"
 msgstr "Tamanho:"
 
 msgid "Upload progress:"
-msgstr "Evolução do envio:"
+msgstr "Progresso:"
 
 msgid "URL:"
-msgstr "URL:"
+msgstr "Endereço :"
 
 msgid "FTP service selected"
-msgstr "Escolhido o serviço FTP"
+msgstr "Serviço FTP seleccionado"
 
 msgid "N/A"
 msgstr "N/D"
 
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_Ficheiro"
+
+msgid "Close"
+msgstr "Fechar"
+
+msgid "_Edit"
+msgstr "_Editar"
+
+msgid "Services"
+msgstr "Serviços"
+
+msgid "New service"
+msgstr "Novo Serviço"
+
+msgid "Edit service"
+msgstr "Modificar Serviço"
+
+msgid "System-wide services"
+msgstr "Serviços do sistema à escala"
+
+msgid "_Help"
+msgstr "_Ajuda"
+
+msgid "About"
+msgstr "Sobre"
+
+msgid "File uploader for Linux Mint"
+msgstr "Ficheiro enviado por Linux Mint"
+
+msgid "Type:"
+msgstr "Tipo:"
+
+msgid "Hostname:"
+msgstr "Nome do Host :"
+
+msgid "Port:"
+msgstr "Porta:"
+
+msgid "Username:"
+msgstr "Nome de usuário:"
+
+msgid "Password:"
+msgstr "Senha :"
+
+msgid "Timestamp:"
+msgstr "Tempo:"
+
+msgid "Path: "
+msgstr "Caminho:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Hostname ou endereço de IP, por defeito: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Porta remota, por defeito: 21 para FTP, 22 para SFTP e SCP"
+
+msgid "Username, defaults to your local username"
+msgstr "Nome de usuário, baseado no teu nome local do sistema"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Senha, por defeito: sem senha para SCP, valor nulo para FTP, chaves ~/.ssh para ligações SFTP"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Formato do tempo (strftime). Por defeito:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "Pasta a receber o envio. <TIMESTAMP> foi sobreposto sobre o tempo corrente. Por defeito: ."
+
+msgid "connection successfully established"
+msgstr "Ligação estabelecida com sucesso"
+
+msgid "This service requires a password."
+msgstr "Necessita de uma senha para o serviço."
+
+msgid "This service requires a password or a private key."
+msgstr "O serviço necessita uma senha ou uma chave privada."

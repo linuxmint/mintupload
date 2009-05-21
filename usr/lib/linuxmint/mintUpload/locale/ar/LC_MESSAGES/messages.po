@@ -1,5 +1,5 @@
 msgid "Checking space on the service..."
-msgstr "التأكد من المساحة في الخدمة..."
+msgstr "يجري التأكد من المساحة في الخدمة...."
 
 msgid "B"
 msgstr "بايت"
@@ -8,77 +8,156 @@ msgid "KB"
 msgstr "كيلو بايت"
 
 msgid "MB"
-msgstr "ميجا بايت"
+msgstr "ميغا بايت"
 
 msgid "GB"
 msgstr "جيجا بايت"
 
 msgid "days"
-msgstr "يوم"
+msgstr "أيام"
 
 msgid "Service ready. Space available."
 msgstr "الخدمة جاهزة. المساحة متوفرة."
 
 msgid "File too big or not enough space on the service."
-msgstr "الملف كبير جدأ أو لا توجد مساحة كافية في الخدمة"
+msgstr "حجم الملف أكبر من المسموح به أو لا تتوفر مساحة كافية في الخدمة."
 
 msgid "Could not connect to the service."
-msgstr "لم يتمكن من الاتصال بالخدمة"
+msgstr "لا يمكن الإتصال بالخدمة."
 
 msgid "Connecting to the service..."
-msgstr "يتم الاتصال بالخدمة"
+msgstr "يجري الإتصال بالخدمة..."
 
 msgid "Uploading the file..."
-msgstr "يتم رفع الملف ..."
+msgstr "يجري رفع الملف..."
 
 msgid "File uploaded successfully."
-msgstr "تم رفع الملف بنجاح"
+msgstr "تم رفع الملف بنجاح."
 
 msgid "Upload failed."
-msgstr "فشل رفع الملف"
+msgstr "فشل رفع الملف."
 
 msgid "Upload a file"
-msgstr "أرفع ملف"
+msgstr "رفع ملف"
 
 msgid "Upload and share a file"
-msgstr "أرفع و شارك ملف"
+msgstr "رفع ومشاركة ملف"
 
 msgid "Upload service"
-msgstr "خدمة الرفع"
+msgstr "خدمة رفع الملفات"
 
 msgid "Local file"
-msgstr "الملف المحلي"
+msgstr "ملف محلي"
 
 msgid "Remote file"
-msgstr "الملف البعيد"
+msgstr "إدارة ملف"
 
 msgid "Name:"
-msgstr "الاسم:"
+msgstr "الإسم :"
 
 msgid "Free space:"
-msgstr "المساحة الحرة:"
+msgstr "مساحة فاضية :"
 
 msgid "Max file size:"
-msgstr "أقصى حجم للملف:"
+msgstr "أقصى حجم مسموح به :"
 
 msgid "Persistence:"
-msgstr "الاستمرارية"
+msgstr "استمرار:"
 
 msgid "Path:"
-msgstr "المسار:"
+msgstr "مسار :"
 
 msgid "Size:"
-msgstr "الحجم:"
+msgstr "حجم :"
 
 msgid "Upload progress:"
-msgstr "تقدم الرفع:"
+msgstr "تقدم الرفع :"
 
 msgid "URL:"
-msgstr "الرابط"
+msgstr "وصلة :"
 
 msgid "FTP service selected"
-msgstr "خدمة FTP المختارة"
+msgstr "خدمةFTP محددة"
 
 msgid "N/A"
-msgstr "غير معروف"
+msgstr "غير موجود"
 
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_ملف"
+
+msgid "Close"
+msgstr "إغلاق"
+
+msgid "_Edit"
+msgstr "_تعديل"
+
+msgid "Services"
+msgstr "خدمات"
+
+msgid "New service"
+msgstr "خدمة جديدة"
+
+msgid "Edit service"
+msgstr "تعديل الخدمة"
+
+msgid "System-wide services"
+msgstr "خدمات النظام"
+
+msgid "_Help"
+msgstr "_مساعدة"
+
+msgid "About"
+msgstr "عن"
+
+msgid "File uploader for Linux Mint"
+msgstr "برنامج رفع الملفات إلى Linux Mint"
+
+msgid "Type:"
+msgstr "النوع :"
+
+msgid "Hostname:"
+msgstr "اسم الخادم :"
+
+msgid "Port:"
+msgstr "البورت :"
+
+msgid "Username:"
+msgstr "اسم المستخدم :"
+
+msgid "Password:"
+msgstr "كلمة المرور :"
+
+msgid "Timestamp:"
+msgstr "ختم الوقت :"
+
+msgid "Path: "
+msgstr "مسار :"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "اسم الخادم أو رقم الآي بي, إفتراضي : mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "بورت التحكم , الإفتراضي هو 21 للإف تي بي , 33 للاس اف تي بي و السي اس بي"
+
+msgid "Username, defaults to your local username"
+msgstr "اسم المستخدم, إفتراضي لاسم المستخدم المحلي الخاص بك"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "الرقم السري,كافتراضي: رقم سري أقل SCP ارتباطاً, لاغية سلسلة اتصال FTP, مفتاح ~/.ssh يستخدم لإتصال SFTP "
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "صيغة ختم الوقت (استمارةالوقت). كافتراضي:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "مسار الرفع إلى. <TIMESTAMP> يستبدل بختم الوقت الحالي, يتبع صيغة ختم الوقت المعطاة. كافتراضي: ."
+
+msgid "connection successfully established"
+msgstr "الإتصال أنشأ بنجاح"
+
+msgid "This service requires a password."
+msgstr "الخدمة تتطلب كلمة مرور."
+
+msgid "This service requires a password or a private key."
+msgstr "هذه الخدمة تتطلب رقم سري أو مفتاح خصوصي"

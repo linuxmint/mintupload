@@ -82,3 +82,82 @@ msgstr "FTP 서비스가 선택됨"
 msgid "N/A"
 msgstr "N/A"
 
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "파일(_F)"
+
+msgid "Close"
+msgstr "닫기"
+
+msgid "_Edit"
+msgstr "편집(_E)"
+
+msgid "Services"
+msgstr "서비스"
+
+msgid "New service"
+msgstr "새 서비스"
+
+msgid "Edit service"
+msgstr "서비스 편집"
+
+msgid "System-wide services"
+msgstr "시스템 범위 서비스"
+
+msgid "_Help"
+msgstr "도움말(_H)"
+
+msgid "About"
+msgstr "정보"
+
+msgid "File uploader for Linux Mint"
+msgstr "리눅스 민트를 위한 파일 업로더"
+
+msgid "Type:"
+msgstr "종류:"
+
+msgid "Hostname:"
+msgstr "호스트명:"
+
+msgid "Port:"
+msgstr "포트:"
+
+msgid "Username:"
+msgstr "사용자명:"
+
+msgid "Password:"
+msgstr "암호:"
+
+msgid "Timestamp:"
+msgstr "시간 형식:"
+
+msgid "Path: "
+msgstr "경로:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "호스트명 혹은 IP. 기본값: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "원격지 포트. 기본값: 21 (FTP), 22 (SFTP,SCP)"
+
+msgid "Username, defaults to your local username"
+msgstr "사용자명. 기본값은 로컬 사용자명"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "암호. 기본값: 암호 없음 (SCP,FTP), ~/.ssh 키 (SFTP)"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "시간 형식 (strftime). 기본값:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "자료를 저장할 폴더. <TIMESTAMP>는 현재 시간으로 대체됩니다. 기본값: ."
+
+msgid "connection successfully established"
+msgstr "성공적으로 연결되었습니다"
+
+msgid "This service requires a password."
+msgstr "이 서비스는 암호를 필요로 합니다."
+
+msgid "This service requires a password or a private key."
+msgstr "이 서비스는 암호 혹은 개인 키를 필요로 합니다."

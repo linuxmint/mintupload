@@ -1,5 +1,5 @@
 msgid "Checking space on the service..."
-msgstr "Kontrolovanie miesta na serveri..."
+msgstr "Kontrolujem miesto na službe"
 
 msgid "B"
 msgstr "B"
@@ -11,40 +11,40 @@ msgid "MB"
 msgstr "MB"
 
 msgid "GB"
-msgstr "GM"
+msgstr "GB"
 
 msgid "days"
-msgstr "Dny"
+msgstr "dni"
 
 msgid "Service ready. Space available."
-msgstr "Server je pripravený.Miesto je dostupné"
+msgstr "Služba je pripravená. Miesto je k dispozícii."
 
 msgid "File too big or not enough space on the service."
-msgstr "Súbor je príliš veľký alebo nie je dostatok miesta na serveri"
+msgstr "Súbor je príliš veľký, alebo na službe nie je dosť miesta."
 
 msgid "Could not connect to the service."
-msgstr "Nemožno pripojiť sa na server"
+msgstr "Nevedel som sa pripojiť na službu."
 
 msgid "Connecting to the service..."
-msgstr "Pripájanie na server..."
+msgstr "Pripojenie ku službe..."
 
 msgid "Uploading the file..."
-msgstr "Nahrávanie súboru..."
+msgstr "Uploadujem súbor..."
 
 msgid "File uploaded successfully."
-msgstr "Súbor úspešne nahratý"
+msgstr "Súbor bol uploadovaný úspešne."
 
 msgid "Upload failed."
-msgstr "Nahrávanie zlyhalo"
+msgstr "Upload sa nepodaril."
 
 msgid "Upload a file"
-msgstr "Nahrať súbor"
+msgstr "Uploadni súbor"
 
 msgid "Upload and share a file"
-msgstr "Nahrať aj zdieľať súbor"
+msgstr "Uploadni a zdieľaj súbor"
 
 msgid "Upload service"
-msgstr "Upload server"
+msgstr "Služba pre upload"
 
 msgid "Local file"
 msgstr "Miestny súbor"
@@ -62,23 +62,102 @@ msgid "Max file size:"
 msgstr "Maximálna veľkosť súboru:"
 
 msgid "Persistence:"
-msgstr "Životnosť"
+msgstr "Životnosť súboru:"
 
 msgid "Path:"
 msgstr "Cesta:"
 
 msgid "Size:"
-msgstr "Veľkosť:"
+msgstr "Veľkosť"
 
 msgid "Upload progress:"
-msgstr "Priebeh nahrávania:"
+msgstr "Postup uploadu:"
 
 msgid "URL:"
-msgstr "URL:"
+msgstr "Adresa URL:"
 
 msgid "FTP service selected"
-msgstr"Vybraný FTP server"
+msgstr "Vybraná FTP služba"
 
 msgid "N/A"
-msgstr "N/A"
+msgstr "--"
 
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_Súbor"
+
+msgid "Close"
+msgstr "Zavri"
+
+msgid "_Edit"
+msgstr "_Uprav"
+
+msgid "Services"
+msgstr "Služby"
+
+msgid "New service"
+msgstr "Nová služba"
+
+msgid "Edit service"
+msgstr "Uprav službu"
+
+msgid "System-wide services"
+msgstr "Celosystémová služba"
+
+msgid "_Help"
+msgstr "_Pomoc"
+
+msgid "About"
+msgstr "O programe"
+
+msgid "File uploader for Linux Mint"
+msgstr "Uploader súborov pre Linux Mint"
+
+msgid "Type:"
+msgstr "Typ:"
+
+msgid "Hostname:"
+msgstr "Názov hostiteľa:"
+
+msgid "Port:"
+msgstr "Port:"
+
+msgid "Username:"
+msgstr "Meno používateľa:"
+
+msgid "Password:"
+msgstr "Heslo:"
+
+msgid "Timestamp:"
+msgstr "Čas:"
+
+msgid "Path: "
+msgstr "Cesta:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Meno hostiteľa, alebo IP adresa, predvolená je: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Vzdialený port: 21 pre FTP, 22 pre SFTP a SCP"
+
+msgid "Username, defaults to your local username"
+msgstr "Predvolené meno používateľa je Vaše používateľské meno v Mint Linuxe"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Heslo je predvolené prázdne, SCP spojenie, nulový reťazec (string) pre FTP pripojenie, ~/.ssh kľúče budú použité pre pripojenie SFTP"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Formát časovej pečiatky (strftime). Predvolená hodn.:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "Adresár na upload. <TIMESTAMP> je nahradený aktuálnou časovou pečiatkou, podľa časovej udaného formátu časovej pečiatky. Predvolená hodnota : ."
+
+msgid "connection successfully established"
+msgstr "spojenie úspešne nadviazané"
+
+msgid "This service requires a password."
+msgstr "Táto služba vyžaduje heslo."
+
+msgid "This service requires a password or a private key."
+msgstr "Táto služba vyžaduje heslo, alebo súkromný kľúč."

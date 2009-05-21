@@ -1,8 +1,8 @@
 msgid "Checking space on the service..."
-msgstr "Ruimte berekenen op de service..."
+msgstr "Beschikbare plaats op de service wordt gekontroleerd..."
 
 msgid "B"
-msgstr "B"
+msgstr "Bytes"
 
 msgid "KB"
 msgstr "KB"
@@ -17,25 +17,25 @@ msgid "days"
 msgstr "dagen"
 
 msgid "Service ready. Space available."
-msgstr "Service gereed. Ruimte beschikbaar."
+msgstr "Service klaar. Plaats beschikbaar."
 
 msgid "File too big or not enough space on the service."
-msgstr "Bestand te groot, of nie genoeg ruimte op de service."
+msgstr "Het bestand is te groot of er is te weinig plaats op de service."
 
 msgid "Could not connect to the service."
-msgstr "Kon niet verbinden met de service."
+msgstr "Er kon geen verbinding met de service gemaakt worden."
 
 msgid "Connecting to the service..."
-msgstr "Bezig met verbinden..."
+msgstr "Verbinding met de service wordt tot stand gebracht..."
 
 msgid "Uploading the file..."
-msgstr "Bestand aan het uploaden..."
+msgstr "Upload van het bestand..."
 
 msgid "File uploaded successfully."
-msgstr "Bestand succesvol upgeload."
+msgstr "Upload van het bestand met success uitgevoerd."
 
 msgid "Upload failed."
-msgstr "Upload gefaald."
+msgstr "Fout bij het uploaden."
 
 msgid "Upload a file"
 msgstr "Upload een bestand"
@@ -50,35 +50,114 @@ msgid "Local file"
 msgstr "Lokaal bestand"
 
 msgid "Remote file"
-msgstr "Bestand op afstand"
+msgstr "Remote bestand"
 
 msgid "Name:"
-msgstr "Naam:"
+msgstr "Naam :"
 
 msgid "Free space:"
-msgstr "Vrije ruimte:"
+msgstr "Vrije ruimte :"
 
 msgid "Max file size:"
-msgstr "Maximale bestandsgroote:"
+msgstr "Maksimale bestandsgrootte :"
 
 msgid "Persistence:"
-msgstr "Aanwezigheid:"
+msgstr "Persistentie :"
 
 msgid "Path:"
-msgstr "Pad:"
+msgstr "Locatie :"
 
 msgid "Size:"
-msgstr "Groote:"
+msgstr "Grootte :"
 
 msgid "Upload progress:"
-msgstr "Voortgang van het uploaden:"
+msgstr "Upload status:"
 
 msgid "URL:"
 msgstr "URL:"
 
 msgid "FTP service selected"
-msgstr "FTP service geselecteerd"
+msgstr "Geselecteerde FTP service"
 
 msgid "N/A"
-msgstr "Niet Beschikbaar"
+msgstr "Niet van toepassing"
 
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_Bestand"
+
+msgid "Close"
+msgstr "Beëindigen"
+
+msgid "_Edit"
+msgstr "_Editie"
+
+msgid "Services"
+msgstr "Services"
+
+msgid "New service"
+msgstr "Nieuwe service"
+
+msgid "Edit service"
+msgstr "Aanpassen van de service"
+
+msgid "System-wide services"
+msgstr "Systeemwijde Services"
+
+msgid "_Help"
+msgstr "_Help"
+
+msgid "About"
+msgstr "Om"
+
+msgid "File uploader for Linux Mint"
+msgstr "Bestand uploader voor Linux Mint"
+
+msgid "Type:"
+msgstr "Type:"
+
+msgid "Hostname:"
+msgstr "Hostnaam:"
+
+msgid "Port:"
+msgstr "Poort:"
+
+msgid "Username:"
+msgstr "Gebruiker:"
+
+msgid "Password:"
+msgstr "Paswoord:"
+
+msgid "Timestamp:"
+msgstr "Tijdsstempel:"
+
+msgid "Path: "
+msgstr "Locatie:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Hostnaam of IP adres, standaard: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Remote poort, standaard is 21 voor FTP, 22 voor SFTP en SCP"
+
+msgid "Username, defaults to your local username"
+msgstr "Gebruiker, lokale gebruiker wordt als standaard gebruikt"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Paswoord, standaard: SCP verbinding zonder paswoord, null string FTP verbinding, ~/.ssh sleutels gebruikt voor SFTP verbindingen"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Formaat voor tijdsstempel (strftime). Standaard:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "Map waar upload plaats vindt. <TIMESTAMP> is vervangen met de huidige tijdsstempel volgens het gegeven tijdsstempelformaat. Standaard: ."
+
+msgid "connection successfully established"
+msgstr "verbinding met succes tot stand gebracht"
+
+msgid "This service requires a password."
+msgstr "Deze service vereist een paswoord."
+
+msgid "This service requires a password or a private key."
+msgstr "Deze service vereist een paswoord of een private sleutel."

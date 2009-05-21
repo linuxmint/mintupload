@@ -1,5 +1,5 @@
 msgid "Checking space on the service..."
-msgstr "Comprovant l'espai disponible al servei..."
+msgstr "Comprovant espai al servei..."
 
 msgid "B"
 msgstr "b"
@@ -14,7 +14,7 @@ msgid "GB"
 msgstr "Gb"
 
 msgid "days"
-msgstr "dies"
+msgstr "díes"
 
 msgid "Service ready. Space available."
 msgstr "Servei preparat. Espai disponible."
@@ -23,28 +23,28 @@ msgid "File too big or not enough space on the service."
 msgstr "Arxiu massa gran o espai insuficient al servei."
 
 msgid "Could not connect to the service."
-msgstr "No s'ha pogut connectar al servei."
+msgstr "No s'ha pogut conectar al servei."
 
 msgid "Connecting to the service..."
-msgstr "Connectant al servei..."
+msgstr "Conectant al servei..."
 
 msgid "Uploading the file..."
-msgstr "Carregant l'arxiu..."
+msgstr "Transferint l'arxiu..."
 
 msgid "File uploaded successfully."
-msgstr "Arxiu carregat amb èxit."
+msgstr "Arxiu penjat amb èxit."
 
 msgid "Upload failed."
-msgstr "Càrrega fallida"
+msgstr "Transferència fallida."
 
 msgid "Upload a file"
-msgstr "Pujar un arxiu"
+msgstr "Penjar un arxiu"
 
 msgid "Upload and share a file"
-msgstr "Pujar i compartir un arxiu"
+msgstr "Penjar i compartir un arxiu"
 
 msgid "Upload service"
-msgstr "Servei de càrrega"
+msgstr "Servei de transferència"
 
 msgid "Local file"
 msgstr "Arxiu local"
@@ -59,7 +59,7 @@ msgid "Free space:"
 msgstr "Espai lliure:"
 
 msgid "Max file size:"
-msgstr "Mida màxima d'arxiu:"
+msgstr "Mida màx. d'arxiu:"
 
 msgid "Persistence:"
 msgstr "Persistència:"
@@ -71,7 +71,7 @@ msgid "Size:"
 msgstr "Mida:"
 
 msgid "Upload progress:"
-msgstr "Progrés de la càrrega:"
+msgstr "Progrés de càrrega:"
 
 msgid "URL:"
 msgstr "URL:"
@@ -80,5 +80,84 @@ msgid "FTP service selected"
 msgstr "Servei FTP seleccionat"
 
 msgid "N/A"
-msgstr "N/A"
+msgstr "No disponible"
 
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_Fitxer"
+
+msgid "Close"
+msgstr "Tancar"
+
+msgid "_Edit"
+msgstr "_Edita"
+
+msgid "Services"
+msgstr "Serveis"
+
+msgid "New service"
+msgstr "Nou servei"
+
+msgid "Edit service"
+msgstr "Edita servei"
+
+msgid "System-wide services"
+msgstr "Serveis del sistema"
+
+msgid "_Help"
+msgstr "_Ajuda"
+
+msgid "About"
+msgstr "Quant a"
+
+msgid "File uploader for Linux Mint"
+msgstr "Càrrega d'arxius de Linux Mint"
+
+msgid "Type:"
+msgstr "Tipus:"
+
+msgid "Hostname:"
+msgstr "Host:"
+
+msgid "Port:"
+msgstr "Port:"
+
+msgid "Username:"
+msgstr "Usuari:"
+
+msgid "Password:"
+msgstr "Contrasenya:"
+
+msgid "Timestamp:"
+msgstr "Marca horària:"
+
+msgid "Path: "
+msgstr "Ruta:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Host o direcció IP, per defecte: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Port remot, per defecte: 21 per a FTP, 22 per a SFTP i SCP"
+
+msgid "Username, defaults to your local username"
+msgstr "Usuari, per defecte nom d'usuari local"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Contrasenya, per defecte: cap per a SCP, cadena nul·la per a FTP, claus ~/.ssh per a SFTP"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Format de marca horària (strftime). Per defecte:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "Directori de destinació. <TIMESTAMP> es reemplaçat per la data actual, segons el format seleccionat. Per defecte: ."
+
+msgid "connection successfully established"
+msgstr "Conexió establerta amb èxit"
+
+msgid "This service requires a password."
+msgstr "Aquest servei requereix contrasenya."
+
+msgid "This service requires a password or a private key."
+msgstr "Aquest servei requereix contrasenya o clau privada."
