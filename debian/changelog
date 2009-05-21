@@ -1,3 +1,21 @@
+mintupload (3.3.3) gloria; urgency=low
+
+  * Updated translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue,  19 May 2009 19:53:00 +0000
+
+mintupload (3.3.2) gloria; urgency=low
+
+  * Updated translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sun,  17 May 2009 22:46:00 +0000
+
+mintupload (3.3.1) gloria; urgency=low
+
+  * Added translations
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sun,  17 May 2009 22:12:00 +0000
+
 mintupload (3.3) gloria; urgency=low
 
   * Localized hardcoded string line #291
