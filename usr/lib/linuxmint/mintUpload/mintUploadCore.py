@@ -38,10 +38,17 @@ class FilesizeError(CustomError):
 	'''Raised when the file is too large or too small'''
 	pass
 
-def sizeStr(size, acc=1, factor=1000):
+def sizeStr(size, acc=None, factor=None):
 	'''Converts integer filesize in bytes to textual repr'''
 
-	thresholds = [_("B"),_("KB"),_("MB"),_("GB")]
+	if not factor:
+		factor = int(config['filesize']['factor'])
+	if not acc:
+		acc = int(config['filesize']['accuracy'])
+	if config['filesize']['binary_units'] == "True":
+		thresholds = [_("B"),_("KiB"),_("MiB"),_("GiB")]
+	else:
+		thresholds = [_("B"),_("KB"),_("MB"),_("GB")]
 	size = float(size)
 	for i in reversed(range(1,len(thresholds))):
 		if size >= factor**i:
@@ -231,15 +238,15 @@ def read_services():
 				services.append(s)
 	return services
 
-config_paths = {'system':"/etc/linuxmint/mintUpload/services/", 'user':home + "/.linuxmint/mintUpload/services/"}
-defaults = ConfigObj({
-	'type':'MINT',
-	'host':'mint-space.com',
-	'user':os.environ['LOGNAME'],
-	'path':'',
-	'pass':'',
-	'format':'%Y%m%d%H%M%S',
-})
+config = ConfigObj('/etc/linuxmint/mintUpload.conf')
+if os.path.exists(home + '/.linuxmint/mintUpload.conf'):
+	config.merge(ConfigObj(home + '/.linuxmint/mintUpload.conf'))
+
+config_paths = config['paths']
+config_paths['user'] = config_paths['user'].replace('<HOME>',home)
+
+defaults = config['defaults']
+defaults['user'] = defaults['user'].replace('<USER>',os.environ['LOGNAME'])
 
 class Service(ConfigObj):
 	'''Object representing an upload service'''
