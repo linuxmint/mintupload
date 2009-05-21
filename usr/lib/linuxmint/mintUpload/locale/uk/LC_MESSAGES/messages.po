@@ -1,5 +1,5 @@
 msgid "Checking space on the service..."
-msgstr "Перевірка місця на сервері..."
+msgstr "Перевірка вільного місця на сервісі..."
 
 msgid "B"
 msgstr "Б"
@@ -17,34 +17,34 @@ msgid "days"
 msgstr "днів"
 
 msgid "Service ready. Space available."
-msgstr "Служба готова. Місця достатньо."
+msgstr "Сервіс готовий. Місце є."
 
 msgid "File too big or not enough space on the service."
-msgstr "Файл занадто великий або недостатньо місця на сервері."
+msgstr "Файл завеликий або відсутнє вільне місце на сервісі."
 
 msgid "Could not connect to the service."
-msgstr "Невдалося з’єднатись з сервером."
+msgstr "Не можу під'єднатися до сервісу."
 
 msgid "Connecting to the service..."
-msgstr "З’єднання з сервером..."
+msgstr "З'єднуюсь з сервісом..."
 
 msgid "Uploading the file..."
-msgstr "Завантаження файлу..."
+msgstr "Завантажую файл..."
 
 msgid "File uploaded successfully."
-msgstr "Файл успішно завантажений."
+msgstr "Файл успішно завантажено."
 
 msgid "Upload failed."
-msgstr "Завантаження не вдалося."
+msgstr "Помилка завантаження."
 
 msgid "Upload a file"
 msgstr "Завантажити файл"
 
 msgid "Upload and share a file"
-msgstr "Завантажити та дозволити доступ до файлу"
+msgstr "Завантажити і розшарити файл"
 
 msgid "Upload service"
-msgstr "Служба завантаження"
+msgstr "Сервіс завантаження"
 
 msgid "Local file"
 msgstr "Локальний файл"
@@ -53,16 +53,16 @@ msgid "Remote file"
 msgstr "Віддалений файл"
 
 msgid "Name:"
-msgstr "Назва:"
+msgstr "Ім'я:"
 
 msgid "Free space:"
 msgstr "Вільне місце:"
 
 msgid "Max file size:"
-msgstr "Максимальний розмір файлу"
+msgstr "Максимальний розмір файлу:"
 
 msgid "Persistence:"
-msgstr "Тривалість:"
+msgstr "Зберігається:"
 
 msgid "Path:"
 msgstr "Шлях:"
@@ -71,13 +71,93 @@ msgid "Size:"
 msgstr "Розмір:"
 
 msgid "Upload progress:"
-msgstr "Перебіг завантаження:"
+msgstr "Завантаження:"
 
 msgid "URL:"
-msgstr "URL:"
+msgstr "Адреса:"
 
 msgid "FTP service selected"
-msgstr "Обрано FTP службу"
+msgstr "Обрано сервіс FTP"
 
 msgid "N/A"
-msgstr "Недоступно"
+msgstr "--"
+
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_Файл"
+
+msgid "Close"
+msgstr "Закрити"
+
+msgid "_Edit"
+msgstr "_Правка"
+
+msgid "Services"
+msgstr "Сервіси"
+
+msgid "New service"
+msgstr "Новий сервіс"
+
+msgid "Edit service"
+msgstr "Редагувати сервіс"
+
+msgid "System-wide services"
+msgstr "Спільні сервіси"
+
+msgid "_Help"
+msgstr "_Допомога"
+
+msgid "About"
+msgstr "Про програму"
+
+msgid "File uploader for Linux Mint"
+msgstr "Завантажувач файлів для Linux Mint"
+
+msgid "Type:"
+msgstr "Тип:"
+
+msgid "Hostname:"
+msgstr "Хост:"
+
+msgid "Port:"
+msgstr "Порт:"
+
+msgid "Username:"
+msgstr "Ім'я користувача:"
+
+msgid "Password:"
+msgstr "Пароль:"
+
+msgid "Timestamp:"
+msgstr "Час:"
+
+msgid "Path: "
+msgstr "Шлях:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Хост або адреса IP, типово: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Порт, типово: 21 для FTP, 22 для SFTP та SCP"
+
+msgid "Username, defaults to your local username"
+msgstr "Ім'я користувача, типово дорівнює локальному"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Пароль, типово: безпарольне SCP з'єднання, null для FTP, ключі ~/.ssh для SFTP"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Формат дати (strftime). Типово:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "Каталог завантажено. <TIMESTAMP> змінено на поточний час за вказаним форматом. Типово: ."
+
+msgid "connection successfully established"
+msgstr "з'єднання успішно встановлено"
+
+msgid "This service requires a password."
+msgstr "Сервіс вимагає пароль."
+
+msgid "This service requires a password or a private key."
+msgstr "Сервіс вимагає пароль або ключ."

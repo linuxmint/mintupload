@@ -1,0 +1,163 @@
+msgid "Checking space on the service..."
+msgstr "服務空間容量檢查中"
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "天"
+
+msgid "Service ready. Space available."
+msgstr "服務準備完成. 空間容量足夠."
+
+msgid "File too big or not enough space on the service."
+msgstr "檔案太大 或是 服務空間容量不足."
+
+msgid "Could not connect to the service."
+msgstr "無法連結服務."
+
+msgid "Connecting to the service..."
+msgstr "連結服務中..."
+
+msgid "Uploading the file..."
+msgstr "檔案上傳中..."
+
+msgid "File uploaded successfully."
+msgstr "檔案上傳成功."
+
+msgid "Upload failed."
+msgstr "上傳失敗."
+
+msgid "Upload a file"
+msgstr "上傳檔案"
+
+msgid "Upload and share a file"
+msgstr "上傳並分享檔案"
+
+msgid "Upload service"
+msgstr "上傳服務"
+
+msgid "Local file"
+msgstr "本地檔案"
+
+msgid "Remote file"
+msgstr "遠端檔案"
+
+msgid "Name:"
+msgstr "名稱:"
+
+msgid "Free space:"
+msgstr "剩餘空間:"
+
+msgid "Max file size:"
+msgstr "最大檔案大小:"
+
+msgid "Persistence:"
+msgstr "一致性:"
+
+msgid "Path:"
+msgstr "路徑:"
+
+msgid "Size:"
+msgstr "大小:"
+
+msgid "Upload progress:"
+msgstr "上傳進度:"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "FTP service selected"
+msgstr "FTP 服務 已選擇 "
+
+msgid "N/A"
+msgstr "N/A"
+
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_檔案"
+
+msgid "Close"
+msgstr "關閉"
+
+msgid "_Edit"
+msgstr "_編輯"
+
+msgid "Services"
+msgstr "服務"
+
+msgid "New service"
+msgstr "新增服務"
+
+msgid "Edit service"
+msgstr "編輯服務"
+
+msgid "System-wide services"
+msgstr "系統性服務"
+
+msgid "_Help"
+msgstr "_幫助"
+
+msgid "About"
+msgstr "關於"
+
+msgid "File uploader for Linux Mint"
+msgstr "Linux Mint 檔案上傳器"
+
+msgid "Type:"
+msgstr "類型:"
+
+msgid "Hostname:"
+msgstr "主機名稱 :"
+
+msgid "Port:"
+msgstr "埠 (Port):"
+
+msgid "Username:"
+msgstr "使用者名稱:"
+
+msgid "Password:"
+msgstr "密碼:"
+
+msgid "Timestamp:"
+msgstr "時間戳記:"
+
+msgid "Path: "
+msgstr "路徑:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "主機名稱或 IP 位置, 預設: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "遠端 port,預設值: FTP 為 21, SFTP 和 SCP 為 22"
+
+msgid "Username, defaults to your local username"
+msgstr "使用者名稱, 預設值為你的本地使用者名稱"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "密碼,預設值: SCP 連結: 無密碼 , FTP 連結: null-string , SFTP : ~/.ssh keys"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "時間戳記格式 (strftime). 預設值:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr ". <TIMESTAMP>之上傳目錄 已被目前設定的 timestamp 格式所取代, 預設值: ."
+
+msgid "connection successfully established"
+msgstr "連結成功建立"
+
+msgid "This service requires a password."
+msgstr "這個服務需要密碼."
+
+msgid "This service requires a password or a private key."
+msgstr "這個服務需要密碼或私鑰(private key)."

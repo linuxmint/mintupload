@@ -1,0 +1,163 @@
+msgid "Checking space on the service..."
+msgstr "A rendelkezésre álló hely ellenőrzése a szerveren..."
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "nap"
+
+msgid "Service ready. Space available."
+msgstr "A szolgáltatás aktív. A szükséges hely rendelkezésre áll."
+
+msgid "File too big or not enough space on the service."
+msgstr "A fájl túl nagy vagy nincs elég hely a szerveren."
+
+msgid "Could not connect to the service."
+msgstr "Nem lehet kapcsolódni a szerverhez."
+
+msgid "Connecting to the service..."
+msgstr "Kapcsolódás a szerverhez..."
+
+msgid "Uploading the file..."
+msgstr "A fájl feltöltése folyamatban..."
+
+msgid "File uploaded successfully."
+msgstr "A fájl sikeresen feltöltve."
+
+msgid "Upload failed."
+msgstr "A feltöltés nem sikerült."
+
+msgid "Upload a file"
+msgstr "Fájl feltöltése"
+
+msgid "Upload and share a file"
+msgstr "Fájl feltöltése és megosztása"
+
+msgid "Upload service"
+msgstr "Feltöltő szolgáltatás"
+
+msgid "Local file"
+msgstr "Helyi fájl"
+
+msgid "Remote file"
+msgstr "Távoli fájl"
+
+msgid "Name:"
+msgstr "Név:"
+
+msgid "Free space:"
+msgstr "Szabad hely:"
+
+msgid "Max file size:"
+msgstr "Maximális fájlméret:"
+
+msgid "Persistence:"
+msgstr "Időtartam:"
+
+msgid "Path:"
+msgstr "Útvonal:"
+
+msgid "Size:"
+msgstr "Méret:"
+
+msgid "Upload progress:"
+msgstr "Feltöltés:"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "FTP service selected"
+msgstr "FTP szolgáltatás kiválasztva"
+
+msgid "N/A"
+msgstr "--"
+
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_Fájl"
+
+msgid "Close"
+msgstr "Bezárás"
+
+msgid "_Edit"
+msgstr "S_zerkesztés"
+
+msgid "Services"
+msgstr "Szolgáltatások"
+
+msgid "New service"
+msgstr "Új szolgáltatás"
+
+msgid "Edit service"
+msgstr "Szolgáltatás szerkesztése"
+
+msgid "System-wide services"
+msgstr "Rendszerszintű szolgáltatások"
+
+msgid "_Help"
+msgstr "_Súgó"
+
+msgid "About"
+msgstr "Névjegy"
+
+msgid "File uploader for Linux Mint"
+msgstr "Fájl feltöltő szolgáltatás a Linux Mint-hez"
+
+msgid "Type:"
+msgstr "Típus:"
+
+msgid "Hostname:"
+msgstr "Gépnév:"
+
+msgid "Port:"
+msgstr "Port:"
+
+msgid "Username:"
+msgstr "Felhasználónév:"
+
+msgid "Password:"
+msgstr "Jelszó:"
+
+msgid "Timestamp:"
+msgstr "Időbélyeg:"
+
+msgid "Path: "
+msgstr "Útvonal:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Gépnév vagy IP cím, alapértelmezett: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Távoli port, alapértelmezés szerint FTP-nél 21, SFTP-nél és SCP-nél 22"
+
+msgid "Username, defaults to your local username"
+msgstr "Felhasználónév, alapesetben a helyi felhasználónév"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Jelszó, alapértelmezés szerint SCP-nél nincs jelszó, FTP-nél üres karakterlánc, SFTP-nél ~/.ssh kulcsok"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Időbélyeg formátuma (strftime). Alapértelmezés szerint:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "A feltöltés helye a szerveren. A <TIMESTAMP> a megadott formátum szerinti aktuális időbélyegre lesz cserélve. Alapértelmezés szerint: ."
+
+msgid "connection successfully established"
+msgstr "kapcsolat sikeresen létrehozva"
+
+msgid "This service requires a password."
+msgstr "Ehhez a szolgáltatáshoz jelszóra van szükség."
+
+msgid "This service requires a password or a private key."
+msgstr "Ehhez a szolgáltatáshoz jelszóra vagy privát kulcsra van szükség."

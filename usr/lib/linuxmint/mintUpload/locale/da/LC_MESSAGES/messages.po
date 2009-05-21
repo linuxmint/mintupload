@@ -1,5 +1,5 @@
 msgid "Checking space on the service..."
-msgstr "Checker plads på servicen..."
+msgstr "Undersøger om der er plads ledig på tjenesten..."
 
 msgid "B"
 msgstr "B"
@@ -14,55 +14,55 @@ msgid "GB"
 msgstr "GB"
 
 msgid "days"
-msgstr "Dage"
+msgstr "dage"
 
 msgid "Service ready. Space available."
-msgstr "Servicen er klar. Brugbar plads."
+msgstr "Tjenesten er klar. Plads ledig."
 
 msgid "File too big or not enough space on the service."
-msgstr "Filen er for stor eller ikke nok plads på servicen"
+msgstr "Filen er for stor eller der er ikke nok plads på tjenesten."
 
 msgid "Could not connect to the service."
-msgstr "Kunne ikke connecte til servicen."
+msgstr "Kunne ikke oprette forbindelse til tjenesten."
 
 msgid "Connecting to the service..."
-msgstr "Connecter til servicen..."
+msgstr "Opretter forbindelse til tjenesten..."
 
 msgid "Uploading the file..."
 msgstr "Uploader filen..."
 
 msgid "File uploaded successfully."
-msgstr "Fil upload lykkes. "
+msgstr "Filen blev uploadet."
 
 msgid "Upload failed."
-msgstr "Uploading fejlede."
+msgstr "Upload fejlede."
 
 msgid "Upload a file"
 msgstr "Upload en fil"
 
 msgid "Upload and share a file"
-msgstr "Upload og del fil"
+msgstr "Upload og del en fil"
 
 msgid "Upload service"
-msgstr "Upload service"
+msgstr "Upload-tjeneste"
 
 msgid "Local file"
 msgstr "Lokal fil"
 
 msgid "Remote file"
-msgstr "Fjern fil"
+msgstr "Ekstern fil"
 
 msgid "Name:"
 msgstr "Navn:"
 
 msgid "Free space:"
-msgstr "Frit plads:"
+msgstr "Ledig plads:"
 
 msgid "Max file size:"
 msgstr "Max filstørrelse:"
 
 msgid "Persistence:"
-msgstr "udholdenhed:"
+msgstr "Tilgængelig:"
 
 msgid "Path:"
 msgstr "Sti:"
@@ -71,14 +71,93 @@ msgid "Size:"
 msgstr "Størrelse:"
 
 msgid "Upload progress:"
-msgstr "Upload fremskridt:"
+msgstr "Upload-forløb:"
 
 msgid "URL:"
 msgstr "URL:"
 
 msgid "FTP service selected"
-msgstr "FTP service valgt"
+msgstr "Valgt FTP-tjeneste"
 
 msgid "N/A"
-msgstr "N/A"
+msgstr "-"
 
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_Filer"
+
+msgid "Close"
+msgstr "Luk"
+
+msgid "_Edit"
+msgstr "_Rediger"
+
+msgid "Services"
+msgstr "Tjenester"
+
+msgid "New service"
+msgstr "Ny tjeneste"
+
+msgid "Edit service"
+msgstr "Rediger tjeneste"
+
+msgid "System-wide services"
+msgstr "System-tjenester"
+
+msgid "_Help"
+msgstr "_Hjælp"
+
+msgid "About"
+msgstr "Om"
+
+msgid "File uploader for Linux Mint"
+msgstr "Linux Mints fil-uploader"
+
+msgid "Type:"
+msgstr "Type:"
+
+msgid "Hostname:"
+msgstr "Værts-navn:"
+
+msgid "Port:"
+msgstr "Port:"
+
+msgid "Username:"
+msgstr "Brugernavn:"
+
+msgid "Password:"
+msgstr "Adgangskode:"
+
+msgid "Timestamp:"
+msgstr "Tidsstempel:"
+
+msgid "Path: "
+msgstr "Sti:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Værts-navn eller IP-adresse, som standard: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Port-nummer: Som standard 21 for FTP og 22 for SFTP og SCP"
+
+msgid "Username, defaults to your local username"
+msgstr "Som standard anvendes dit lokale brugernavn som brugernavn."
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Standard-adgangskode: Adgangskodefri SCP-forbindelse, null-string FTP-forbindelse, ~/.ssh-nøgler til SFTP-forbindelser"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Datoformat (strftime). Som standard:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "Upload-adresse. <TIMESTAMP> erstattes med det nuværende datoformat. Som standard: ."
+
+msgid "connection successfully established"
+msgstr "forbindelsen blev oprettet"
+
+msgid "This service requires a password."
+msgstr "Denne tjeneste kræver en adgangskode."
+
+msgid "This service requires a password or a private key."
+msgstr "Denne tjeneste kræver en adgangskode eller en privat nøgle."

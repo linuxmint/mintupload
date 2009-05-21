@@ -1,8 +1,8 @@
 msgid "Checking space on the service..."
-msgstr "サービスの空き容量をチェックしています..."
+msgstr "サービスの空き容量を調べています..."
 
 msgid "B"
-msgstr "B"
+msgstr "バイト"
 
 msgid "KB"
 msgstr "KB"
@@ -20,7 +20,7 @@ msgid "Service ready. Space available."
 msgstr "空き容量あり。アップロードできます。"
 
 msgid "File too big or not enough space on the service."
-msgstr "ファイルが大きすぎるか、サービスに十分な空き容量がありません。"
+msgstr "ファイルが大き過ぎるか、サービスの空き容量が足りません。"
 
 msgid "Could not connect to the service."
 msgstr "サービスに接続できませんでした。"
@@ -38,10 +38,10 @@ msgid "Upload failed."
 msgstr "アップロードに失敗しました。"
 
 msgid "Upload a file"
-msgstr "ファイルのアップロード"
+msgstr "ファイルをアップロードする"
 
 msgid "Upload and share a file"
-msgstr "ファイルをアップロードし、共有します"
+msgstr "ファイルをアップロードし、シェアする"
 
 msgid "Upload service"
 msgstr "アップロードサービス"
@@ -53,32 +53,111 @@ msgid "Remote file"
 msgstr "リモートファイル"
 
 msgid "Name:"
-msgstr "名前:"
+msgstr "名前："
 
 msgid "Free space:"
-msgstr "空き容量:"
+msgstr "空き容量："
 
 msgid "Max file size:"
-msgstr "最大ファイルサイズ:"
+msgstr "ファイルの最大サイズ："
 
 msgid "Persistence:"
-msgstr "保存期間:"
+msgstr "保存期間："
 
 msgid "Path:"
-msgstr "パス:"
+msgstr "パス："
 
 msgid "Size:"
-msgstr "サイズ:"
+msgstr "サイズ："
 
 msgid "Upload progress:"
-msgstr "アップロード進捗:"
+msgstr "アップロード進捗："
 
 msgid "URL:"
-msgstr "URL:"
+msgstr "URL："
 
 msgid "FTP service selected"
-msgstr "FTPサービスが選択されました"
+msgstr "FTPサービスを選択"
 
 msgid "N/A"
-msgstr "N/A"
+msgstr "該当なし"
 
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_ファイル"
+
+msgid "Close"
+msgstr "閉じる"
+
+msgid "_Edit"
+msgstr "_編集"
+
+msgid "Services"
+msgstr "サービス"
+
+msgid "New service"
+msgstr "新サービス"
+
+msgid "Edit service"
+msgstr "サービスの編集"
+
+msgid "System-wide services"
+msgstr "システム全体のサービス"
+
+msgid "_Help"
+msgstr "_ヘルプ"
+
+msgid "About"
+msgstr "このソフトについて"
+
+msgid "File uploader for Linux Mint"
+msgstr "Linux Mint用ファイルアップローダー"
+
+msgid "Type:"
+msgstr "タイプ："
+
+msgid "Hostname:"
+msgstr "ホスト名："
+
+msgid "Port:"
+msgstr "ポート："
+
+msgid "Username:"
+msgstr "ユーザー名："
+
+msgid "Password:"
+msgstr "パスワード："
+
+msgid "Timestamp:"
+msgstr "タイムスタンプ："
+
+msgid "Path: "
+msgstr "パス："
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "ホスト名か、IPアドレス。デフォルトでは：mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "リモートポート。デフォルトでは：FTP が 21；SFTP と SCP が 22"
+
+msgid "Username, defaults to your local username"
+msgstr "ユーザー名。デフォルトでは：あなたのローカルユーザー名"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "パスワード。デフォルトでは： SCP 接続はパスワード無し； FTP 接続は空値； SFTP 接続は ~/.ssh キー"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "タイムスタンプの書式（strftime）。 デフォルトでは："
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "アップロード先ディレクトリ。 <TIMESTAMP> は与えられたタイムスタンプの書式に従い、現行のタイムスタンプに置換されます。デフォルトでは： ."
+
+msgid "connection successfully established"
+msgstr "接続の確立に成功しました"
+
+msgid "This service requires a password."
+msgstr "このサービスにはパスワードが必要です。"
+
+msgid "This service requires a password or a private key."
+msgstr "このサービスにはパスワードか秘密鍵が必要です。"

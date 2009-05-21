@@ -1,5 +1,5 @@
 msgid "Checking space on the service..."
-msgstr "Servisteki alan denetleniyor..."
+msgstr "Servisteki boş yer kontrol ediliyor..."
 
 msgid "B"
 msgstr "B"
@@ -17,68 +17,147 @@ msgid "days"
 msgstr "gün"
 
 msgid "Service ready. Space available."
-msgstr "Servis hazır. Alan erişilebilir."
+msgstr "Sevis hazır. Boş yer mevcut."
 
 msgid "File too big or not enough space on the service."
-msgstr "Dosya çok büyük veya serviste yeterli alan yok."
+msgstr "Dosya çok büyük ya da serviste yeterli yer yok."
 
 msgid "Could not connect to the service."
-msgstr "Servise erişilemedi."
+msgstr "Servise bağlanılamadı."
 
 msgid "Connecting to the service..."
 msgstr "Servise bağlanılıyor..."
 
 msgid "Uploading the file..."
-msgstr "Dosya yükleniyor..."
+msgstr "Dosya gönderiliyor..."
 
 msgid "File uploaded successfully."
-msgstr "Dosya başarı ile yüklendi."
+msgstr "Dosya gönderimi başarılı."
 
 msgid "Upload failed."
-msgstr "Yükleme başarısız oldu."
+msgstr "Gönderme başarısız."
 
 msgid "Upload a file"
-msgstr "Bir dosya yükleyin"
+msgstr "Bir dosya gönder"
 
 msgid "Upload and share a file"
-msgstr "Bir dosya yükleyip paylaşın"
+msgstr "Bir dosya gönder ve paylaş"
 
 msgid "Upload service"
-msgstr "Yükleme servisi"
+msgstr "Gönderme servisi"
 
 msgid "Local file"
 msgstr "Yerel dosya"
 
 msgid "Remote file"
-msgstr "Yüklenen dosya"
+msgstr "Uzak dosya"
 
 msgid "Name:"
-msgstr "Adı:"
+msgstr "İsim:"
 
 msgid "Free space:"
-msgstr "Boş alan:"
+msgstr "Boş yer:"
 
 msgid "Max file size:"
-msgstr "En büyük dosya boyutu:"
+msgstr "En fazla dosya boyutu:"
 
 msgid "Persistence:"
-msgstr "Yazma İzni:"
+msgstr "Kalıcılık:"
 
 msgid "Path:"
-msgstr "Dosya Yolu:"
+msgstr "Yol:"
 
 msgid "Size:"
-msgstr "Büyüklüğü:"
+msgstr "Boyut:"
 
 msgid "Upload progress:"
-msgstr "Yükleme İşlemi:"
+msgstr "Gönderme süreci :"
 
 msgid "URL:"
-msgstr "URL:"
+msgstr "Adres:"
 
 msgid "FTP service selected"
-msgstr "FTP hizmeti seçildi"
+msgstr "FTP servisi seçildi"
 
 msgid "N/A"
-msgstr "Erişilebilir değil"
+msgstr "Uygulanabilir değil"
 
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_Dosya"
+
+msgid "Close"
+msgstr "Kapat"
+
+msgid "_Edit"
+msgstr "_Düzenle"
+
+msgid "Services"
+msgstr "Hizmetler"
+
+msgid "New service"
+msgstr "Yeni hizmet"
+
+msgid "Edit service"
+msgstr "Hizmeti düzenle"
+
+msgid "System-wide services"
+msgstr "Sistem çapındaki hizmetler"
+
+msgid "_Help"
+msgstr "_Yardım"
+
+msgid "About"
+msgstr "Hakkında"
+
+msgid "File uploader for Linux Mint"
+msgstr "Linux Mint için dosya gönderme aracı"
+
+msgid "Type:"
+msgstr "Tür:"
+
+msgid "Hostname:"
+msgstr "Sağlayıcı adı:"
+
+msgid "Port:"
+msgstr "Port:"
+
+msgid "Username:"
+msgstr "Kullanıcı adı:"
+
+msgid "Password:"
+msgstr "Şifre:"
+
+msgid "Timestamp:"
+msgstr "Zaman damgası:"
+
+msgid "Path: "
+msgstr "Yol:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Sağlayıcı adı yada IP, varsayılan: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Uzak port, varsayılan: FTP için 21, SFTP ve SCP için 22"
+
+msgid "Username, defaults to your local username"
+msgstr "Kullancı adı, yerel kullanıcı adınız için varsayılanlar"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Şifre, varsayılan: şiresiz SCP bağlantısı, Boş dizgili FTP bağlantısı, pour SFTP için kullanılan ~/.ssh anahtarları"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Zaman damgası formatı (strftime). Varsayılan:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "Gönderme dizini. Verilen zaman damgası formatına göre <TIMESTAMP> varolan zaman damgası ile değiştirildi. Varsayılan: ."
+
+msgid "connection successfully established"
+msgstr "bağlantı başarıyla sağlandı"
+
+msgid "This service requires a password."
+msgstr "Bu hizmet şifre gerektiriyor."
+
+msgid "This service requires a password or a private key."
+msgstr "Bu hizmet şifre ya da özel anahtar gerektiriyor."

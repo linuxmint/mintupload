@@ -1,5 +1,5 @@
 msgid "Checking space on the service..."
-msgstr "Tikrinama vieta serveryje..."
+msgstr "Tikrinama, ar yra vietos paslaugai..."
 
 msgid "B"
 msgstr "B"
@@ -14,71 +14,150 @@ msgid "GB"
 msgstr "GB"
 
 msgid "days"
-msgstr "dienos/dienų"
+msgstr "dienos"
 
 msgid "Service ready. Space available."
-msgstr "Serveris pasiruošęs. Vietos užtenka."
+msgstr "Paslauga paruošta. Vietos pakanka."
 
 msgid "File too big or not enough space on the service."
-msgstr "Failas yra per didelis arba neužtenka vietos serveryje."
+msgstr "Rinkmena yra per didelė arba per mažai vietos."
 
 msgid "Could not connect to the service."
-msgstr "Nepavyko prisijungti prie serverio..."
+msgstr "Neįmanoma prisijungti prie paslaugos."
 
 msgid "Connecting to the service..."
-msgstr "Jungiamasi prie serverio..."
+msgstr "Jungiama paslauga..."
 
 msgid "Uploading the file..."
-msgstr "Failas talpinamas"
+msgstr "Rinkmena siunčiama..."
 
 msgid "File uploaded successfully."
-msgstr "Failas sėkmingai patalpintas."
+msgstr "Rinkmena sėkmingai nusiųsta."
 
 msgid "Upload failed."
-msgstr "Išsiuntimas nepavyko."
+msgstr "Siuntimas nepavyko."
 
 msgid "Upload a file"
-msgstr "Talpinti failą"
+msgstr "Siųsti failą"
 
 msgid "Upload and share a file"
-msgstr "Patalpinkite ir dalinkitės failu"
+msgstr "Siųsti ir dalintis failu"
 
 msgid "Upload service"
-msgstr "Talpinimas"
+msgstr "Siuntimo paslauga"
 
 msgid "Local file"
-msgstr "Failas diske"
+msgstr "Vietinė rinkmena"
 
 msgid "Remote file"
-msgstr "Failo talpinimas"
+msgstr "Rinkmena tinkle"
 
 msgid "Name:"
 msgstr "Pavadinimas:"
 
 msgid "Free space:"
-msgstr "Laisvos vietos:"
+msgstr "Laisva vieta:"
 
 msgid "Max file size:"
-msgstr "Maksimalus failo dydis:"
+msgstr "Didžiausias rinkmenos dydis:"
 
 msgid "Persistence:"
-msgstr "Gyvavimo laikas:"
+msgstr "Išsilaikymas:"
 
 msgid "Path:"
-msgstr "Vieta:"
+msgstr "Kelias:"
 
 msgid "Size:"
 msgstr "Dydis:"
 
 msgid "Upload progress:"
-msgstr "Išsiunčiama:"
+msgstr "Siuntimas:"
 
 msgid "URL:"
-msgstr "Nuoroda:"
+msgstr "Adresas:"
 
 msgid "FTP service selected"
-msgstr "FTP paslauga pasirinkta"
+msgstr "Pasirinkta FTP paslauga"
 
 msgid "N/A"
-msgstr "N/A"
+msgstr "Neprieinama"
 
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_Rinkmena"
+
+msgid "Close"
+msgstr "Uždaryti"
+
+msgid "_Edit"
+msgstr "_Tvarkyti"
+
+msgid "Services"
+msgstr "Paslaugos"
+
+msgid "New service"
+msgstr "Nauja paslauga"
+
+msgid "Edit service"
+msgstr "Tvarkyti paslaugą"
+
+msgid "System-wide services"
+msgstr "Sisteminės paslaugos"
+
+msgid "_Help"
+msgstr "_Pagalba"
+
+msgid "About"
+msgstr "Informacija"
+
+msgid "File uploader for Linux Mint"
+msgstr "Linux Mint failų siuntėjas"
+
+msgid "Type:"
+msgstr "Tipas "
+
+msgid "Hostname:"
+msgstr "Saugotojas:"
+
+msgid "Port:"
+msgstr "Portas:"
+
+msgid "Username:"
+msgstr "Vartotojas:"
+
+msgid "Password:"
+msgstr "Slaptažodis:"
+
+msgid "Timestamp:"
+msgstr "Data ir laikas:"
+
+msgid "Path: "
+msgstr "Kelias:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Saugotojas arba IP adresas, pavyzdžiui, mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Nuotolinis portas, pavyzdžiui: 21 - FTP, 22 - SFTP ir SCP"
+
+msgid "Username, defaults to your local username"
+msgstr "Vartotojas, pagal nutylėjimą - vietinis"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Slaptažodis, pavyzdžiui: nesaugi SCP jungtis, bevardė FTP jungtis, ~/.ssh raktai SFTP"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Datos ir laikos formatas (strftime). Pagal nutylėjimą:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "Katalogas, į kurių siųsti. <TIMESTAMP> pakeičiama dabartine data ir laiku, pagal nurodytą formatą. Pagal nutylėjimą: ."
+
+msgid "connection successfully established"
+msgstr "sėkmingai susijungta"
+
+msgid "This service requires a password."
+msgstr "Ši paslauga reikalauja slaptažodžio."
+
+msgid "This service requires a password or a private key."
+msgstr "Ši paslauga reikalauja slaptažodžio arba nuosavo rakto."

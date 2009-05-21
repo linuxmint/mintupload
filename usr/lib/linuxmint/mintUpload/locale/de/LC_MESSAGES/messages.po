@@ -1,5 +1,5 @@
 msgid "Checking space on the service..."
-msgstr "Überprüfe freien Speicher des Dienstes..."
+msgstr "Überprüfe mögliche Speichergröße des Dienstes..."
 
 msgid "B"
 msgstr "B"
@@ -23,7 +23,7 @@ msgid "File too big or not enough space on the service."
 msgstr "Datei zu groß oder kein ausreichender Speicherplatz."
 
 msgid "Could not connect to the service."
-msgstr "Verbindung zum Dienst konnte nicht hergestellt werden."
+msgstr "Verbindung zum Dienst kann nicht hergestellt werden."
 
 msgid "Connecting to the service..."
 msgstr "Verbindung zum Dienst wird hergestellt..."
@@ -32,7 +32,7 @@ msgid "Uploading the file..."
 msgstr "Upload der Datei..."
 
 msgid "File uploaded successfully."
-msgstr "Datei erfolgreich hochgeladen."
+msgstr "Datei erfolgreich hoch geladen."
 
 msgid "Upload failed."
 msgstr "Fehler beim Upload."
@@ -56,13 +56,13 @@ msgid "Name:"
 msgstr "Name:"
 
 msgid "Free space:"
-msgstr "Freier Speicher:"
+msgstr "Freier Speicherplatz:"
 
 msgid "Max file size:"
 msgstr "Maximale Dateigröße:"
 
 msgid "Persistence:"
-msgstr "Aufbewahrungszeit:"
+msgstr "Zeitdauer:"
 
 msgid "Path:"
 msgstr "Pfad:"
@@ -74,7 +74,7 @@ msgid "Upload progress:"
 msgstr "Upload Fortschritt:"
 
 msgid "URL:"
-msgstr "URL:"
+msgstr "Adresse :"
 
 msgid "FTP service selected"
 msgstr "FTP-Dienst ausgewählt"
@@ -82,3 +82,82 @@ msgstr "FTP-Dienst ausgewählt"
 msgid "N/A"
 msgstr "N/A"
 
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_Datei"
+
+msgid "Close"
+msgstr "Schließen"
+
+msgid "_Edit"
+msgstr "_Bearbeiten"
+
+msgid "Services"
+msgstr "Dienste"
+
+msgid "New service"
+msgstr "Neuer Dienst"
+
+msgid "Edit service"
+msgstr "Dienst bearbeiten"
+
+msgid "System-wide services"
+msgstr "Systemweite Dienste"
+
+msgid "_Help"
+msgstr "_Hilfe"
+
+msgid "About"
+msgstr "Über"
+
+msgid "File uploader for Linux Mint"
+msgstr "Datei Upload-Dienst für Linux Mint"
+
+msgid "Type:"
+msgstr "Typ:"
+
+msgid "Hostname:"
+msgstr "Host Name:"
+
+msgid "Port:"
+msgstr "Port:"
+
+msgid "Username:"
+msgstr "Benutzername:"
+
+msgid "Password:"
+msgstr "Passwort:"
+
+msgid "Timestamp:"
+msgstr "Zeitstempel:"
+
+msgid "Path: "
+msgstr "Pfad:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Host Name oder IP Adresse, Standart: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Entfernter Port, Standart: für FTP 21, für SFTP und SCP 22"
+
+msgid "Username, defaults to your local username"
+msgstr "Benutzername, voreingestellt ist Ihr lokaler Benutzername"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Passwort, als Standart: SCP Verbindung ohne Passwort, für FTP ein Null-Wert, für SFTP werden Schlüssel aus ~/.ssh verwendet"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Format des Zeitstempels (strftime). Als Standart:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "Verzeichnis zu dem hoch geladen wird. <TIMESTAMP> wird durch den Wert des aktuellen Zeitstempels ersetzt. Als Standart: ."
+
+msgid "connection successfully established"
+msgstr "Verbindung erfolgreich hergestellt"
+
+msgid "This service requires a password."
+msgstr "Dieser Dienst verlangt ein Passwort."
+
+msgid "This service requires a password or a private key."
+msgstr "Dieser Dienst verlangt ein Passwort oder einen persönlichen Schlüssel."

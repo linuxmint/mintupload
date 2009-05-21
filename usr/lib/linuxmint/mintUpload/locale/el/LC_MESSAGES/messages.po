@@ -1,0 +1,163 @@
+msgid "Checking space on the service..."
+msgstr "Έλεγχος διαθέσιμου χώρου της υπηρεσίας..."
+
+msgid "B"
+msgstr "B"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "days"
+msgstr "ημέρες"
+
+msgid "Service ready. Space available."
+msgstr "Υπηρεσία έτοιμη. Χώρος διαθέσιμος."
+
+msgid "File too big or not enough space on the service."
+msgstr "Αρχείο πολύ μεγάλο ή δεν υπάρχει αρκετός χώρος στην υπηρεσία."
+
+msgid "Could not connect to the service."
+msgstr "Δεν έγινε σύνδεση στην υπηρεσία."
+
+msgid "Connecting to the service..."
+msgstr "Γίνετε σύνδεση στην υπηρεσία..."
+
+msgid "Uploading the file..."
+msgstr "Το αρχείο ανεβαίνει..."
+
+msgid "File uploaded successfully."
+msgstr "Το αρχείο ανέβηκε επιτυχώς."
+
+msgid "Upload failed."
+msgstr "Το ανέβασμα του αρχείου απέτυχε."
+
+msgid "Upload a file"
+msgstr "Ανέβασε αρχείο"
+
+msgid "Upload and share a file"
+msgstr "Ανέβασε και μοίρασε αρχείο"
+
+msgid "Upload service"
+msgstr "Υπηρεσία ανεβάσματος αρχείου"
+
+msgid "Local file"
+msgstr "Τοπικό αρχείο"
+
+msgid "Remote file"
+msgstr "Απομακρυσμένο αρχείο"
+
+msgid "Name:"
+msgstr "Όνομα:"
+
+msgid "Free space:"
+msgstr "Eλεύθερος χώρος:"
+
+msgid "Max file size:"
+msgstr "Μέγιστο μέγεθος αρχείου:"
+
+msgid "Persistence:"
+msgstr "Χρόνος παραμονής:"
+
+msgid "Path:"
+msgstr "Διαδρομή:"
+
+msgid "Size:"
+msgstr "Μέγεθος:"
+
+msgid "Upload progress:"
+msgstr "Πρόοδος ανεβάσματος:"
+
+msgid "URL:"
+msgstr " URL:"
+
+msgid "FTP service selected"
+msgstr " Επιλογή υπηρεσίας FTP"
+
+msgid "N/A"
+msgstr "Δεν είναι διαθέσιμο"
+
+# Added since mintUpload 3.0
+
+msgid "_File"
+msgstr "_ Αρχείο "
+
+msgid "Close"
+msgstr "Κλείσιμο "
+
+msgid "_Edit"
+msgstr "_ Σύνταξη "
+
+msgid "Services"
+msgstr "Υπηρεσίες "
+
+msgid "New service"
+msgstr "Νέα υπηρεσία "
+
+msgid "Edit service"
+msgstr "Τροποποίηση υπηρεσίας "
+
+msgid "System-wide services"
+msgstr "Ευρείες υπηρεσίες συστήματος "
+
+msgid "_Help"
+msgstr "_ Βοήθεια "
+
+msgid "About"
+msgstr "Σχετικά"
+
+msgid "File uploader for Linux Mint"
+msgstr "Εργαλείο ανεβάσματος αρχείου για το Linux Mint"
+
+msgid "Type:"
+msgstr "Τύπος:"
+
+msgid "Hostname:"
+msgstr "Όνομα εξυπηρετητή: "
+
+msgid "Port:"
+msgstr "Θύρα:"
+
+msgid "Username:"
+msgstr "Όνομα χρήστη: "
+
+msgid "Password:"
+msgstr "Κωδικός πρόσβασης:"
+
+msgid "Timestamp:"
+msgstr "Ημερομηνία:"
+
+msgid "Path: "
+msgstr "Διαδρομή:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Όνομα εξυπηρετητή ή διεύθυνση IP , προεπιλογή: mint-space.com "
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Απομακρυσμένη θύρα, προεπιλεγμένη η 21 για FTP, 22 για SFTP και SCP "
+
+msgid "Username, defaults to your local username"
+msgstr "Όνομα χρήστη, προεπιλογή το τοπικό όνομα χρήστη "
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Κωδικός πρόσβασης, προεπιλογή: χωρίς κωδικό πρόσβασης για SCP σύνδεση, null-string FTP σύνδεση, ~/.ssh κλειδιά χρησιμοποιούνται για SFTP συνδέσεις "
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Διάταξη ημερομηνίας (strftime). Προεπιλογή:"
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "Κατάλογος που θα ανεβεί το αρχείο. Το <TIMESTAMP> αντικαθίσταται από την τρέχουσα ημερομηνία, σύμφωνα με τη διάταξη της ημερομηνίας που έχει δωθεί. Προεπιλογή: ."
+
+msgid "connection successfully established"
+msgstr "η σύνδεση έγινε επιτυχώς "
+
+msgid "This service requires a password."
+msgstr "Η υπηρεσία απαιτεί κωδικό πρόσβασης."
+
+msgid "This service requires a password or a private key."
+msgstr "Η υπηρεσία απαιτεί κωδικό πρόσβασης η προσωπικό κλειδί. "

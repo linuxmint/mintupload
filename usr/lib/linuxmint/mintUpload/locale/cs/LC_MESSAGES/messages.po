@@ -17,16 +17,16 @@ msgid "days"
 msgstr "dní"
 
 msgid "Service ready. Space available."
-msgstr "Prostor je k dispozici, služba je připravena."
+msgstr "Služba je dostupná. Prostor je k dispozici."
 
 msgid "File too big or not enough space on the service."
-msgstr "Příliš velký soubor nebo málo prostoru pro službu."
+msgstr "Soubor je příliš velký, nebo není prostor pro službu."
 
 msgid "Could not connect to the service."
-msgstr "Služba není dostupná."
+msgstr "Nelze se připojit ke službě."
 
 msgid "Connecting to the service..."
-msgstr "Připojení ke službě..."
+msgstr "Připojování se ke službě..."
 
 msgid "Uploading the file..."
 msgstr "Nahrávání souboru..."
@@ -35,7 +35,7 @@ msgid "File uploaded successfully."
 msgstr "Soubor byl úspěšně nahrán."
 
 msgid "Upload failed."
-msgstr "Nepodařilo se nahrát soubor."
+msgstr "Nahrávání selhalo."
 
 msgid "Upload a file"
 msgstr "Nahrát soubor"
@@ -56,13 +56,13 @@ msgid "Name:"
 msgstr "Název:"
 
 msgid "Free space:"
-msgstr "Volné místo:"
+msgstr "Volný prostor:"
 
 msgid "Max file size:"
 msgstr "Max. velikost souboru:"
 
 msgid "Persistence:"
-msgstr "Životnost:"
+msgstr "Trvání:"
 
 msgid "Path:"
 msgstr "Cesta:"
@@ -71,7 +71,7 @@ msgid "Size:"
 msgstr "Velikost:"
 
 msgid "Upload progress:"
-msgstr "Stav nahrávání:"
+msgstr "Průběh nahrávání:"
 
 msgid "URL:"
 msgstr "URL:"
@@ -81,3 +81,82 @@ msgstr "Vybrána FTP služba"
 
 msgid "N/A"
 msgstr "N/A"
+
+# Added since mintUpload 3.0
+msgid "_File"
+msgstr "_Soubor"
+
+msgid "Close"
+msgstr "Zavřít"
+
+msgid "_Edit"
+msgstr "_Editovat"
+
+msgid "Services"
+msgstr "Služby"
+
+msgid "New service"
+msgstr "Nová služba"
+
+msgid "Edit service"
+msgstr "Editovat službu"
+
+msgid "System-wide services"
+msgstr "Systémové služby"
+
+msgid "_Help"
+msgstr "_Nápověda"
+
+msgid "About"
+msgstr "O programu"
+
+msgid "File uploader for Linux Mint"
+msgstr "Nahrávání souboru pro Linux Mint"
+
+msgid "Type:"
+msgstr "Typ:"
+
+msgid "Hostname:"
+msgstr "Název hostitele:"
+
+msgid "Port:"
+msgstr "Port:"
+
+msgid "Username:"
+msgstr "Uživatelské jméno:"
+
+msgid "Password:"
+msgstr "Heslo:"
+
+msgid "Timestamp:"
+msgstr "Časové razítko:"
+
+msgid "Path: "
+msgstr "Cesta:"
+
+msgid "Hostname or IP address, default: mint-space.com"
+msgstr "Hostitelský název nebo IP adresa, výchozí: mint-space.com"
+
+msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
+msgstr "Vzdálený port, výchozí je 21 pro FTP, 22 pro SFTP a SCP"
+
+msgid "Username, defaults to your local username"
+msgstr "Uživatelské jméno, výchozí je vaše místní uživatelské jméno"
+
+msgid "Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"
+msgstr "Heslo, výchozí hodnoty: bez hesla pro SCP připojení, prázdný řetězec pro FTP připojení, ~ /.ssh klíče použité pro SFTP spojení"
+
+msgid "Timestamp format (strftime). By default:"
+msgstr "Formát časového razítka (strftime). Výchozí: "
+
+msgid "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."
+msgstr "Složka k nahrávání. <TIMESTAMP> je nahrazen aktuálním časovým údajem, v následujícím daném formátu. Výchozí: ."
+
+msgid "connection successfully established"
+msgstr "připojení úspěšně navázáno"
+
+msgid "This service requires a password."
+msgstr "Tato služba vyžaduje heslo."
+
+msgid "This service requires a password or a private key."
+msgstr "Tato služba vyžaduje heslo nebo soukromý klíč."
