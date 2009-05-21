@@ -8,7 +8,7 @@ mintupload (3.5) jaunty; urgency=low
   * Better error handling
   * Sufficient abstraction for writing multiple UIs (CLI/QT etc.)
  
- -- Philip Morrell <ubuntu.emorrp1@mamber.net>  Thu,  21 May 2009 18:20:45 +0100
+ -- Philip Morrell <mintupload.emorrp1@mamber.net>  Thu,  21 May 2009 18:20:45 +0100
 
 mintupload (3.3.3) gloria; urgency=low
 

@@ -1,7 +1,7 @@
 Source: mintupload
 Section: admin
 Priority: optional
-Maintainer: Philip Morrell <ubuntu.emorrp1@mamber.net>
+Maintainer: Philip Morrell <mintupload.emorrp1@mamber.net>
 Build-Depends: debhelper (>= 5)
 Standards-Version: 3.7.2
 

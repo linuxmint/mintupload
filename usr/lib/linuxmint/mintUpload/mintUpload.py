@@ -287,7 +287,7 @@ class mintUploadWindow:
 
 		dlg.set_authors([
 			"Clement Lefebvre <root@linuxmint.com>",
-			"Philip Morrell <ubuntu.emorrp1@xoxy.net>",
+			"Philip Morrell <mintupload.emorrp1@mamber.net>",
 			"Manuel Sandoval <manuel@slashvar.com>",
 			"Dennis Schwertel <s@digitalkultur.net>"
 		])
