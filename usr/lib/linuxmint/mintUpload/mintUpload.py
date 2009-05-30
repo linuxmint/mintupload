@@ -197,7 +197,7 @@ class gtkUploader(mintUploader):
 			#if showOnlyOnNoFocus is false OR showOnlyOnNoFocus is true and the window has no focus
 			if not (config['notification']['showOnlyOnNoFocus'].lower()=="true" and self.wTree.get_widget("main_window").has_toplevel_focus()): 
 				notify = CustomNotifier()
-				notify.notify("transfer complete!") #i18n me
+				notify.notify(_("File uploaded successfully."))
 
 
 
