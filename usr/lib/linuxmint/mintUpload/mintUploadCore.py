@@ -245,8 +245,16 @@ config = ConfigObj('/etc/linuxmint/mintUpload.conf')
 if os.path.exists(home + '/.linuxmint/mintUpload.conf'):
 	config.merge(ConfigObj(home + '/.linuxmint/mintUpload.conf'))
 
+if not config.has_key('paths'):
+	print "paths not set in config" #i18n me
+	sys.exit(1)
+
 config_paths = config['paths']
 config_paths['user'] = config_paths['user'].replace('<HOME>',home)
+	
+if not config.has_key('defaults'):
+	print "defaults not set in config" #i18n me
+	sys.exit(1)
 
 defaults = config['defaults']
 defaults['user'] = defaults['user'].replace('<USER>',os.environ['LOGNAME'])
