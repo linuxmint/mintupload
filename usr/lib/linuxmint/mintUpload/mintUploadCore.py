@@ -188,12 +188,12 @@ class mintUploader(threading.Thread):
 	def _scp(self):
 		'''Connection process for SCP services'''
 
+		if not self.service.has_key('port'):
+			self.service['port'] = 22
 		try:
 			# Attempting to connect
-			if not self.service.has_key('port'):
-				self.service['port'] = 22
-
-			scp_cmd = "scp -P %i "%self.service['port'] + self.file + " " + self.service['user'] + "@" + self.service['host'] + ':' + self.service['path']
+			self.service['file'] = self.file
+			scp_cmd = "scp -P %(port)i %(file)s %(user)s@%(host)s:%(path)s"%self.service
 			scp = pexpect.spawn(scp_cmd)
 
 			# If password is not defined, or is the empty string, use password-less scp
