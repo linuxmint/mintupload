@@ -242,18 +242,18 @@ def read_services():
 	return services
 
 CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
-CONFIGFILE_USER = '/.linuxmint/mintUpload.conf'
+CONFIGFILE_USER = home + '/.linuxmint/mintUpload.conf'
 
 config = ConfigObj(CONFIGFILE_GLOBAL)
-if os.path.exists(home + CONFIGFILE_USER):
-	config.merge(ConfigObj(home + CONFIGFILE_USER))
+if os.path.exists(CONFIGFILE_USER):
+	config.merge(ConfigObj(CONFIGFILE_USER))
 
 if not config.has_key('paths'):
-	print _("%s is not set in the config-File found under %s or %s") %('path', CONFIGFILE_GLOBAL, CONFIGFILE_USER)
+	print _("%s is not set in the config file found under %s or %s") %('paths', CONFIGFILE_GLOBAL, CONFIGFILE_USER)
 	sys.exit(1)
 
 if not config.has_key('defaults'):
-	print _("%s is not set in the config-File found under %s or %s") %('defaults', CONFIGFILE_GLOBAL, CONFIGFILE_USER)
+	print _("%s is not set in the config file found under %s or %s") %('defaults', CONFIGFILE_GLOBAL, CONFIGFILE_USER)
 	sys.exit(1)
 
 config_paths = config['paths']
