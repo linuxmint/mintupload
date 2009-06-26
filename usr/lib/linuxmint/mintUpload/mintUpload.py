@@ -79,6 +79,8 @@ class gtkSpaceChecker(mintSpaceChecker):
 				needsCheck=False
 				# Activate upload button
 				statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
+				label = statusbar.get_children()[0].get_children()[0]
+				label.set_use_markup(True)
 				wTree.get_widget("upload_button").set_sensitive(True)
 
 		if needsCheck:
