@@ -319,16 +319,17 @@ class Service(ConfigObj):
 		s['path'] = s['path'].replace('<TIMESTAMP>',timestamp)
 
 		# Replace placeholders in url
-		url_replace = {
-			' ':'%20',
-			'<TIMESTAMP>':timestamp,
-			'<FILE>':os.path.basename(file),
-			'<PATH>':s['path']
-		}
-		url = s['url']
-		for k,v in url_replace.iteritems():
-			url = url.replace(k,v)
-		s['url'] = url
+		if s.has_key('url'):
+			url_replace = {
+				' ':'%20',
+				'<TIMESTAMP>':timestamp,
+				'<FILE>':os.path.basename(file),
+				'<PATH>':s['path']
+			}
+			url = s['url']
+			for k,v in url_replace.iteritems():
+				url = url.replace(k,v)
+			s['url'] = url
 
 		# Ensure trailing '/', after url <PATH> replace
 		if s['path']:
