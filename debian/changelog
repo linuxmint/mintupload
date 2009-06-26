@@ -1,3 +1,13 @@
+mintupload (3.5.1) jaunty; urgency=low
+
+  * bugfix release:
+  * scp can use custom port
+  * enabling text beside icons
+  * no longer assumes url is defined
+  * enables upload button for minimum service config
+
+ -- Philip Morrell <mintupload.emorrp1@mamber.net>  Fri,  26 Jun 2009 11:46:43 +0100
+
 mintupload (3.5) jaunty; urgency=low
 
   * Spaces in URLs are now encoded for correct auto-linking e.g. IRC
