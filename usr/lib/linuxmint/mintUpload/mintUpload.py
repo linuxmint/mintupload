@@ -77,6 +77,9 @@ class gtkSpaceChecker(mintSpaceChecker):
 			wTree.get_widget("lbl_space").hide()
 			if not self.service.has_key('maxsize'):
 				needsCheck=False
+				# Activate upload button
+				statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
+				wTree.get_widget("upload_button").set_sensitive(True)
 
 		if needsCheck:
 			wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
