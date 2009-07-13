@@ -172,18 +172,8 @@ class gtkUploader(mintUploader):
 		progressbar.set_text(pctStr + "%")
 
 	def asciicallback(self, buffer):
-		global progressbar
-
 		self.so_far = self.so_far+len(buffer)-1
-		pct = float(self.so_far)/self.filesize
-		pctStr = str(int(pct * 100))
-		progressbar.set_fraction(pct)
-		progressbar.set_text(pctStr + "%")
-
-		# Output cli for debugging, bugfix
-		self.so_far = self.so_far-len(buffer)+1
-		mintUploader.asciicallback(self, buffer)
-		return
+		self.pct(float(self.so_far)/self.filesize)
 
 class mintUploadWindow:
 	"""This is the main class for the application"""
