@@ -157,7 +157,7 @@ class gtkUploader(mintUploader):
 
 	def progress(self, message, color=None):
 		global statusbar
-		global context_id
+		context_id = statusbar.get_context_id("mintUpload")
 		mintUploader.progress(self, message)
 		if color:
 			statusbar.push(context_id, "<span color='%s'>%s</span>" %(color, message))
