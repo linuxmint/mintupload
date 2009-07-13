@@ -113,6 +113,7 @@ class mintUploader(threading.Thread):
 		self.pct(0)
 		self.upload()
 		self.pct(1)
+		self.progress( _("File uploaded successfully."))
 		if self.service.has_key('url'):
 			self.progress( _("URL:") + " " + self.service['url'])
 
