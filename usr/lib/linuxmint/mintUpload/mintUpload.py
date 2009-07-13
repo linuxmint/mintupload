@@ -298,19 +298,19 @@ class mintUploadWindow:
 		dlg.show()
 
 	def open_services(self, widget, combo):
-		self.wTree = gtk.glade.XML(self.gladefile, "services_window")
-		treeview_services = self.wTree.get_widget("treeview_services")
-		treeview_services_system = self.wTree.get_widget("treeview_services_system")
+		wTree = gtk.glade.XML(self.gladefile, "services_window")
+		treeview_services = wTree.get_widget("treeview_services")
+		treeview_services_system = wTree.get_widget("treeview_services_system")
 
-		self.wTree.get_widget("services_window").set_title(_("Services") + " - mintUpload")
-		self.wTree.get_widget("services_window").set_icon_from_file(self.iconfile)
-		self.wTree.get_widget("services_window").show()
+		wTree.get_widget("services_window").set_title(_("Services") + " - mintUpload")
+		wTree.get_widget("services_window").set_icon_from_file(self.iconfile)
+		wTree.get_widget("services_window").show()
 
-		self.wTree.get_widget("button_close").connect("clicked", self.close_window, self.wTree.get_widget("services_window"), combo)
-		self.wTree.get_widget("services_window").connect("destroy", self.close_window, self.wTree.get_widget("services_window"), combo)
-		self.wTree.get_widget("toolbutton_add").connect("clicked", self.add_service, treeview_services)
-		self.wTree.get_widget("toolbutton_edit").connect("clicked", self.edit_service_toolbutton, treeview_services)
-		self.wTree.get_widget("toolbutton_remove").connect("clicked", self.remove_service, treeview_services)
+		wTree.get_widget("button_close").connect("clicked", self.close_window, wTree.get_widget("services_window"), combo)
+		wTree.get_widget("services_window").connect("destroy", self.close_window, wTree.get_widget("services_window"), combo)
+		wTree.get_widget("toolbutton_add").connect("clicked", self.add_service, treeview_services)
+		wTree.get_widget("toolbutton_edit").connect("clicked", self.edit_service_toolbutton, treeview_services)
+		wTree.get_widget("toolbutton_remove").connect("clicked", self.remove_service, treeview_services)
 
 		column1 = gtk.TreeViewColumn(_("Services"), gtk.CellRendererText(), text=0)
 		column1.set_sort_column_id(0)
@@ -351,13 +351,13 @@ class mintUploadWindow:
 			self.reload_services(combo)
 
 	def add_service(self, widget, treeview_services):
-		self.wTree = gtk.glade.XML(self.gladefile, "dialog_add_service")
-		self.wTree.get_widget("dialog_add_service").set_title(_("New service"))
-		self.wTree.get_widget("dialog_add_service").set_icon_from_file(self.iconfile)
-		self.wTree.get_widget("dialog_add_service").show()
-		self.wTree.get_widget("lbl_name").set_label(_("Name:"))
-		self.wTree.get_widget("button_ok").connect("clicked", self.new_service, self.wTree.get_widget("dialog_add_service"), self.wTree.get_widget("txt_name"), treeview_services)
-		self.wTree.get_widget("button_cancel").connect("clicked", self.close_window, self.wTree.get_widget("dialog_add_service"))
+		wTree = gtk.glade.XML(self.gladefile, "dialog_add_service")
+		wTree.get_widget("dialog_add_service").set_title(_("New service"))
+		wTree.get_widget("dialog_add_service").set_icon_from_file(self.iconfile)
+		wTree.get_widget("dialog_add_service").show()
+		wTree.get_widget("lbl_name").set_label(_("Name:"))
+		wTree.get_widget("button_ok").connect("clicked", self.new_service, wTree.get_widget("dialog_add_service"), wTree.get_widget("txt_name"), treeview_services)
+		wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_add_service"))
 
 	def new_service(self, widget, window, entry, treeview_services):
 		service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
@@ -382,91 +382,91 @@ class mintUploadWindow:
 		sname = model.get_value(iter, 0)
 		file = config_paths['user'] + sname
 
-		self.wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
-		self.wTree.get_widget("dialog_edit_service").set_title(_("Edit service"))
-		self.wTree.get_widget("dialog_edit_service").set_icon_from_file(self.iconfile)
-		self.wTree.get_widget("dialog_edit_service").show()
-		self.wTree.get_widget("button_ok").connect("clicked", self.modify_service, self.wTree.get_widget("dialog_edit_service"), file)
-		self.wTree.get_widget("button_cancel").connect("clicked", self.close_window, self.wTree.get_widget("dialog_edit_service"))
+		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
+		wTree.get_widget("dialog_edit_service").set_title(_("Edit service"))
+		wTree.get_widget("dialog_edit_service").set_icon_from_file(self.iconfile)
+		wTree.get_widget("dialog_edit_service").show()
+		wTree.get_widget("button_ok").connect("clicked", self.modify_service, wTree.get_widget("dialog_edit_service"), wTree, file)
+		wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_edit_service"))
 
 		#i18n
-		self.wTree.get_widget("lbl_type").set_label(_("Type:"))
-		self.wTree.get_widget("lbl_hostname").set_label(_("Hostname:"))
-		self.wTree.get_widget("lbl_port").set_label(_("Port:"))
-		self.wTree.get_widget("lbl_username").set_label(_("Username:"))
-		self.wTree.get_widget("lbl_password").set_label(_("Password:"))
-		self.wTree.get_widget("lbl_timestamp").set_label(_("Timestamp:"))
-		self.wTree.get_widget("lbl_path").set_label(_("Path:"))
+		wTree.get_widget("lbl_type").set_label(_("Type:"))
+		wTree.get_widget("lbl_hostname").set_label(_("Hostname:"))
+		wTree.get_widget("lbl_port").set_label(_("Port:"))
+		wTree.get_widget("lbl_username").set_label(_("Username:"))
+		wTree.get_widget("lbl_password").set_label(_("Password:"))
+		wTree.get_widget("lbl_timestamp").set_label(_("Timestamp:"))
+		wTree.get_widget("lbl_path").set_label(_("Path:"))
 
-		self.wTree.get_widget("lbl_hostname").set_tooltip_text(_("Hostname or IP address, default: mint-space.com"))
-		self.wTree.get_widget("txt_hostname").set_tooltip_text(_("Hostname or IP address, default: mint-space.com"))
+		wTree.get_widget("lbl_hostname").set_tooltip_text(_("Hostname or IP address, default: mint-space.com"))
+		wTree.get_widget("txt_hostname").set_tooltip_text(_("Hostname or IP address, default: mint-space.com"))
 
-		self.wTree.get_widget("lbl_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
-		self.wTree.get_widget("txt_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
+		wTree.get_widget("lbl_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
+		wTree.get_widget("txt_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
 
-		self.wTree.get_widget("lbl_username").set_tooltip_text(_("Username, defaults to your local username"))
-		self.wTree.get_widget("txt_username").set_tooltip_text(_("Username, defaults to your local username"))
+		wTree.get_widget("lbl_username").set_tooltip_text(_("Username, defaults to your local username"))
+		wTree.get_widget("txt_username").set_tooltip_text(_("Username, defaults to your local username"))
 
-		self.wTree.get_widget("lbl_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
-		self.wTree.get_widget("txt_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
+		wTree.get_widget("lbl_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
+		wTree.get_widget("txt_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
 
-		self.wTree.get_widget("lbl_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
-		self.wTree.get_widget("txt_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
+		wTree.get_widget("lbl_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
+		wTree.get_widget("txt_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
 
-		self.wTree.get_widget("lbl_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
-		self.wTree.get_widget("txt_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
+		wTree.get_widget("lbl_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
+		wTree.get_widget("txt_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
 
 		try:
 			config = Service(file)
 			try:
-				model = self.wTree.get_widget("combo_type").get_model()
+				model = wTree.get_widget("combo_type").get_model()
 				iter = model.get_iter_first()
 				while (iter != None and model.get_value(iter, 0) != config['type'].lower()):
 					iter = model.iter_next(iter)
-				self.wTree.get_widget("combo_type").set_active_iter(iter)
+				wTree.get_widget("combo_type").set_active_iter(iter)
 			except:
 				pass
 			try:
-				self.wTree.get_widget("txt_hostname").set_text(config['host'])
+				wTree.get_widget("txt_hostname").set_text(config['host'])
 			except:
-				self.wTree.get_widget("txt_hostname").set_text("")
+				wTree.get_widget("txt_hostname").set_text("")
 			try:
-				self.wTree.get_widget("txt_port").set_text(config['port'])
+				wTree.get_widget("txt_port").set_text(config['port'])
 			except:
-				self.wTree.get_widget("txt_port").set_text("")
+				wTree.get_widget("txt_port").set_text("")
 			try:
-				self.wTree.get_widget("txt_username").set_text(config['user'])
+				wTree.get_widget("txt_username").set_text(config['user'])
 			except:
-				self.wTree.get_widget("txt_username").set_text("")
+				wTree.get_widget("txt_username").set_text("")
 			try:
-				self.wTree.get_widget("txt_password").set_text(config['pass'])
+				wTree.get_widget("txt_password").set_text(config['pass'])
 			except:
-				self.wTree.get_widget("txt_password").set_text("")
+				wTree.get_widget("txt_password").set_text("")
 			try:
-				self.wTree.get_widget("txt_timestamp").set_text(config['format'])
+				wTree.get_widget("txt_timestamp").set_text(config['format'])
 			except:
-				self.wTree.get_widget("txt_timestamp").set_text("")
+				wTree.get_widget("txt_timestamp").set_text("")
 			try:
-				self.wTree.get_widget("txt_path").set_text(config['path'])
+				wTree.get_widget("txt_path").set_text(config['path'])
 			except:
-				self.wTree.get_widget("txt_path").set_text("")
+				wTree.get_widget("txt_path").set_text("")
 		except Exception, detail:
 			print detail
 
-	def modify_service(self, widget, window, file):
+	def modify_service(self, widget, window, wTree, file):
 		try:
-			model = self.wTree.get_widget("combo_type").get_model()
-			iter = 	self.wTree.get_widget("combo_type").get_active_iter()
+			model = wTree.get_widget("combo_type").get_model()
+			iter = 	wTree.get_widget("combo_type").get_active_iter()
 
 			# Get configuration
 			config = {}
 			config['type'] = model.get_value(iter, 0)
-			config['host'] = self.wTree.get_widget("txt_hostname").get_text()
-			config['port'] = self.wTree.get_widget("txt_port").get_text()
-			config['user'] = self.wTree.get_widget("txt_username").get_text()
-			config['pass'] = self.wTree.get_widget("txt_password").get_text()
-			config['format'] = self.wTree.get_widget("txt_timestamp").get_text()
-			config['path'] = self.wTree.get_widget("txt_path").get_text()
+			config['host'] = wTree.get_widget("txt_hostname").get_text()
+			config['port'] = wTree.get_widget("txt_port").get_text()
+			config['user'] = wTree.get_widget("txt_username").get_text()
+			config['pass'] = wTree.get_widget("txt_password").get_text()
+			config['format'] = wTree.get_widget("txt_timestamp").get_text()
+			config['path'] = wTree.get_widget("txt_path").get_text()
 
 			# Write to service's config file
 			s = Service(file)
