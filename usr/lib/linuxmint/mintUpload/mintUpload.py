@@ -44,6 +44,11 @@ CustomError.__init__ = gtkCustomError
 class gtkSpaceChecker(mintSpaceChecker):
 	'''Checks for available space on the service'''
 
+	def __init__(self, service, filesize, statusbar, wTree):
+		mintSpaceChecker.__init__(self, service, filesize)
+		self.statusbar = statusbar
+		self.wTree = wTree
+
 	def run(self):
 		global statusbar
 		global wTree
@@ -509,7 +514,7 @@ class mintUploadWindow:
 		for service in self.services:
 			if service['name'] == selectedService:
 				selected_service = service
-				checker = gtkSpaceChecker(selected_service, self.filesize)
+				checker = gtkSpaceChecker(selected_service, self.filesize, statusbar, wTree)
 				checker.start()
 				return True
 
