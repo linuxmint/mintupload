@@ -489,15 +489,9 @@ class mintUploadWindow:
 	def comboChanged(self, widget):
 		'''Change the selected service'''
 
-		global progressbar
-		global wTree
-		global selected_service
-
-		progressbar = wTree.get_widget("progressbar")
-
 		# Get the selected service
-		model = wTree.get_widget("combo").get_model()
-		active = wTree.get_widget("combo").get_active()
+		model = self.wTree.get_widget("combo").get_model()
+		active = self.wTree.get_widget("combo").get_active()
 		if active < 0:
 			return
 		selectedService = model[active][0]
@@ -505,8 +499,8 @@ class mintUploadWindow:
 		self.services = read_services()
 		for service in self.services:
 			if service['name'] == selectedService:
-				selected_service = service
-				checker = gtkSpaceChecker(selected_service, self.filesize, self.statusbar, wTree)
+				self.selected_service = service
+				checker = gtkSpaceChecker(self.selected_service, self.filesize, self.statusbar, wTree)
 				checker.start()
 				return True
 
