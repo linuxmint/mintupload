@@ -164,8 +164,8 @@ class gtkUploader(mintUploader):
 		mintUploader.progress(self, message)
 		if color:
 			color_message = "<span color='%s'>%s</span>" % (color, message)
-			statusbar.push(context_id, color_message)
-			statusbar.get_children()[0].get_children()[0].set_use_markup(True)
+			self.statusbar.push(context_id, color_message)
+			self.statusbar.get_children()[0].get_children()[0].set_use_markup(True)
 		else:
 			self.statusbar.push(context_id, message)
 
