@@ -128,6 +128,7 @@ class gtkUploader(mintUploader):
 		global progressbar
 		global statusbar
 		global wTree
+		global context_id
 
 		wTree.get_widget("upload_button").set_sensitive(False)
 		wTree.get_widget("combo").set_sensitive(False)
