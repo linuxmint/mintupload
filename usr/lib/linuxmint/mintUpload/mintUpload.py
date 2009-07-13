@@ -500,7 +500,7 @@ class mintUploadWindow:
 		for service in self.services:
 			if service['name'] == selectedService:
 				self.selected_service = service
-				checker = gtkSpaceChecker(self.selected_service, self.filesize, self.statusbar, wTree)
+				checker = gtkSpaceChecker(self.selected_service, self.filesize, self.statusbar, self.wTree)
 				checker.start()
 				return True
 
