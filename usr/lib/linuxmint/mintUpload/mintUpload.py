@@ -184,11 +184,9 @@ class mintUploadWindow:
 
 	def __init__(self, filename):
 		global wTree
-		global name
 		global statusbar
 
 		self.filename = filename
-		name = os.path.basename(filename)
 		self.iconfile = "/usr/lib/linuxmint/mintSystem/icon.png"
 
 		# Set the Glade file
