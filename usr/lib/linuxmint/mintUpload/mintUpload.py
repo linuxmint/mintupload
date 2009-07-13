@@ -32,10 +32,10 @@ gtk.gdk.threads_init()
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 
-def gtkCustomError(self, detail, statusbar):
+def gtkCustomError(self, detail):
 	message = "<span color='red'>" + detail + "</span>"
-	statusbar.push(statusbar.get_context_id("mintUpload"), message)
-	statusbar.get_children()[0].get_children()[0].set_use_markup(True)
+	self.statusbar.push(self.statusbar.get_context_id("mintUpload"), message)
+	self.statusbar.get_children()[0].get_children()[0].set_use_markup(True)
 	CustomError.error(self, detail)
 
 CustomError.__init__ = gtkCustomError
@@ -142,7 +142,7 @@ class gtkUploader(mintUploader):
 		try:
 			self.upload()
 		except:
-			try:    raise CustomError(_("Upload failed."), self.statusbar)
+			try:    raise CustomError(_("Upload failed."))
 			except: pass
 
 		else:
@@ -254,6 +254,7 @@ class mintUploadWindow:
 
 		self.statusbar = self.wTree.get_widget("statusbar")
 		self.progressbar = self.wTree.get_widget("progressbar")
+		CustomError.statusbar = self.statusbar
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
