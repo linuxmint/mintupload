@@ -51,51 +51,50 @@ class gtkSpaceChecker(mintSpaceChecker):
 
 	def run(self):
 		global statusbar
-		global wTree
 
 		context_id = statusbar.get_context_id("mintUpload")
 
 		# Get the file's persistence on the service
 		if self.service.has_key('persistence'):
-			wTree.get_widget("txt_persistence").set_label(str(self.service['persistence']) + " " + _("days"))
-			wTree.get_widget("txt_persistence").show()
-			wTree.get_widget("lbl_persistence").show()
+			self.wTree.get_widget("txt_persistence").set_label(str(self.service['persistence']) + " " + _("days"))
+			self.wTree.get_widget("txt_persistence").show()
+			self.wTree.get_widget("lbl_persistence").show()
 		else:
-			wTree.get_widget("txt_persistence").set_label(_("N/A"))
-			wTree.get_widget("txt_persistence").hide()
-			wTree.get_widget("lbl_persistence").hide()
+			self.wTree.get_widget("txt_persistence").set_label(_("N/A"))
+			self.wTree.get_widget("txt_persistence").hide()
+			self.wTree.get_widget("lbl_persistence").hide()
 
 		# Get the maximum allowed filesize on the service
 		if self.service.has_key('maxsize'):
 			maxsizeStr = sizeStr(self.service['maxsize'])
-			wTree.get_widget("txt_maxsize").set_label(maxsizeStr)
-			wTree.get_widget("txt_maxsize").show()
-			wTree.get_widget("lbl_maxsize").show()
+			self.wTree.get_widget("txt_maxsize").set_label(maxsizeStr)
+			self.wTree.get_widget("txt_maxsize").show()
+			self.wTree.get_widget("lbl_maxsize").show()
 		else:
-			wTree.get_widget("txt_maxsize").set_label(_("N/A"))
-			wTree.get_widget("txt_maxsize").hide()
-			wTree.get_widget("lbl_maxsize").hide()
+			self.wTree.get_widget("txt_maxsize").set_label(_("N/A"))
+			self.wTree.get_widget("txt_maxsize").hide()
+			self.wTree.get_widget("lbl_maxsize").hide()
 
 		needsCheck = True
 		if not self.service.has_key('space'):
-			wTree.get_widget("txt_space").set_label(_("N/A"))
-			wTree.get_widget("txt_space").hide()
-			wTree.get_widget("lbl_space").hide()
+			self.wTree.get_widget("txt_space").set_label(_("N/A"))
+			self.wTree.get_widget("txt_space").hide()
+			self.wTree.get_widget("lbl_space").hide()
 			if not self.service.has_key('maxsize'):
 				needsCheck=False
 				# Activate upload button
 				statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
 				label = statusbar.get_children()[0].get_children()[0]
 				label.set_use_markup(True)
-				wTree.get_widget("upload_button").set_sensitive(True)
+				self.wTree.get_widget("upload_button").set_sensitive(True)
 
 		if needsCheck:
-			wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
-			wTree.get_widget("combo").set_sensitive(False)
-			wTree.get_widget("upload_button").set_sensitive(False)
+			self.wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
+			self.wTree.get_widget("combo").set_sensitive(False)
+			self.wTree.get_widget("upload_button").set_sensitive(False)
 			statusbar.push(context_id, _("Checking space on the service..."))
 
-			wTree.get_widget("frame_progress").hide()
+			self.wTree.get_widget("frame_progress").hide()
 
 			# Check the filesize
 			try:
@@ -112,20 +111,20 @@ class gtkSpaceChecker(mintSpaceChecker):
 				if self.service.has_key('space'):
 					pctSpace = float(self.available) / float(self.total) * 100
 					pctSpaceStr = sizeStr(self.available) + " (" + str(int(pctSpace)) + "%)"
-					wTree.get_widget("txt_space").set_label(pctSpaceStr)
-					wTree.get_widget("txt_space").show()
-					wTree.get_widget("lbl_space").show()
+					self.wTree.get_widget("txt_space").set_label(pctSpaceStr)
+					self.wTree.get_widget("txt_space").show()
+					self.wTree.get_widget("lbl_space").show()
 
 				# Activate upload button
 				statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
-				wTree.get_widget("upload_button").set_sensitive(True)
+				self.wTree.get_widget("upload_button").set_sensitive(True)
 
 			finally:
 				label = statusbar.get_children()[0].get_children()[0]
 				label.set_use_markup(True)
-				wTree.get_widget("combo").set_sensitive(True)
-				wTree.get_widget("main_window").window.set_cursor(None)
-				wTree.get_widget("main_window").resize(*wTree.get_widget("main_window").size_request())
+				self.wTree.get_widget("combo").set_sensitive(True)
+				self.wTree.get_widget("main_window").window.set_cursor(None)
+				self.wTree.get_widget("main_window").resize(*self.wTree.get_widget("main_window").size_request())
 
 class gtkUploader(mintUploader):
 	'''Wrapper for the gtk management of mintUploader'''
