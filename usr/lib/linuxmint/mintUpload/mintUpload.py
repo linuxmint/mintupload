@@ -386,7 +386,7 @@ class mintUploadWindow:
 		self.wTree.get_widget("dialog_edit_service").set_title(_("Edit service"))
 		self.wTree.get_widget("dialog_edit_service").set_icon_from_file(self.iconfile)
 		self.wTree.get_widget("dialog_edit_service").show()
-		self.wTree.get_widget("button_ok").connect("clicked", self.modify_service, self.wTree.get_widget("dialog_edit_service"), self.wTree, file)
+		self.wTree.get_widget("button_ok").connect("clicked", self.modify_service, self.wTree.get_widget("dialog_edit_service"), file)
 		self.wTree.get_widget("button_cancel").connect("clicked", self.close_window, self.wTree.get_widget("dialog_edit_service"))
 
 		#i18n
@@ -453,20 +453,20 @@ class mintUploadWindow:
 		except Exception, detail:
 			print detail
 
-	def modify_service(self, widget, window, wTree, file):
+	def modify_service(self, widget, window, file):
 		try:
-			model = wTree.get_widget("combo_type").get_model()
-			iter = 	wTree.get_widget("combo_type").get_active_iter()
+			model = self.wTree.get_widget("combo_type").get_model()
+			iter = 	self.wTree.get_widget("combo_type").get_active_iter()
 
 			# Get configuration
 			config = {}
 			config['type'] = model.get_value(iter, 0)
-			config['host'] = wTree.get_widget("txt_hostname").get_text()
-			config['port'] = wTree.get_widget("txt_port").get_text()
-			config['user'] = wTree.get_widget("txt_username").get_text()
-			config['pass'] = wTree.get_widget("txt_password").get_text()
-			config['format'] = wTree.get_widget("txt_timestamp").get_text()
-			config['path'] = wTree.get_widget("txt_path").get_text()
+			config['host'] = self.wTree.get_widget("txt_hostname").get_text()
+			config['port'] = self.wTree.get_widget("txt_port").get_text()
+			config['user'] = self.wTree.get_widget("txt_username").get_text()
+			config['pass'] = self.wTree.get_widget("txt_password").get_text()
+			config['format'] = self.wTree.get_widget("txt_timestamp").get_text()
+			config['path'] = self.wTree.get_widget("txt_path").get_text()
 
 			# Write to service's config file
 			s = Service(file)
