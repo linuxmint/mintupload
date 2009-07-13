@@ -46,8 +46,9 @@ class gtkSpaceChecker(mintSpaceChecker):
 
 	def run(self):
 		global statusbar
-		global context_id
 		global wTree
+
+		context_id = statusbar.get_context_id("mintUpload")
 
 		# Get the file's persistence on the service
 		if self.service.has_key('persistence'):
