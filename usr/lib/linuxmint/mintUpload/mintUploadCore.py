@@ -136,7 +136,9 @@ class mintUploader(threading.Thread):
 
 			f = open(self.file, "rb")
 			self.progress(_("Uploading the file..."))
+			self.pct(0)
 			ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.asciicallback)
+			self.pct(1)
 
 		finally:
 			# Close any open connections
