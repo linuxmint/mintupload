@@ -132,11 +132,10 @@ class gtkUploader(mintUploader):
 		self.wTree = wTree
 
 	def run(self):
-		wTree.get_widget("upload_button").set_sensitive(False)
-		wTree.get_widget("combo").set_sensitive(False)
-
-		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
-		wTree.get_widget("frame_progress").show()
+		self.wTree.get_widget("upload_button").set_sensitive(False)
+		self.wTree.get_widget("combo").set_sensitive(False)
+		self.wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
+		self.wTree.get_widget("frame_progress").show()
 
 		try:
 			self.upload()
