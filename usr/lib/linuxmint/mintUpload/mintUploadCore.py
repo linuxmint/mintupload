@@ -218,8 +218,9 @@ class mintUploader(threading.Thread):
 		print message
 
 	def pct(self, pct):
-		sys.stdout.write("\r " + str(int(pct*100)) + "% [" + (int(pct*100)/2)*"=" + ">" + (50-(int(pct*100)/2)) * " " + "] " + sizeStr(self.so_far) + "     ")
-		if pct == 1: #if finished
+		pct = int(pct*100)
+		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(self.so_far) + "     ")
+		if pct == 100: #if finished
 			sys.stdout.write("\n")
 		sys.stdout.flush()
 
