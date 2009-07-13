@@ -165,6 +165,12 @@ class gtkUploader(mintUploader):
 		statusbar.push(context_id, message)
 		mintUploader.progress(self, message)
 
+	def pct(self, pct):
+		mintUploader.pct(self, pct)
+		pctStr = str(int(pct * 100))
+		progressbar.set_fraction(pct)
+		progressbar.set_text(pctStr + "%")
+
 	def asciicallback(self, buffer):
 		global progressbar
 
