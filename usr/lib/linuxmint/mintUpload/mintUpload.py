@@ -180,30 +180,28 @@ class mintUploadWindow:
 	"""This is the main class for the application"""
 
 	def __init__(self, filename):
-		global wTree
-
 		self.filename = filename
 		self.iconfile = "/usr/lib/linuxmint/mintSystem/icon.png"
 
 		# Set the Glade file
 		self.gladefile = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
-		wTree = gtk.glade.XML(self.gladefile,"main_window")
+		self.wTree = gtk.glade.XML(self.gladefile,"main_window")
 
-		wTree.get_widget("main_window").connect("destroy", gtk.main_quit)
-		wTree.get_widget("main_window").set_icon_from_file(self.iconfile)
+		self.wTree.get_widget("main_window").connect("destroy", gtk.main_quit)
+		self.wTree.get_widget("main_window").set_icon_from_file(self.iconfile)
 
 		# i18n
-		wTree.get_widget("label2").set_label("<b>" + _("Upload service") + "</b>")
-		wTree.get_widget("label3").set_label("<b>" + _("Local file") + "</b>")
-		wTree.get_widget("label4").set_label("<b>" + _("Remote file") + "</b>")
-		wTree.get_widget("label187").set_label(_("Name:"))
-		wTree.get_widget("lbl_space").set_label(_("Free space:"))
-		wTree.get_widget("lbl_maxsize").set_label(_("Max file size:"))
-		wTree.get_widget("lbl_persistence").set_label(_("Persistence:"))
-		wTree.get_widget("label195").set_label(_("Path:"))
-		wTree.get_widget("label193").set_label(_("Size:"))
-		wTree.get_widget("label190").set_label(_("Upload progress:"))
-		wTree.get_widget("lbl_url").set_label(_("URL:"))
+		self.wTree.get_widget("label2").set_label("<b>" + _("Upload service") + "</b>")
+		self.wTree.get_widget("label3").set_label("<b>" + _("Local file") + "</b>")
+		self.wTree.get_widget("label4").set_label("<b>" + _("Remote file") + "</b>")
+		self.wTree.get_widget("label187").set_label(_("Name:"))
+		self.wTree.get_widget("lbl_space").set_label(_("Free space:"))
+		self.wTree.get_widget("lbl_maxsize").set_label(_("Max file size:"))
+		self.wTree.get_widget("lbl_persistence").set_label(_("Persistence:"))
+		self.wTree.get_widget("label195").set_label(_("Path:"))
+		self.wTree.get_widget("label193").set_label(_("Size:"))
+		self.wTree.get_widget("label190").set_label(_("Upload progress:"))
+		self.wTree.get_widget("lbl_url").set_label(_("URL:"))
 
 		fileMenu = gtk.MenuItem(_("_File"))
 		fileSubmenu = gtk.Menu()
@@ -226,36 +224,36 @@ class mintUploadWindow:
 		editMenu.set_submenu(editSubmenu)
 		prefsMenuItem = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
 		prefsMenuItem.get_child().set_text(_("Services"))
-		prefsMenuItem.connect("activate", self.open_services, wTree.get_widget("combo"))
+		prefsMenuItem.connect("activate", self.open_services, self.wTree.get_widget("combo"))
 		editSubmenu.append(prefsMenuItem)
 
-		wTree.get_widget("menubar1").append(fileMenu)
-		wTree.get_widget("menubar1").append(editMenu)
-		wTree.get_widget("menubar1").append(helpMenu)
-		wTree.get_widget("menubar1").show_all()
+		self.wTree.get_widget("menubar1").append(fileMenu)
+		self.wTree.get_widget("menubar1").append(editMenu)
+		self.wTree.get_widget("menubar1").append(helpMenu)
+		self.wTree.get_widget("menubar1").show_all()
 
-		self.reload_services(wTree.get_widget("combo"))
+		self.reload_services(self.wTree.get_widget("combo"))
 
 		cell = gtk.CellRendererText()
-		wTree.get_widget("combo").pack_start(cell)
-		wTree.get_widget("combo").add_attribute(cell,'text',0)
+		self.wTree.get_widget("combo").pack_start(cell)
+		self.wTree.get_widget("combo").add_attribute(cell,'text',0)
 
-		wTree.get_widget("combo").connect("changed", self.comboChanged)
-		wTree.get_widget("upload_button").connect("clicked", self.upload)
-		wTree.get_widget("cancel_button").connect("clicked", gtk.main_quit)
+		self.wTree.get_widget("combo").connect("changed", self.comboChanged)
+		self.wTree.get_widget("upload_button").connect("clicked", self.upload)
+		self.wTree.get_widget("cancel_button").connect("clicked", gtk.main_quit)
 
 		# Print the name of the file in the GUI
-		wTree.get_widget("txt_file").set_label(self.filename)
+		self.wTree.get_widget("txt_file").set_label(self.filename)
 
 		# Calculate the size of the file
 		self.filesize = os.path.getsize(self.filename)
-		wTree.get_widget("txt_size").set_label(sizeStr(self.filesize))
+		self.wTree.get_widget("txt_size").set_label(sizeStr(self.filesize))
 
 		if len(self.services) == 1:
-			wTree.get_widget("combo").set_active(0)
+			self.wTree.get_widget("combo").set_active(0)
 			self.comboChanged(None)
 
-		self.statusbar = wTree.get_widget("statusbar")
+		self.statusbar = self.wTree.get_widget("statusbar")
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
