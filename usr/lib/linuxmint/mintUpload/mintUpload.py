@@ -125,6 +125,12 @@ class gtkSpaceChecker(mintSpaceChecker):
 class gtkUploader(mintUploader):
 	'''Wrapper for the gtk management of mintUploader'''
 
+	def __init__(self, service, file, progressbar, statusbar, wTree):
+		mintUploader.__init__(self, service, file)
+		self.progressbar = progressbar
+		self.statusbar = statusbar
+		self.wTree = wTree
+
 	def run(self):
 		global progressbar
 		global statusbar
