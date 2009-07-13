@@ -217,13 +217,15 @@ class mintUploader(threading.Thread):
 	def progress(self, message):
 		print message
 
+	def pct(self, pct):
+		sys.stdout.write("\r " + str(int(pct*100)) + "% [" + (int(pct*100)/2)*"=" + ">" + (50-(int(pct*100)/2)) * " " + "] " + sizeStr(self.so_far) + "     ")
+		if pct == 1: #if finished
+			sys.stdout.write("\n")
+		sys.stdout.flush()
+
 	def asciicallback(self, buffer):
 		self.so_far = self.so_far+len(buffer)-1
-		pct = float(self.so_far)/self.filesize
-		pct = int(pct * 100)
-		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(self.so_far) + "     ")
-		sys.stdout.flush()
-		return
+		self.pct(float(self.so_far)/self.filesize)
 
 def read_services():
 	'''Get all defined services'''
