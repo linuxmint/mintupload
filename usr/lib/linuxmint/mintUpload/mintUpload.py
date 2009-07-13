@@ -157,14 +157,13 @@ class gtkUploader(mintUploader):
 			self.wTree.get_widget("main_window").window.set_cursor(None)
 
 	def progress(self, message, color=None):
-		global statusbar
-		context_id = statusbar.get_context_id("mintUpload")
+		context_id = self.statusbar.get_context_id("mintUpload")
 		mintUploader.progress(self, message)
 		if color:
-			statusbar.push(context_id, "<span color='%s'>%s</span>" %(color, message))
-			statusbar.get_children()[0].get_children()[0].set_use_markup(True)
+			self.statusbar.push(context_id, "<span color='%s'>%s</span>" %(color, message))
+			self.statusbar.get_children()[0].get_children()[0].set_use_markup(True)
 		else:
-			statusbar.push(context_id, message)
+			self.statusbar.push(context_id, message)
 
 	def pct(self, pct):
 		mintUploader.pct(self, pct)
