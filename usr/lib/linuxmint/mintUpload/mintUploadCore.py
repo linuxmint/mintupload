@@ -227,6 +227,7 @@ class mintUploader(threading.Thread):
 	def asciicallback(self, buffer):
 		self.so_far = self.so_far+len(buffer)-1
 		self.pct(float(self.so_far)/self.filesize)
+		return
 
 def read_services():
 	'''Get all defined services'''
