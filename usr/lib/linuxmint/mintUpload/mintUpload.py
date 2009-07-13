@@ -135,6 +135,7 @@ class gtkUploader(mintUploader):
 
 		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 		wTree.get_widget("frame_progress").show()
+		self.pct(0)
 
 		try:
 			self.upload()
@@ -144,6 +145,7 @@ class gtkUploader(mintUploader):
 
 		else:
 			# Report success
+			self.pct(1)
 			self.progress(_("File uploaded successfully."), "green")
 
 			#If service is Mint then show the URL
