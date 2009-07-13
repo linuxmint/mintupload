@@ -181,7 +181,6 @@ class mintUploadWindow:
 
 	def __init__(self, filename):
 		global wTree
-		global statusbar
 
 		self.filename = filename
 		self.iconfile = "/usr/lib/linuxmint/mintSystem/icon.png"
@@ -256,7 +255,7 @@ class mintUploadWindow:
 			wTree.get_widget("combo").set_active(0)
 			self.comboChanged(None)
 
-		statusbar = wTree.get_widget("statusbar")
+		self.statusbar = wTree.get_widget("statusbar")
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
@@ -492,12 +491,10 @@ class mintUploadWindow:
 		'''Change the selected service'''
 
 		global progressbar
-		global statusbar
 		global wTree
 		global selected_service
 
 		progressbar = wTree.get_widget("progressbar")
-		statusbar = wTree.get_widget("statusbar")
 
 		# Get the selected service
 		model = wTree.get_widget("combo").get_model()
@@ -510,14 +507,14 @@ class mintUploadWindow:
 		for service in self.services:
 			if service['name'] == selectedService:
 				selected_service = service
-				checker = gtkSpaceChecker(selected_service, self.filesize, statusbar, wTree)
+				checker = gtkSpaceChecker(selected_service, self.filesize, self.statusbar, wTree)
 				checker.start()
 				return True
 
 	def upload(self, widget):
 		'''Start the upload process'''
 
-		uploader = gtkUploader(selected_service, self.filename, progressbar, statusbar, wTree)
+		uploader = gtkUploader(selected_service, self.filename, progressbar, self.statusbar, wTree)
 		uploader.start()
 		return True
 
