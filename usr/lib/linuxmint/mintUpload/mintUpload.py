@@ -493,12 +493,10 @@ class mintUploadWindow:
 		global progressbar
 		global statusbar
 		global wTree
-		global context_id
 		global selected_service
 
 		progressbar = wTree.get_widget("progressbar")
 		statusbar = wTree.get_widget("statusbar")
-		context_id = statusbar.get_context_id("mintUpload")
 
 		# Get the selected service
 		model = wTree.get_widget("combo").get_model()
