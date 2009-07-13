@@ -149,12 +149,12 @@ class gtkUploader(mintUploader):
 
 			#If service is Mint then show the URL
 			if self.service.has_key('url'):
-				wTree.get_widget("txt_url").set_text(self.service['url'])
-				wTree.get_widget("txt_url").show()
-				wTree.get_widget("lbl_url").show()
+				self.wTree.get_widget("txt_url").set_text(self.service['url'])
+				self.wTree.get_widget("txt_url").show()
+				self.wTree.get_widget("lbl_url").show()
 
 		finally:
-			wTree.get_widget("main_window").window.set_cursor(None)
+			self.wTree.get_widget("main_window").window.set_cursor(None)
 
 	def progress(self, message, color=None):
 		global statusbar
