@@ -254,6 +254,7 @@ class mintUploadWindow:
 			self.comboChanged(None)
 
 		self.statusbar = self.wTree.get_widget("statusbar")
+		self.progressbar = self.wTree.get_widget("progressbar")
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
