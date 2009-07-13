@@ -132,11 +132,8 @@ class gtkUploader(mintUploader):
 		wTree.get_widget("upload_button").set_sensitive(False)
 		wTree.get_widget("combo").set_sensitive(False)
 
-		statusbar.push(context_id, _("Connecting to the service..."))
 		wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 		wTree.get_widget("frame_progress").show()
-		progressbar.set_fraction(0)
-		progressbar.set_text("0%")
 
 		try:
 			self.upload()
