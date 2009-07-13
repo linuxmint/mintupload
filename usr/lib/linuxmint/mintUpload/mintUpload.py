@@ -146,10 +146,7 @@ class gtkUploader(mintUploader):
 
 		else:
 			# Report success
-			progressbar.set_fraction(1)
-			progressbar.set_text("100%")
-			statusbar.push(context_id, "<span color='green'>" + _("File uploaded successfully.") + "</span>")
-			statusbar.get_children()[0].get_children()[0].set_use_markup(True)
+			self.progress(_("File uploaded successfully."), "green")
 
 			#If service is Mint then show the URL
 			if self.service.has_key('url'):
