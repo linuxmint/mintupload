@@ -32,8 +32,7 @@ gtk.gdk.threads_init()
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 
-def gtkCustomError(self, detail):
-	global statusbar
+def gtkCustomError(self, detail, statusbar):
 	message = "<span color='red'>" + detail + "</span>"
 	statusbar.push(statusbar.get_context_id("mintUpload"), message)
 	statusbar.get_children()[0].get_children()[0].set_use_markup(True)
@@ -142,7 +141,7 @@ class gtkUploader(mintUploader):
 		try:
 			self.upload()
 		except:
-			try:    raise CustomError(_("Upload failed."))
+			try:    raise CustomError(_("Upload failed."), self.statusbar)
 			except: pass
 
 		else:
