@@ -50,9 +50,7 @@ class gtkSpaceChecker(mintSpaceChecker):
 		self.wTree = wTree
 
 	def run(self):
-		global statusbar
-
-		context_id = statusbar.get_context_id("mintUpload")
+		context_id = self.statusbar.get_context_id("mintUpload")
 
 		# Get the file's persistence on the service
 		if self.service.has_key('persistence'):
@@ -83,8 +81,8 @@ class gtkSpaceChecker(mintSpaceChecker):
 			if not self.service.has_key('maxsize'):
 				needsCheck=False
 				# Activate upload button
-				statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
-				label = statusbar.get_children()[0].get_children()[0]
+				self.statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
+				label = self.statusbar.get_children()[0].get_children()[0]
 				label.set_use_markup(True)
 				self.wTree.get_widget("upload_button").set_sensitive(True)
 
@@ -92,7 +90,7 @@ class gtkSpaceChecker(mintSpaceChecker):
 			self.wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 			self.wTree.get_widget("combo").set_sensitive(False)
 			self.wTree.get_widget("upload_button").set_sensitive(False)
-			statusbar.push(context_id, _("Checking space on the service..."))
+			self.statusbar.push(context_id, _("Checking space on the service..."))
 
 			self.wTree.get_widget("frame_progress").hide()
 
@@ -101,10 +99,10 @@ class gtkSpaceChecker(mintSpaceChecker):
 				self.check()
 
 			except ConnectionError:
-				statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
+				self.statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
 
 			except FilesizeError:
-				statusbar.push(context_id, "<span color='red'>" + _("File too big or not enough space on the service.") + "</span>")
+				self.statusbar.push(context_id, "<span color='red'>" + _("File too big or not enough space on the service.") + "</span>")
 
 			else:
 				# Display the available space left on the service
@@ -116,11 +114,11 @@ class gtkSpaceChecker(mintSpaceChecker):
 					self.wTree.get_widget("lbl_space").show()
 
 				# Activate upload button
-				statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
+				self.statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
 				self.wTree.get_widget("upload_button").set_sensitive(True)
 
 			finally:
-				label = statusbar.get_children()[0].get_children()[0]
+				label = self.statusbar.get_children()[0].get_children()[0]
 				label.set_use_markup(True)
 				self.wTree.get_widget("combo").set_sensitive(True)
 				self.wTree.get_widget("main_window").window.set_cursor(None)
