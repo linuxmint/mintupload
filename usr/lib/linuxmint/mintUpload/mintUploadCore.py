@@ -81,12 +81,12 @@ class mintSpaceChecker(threading.Thread):
 		if self.service.has_key("space"):
 			try:
 				spaceInfo = urllib.urlopen(self.service["space"]).read()
+				spaceInfo = spaceInfo.split("/")
+				self.available = int(spaceInfo[0])
+				self.total = int(spaceInfo[1])
 			except:
 				raise ConnectionError(_("Could not get available space"))
 
-			spaceInfo = spaceInfo.split("/")
-			self.available = int(spaceInfo[0])
-			self.total = int(spaceInfo[1])
 			if self.filesize > self.available:
 				raise FilesizeError(_("File larger than service's available space"))
 
