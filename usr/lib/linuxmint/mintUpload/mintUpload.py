@@ -35,7 +35,7 @@ gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 def gtkCustomError(self, detail):
 	global statusbar
 	message = "<span color='red'>" + detail + "</span>"
-	statusbar.push(context_id, message)
+	statusbar.push(statusbar.get_context_id("mintUpload"), message)
 	statusbar.get_children()[0].get_children()[0].set_use_markup(True)
 	CustomError.error(self, detail)
 
