@@ -1,3 +1,11 @@
+mintupload (3.5.2) jaunty; urgency=low
+
+  * small bugfixes
+  * general code cleanup
+  * no longer packaged with git database
+
+ -- Philip Morrell <mintupload.emorrp1@mamber.net>  Mon,  13 Jul 2009 17:12:26 +0100
+
 mintupload (3.5.1) jaunty; urgency=low
 
   * bugfix release:
