@@ -111,8 +111,6 @@ class mintUploader(threading.Thread):
 
 	def run(self):
 		self.upload()
-		print "\r 100% [" + 50*"=" + ">] " + sizeStr(self.filesize) + "     "
-		print _("File uploaded successfully.")
 		if self.service.has_key('url'):
 			self.progress( _("URL:") + " " + self.service['url'])
 
@@ -136,7 +134,9 @@ class mintUploader(threading.Thread):
 
 			f = open(self.file, "rb")
 			self.progress(_("Uploading the file..."))
+			self.pct(0)
 			ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.asciicallback)
+			self.pct(1)
 
 		finally:
 			# Close any open connections
@@ -176,7 +176,9 @@ class mintUploader(threading.Thread):
 
 			sftp = paramiko.SFTPClient.from_transport(transport)
 			self.progress(_("Uploading the file..."))
+			self.pct(0)
 			sftp.put(self.file, path + self.name)
+			self.pct(1)
 
 		finally:
 			# Close any open connections
@@ -204,7 +206,9 @@ class mintUploader(threading.Thread):
 			self.progress(self.service['type'] + " " + _("connection successfully established"))
 
 			scp.timeout = None
+			self.pct(0)
 			received = scp.expect(['.*100\%.*','.*password:.*',pexpect.EOF])
+			self.pct(1)
 			if received == 1:
 				scp.sendline(' ')
 				raise ConnectionError(_("This service requires a password."))
