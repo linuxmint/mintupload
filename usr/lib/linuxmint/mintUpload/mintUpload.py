@@ -382,74 +382,74 @@ class mintUploadWindow:
 		sname = model.get_value(iter, 0)
 		file = config_paths['user'] + sname
 
-		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
-		wTree.get_widget("dialog_edit_service").set_title(_("Edit service"))
-		wTree.get_widget("dialog_edit_service").set_icon_from_file(self.iconfile)
-		wTree.get_widget("dialog_edit_service").show()
-		wTree.get_widget("button_ok").connect("clicked", self.modify_service, wTree.get_widget("dialog_edit_service"), wTree, file)
-		wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_edit_service"))
+		self.wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
+		self.wTree.get_widget("dialog_edit_service").set_title(_("Edit service"))
+		self.wTree.get_widget("dialog_edit_service").set_icon_from_file(self.iconfile)
+		self.wTree.get_widget("dialog_edit_service").show()
+		self.wTree.get_widget("button_ok").connect("clicked", self.modify_service, self.wTree.get_widget("dialog_edit_service"), self.wTree, file)
+		self.wTree.get_widget("button_cancel").connect("clicked", self.close_window, self.wTree.get_widget("dialog_edit_service"))
 
 		#i18n
-		wTree.get_widget("lbl_type").set_label(_("Type:"))
-		wTree.get_widget("lbl_hostname").set_label(_("Hostname:"))
-		wTree.get_widget("lbl_port").set_label(_("Port:"))
-		wTree.get_widget("lbl_username").set_label(_("Username:"))
-		wTree.get_widget("lbl_password").set_label(_("Password:"))
-		wTree.get_widget("lbl_timestamp").set_label(_("Timestamp:"))
-		wTree.get_widget("lbl_path").set_label(_("Path:"))
+		self.wTree.get_widget("lbl_type").set_label(_("Type:"))
+		self.wTree.get_widget("lbl_hostname").set_label(_("Hostname:"))
+		self.wTree.get_widget("lbl_port").set_label(_("Port:"))
+		self.wTree.get_widget("lbl_username").set_label(_("Username:"))
+		self.wTree.get_widget("lbl_password").set_label(_("Password:"))
+		self.wTree.get_widget("lbl_timestamp").set_label(_("Timestamp:"))
+		self.wTree.get_widget("lbl_path").set_label(_("Path:"))
 
-		wTree.get_widget("lbl_hostname").set_tooltip_text(_("Hostname or IP address, default: mint-space.com"))
-		wTree.get_widget("txt_hostname").set_tooltip_text(_("Hostname or IP address, default: mint-space.com"))
+		self.wTree.get_widget("lbl_hostname").set_tooltip_text(_("Hostname or IP address, default: mint-space.com"))
+		self.wTree.get_widget("txt_hostname").set_tooltip_text(_("Hostname or IP address, default: mint-space.com"))
 
-		wTree.get_widget("lbl_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
-		wTree.get_widget("txt_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
+		self.wTree.get_widget("lbl_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
+		self.wTree.get_widget("txt_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
 
-		wTree.get_widget("lbl_username").set_tooltip_text(_("Username, defaults to your local username"))
-		wTree.get_widget("txt_username").set_tooltip_text(_("Username, defaults to your local username"))
+		self.wTree.get_widget("lbl_username").set_tooltip_text(_("Username, defaults to your local username"))
+		self.wTree.get_widget("txt_username").set_tooltip_text(_("Username, defaults to your local username"))
 
-		wTree.get_widget("lbl_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
-		wTree.get_widget("txt_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
+		self.wTree.get_widget("lbl_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
+		self.wTree.get_widget("txt_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
 
-		wTree.get_widget("lbl_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
-		wTree.get_widget("txt_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
+		self.wTree.get_widget("lbl_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
+		self.wTree.get_widget("txt_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
 
-		wTree.get_widget("lbl_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
-		wTree.get_widget("txt_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
+		self.wTree.get_widget("lbl_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
+		self.wTree.get_widget("txt_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
 
 		try:
 			config = Service(file)
 			try:
-				model = wTree.get_widget("combo_type").get_model()
+				model = self.wTree.get_widget("combo_type").get_model()
 				iter = model.get_iter_first()
 				while (iter != None and model.get_value(iter, 0) != config['type'].lower()):
 					iter = model.iter_next(iter)
-				wTree.get_widget("combo_type").set_active_iter(iter)
+				self.wTree.get_widget("combo_type").set_active_iter(iter)
 			except:
 				pass
 			try:
-				wTree.get_widget("txt_hostname").set_text(config['host'])
+				self.wTree.get_widget("txt_hostname").set_text(config['host'])
 			except:
-				wTree.get_widget("txt_hostname").set_text("")
+				self.wTree.get_widget("txt_hostname").set_text("")
 			try:
-				wTree.get_widget("txt_port").set_text(config['port'])
+				self.wTree.get_widget("txt_port").set_text(config['port'])
 			except:
-				wTree.get_widget("txt_port").set_text("")
+				self.wTree.get_widget("txt_port").set_text("")
 			try:
-				wTree.get_widget("txt_username").set_text(config['user'])
+				self.wTree.get_widget("txt_username").set_text(config['user'])
 			except:
-				wTree.get_widget("txt_username").set_text("")
+				self.wTree.get_widget("txt_username").set_text("")
 			try:
-				wTree.get_widget("txt_password").set_text(config['pass'])
+				self.wTree.get_widget("txt_password").set_text(config['pass'])
 			except:
-				wTree.get_widget("txt_password").set_text("")
+				self.wTree.get_widget("txt_password").set_text("")
 			try:
-				wTree.get_widget("txt_timestamp").set_text(config['format'])
+				self.wTree.get_widget("txt_timestamp").set_text(config['format'])
 			except:
-				wTree.get_widget("txt_timestamp").set_text("")
+				self.wTree.get_widget("txt_timestamp").set_text("")
 			try:
-				wTree.get_widget("txt_path").set_text(config['path'])
+				self.wTree.get_widget("txt_path").set_text(config['path'])
 			except:
-				wTree.get_widget("txt_path").set_text("")
+				self.wTree.get_widget("txt_path").set_text("")
 		except Exception, detail:
 			print detail
 
