@@ -35,7 +35,7 @@ gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 def gtkCustomError(self, detail):
 	global statusbar
 	message = "<span color='red'>" + detail + "</span>"
-	statusbar.push(context_id, message)
+	statusbar.push(statusbar.get_context_id("mintUpload"), message)
 	statusbar.get_children()[0].get_children()[0].set_use_markup(True)
 	CustomError.error(self, detail)
 
@@ -46,8 +46,9 @@ class gtkSpaceChecker(mintSpaceChecker):
 
 	def run(self):
 		global statusbar
-		global context_id
 		global wTree
+
+		context_id = statusbar.get_context_id("mintUpload")
 
 		# Get the file's persistence on the service
 		if self.service.has_key('persistence'):
@@ -128,7 +129,6 @@ class gtkUploader(mintUploader):
 		global progressbar
 		global statusbar
 		global wTree
-		global context_id
 
 		wTree.get_widget("upload_button").set_sensitive(False)
 		wTree.get_widget("combo").set_sensitive(False)
@@ -159,7 +159,7 @@ class gtkUploader(mintUploader):
 
 	def progress(self, message, color=None):
 		global statusbar
-		global context_id
+		context_id = statusbar.get_context_id("mintUpload")
 		mintUploader.progress(self, message)
 		if color:
 			color_message = "<span color='%s'>%s</span>" % (color, message)
@@ -492,12 +492,10 @@ class mintUploadWindow:
 		global progressbar
 		global statusbar
 		global wTree
-		global context_id
 		global selected_service
 
 		progressbar = wTree.get_widget("progressbar")
 		statusbar = wTree.get_widget("statusbar")
-		context_id = statusbar.get_context_id("mintUpload")
 
 		# Get the selected service
 		model = wTree.get_widget("combo").get_model()
