@@ -298,19 +298,19 @@ class mintUploadWindow:
 		dlg.show()
 
 	def open_services(self, widget, combo):
-		wTree = gtk.glade.XML(self.gladefile, "services_window")
-		treeview_services = wTree.get_widget("treeview_services")
-		treeview_services_system = wTree.get_widget("treeview_services_system")
+		self.wTree = gtk.glade.XML(self.gladefile, "services_window")
+		treeview_services = self.wTree.get_widget("treeview_services")
+		treeview_services_system = self.wTree.get_widget("treeview_services_system")
 
-		wTree.get_widget("services_window").set_title(_("Services") + " - mintUpload")
-		wTree.get_widget("services_window").set_icon_from_file(self.iconfile)
-		wTree.get_widget("services_window").show()
+		self.wTree.get_widget("services_window").set_title(_("Services") + " - mintUpload")
+		self.wTree.get_widget("services_window").set_icon_from_file(self.iconfile)
+		self.wTree.get_widget("services_window").show()
 
-		wTree.get_widget("button_close").connect("clicked", self.close_window, wTree.get_widget("services_window"), combo)
-		wTree.get_widget("services_window").connect("destroy", self.close_window, wTree.get_widget("services_window"), combo)
-		wTree.get_widget("toolbutton_add").connect("clicked", self.add_service, treeview_services)
-		wTree.get_widget("toolbutton_edit").connect("clicked", self.edit_service_toolbutton, treeview_services)
-		wTree.get_widget("toolbutton_remove").connect("clicked", self.remove_service, treeview_services)
+		self.wTree.get_widget("button_close").connect("clicked", self.close_window, self.wTree.get_widget("services_window"), combo)
+		self.wTree.get_widget("services_window").connect("destroy", self.close_window, self.wTree.get_widget("services_window"), combo)
+		self.wTree.get_widget("toolbutton_add").connect("clicked", self.add_service, treeview_services)
+		self.wTree.get_widget("toolbutton_edit").connect("clicked", self.edit_service_toolbutton, treeview_services)
+		self.wTree.get_widget("toolbutton_remove").connect("clicked", self.remove_service, treeview_services)
 
 		column1 = gtk.TreeViewColumn(_("Services"), gtk.CellRendererText(), text=0)
 		column1.set_sort_column_id(0)
