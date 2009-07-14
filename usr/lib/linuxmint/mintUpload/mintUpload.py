@@ -251,6 +251,17 @@ class mintUploadWindow:
 		self.wTree.get_widget("upload_button").connect("clicked", self.upload)
 		self.wTree.get_widget("cancel_button").connect("clicked", gtk.main_quit)
 
+		if len(self.services) == 1:
+			self.wTree.get_widget("combo").set_active(0)
+			self.comboChanged(None)
+
+		self.statusbar = self.wTree.get_widget("statusbar")
+		self.progressbar = self.wTree.get_widget("progressbar")
+		CustomError.statusbar = self.statusbar
+
+		self.refresh()
+
+	def refresh(self):
 		# Print the name of the file in the GUI
 		labeltext = ""
 		for onefile in self.filenames:
@@ -263,14 +274,6 @@ class mintUploadWindow:
 		for onefile in self.filenames:
 			self.filesize += os.path.getsize(onefile)
 		self.wTree.get_widget("txt_size").set_label(sizeStr(self.filesize))
-
-		if len(self.services) == 1:
-			self.wTree.get_widget("combo").set_active(0)
-			self.comboChanged(None)
-
-		self.statusbar = self.wTree.get_widget("statusbar")
-		self.progressbar = self.wTree.get_widget("progressbar")
-		CustomError.statusbar = self.statusbar
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
