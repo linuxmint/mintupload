@@ -24,11 +24,20 @@ gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 
 class CustomError(Exception):
 	'''All custom defined errors'''
+
+	errorListener = []
+
 	def __init__(self, detail):
 		self.error(detail)
 
 	def error(self, detail):
 		sys.stderr.write(os.linesep + self.__class__.__name__ + ': ' + detail + os.linesep*2)
+		for listener in CustomError.errorListener:
+			listener.error(detail)
+
+	@staticmethod
+	def addErrorListener(listener):
+		CustomError.errorListener.append(listener)
 
 class ConnectionError(CustomError):
 	'''Raised when an error has occured with an external connection'''
