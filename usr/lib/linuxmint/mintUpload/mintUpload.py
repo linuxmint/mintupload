@@ -548,13 +548,10 @@ class mintUploadWindow:
 
 
 if __name__ == "__main__":
-	if len(sys.argv) < 2:
-		print "need a file to upload!"
-		exit(1)
-	if sys.argv[1] == "--version":
+	if len(sys.argv) >=2 and sys.argv[1] == "--version":
 		print "mintupload: %s" % commands.getoutput("mint-apt-version mintupload 2> /dev/null")
 		exit(0)
-	if sys.argv[1] in ["-h","--help"]:
+	if len(sys.argv) >=2 and sys.argv[1] in ["-h","--help"]:
 		print """Usage: mintupload.py path/to/filename"""
 		exit(0)
 
