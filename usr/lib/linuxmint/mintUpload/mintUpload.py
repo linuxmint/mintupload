@@ -40,6 +40,17 @@ def gtkCustomError(self, detail):
 
 CustomError.__init__ = gtkCustomError
 
+class gtkCustomErrorListener:
+	'''All custom defined errors, using the statusbar'''
+
+	def __init__(self, statusbar):
+		self.statusbar = statusbar
+
+	def error(self, detail):
+		message = "<span color='red'>" + detail + "</span>"
+		self.statusbar.push(self.statusbar.get_context_id("mintUpload"), message)
+		self.statusbar.get_children()[0].get_children()[0].set_use_markup(True)
+
 class gtkSpaceChecker(mintSpaceChecker):
 	'''Checks for available space on the service'''
 
