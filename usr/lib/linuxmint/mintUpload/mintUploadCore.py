@@ -31,16 +31,16 @@ gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 class CustomError(Exception):
 	'''All custom defined errors'''
 
-	errorListener = []
+	observers = []
 
 	def __init__(self, detail):
 		sys.stderr.write(os.linesep + self.__class__.__name__ + ': ' + detail + os.linesep*2)
-		for listener in CustomError.errorListener:
-			listener.error(detail)
+		for observer in self.observers:
+			observer.error(detail)
 
 	@classmethod
-	def addErrorListener(cls, listener):
-		cls.errorListener.append(listener)
+	def addErrorListener(cls, observer):
+		cls.observers.append(observer)
 
 
 
