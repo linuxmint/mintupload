@@ -189,7 +189,6 @@ class mintUploadWindow:
 	"""This is the main class for the application"""
 
 	def __init__(self, filenames):
-		self.filename = filenames[0]
 		self.filenames = filenames
 		self.iconfile = "/usr/lib/linuxmint/mintSystem/icon.png"
 
@@ -536,8 +535,6 @@ if __name__ == "__main__":
 	if len(sys.argv) < 2:
 		print "need a file to upload!"
 		exit(1)
-	if len(sys.argv) > 2:
-		print "too many files! using only the first!"
 	if sys.argv[1] == "--version":
 		print "mintupload: %s" % commands.getoutput("mint-apt-version mintupload 2> /dev/null")
 		exit(0)
