@@ -7,6 +7,8 @@
 # as published by the Free Software Foundation; Version 2
 # of the License.
 
+
+
 import sys
 import urllib
 import ftplib
@@ -19,8 +21,12 @@ import threading
 from user import home
 from configobj import ConfigObj
 
+
+
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
+
+
 
 class CustomError(Exception):
 	'''All custom defined errors'''
@@ -30,13 +36,19 @@ class CustomError(Exception):
 	def error(self, detail):
 		sys.stderr.write(os.linesep + self.__class__.__name__ + ': ' + detail + os.linesep*2)
 
+
+
 class ConnectionError(CustomError):
 	'''Raised when an error has occured with an external connection'''
 	pass
 
+
+
 class FilesizeError(CustomError):
 	'''Raised when the file is too large or too small'''
 	pass
+
+
 
 def sizeStr(size, acc=None, factor=None):
 	'''Converts integer filesize in bytes to textual repr'''
@@ -55,6 +67,8 @@ def sizeStr(size, acc=None, factor=None):
 			rounded = round(size/factor**i, acc)
 			return str(rounded) + thresholds[i]
 	return str(int(size)) + thresholds[0]
+
+
 
 class mintSpaceChecker(threading.Thread):
 	'''Checks that the filesize is ok'''
@@ -89,6 +103,8 @@ class mintSpaceChecker(threading.Thread):
 
 			if self.filesize > self.available:
 				raise FilesizeError(_("File larger than service's available space"))
+
+
 
 class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
@@ -234,6 +250,8 @@ class mintUploader(threading.Thread):
 		self.pct(float(self.so_far)/self.filesize)
 		return
 
+
+
 def read_services():
 	'''Get all defined services'''
 
@@ -249,6 +267,8 @@ def read_services():
 				s['loc'] = loc
 				services.append(s)
 	return services
+
+
 
 CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
 CONFIGFILE_USER = home + '/.linuxmint/mintUpload.conf'
@@ -270,6 +290,8 @@ config_paths['user'] = config_paths['user'].replace('<HOME>',home)
 
 defaults = config['defaults']
 defaults['user'] = defaults['user'].replace('<USER>',os.environ['LOGNAME'])
+
+
 
 class Service(ConfigObj):
 	'''Object representing an upload service'''
@@ -348,6 +370,8 @@ class Service(ConfigObj):
 		s['path'] += os.sep
 
 		return s
+
+
 
 def my_storbinary(self, cmd, fp, blocksize=8192, callback=None):
 	'''Store a file in binary mode.'''
