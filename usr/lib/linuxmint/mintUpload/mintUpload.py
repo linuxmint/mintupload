@@ -192,6 +192,9 @@ class gtkUploader(mintUploader):
 		pctStr = str(int(pct * 100))
 		self.progressbar.set_fraction(pct)
 		self.progressbar.set_text(pctStr + "%")
+		if pct == 1 and config['notification']['enable'].lower()=="true" and (self.so_far > int(config['notification']['minimalfilesize']) or int(config['notification']['minimalfilesize']) == 0):
+			notify = CustomNotifier()
+			notify.notify("transfer complete!") #i18n me
 
 
 
