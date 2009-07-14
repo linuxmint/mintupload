@@ -48,6 +48,8 @@ class cliErrorObserver:
 	def error(self, type, detail):
 		sys.stderr.write(os.linesep + type + ': ' + detail + os.linesep*2)
 
+CustomError.addObserver(cliErrorObserver)
+
 
 
 class ConnectionError(CustomError):
