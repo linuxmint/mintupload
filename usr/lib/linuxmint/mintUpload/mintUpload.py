@@ -24,6 +24,7 @@ try:
 	import os
 	import gettext
 	import commands
+	import pynotify
 	from mintUploadCore import *
 except:
 	print "You do not have all the dependencies!"
@@ -45,6 +46,15 @@ def gtkCustomError(self, detail):
 	CustomError.error(self, detail)
 
 CustomError.__init__ = gtkCustomError
+
+
+
+class CustomNotifier:
+	def __init__(self):
+		pynotify.init("mintUpload")
+
+	def notify(self, detail, ntype="dialog-information"):
+		pynotify.Notification("mintUpload", detail, ntype).show()
 
 
 
