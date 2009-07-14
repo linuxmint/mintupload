@@ -258,6 +258,7 @@ class mintUploadWindow:
 		self.filesize = os.path.getsize(self.filename)
 		self.wTree.get_widget("txt_size").set_label(sizeStr(self.filesize))
 
+		# If only one service is present, autoselect it
 		if len(self.services) == 1:
 			self.wTree.get_widget("combo").set_active(0)
 			self.comboChanged(None)
