@@ -253,7 +253,11 @@ class mintUploadWindow:
 		self.wTree.get_widget("cancel_button").connect("clicked", gtk.main_quit)
 
 		# Print the name of the file in the GUI
-		self.wTree.get_widget("txt_file").set_label(self.filename)
+		labeltext = ""
+		for onefile in self.filenames:
+			labeltext += onefile + "\n"
+		labeltext = labeltext[:-1] #remove last \n
+		self.wTree.get_widget("txt_file").set_label(labeltext)
 
 		# Calculate the size of the file
 		self.filesize = 0
