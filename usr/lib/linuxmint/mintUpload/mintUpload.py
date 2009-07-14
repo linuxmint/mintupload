@@ -261,6 +261,11 @@ class mintUploadWindow:
 
 		self.refresh()
 
+		#drag n drop
+		self.wTree.get_widget("main_window").connect( "drag_data_received", self.handle_drop )
+		toButton = [ ( "text/uri-list", 0, 80 ) ]
+		self.wTree.get_widget("main_window").drag_dest_set( gtk.DEST_DEFAULT_MOTION |gtk.DEST_DEFAULT_HIGHLIGHT |gtk.DEST_DEFAULT_DROP, toButton, gtk.gdk.ACTION_COPY )
+
 	def refresh(self):
 		# Print the name of the file in the GUI
 		labeltext = ""
