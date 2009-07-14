@@ -270,7 +270,7 @@ class mintUploadWindow:
 		self.statusbar = self.wTree.get_widget("statusbar")
 		self.progressbar = self.wTree.get_widget("progressbar")
 
-		CustomError.addErrorListener(gtkCustomErrorObserver(self.statusbar))
+		CustomError.addObserver(gtkCustomErrorObserver(self.statusbar))
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)

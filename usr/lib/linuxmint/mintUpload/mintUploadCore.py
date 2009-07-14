@@ -39,7 +39,7 @@ class CustomError(Exception):
 			observer.error(detail)
 
 	@classmethod
-	def addErrorListener(cls, observer):
+	def addObserver(cls, observer):
 		cls.observers.append(observer)
 
 
