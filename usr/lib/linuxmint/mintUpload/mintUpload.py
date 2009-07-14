@@ -524,8 +524,10 @@ class mintUploadWindow:
 	def upload(self, widget):
 		'''Start the upload process'''
 
-		uploader = gtkUploader(self.selected_service, self.filename, self.progressbar, self.statusbar, self.wTree)
-		uploader.start()
+		for onefile in self.filenames:
+			uploader = gtkUploader(self.selected_service, onefile, self.progressbar, self.statusbar, self.wTree)
+			uploader.start()
+			uploader.join()
 		return True
 
 
