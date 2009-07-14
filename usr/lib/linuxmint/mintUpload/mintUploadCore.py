@@ -34,8 +34,9 @@ class CustomError(Exception):
 	observers = []
 
 	def __init__(self, detail):
+		type = self.__class__.__name__
 		for observer in self.observers:
-			observer.error(detail)
+			observer.error(type, detail)
 
 	@classmethod
 	def addObserver(cls, observer):
@@ -44,8 +45,8 @@ class CustomError(Exception):
 
 
 class cliErrorObserver:
-	def error(self, detail):
-		sys.stderr.write(os.linesep + self.__class__.__name__ + ': ' + detail + os.linesep*2)
+	def error(self, type, detail):
+		sys.stderr.write(os.linesep + type + ': ' + detail + os.linesep*2)
 
 
 
