@@ -188,8 +188,9 @@ class gtkUploader(mintUploader):
 class mintUploadWindow:
 	"""This is the main class for the application"""
 
-	def __init__(self, filename):
-		self.filename = filename
+	def __init__(self, filenames):
+		self.filename = filenames[0]
+		self.filenames = filenames
 		self.iconfile = "/usr/lib/linuxmint/mintSystem/icon.png"
 
 		# Set the Glade file
@@ -536,6 +537,6 @@ if __name__ == "__main__":
 		print """Usage: mintupload.py path/to/filename"""
 		exit(0)
 
-	filename = sys.argv[1]
-	mainwin = mintUploadWindow(filename)
+	filenames = sys.argv[1:]
+	mainwin = mintUploadWindow(filenames)
 	gtk.main()
