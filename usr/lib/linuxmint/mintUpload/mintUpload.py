@@ -8,6 +8,8 @@
 # as published by the Free Software Foundation; Version 2
 # of the License.
 
+
+
 import sys
 
 try:
@@ -27,10 +29,14 @@ except:
 	print "You do not have all the dependencies!"
 	sys.exit(1)
 
+
+
 gtk.gdk.threads_init()
 
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
+
+
 
 class gtkCustomErrorObserver:
 	'''All custom defined errors, using the statusbar'''
@@ -42,6 +48,8 @@ class gtkCustomErrorObserver:
 		message = "<span color='red'>" + detail + "</span>"
 		self.statusbar.push(self.statusbar.get_context_id("mintUpload"), message)
 		self.statusbar.get_children()[0].get_children()[0].set_use_markup(True)
+
+
 
 class gtkSpaceChecker(mintSpaceChecker):
 	'''Checks for available space on the service'''
@@ -126,6 +134,8 @@ class gtkSpaceChecker(mintSpaceChecker):
 				self.wTree.get_widget("main_window").window.set_cursor(None)
 				self.wTree.get_widget("main_window").resize(*self.wTree.get_widget("main_window").size_request())
 
+
+
 class gtkUploader(mintUploader):
 	'''Wrapper for the gtk management of mintUploader'''
 
@@ -175,6 +185,8 @@ class gtkUploader(mintUploader):
 		pctStr = str(int(pct * 100))
 		self.progressbar.set_fraction(pct)
 		self.progressbar.set_text(pctStr + "%")
+
+
 
 class mintUploadWindow:
 	"""This is the main class for the application"""
@@ -512,6 +524,8 @@ class mintUploadWindow:
 		uploader = gtkUploader(self.selected_service, self.filename, self.progressbar, self.statusbar, self.wTree)
 		uploader.start()
 		return True
+
+
 
 if __name__ == "__main__":
 	if len(sys.argv) < 2:
