@@ -256,7 +256,9 @@ class mintUploadWindow:
 		self.wTree.get_widget("txt_file").set_label(self.filename)
 
 		# Calculate the size of the file
-		self.filesize = os.path.getsize(self.filename)
+		self.filesize = 0
+		for onefile in self.filenames:
+			self.filesize += os.path.getsize(onefile)
 		self.wTree.get_widget("txt_size").set_label(sizeStr(self.filesize))
 
 		if len(self.services) == 1:
