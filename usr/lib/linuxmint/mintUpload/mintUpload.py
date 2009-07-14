@@ -48,6 +48,17 @@ CustomError.__init__ = gtkCustomError
 
 
 
+class CustomClipboard:
+
+	def __init__(self):
+		self.clipboard = gtk.clipboard_get()
+
+	def push(self, text):
+		self.clipboard.set_text(text)
+		self.clipboard.store()
+
+
+
 class gtkSpaceChecker(mintSpaceChecker):
 	'''Checks for available space on the service'''
 
