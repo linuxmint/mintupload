@@ -49,13 +49,14 @@ CustomError.__init__ = gtkCustomError
 
 
 class CustomClipboard:
-
-	def __init__(self):
-		self.clipboard = gtk.clipboard_get()
-
 	def push(self, text):
-		self.clipboard.set_text(text)
-		self.clipboard.store()
+		print _("copy to clipboard: %s") % text
+		try:
+			display = gtk.gdk.display_manager_get().get_default_display()
+			clipboard = gtk.Clipboard(display)
+			clipboard.set_text(text)
+		except Exception, e:
+			print e
 
 
 
