@@ -38,9 +38,9 @@ class CustomError(Exception):
 		for listener in CustomError.errorListener:
 			listener.error(detail)
 
-	@staticmethod
-	def addErrorListener(listener):
-		CustomError.errorListener.append(listener)
+	@classmethod
+	def addErrorListener(cls, listener):
+		cls.errorListener.append(listener)
 
 
 
