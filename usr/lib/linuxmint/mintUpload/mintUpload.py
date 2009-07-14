@@ -520,6 +520,14 @@ class mintUploadWindow:
 				checker.start()
 				return True
 
+	def handle_drop(self, widget, context, x, y, selection, targetType, time ):
+		tmp = selection.data.strip()
+		from urlparse import urlparse
+		(scheme, netloc, path, params, query, fragment) = urlparse(tmp)
+		if not path in self.filenames:
+			self.filenames.append(path)
+		self.refresh()
+
 	def upload(self, widget):
 		'''Start the upload process'''
 
