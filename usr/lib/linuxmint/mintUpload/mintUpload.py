@@ -267,6 +267,7 @@ class mintUploadWindow:
 		self.wTree.get_widget("main_window").drag_dest_set( gtk.DEST_DEFAULT_MOTION |gtk.DEST_DEFAULT_HIGHLIGHT |gtk.DEST_DEFAULT_DROP, toButton, gtk.gdk.ACTION_COPY )
 
 	def refresh(self):
+		'''updates the GUI'''
 		# Print the name of the file in the GUI
 		labeltext = ""
 		for onefile in self.filenames:
@@ -529,6 +530,7 @@ class mintUploadWindow:
 				return True
 
 	def handle_drop(self, widget, context, x, y, selection, targetType, time ):
+		'''Handles the drop of files in the mintUpload window'''
 		from urlparse import urlparse
 		for tmp in selection.data.splitlines():
 			(scheme, netloc, path, params, query, fragment) = urlparse(tmp)
