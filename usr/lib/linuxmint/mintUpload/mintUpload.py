@@ -32,7 +32,7 @@ gtk.gdk.threads_init()
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 
-class gtkCustomErrorListener:
+class gtkCustomErrorObserver:
 	'''All custom defined errors, using the statusbar'''
 
 	def __init__(self, statusbar):
@@ -256,7 +256,7 @@ class mintUploadWindow:
 		self.statusbar = self.wTree.get_widget("statusbar")
 		self.progressbar = self.wTree.get_widget("progressbar")
 
-		CustomError.addErrorListener(gtkCustomErrorListener(self.statusbar))
+		CustomError.addErrorListener(gtkCustomErrorObserver(self.statusbar))
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
