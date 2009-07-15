@@ -52,16 +52,6 @@ class gtkErrorObserver:
 
 
 
-class gtkClipboard(gtk.Clipboard):
-	def push(self, text):
-		print _("Copied to clipboard: %s") % text
-		try:
-			self.set_text(text)
-		except Exception, e:
-			print e
-
-
-
 class gtkSpaceChecker(mintSpaceChecker):
 	'''Checks for available space on the service'''
 
