@@ -24,7 +24,6 @@ try:
 	import os
 	import gettext
 	import commands
-	import pynotify
 	from mintUploadCore import *
 except:
 	print "You do not have all the dependencies!"

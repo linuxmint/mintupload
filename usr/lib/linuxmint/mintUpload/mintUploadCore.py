@@ -18,6 +18,7 @@ import gettext
 import paramiko
 import pexpect
 import threading
+import pynotify
 from user import home
 from configobj import ConfigObj
 
