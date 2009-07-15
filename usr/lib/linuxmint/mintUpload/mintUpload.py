@@ -52,6 +52,18 @@ class gtkErrorObserver:
 
 
 
+class CustomClipboard:
+	def push(self, text):
+		print _("copy to clipboard: %s") % text
+		try:
+			display = gtk.gdk.display_manager_get().get_default_display()
+			clipboard = gtk.Clipboard(display)
+			clipboard.set_text(text)
+		except Exception, e:
+			print e
+
+
+
 class gtkSpaceChecker(mintSpaceChecker):
 	'''Checks for available space on the service'''
 
@@ -186,6 +198,10 @@ class gtkUploader(mintUploader):
 		pctStr = str(int(pct * 100))
 		self.progressbar.set_fraction(pct)
 		self.progressbar.set_text(pctStr + "%")
+		if pct == 1 and config['clipboard']['autocopy'].lower()=="true" and self.wTree.get_widget("main_window").has_toplevel_focus():
+			if self.service.has_key('url'):
+				clip = CustomClipboard()
+				clip.push(self.service['url'])
 
 
 
