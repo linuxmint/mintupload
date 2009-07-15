@@ -171,7 +171,7 @@ class gtkUploader(mintUploader):
 					except:
 						try:    raise CustomError("Could not copy URL to keyboard")
 						except: pass
-					else: self.progress(_("Copied URL to clipboard")
+					else: self.progress(_("Copied URL to clipboard"))
 
 			# Report success
 			self.progress(_("File uploaded successfully."), "green")
