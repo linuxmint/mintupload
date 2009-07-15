@@ -174,7 +174,7 @@ class gtkUploader(mintUploader):
 					except:
 						try:    raise CustomError("Could not copy URL to keyboard")
 						except: pass
-					else: print _("Copied to clipboard: %s") % text
+					else: self.progress(_("Copied URL to clipboard")
 
 		finally:
 			self.wTree.get_widget("main_window").window.set_cursor(None)
