@@ -53,15 +53,6 @@ class gtkErrorObserver:
 
 
 
-class CustomNotifier:
-	def __init__(self):
-		pynotify.init("mintUpload")
-
-	def notify(self, detail, ntype="dialog-information"):
-		pynotify.Notification("mintUpload", detail, ntype).show()
-
-
-
 class gtkSpaceChecker(mintSpaceChecker):
 	'''Checks for available space on the service'''
 

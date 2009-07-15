@@ -84,6 +84,15 @@ def sizeStr(size, acc=None, factor=None):
 
 
 
+class CustomNotifier:
+	def __init__(self):
+		pynotify.init("mintUpload")
+
+	def notify(self, detail, ntype="dialog-information"):
+		pynotify.Notification("mintUpload", detail, ntype).show()
+
+
+
 class mintSpaceChecker(threading.Thread):
 	'''Checks that the filesize is ok'''
 
