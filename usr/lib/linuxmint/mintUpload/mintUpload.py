@@ -52,13 +52,15 @@ class gtkErrorObserver:
 
 
 
-class gtkClipboard:
+class gtkClipboard(gtk.Clipboard):
+	def __init__(self):
+		display = gtk.gdk.display_manager_get().get_default_display()
+		gtk.Clipboard.__init__(self, display)
+
 	def push(self, text):
 		print _("copy to clipboard: %s") % text
 		try:
-			display = gtk.gdk.display_manager_get().get_default_display()
-			clipboard = gtk.Clipboard(display)
-			clipboard.set_text(text)
+			self.set_text(text)
 		except Exception, e:
 			print e
 
