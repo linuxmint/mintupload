@@ -152,8 +152,6 @@ class mintUploader(threading.Thread):
 	def run(self):
 		self.upload()
 		self.progress( _("File uploaded successfully."))
-		if self.service.has_key('url'):
-			self.progress( _("URL:") + " " + self.service['url'])
 
 	def _ftp(self):
 		'''Connection process for FTP services'''
@@ -267,6 +265,10 @@ class mintUploader(threading.Thread):
 		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(self.so_far) + "     ")
 		if pct == 100: #if finished
 			sys.stdout.write("\n")
+			# Print URL
+			if self.service.has_key('url'):
+				self.progress( _("URL:") + " " + self.service['url'])
+
 			n = config['notification']
 			# If nofications are enabled AND the file is minimal x byte in size...
 			if n['enable'] == "True" and self.so_far >= int(n['min_filesize']):
