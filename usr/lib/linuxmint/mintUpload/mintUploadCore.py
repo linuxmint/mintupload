@@ -267,12 +267,13 @@ class mintUploader(threading.Thread):
 		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(self.so_far) + "     ")
 		if pct == 100: #if finished
 			sys.stdout.write("\n")
+			n = config['notification']
+			# If nofications are enabled AND the file is minimal x byte in size...
+			if n['enable'] == "True" and self.so_far >= int(n['min_filesize']):
+				# If when_focused is true OR window has no focus
+				if n['when_focused'] == "True" or not self.wTree.get_widget("main_window").has_toplevel_focus():
+					mintNotifier().notify(_("File uploaded successfully."))
 		sys.stdout.flush()
-		#if transfer complete AND nofications are enabled AND the file is minimal x byte in size...
-		if pct == 100 and config['notification']['enable'] == "True" and self.so_far >= int(config['notification']['min_filesize']):
-			#if when_focused is true OR window has no focus
-			if config['notification']['when_focused'] == "True" or not self.wTree.get_widget("main_window").has_toplevel_focus():
-				mintNotifier().notify(_("File uploaded successfully."))
 
 	def asciicallback(self, buffer):
 		self.so_far = self.so_far+len(buffer)-1
