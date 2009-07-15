@@ -194,7 +194,7 @@ class mintUploadWindow:
 
 	def __init__(self, filename):
 		self.filename = filename
-		self.iconfile = "/usr/lib/linuxmint/mintSystem/icon.png"
+		self.iconfile = ICONFILE
 
 		# Set the Glade file
 		self.gladefile = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
