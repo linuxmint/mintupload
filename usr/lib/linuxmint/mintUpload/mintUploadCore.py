@@ -46,6 +46,7 @@ class CustomError(Exception):
 
 
 class cliErrorObserver:
+	'''All custom defined errors, using stderr'''
 	def error(self, type, detail):
 		sys.stderr.write(os.linesep + type + ': ' + detail + os.linesep*2)
 
@@ -86,6 +87,7 @@ def sizeStr(size, acc=None, factor=None):
 
 
 class mintNotifier:
+	'''Enables integration with external notifiers'''
 	def __init__(self):
 		pynotify.init("mintUpload")
 
@@ -330,19 +332,14 @@ class Service(ConfigObj):
 	'''Object representing an upload service'''
 
 	def __init__(self, *args):
-		'''Get the details of an individual service'''
-
 		ConfigObj.__init__(self, *args)
 		self._fix()
 
 	def merge(self, *args):
-		'''Merge configuration with another'''
-
 		ConfigObj.merge(self, *args)
 		self._fix()
 
 	def remove(self):
-		'''Deletes the configuration file'''
 		os.system("rm " + self.filename)
 
 	def _fix(self):
@@ -374,7 +371,7 @@ class Service(ConfigObj):
 				self[k] = int(self[k])
 
 	def for_upload(self, file):
-		'''Upload a file to the service'''
+		'''Prepare a service for uploading'''
 
 		s = defaults
 		s.merge(self)
@@ -438,4 +435,3 @@ def my_storlines(self, cmd, fp, callback=None):
 # Use the patched versions
 ftplib.FTP.storbinary = my_storbinary
 ftplib.FTP.storlines = my_storlines
-
