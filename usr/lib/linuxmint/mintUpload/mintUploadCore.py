@@ -84,7 +84,7 @@ def sizeStr(size, acc=None, factor=None):
 
 
 
-class CustomNotifier:
+class mintNotifier:
 	def __init__(self):
 		pynotify.init("mintUpload")
 
@@ -271,7 +271,7 @@ class mintUploader(threading.Thread):
 		if pct == 100 and config['notification']['enable'].lower()=="true" and self.so_far >= int(config['notification']['minimalfilesize']):
 			#if showOnlyOnNoFocus is false OR showOnlyOnNoFocus is true and the window has no focus
 			if not config['notification']['showOnlyOnNoFocus'].lower()=="true" or self.wTree.get_widget("main_window").has_toplevel_focus():
-				notify = CustomNotifier()
+				notify = mintNotifier()
 				notify.notify(_("File uploaded successfully."))
 
 	def asciicallback(self, buffer):
