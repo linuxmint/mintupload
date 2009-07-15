@@ -187,12 +187,6 @@ class gtkUploader(mintUploader):
 		pctStr = str(int(pct * 100))
 		self.progressbar.set_fraction(pct)
 		self.progressbar.set_text(pctStr + "%")
-		#if transfer complete AND nofications are enabled AND the file is minimal x byte in size...
-		if pct == 1 and config['notification']['enable'].lower()=="true" and self.so_far >= int(config['notification']['minimalfilesize']):
-			#if showOnlyOnNoFocus is false OR showOnlyOnNoFocus is true and the window has no focus
-			if not config['notification']['showOnlyOnNoFocus'].lower()=="true" or self.wTree.get_widget("main_window").has_toplevel_focus():
-				notify = CustomNotifier()
-				notify.notify(_("File uploaded successfully."))
 
 
 
