@@ -53,10 +53,6 @@ class gtkErrorObserver:
 
 
 class gtkClipboard(gtk.Clipboard):
-	def __init__(self):
-		display = gtk.gdk.display_manager_get().get_default_display()
-		gtk.Clipboard.__init__(self, display)
-
 	def push(self, text):
 		print _("Copied to clipboard: %s") % text
 		try:
