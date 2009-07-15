@@ -159,9 +159,6 @@ class gtkUploader(mintUploader):
 			except: pass
 
 		else:
-			# Report success
-			self.progress(_("File uploaded successfully."), "green")
-
 			#If service is Mint then show the URL
 			if self.service.has_key('url'):
 				self.wTree.get_widget("txt_url").set_text(self.service['url'])
@@ -175,6 +172,9 @@ class gtkUploader(mintUploader):
 						try:    raise CustomError("Could not copy URL to keyboard")
 						except: pass
 					else: self.progress(_("Copied URL to clipboard")
+
+			# Report success
+			self.progress(_("File uploaded successfully."), "green")
 
 		finally:
 			self.wTree.get_widget("main_window").window.set_cursor(None)
