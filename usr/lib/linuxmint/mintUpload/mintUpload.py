@@ -196,7 +196,7 @@ class gtkUploader(mintUploader):
 		pctStr = str(int(pct * 100))
 		self.progressbar.set_fraction(pct)
 		self.progressbar.set_text(pctStr + "%")
-		if pct == 1 and config['clipboard']['autocopy'].lower()=="true" and self.wTree.get_widget("main_window").has_toplevel_focus():
+		if pct == 1 and config['clipboard']['autocopy'] == "True" and self.wTree.get_widget("main_window").has_toplevel_focus():
 			if self.service.has_key('url'):
 				gtkClipboard().push(self.service['url'])
 
