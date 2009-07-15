@@ -24,6 +24,7 @@ try:
 	import os
 	import gettext
 	import commands
+	import pynotify
 	from mintUploadCore import *
 except:
 	print "You do not have all the dependencies!"
@@ -49,6 +50,15 @@ class gtkErrorObserver:
 		message = "<span color='red'>" + detail + "</span>"
 		self.statusbar.push(context_id, message)
 		self.statusbar.get_children()[0].get_children()[0].set_use_markup(True)
+
+
+
+class CustomNotifier:
+	def __init__(self):
+		pynotify.init("mintUpload")
+
+	def notify(self, detail, ntype="dialog-information"):
+		pynotify.Notification("mintUpload", detail, ntype).show()
 
 
 
@@ -186,6 +196,12 @@ class gtkUploader(mintUploader):
 		pctStr = str(int(pct * 100))
 		self.progressbar.set_fraction(pct)
 		self.progressbar.set_text(pctStr + "%")
+		#if transfer complete AND nofications are enabled AND the file is minimal x byte in size...
+		if pct == 1 and config['notification']['enable'].lower()=="true" and self.so_far >= int(config['notification']['minimalfilesize']):
+			#if showOnlyOnNoFocus is false OR showOnlyOnNoFocus is true and the window has no focus
+			if not config['notification']['showOnlyOnNoFocus'].lower()=="true" or self.wTree.get_widget("main_window").has_toplevel_focus():
+				notify = CustomNotifier()
+				notify.notify(_("File uploaded successfully."))
 
 
 
