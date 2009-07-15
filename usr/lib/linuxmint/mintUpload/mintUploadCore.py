@@ -89,8 +89,8 @@ class mintNotifier:
 	def __init__(self):
 		pynotify.init("mintUpload")
 
-	def notify(self, detail, ntype="dialog-information"):
-		pynotify.Notification("mintUpload", detail, ntype).show()
+	def notify(self, detail):
+		pynotify.Notification("mintUpload", detail, ICONFILE).show()
 
 
 
