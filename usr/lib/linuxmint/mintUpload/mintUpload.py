@@ -114,17 +114,10 @@ class gtkSpaceChecker(mintSpaceChecker):
 
 			except FilesizeError:
 				self.statusbar.push(context_id, "<span color='red'>" + _("File too big or not enough space on the service.") + "</span>")
+				self.display_space()
 
 			else:
-				# Display the available space left on the service
-				if self.service.has_key('space'):
-					pctSpace = float(self.available) / float(self.total) * 100
-					pctSpaceStr = sizeStr(self.available) + " (" + str(int(pctSpace)) + "%)"
-					self.wTree.get_widget("txt_space").set_label(pctSpaceStr)
-					self.wTree.get_widget("txt_space").show()
-					self.wTree.get_widget("lbl_space").show()
-
-				# Activate upload button
+				self.display_space()
 				self.statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
 				self.wTree.get_widget("upload_button").set_sensitive(True)
 
@@ -134,6 +127,16 @@ class gtkSpaceChecker(mintSpaceChecker):
 				self.wTree.get_widget("combo").set_sensitive(True)
 				self.wTree.get_widget("main_window").window.set_cursor(None)
 				self.wTree.get_widget("main_window").resize(*self.wTree.get_widget("main_window").size_request())
+
+	def display_space(self):
+		'''Display the available space left on the service'''
+		try:    pctSpace = float(self.available) / float(self.total) * 100
+		except: pass
+		else:
+			pctSpaceStr = sizeStr(self.available) + " (" + str(int(pctSpace)) + "%)"
+			self.wTree.get_widget("txt_space").set_label(pctSpaceStr)
+			self.wTree.get_widget("txt_space").show()
+			self.wTree.get_widget("lbl_space").show()
 
 
 
