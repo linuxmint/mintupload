@@ -271,8 +271,7 @@ class mintUploader(threading.Thread):
 		if pct == 100 and config['notification']['enable'].lower()=="true" and self.so_far >= int(config['notification']['minimalfilesize']):
 			#if showOnlyOnNoFocus is false OR showOnlyOnNoFocus is true and the window has no focus
 			if not config['notification']['showOnlyOnNoFocus'].lower()=="true" or self.wTree.get_widget("main_window").has_toplevel_focus():
-				notify = mintNotifier()
-				notify.notify(_("File uploaded successfully."))
+				mintNotifier().notify(_("File uploaded successfully."))
 
 	def asciicallback(self, buffer):
 		self.so_far = self.so_far+len(buffer)-1
