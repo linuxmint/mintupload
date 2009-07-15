@@ -58,7 +58,7 @@ class gtkClipboard(gtk.Clipboard):
 		gtk.Clipboard.__init__(self, display)
 
 	def push(self, text):
-		print _("copy to clipboard: %s") % text
+		print _("Copied to clipboard: %s") % text
 		try:
 			self.set_text(text)
 		except Exception, e:
