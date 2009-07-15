@@ -167,11 +167,13 @@ class gtkUploader(mintUploader):
 
 				# Autocopy URL
 				if config['clipboard']['autocopy'] == "True":
-					try:  gtk.Clipboard().set_text(self.service['url'])
-					except:
-						try:    raise CustomError(_("Could not copy URL to keyboard"))
-						except: pass
-					else: self.progress(_("Copied URL to clipboard"))
+					# If when_unfocused is true OR window has focus
+					if config['clipboard']['when_unfocused'] == "True" or self.wTree.get_widget("main_window").has_toplevel_focus():
+						try:  gtk.Clipboard().set_text(self.service['url'])
+						except:
+							try:    raise CustomError(_("Could not copy URL to keyboard"))
+							except: pass
+						else: self.progress(_("Copied URL to clipboard"))
 
 			# Report success
 			self.progress(_("File uploaded successfully."), "green")
