@@ -1,8 +1,8 @@
 mintupload (3.6) jaunty; urgency=low
 
-  * autocopy of url to clipboard
-  * integration with jaunty's notification system
-  * much improved error handling
+  * autocopy of url to clipboard - kinkerl
+  * integration with jaunty's notification system - kinkerl
+  * much improved error handling - kinkerl
   * large amount of code cleanup, hence better stability
 
  -- Philip Morrell <mintupload.emorrp1@mamber.net>  Wed,  15 Jul 2009 16:45:42 +0100
