@@ -382,7 +382,6 @@ class Service(ConfigObj):
 		# Replace placeholders in url
 		if s.has_key('url'):
 			url_replace = {
-				' ':'%20',
 				'<TIMESTAMP>':timestamp,
 				'<FILE>':os.path.basename(file),
 				'<PATH>':s['path']
@@ -390,6 +389,8 @@ class Service(ConfigObj):
 			url = s['url']
 			for k,v in url_replace.iteritems():
 				url = url.replace(k,v)
+			# Must be done after other replaces to function correctly
+			url = url.replace(' ','%20')
 			s['url'] = url
 
 		# Ensure trailing '/', after url <PATH> replace
