@@ -139,7 +139,9 @@ class gtkSpaceChecker(mintSpaceChecker):
 			self.wTree.get_widget("lbl_space").show()
 	
 	def autoupload(self):
-		uploader = gtkUploader(self.service, sys.argv[1], self.progressbar, self.statusbar, self.wTree)
+		filename = sys.argv[1]
+		progressbar = self.wTree.get_widget("progressbar")
+		uploader = gtkUploader(self.service, filename, progressbar, self.statusbar, self.wTree)
 		uploader.start()
 
 
