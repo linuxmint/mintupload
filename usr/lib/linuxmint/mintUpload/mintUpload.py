@@ -61,6 +61,7 @@ class gtkSpaceChecker(mintSpaceChecker):
 		self.wTree = wTree
 
 	def run(self):
+		self.spaceOK = False
 		context_id = self.statusbar.get_context_id("mintUpload")
 
 		# Get the file's persistence on the service
@@ -117,13 +118,10 @@ class gtkSpaceChecker(mintSpaceChecker):
 				self.display_space()
 
 			else:
+				self.spaceOK = True
 				self.display_space()
 				self.statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
 				self.wTree.get_widget("upload_button").set_sensitive(True)
-
-				# If autoupload enabled, do it
-				if config['autoupload']['autoupload'] == "True":
-					self.autoupload()
 
 			finally:
 				label = self.statusbar.get_children()[0].get_children()[0]
@@ -131,6 +129,10 @@ class gtkSpaceChecker(mintSpaceChecker):
 				self.wTree.get_widget("combo").set_sensitive(True)
 				self.wTree.get_widget("main_window").window.set_cursor(None)
 				self.wTree.get_widget("main_window").resize(*self.wTree.get_widget("main_window").size_request())
+
+				# If autoupload enabled, do it
+				if config['autoupload']['autoupload'] == "True" and self.spaceOK:
+					self.autoupload()
 
 	def display_space(self):
 		'''Display the available space left on the service'''
