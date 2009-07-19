@@ -283,6 +283,11 @@ class mintUploadWindow:
 			self.wTree.get_widget("combo").set_active(0)
 			self.comboChanged(None)
 
+		self.statusbar = self.wTree.get_widget("statusbar")
+		self.progressbar = self.wTree.get_widget("progressbar")
+
+		CustomError.addObserver(gtkErrorObserver(self.statusbar))
+
 		# If service autoselect is enabled, use it
 		autoselect = config['autoupload']['autoselect']
 		if autoselect != "False":
@@ -291,11 +296,6 @@ class mintUploadWindow:
 				if model[i][0] == autoselect:
 					self.wTree.get_widget("combo").set_active(i)
 					self.comboChanged(None)
-
-		self.statusbar = self.wTree.get_widget("statusbar")
-		self.progressbar = self.wTree.get_widget("progressbar")
-
-		CustomError.addObserver(gtkErrorObserver(self.statusbar))
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
