@@ -544,6 +544,9 @@ class mintUploadWindow:
 				self.selected_service = service
 				checker = gtkSpaceChecker(self.selected_service, self.filesize, self.statusbar, self.wTree)
 				checker.start()
+
+				if config['autoupload']['autoupload'] == "True":
+					autoUploader(checker, self).start()
 				return True
 
 	def upload(self, widget):
