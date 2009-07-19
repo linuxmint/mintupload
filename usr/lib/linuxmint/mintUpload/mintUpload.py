@@ -24,6 +24,7 @@ try:
 	import os
 	import gettext
 	import commands
+	import threading
 	from mintUploadCore import *
 except:
 	print "You do not have all the dependencies!"
@@ -551,6 +552,20 @@ class mintUploadWindow:
 		uploader = gtkUploader(self.selected_service, self.filename, self.progressbar, self.statusbar, self.wTree)
 		uploader.start()
 		return True
+
+
+
+class autoUploader(threading.Thread):
+	'''Handles the threading aspects of autouploading'''
+	def __init__(self, spaceChecker, uploadWindow):
+		threading.Thread.__init(self)
+		self.spaceChecker = spaceChecker
+		self.uploadWindow = uploadWindow
+
+	def run(self)
+		self.spaceChecker.join()
+		if self.spaceChecker.spaceOK:
+			mintUploadWindow.upload(self.uploadWindow, None)
 
 
 
