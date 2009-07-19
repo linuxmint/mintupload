@@ -561,7 +561,7 @@ class mintUploadWindow:
 class autoUploader(threading.Thread):
 	'''Handles the threading aspects of autouploading'''
 	def __init__(self, spaceChecker, uploadWindow):
-		threading.Thread.__init(self)
+		threading.Thread.__init__(self)
 		self.spaceChecker = spaceChecker
 		self.uploadWindow = uploadWindow
 
