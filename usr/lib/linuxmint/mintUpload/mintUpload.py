@@ -283,6 +283,15 @@ class mintUploadWindow:
 			self.wTree.get_widget("combo").set_active(0)
 			self.comboChanged(None)
 
+		# If service autoselect is enabled, use it
+		autoselect = config['autoupload']['autoselect']
+		if autoselect != "False":
+			model = self.wTree.get_widget("combo").get_model()
+			for i in range(len(model)):
+				if model[i][0] == autoselect:
+					self.wTree.get_widget("combo").set_active(i)
+					self.comboChanged(None)
+
 		self.statusbar = self.wTree.get_widget("statusbar")
 		self.progressbar = self.wTree.get_widget("progressbar")
 
