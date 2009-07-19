@@ -165,6 +165,8 @@ class gtkUploader(mintUploader):
 			#If service is Mint then show the URL
 			if self.service.has_key('url'):
 				self.wTree.get_widget("txt_url").set_text(self.service['url'])
+				self.wTree.get_widget("progressbar").hide()
+				self.WTree.get_widget("label190").hide()
 				self.wTree.get_widget("txt_url").show()
 				self.wTree.get_widget("lbl_url").show()
 
