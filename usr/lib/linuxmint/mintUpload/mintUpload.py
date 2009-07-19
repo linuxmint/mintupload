@@ -228,6 +228,7 @@ class mintUploadWindow:
 		self.wTree.get_widget("label193").set_label(_("Size:"))
 		self.wTree.get_widget("label190").set_label(_("Upload progress:"))
 		self.wTree.get_widget("lbl_url").set_label(_("URL:"))
+		self.wTree.get_widget("label1").set_label(_("_Upload"))
 
 		fileMenu = gtk.MenuItem(_("_File"))
 		fileSubmenu = gtk.Menu()
