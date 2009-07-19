@@ -105,13 +105,12 @@ class mintSpaceChecker(threading.Thread):
 		self.filesize = filesize
 	
 	def run(self):
-		try:
-			self.check()
-			return True
-		except FilesizeError:
-			return False
+		try:     self.check()
+		except   FilesizeError: pass
+		finally: return self.spaceOK
 
 	def check(self):
+		self.spaceOK = False
 		# Get the maximum allowed self.filesize on the service
 		if self.service.has_key("maxsize"):
 			if self.filesize > self.service["maxsize"]:
@@ -129,6 +128,7 @@ class mintSpaceChecker(threading.Thread):
 
 			if self.filesize > self.available:
 				raise FilesizeError(_("File larger than service's available space"))
+		self.spaceOK = True
 
 
 
