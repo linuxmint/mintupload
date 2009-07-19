@@ -122,7 +122,7 @@ class gtkSpaceChecker(mintSpaceChecker):
 				self.wTree.get_widget("upload_button").set_sensitive(True)
 
 				# If autoupload enabled, do it
-				if config['autoupload']['autoupload'] == True:
+				if config['autoupload']['autoupload'] == "True":
 					self.autoupload()
 
 			finally:
