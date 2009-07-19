@@ -121,6 +121,10 @@ class gtkSpaceChecker(mintSpaceChecker):
 				self.statusbar.push(context_id, "<span color='green'>" + _("Service ready. Space available.") + "</span>")
 				self.wTree.get_widget("upload_button").set_sensitive(True)
 
+				# If autoupload enabled, do it
+				if config['autoupload']['autoupload'] == True:
+					self.autoupload()
+
 			finally:
 				label = self.statusbar.get_children()[0].get_children()[0]
 				label.set_use_markup(True)
