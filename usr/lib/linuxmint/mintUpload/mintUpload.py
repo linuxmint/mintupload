@@ -353,7 +353,11 @@ class mintUploadWindow:
 		wTree.get_widget("toolbutton_edit").connect("clicked", self.edit_service_toolbutton, treeview_services)
 		wTree.get_widget("toolbutton_remove").connect("clicked", self.remove_service, treeview_services)
 
-		column1 = gtk.TreeViewColumn(_("Services"), gtk.CellRendererText(), text=0)
+		renderer = gtk.CellRendererText()
+		renderer.connect("edited", self.move_service, treeview_services, treeview_services_system)
+		renderer.set_property("editable", True)
+
+		column1 = gtk.TreeViewColumn(_("Services"), renderer, text=0)
 		column1.set_sort_column_id(0)
 		column1.set_resizable(True)
 		treeview_services.append_column(column1)
