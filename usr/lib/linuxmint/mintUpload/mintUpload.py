@@ -349,7 +349,7 @@ class mintUploadWindow:
 
 		wTree.get_widget("button_close").connect("clicked", self.close_window, wTree.get_widget("services_window"), combo)
 		wTree.get_widget("services_window").connect("destroy", self.close_window, wTree.get_widget("services_window"), combo)
-		wTree.get_widget("toolbutton_add").connect("clicked", self.add_service, treeview_services)
+		wTree.get_widget("toolbutton_add").connect("clicked", self.new_service_toolbutton, treeview_services)
 		wTree.get_widget("toolbutton_edit").connect("clicked", self.edit_service_toolbutton, treeview_services)
 		wTree.get_widget("toolbutton_remove").connect("clicked", self.remove_service, treeview_services)
 
