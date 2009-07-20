@@ -348,7 +348,6 @@ class mintUploadWindow:
 		column1.set_sort_column_id(0)
 		column1.set_resizable(True)
 		treeview_services.append_column(column1)
-		treeview_services.set_headers_clickable(True)
 		treeview_services.show()
 		column1 = gtk.TreeViewColumn(_("System-wide services"), gtk.CellRendererText(), text=0)
 		treeview_services_system.append_column(column1)
