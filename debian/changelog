@@ -48,6 +48,12 @@ mintupload (3.5) jaunty; urgency=low
  
  -- Philip Morrell <mintupload.emorrp1@mamber.net>  Thu,  21 May 2009 18:20:45 +0100
 
+mintupload (3.3.4) gloria; urgency=low
+
+  * merlwiz's text beside icons bugfix #399705
+
+ -- Philip Morrell <mintupload.emorrp1@mamber.net>  Mon,  20 Jul 2009 20:38:47 +0100
+
 mintupload (3.3.3) gloria; urgency=low
 
   * Updated translations
