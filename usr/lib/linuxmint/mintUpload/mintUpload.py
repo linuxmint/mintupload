@@ -568,7 +568,7 @@ class autoUploader(threading.Thread):
 	def run(self):
 		self.spaceChecker.join()
 		if self.spaceChecker.spaceOK:
-			mintUploadWindow.upload(self.uploadWindow, None)
+			self.uploadWindow.upload(None)
 
 
 
