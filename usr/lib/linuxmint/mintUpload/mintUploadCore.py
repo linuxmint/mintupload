@@ -347,6 +347,13 @@ class Service(ConfigObj):
 			os.system("mv '" + self.filename + "' '" + newname + "'")
 			self.filename = newname
 
+	def copy(self, newname, force=False):
+		if force or not os.path.exists(newname):
+			oldname = self.filename
+			self.filename = newname
+			self.write()
+			self.filename = oldfile
+
 	def _fix(self):
 		'''Format values correctly'''
 
