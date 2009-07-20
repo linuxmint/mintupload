@@ -409,6 +409,18 @@ class mintUploadWindow:
 		model.set_value(iter, 0, sname)
 		self.edit_service(treeview_services, model.get_path(iter), 0)
 
+	def copy_service_toolbutton(self, widget, treeview_services, treeview_services_system):
+		selection = treeview_services.get_selection()
+		(model, iter) = selection.get_selected()
+		for s in self.services:
+			if s['name'] == sname:
+				sname += " 2"
+				while os.path.exists(config_paths['user'] + sname):
+					next = int(sname[-1:]) + 1
+					sname = sname[:-1] + str(next)
+				s.copy(config_paths['user'] + sname)
+				self.load_services(treeview_services, treeview_services_system)
+
 	def move_service(self, renderer, path, new_text, treeview_services, treeview_services_system):
 		old_text = renderer.get_property('text')
 		for s in self.services:
