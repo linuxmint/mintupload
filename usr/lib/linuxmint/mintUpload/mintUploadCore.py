@@ -352,7 +352,7 @@ class Service(ConfigObj):
 			oldname = self.filename
 			self.filename = newname
 			self.write()
-			self.filename = oldfile
+			self.filename = oldname
 
 	def _fix(self):
 		'''Format values correctly'''
