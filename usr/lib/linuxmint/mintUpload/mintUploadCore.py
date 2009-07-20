@@ -342,9 +342,10 @@ class Service(ConfigObj):
 	def remove(self):
 		os.system("rm " + self.filename)
 
-	def move(self, newname):
-		os.system("mv " + self.filename + " " + newname)
-		self.filename = newname
+	def move(self, newname, force=False):
+		if force or not os.path.exists(newname):
+			os.system("mv " + self.filename + " " + newname)
+			self.filename = newname
 
 	def _fix(self):
 		'''Format values correctly'''
