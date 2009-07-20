@@ -464,6 +464,16 @@
               </packing>
             </child>
             <child>
+              <widget class="GtkToolButton" id="toolbutton_copy">
+                <property name="visible">True</property>
+                <property name="stock_id">gtk-copy</property>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
               <widget class="GtkToolButton" id="toolbutton_edit">
                 <property name="visible">True</property>
                 <property name="stock_id">gtk-edit</property>
