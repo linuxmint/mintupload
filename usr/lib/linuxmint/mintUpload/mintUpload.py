@@ -393,27 +393,6 @@ class mintUploadWindow:
 		if (combo != None):
 			self.reload_services(combo)
 
-	def add_service(self, widget, treeview_services):
-		wTree = gtk.glade.XML(self.gladefile, "dialog_add_service")
-		wTree.get_widget("dialog_add_service").set_title(_("New service"))
-		wTree.get_widget("dialog_add_service").set_icon_from_file(self.iconfile)
-		wTree.get_widget("dialog_add_service").show()
-		wTree.get_widget("lbl_name").set_label(_("Name:"))
-		wTree.get_widget("button_ok").connect("clicked", self.new_service, wTree.get_widget("dialog_add_service"), wTree.get_widget("txt_name"), treeview_services)
-		wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_add_service"))
-
-	def new_service(self, widget, window, entry, treeview_services):
-		service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
-		sname = entry.get_text()
-		if sname:
-			model = treeview_services.get_model()
-			iter = model.insert_before(None, None)
-			model.set_value(iter, 0, sname)
-			service.filename = config_paths['user'] + sname
-			service.write()
-		self.close_window(None, window)
-		self.edit_service(treeview_services, model.get_path(iter), 0)
-
 	def new_service_toolbutton(self, widget, treeview_services):
 		service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
 		sname = "New Service"
