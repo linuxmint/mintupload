@@ -414,6 +414,22 @@ class mintUploadWindow:
 		self.close_window(None, window)
 		self.edit_service(treeview_services, model.get_path(iter), 0)
 
+	def new_service_toolbutton(self, widget, treeview_services):
+		service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
+		sname = "New Service"
+		if os.path.exists(config_paths['user'] + sname):
+			sname += "(2)"
+			while os.path.exists(config_paths['user'] + sname):
+				next = int(sname[-2:-1]) + 1
+				sname = sname[:-2] + str(next) + ")"
+		service.filename = config_paths['user'] + sname
+		service.write()
+
+		model = treeview_services.get_model()
+		iter = model.insert_before(None, None)
+		model.set_value(iter, 0, sname)
+		self.edit_service(treeview_services, model.get_path(iter), 0)
+
 	def move_service(self, renderer, path, new_text, services, services_system):
 		old_text = renderer.get_property('text')
 		for s in self.services:
