@@ -413,6 +413,7 @@ class mintUploadWindow:
 	def copy_service_toolbutton(self, widget, treeview_services, treeview_services_system):
 		selection = treeview_services.get_selection()
 		(model, iter) = selection.get_selected()
+		sname = model.get_value(iter, 0)
 		for s in self.services:
 			if s['name'] == sname:
 				sname += " 2"
