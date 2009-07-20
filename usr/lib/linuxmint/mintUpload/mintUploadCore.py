@@ -344,7 +344,7 @@ class Service(ConfigObj):
 
 	def move(self, newname, force=False):
 		if force or not os.path.exists(newname):
-			os.system("mv " + self.filename + " " + newname)
+			os.system("mv '" + self.filename + "' '" + newname + "'")
 			self.filename = newname
 
 	def _fix(self):
