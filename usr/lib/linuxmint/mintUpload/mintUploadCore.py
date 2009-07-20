@@ -340,7 +340,7 @@ class Service(ConfigObj):
 		self._fix()
 
 	def remove(self):
-		os.system("rm " + self.filename)
+		os.system("rm '" + self.filename + "'")
 
 	def move(self, newname, force=False):
 		if force or not os.path.exists(newname):
