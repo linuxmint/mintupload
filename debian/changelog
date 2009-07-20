@@ -1,3 +1,14 @@
+mintupload (3.6.1) jaunty; urgency=low
+
+  * fixes spaces in filename affecting url output
+  * upload button now i18ned #399302
+  * progressbar not needed after 100%, so replaced with url if defined
+  * fixes autoselection when only one service is defined
+  * fixes removal of services with spaces in name
+  * gladefile cleaning
+ 
+ -- Philip Morrell <mintupload.emorrp1@mamber.net>  Mon,  20 Jul 2009 15:33:19 +0100
+
 mintupload (3.6) jaunty; urgency=low
 
   * autocopy of url to clipboard - kinkerl
