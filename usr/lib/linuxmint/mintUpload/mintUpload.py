@@ -418,10 +418,10 @@ class mintUploadWindow:
 		service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
 		sname = "New Service"
 		if os.path.exists(config_paths['user'] + sname):
-			sname += "(2)"
+			sname += " 2"
 			while os.path.exists(config_paths['user'] + sname):
-				next = int(sname[-2:-1]) + 1
-				sname = sname[:-2] + str(next) + ")"
+				next = int(sname[-1:]) + 1
+				sname = sname[:-1] + str(next)
 		service.filename = config_paths['user'] + sname
 		service.write()
 
