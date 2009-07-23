@@ -483,6 +483,7 @@ class servicesWindow:
 				sname = sname[:-1] + str(next)
 		service.filename = config_paths['user'] + sname
 		service.write()
+		self.services.append(service)
 
 		model = self.treeview_services.get_model()
 		iter = model.insert_before(None, None)
