@@ -444,6 +444,26 @@ class servicesWindow:
 		if (combo != None):
 			self.mainwin.reload_services(combo)
 
+	def load_services(self):
+		usermodel = gtk.TreeStore(str)
+		usermodel.set_sort_column_id( 0, gtk.SORT_ASCENDING )
+		sysmodel = gtk.TreeStore(str)
+		sysmodel.set_sort_column_id( 0, gtk.SORT_ASCENDING )
+		models = {
+			'user':usermodel,
+			'system':sysmodel
+		}
+		self.treeview_services.set_model(models['user'])
+		self.treeview_services_system.set_model(models['system'])
+
+		self.services = read_services()
+		for service in self.services:
+			iter = models[service['loc']].insert_before(None, None)
+			models[service['loc']].set_value(iter, 0, service['name'])
+
+		del usermodel
+		del sysmodel
+
 	def new_service_toolbutton(self, widget):
 		service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
 		sname = "New Service"
@@ -587,26 +607,6 @@ class servicesWindow:
 		except Exception, detail:
 			print detail
 		window.hide()
-
-	def load_services(self):
-		usermodel = gtk.TreeStore(str)
-		usermodel.set_sort_column_id( 0, gtk.SORT_ASCENDING )
-		sysmodel = gtk.TreeStore(str)
-		sysmodel.set_sort_column_id( 0, gtk.SORT_ASCENDING )
-		models = {
-			'user':usermodel,
-			'system':sysmodel
-		}
-		self.treeview_services.set_model(models['user'])
-		self.treeview_services_system.set_model(models['system'])
-
-		self.services = read_services()
-		for service in self.services:
-			iter = models[service['loc']].insert_before(None, None)
-			models[service['loc']].set_value(iter, 0, service['name'])
-
-		del usermodel
-		del sysmodel
 
 	def move_service(self, renderer, path, new_text):
 		old_text = renderer.get_property('text')
