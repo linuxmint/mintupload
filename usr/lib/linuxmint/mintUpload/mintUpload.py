@@ -464,6 +464,14 @@ class servicesWindow:
 		del usermodel
 		del sysmodel
 
+	def move_service(self, renderer, path, new_text):
+		old_text = renderer.get_property('text')
+		for s in self.services:
+			if s['name'] == old_text:
+				s.move(config_paths['user'] + new_text)
+				self.load_services()
+				return
+
 	def new_service_toolbutton(self, widget):
 		service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
 		sname = "New Service"
@@ -607,14 +615,6 @@ class servicesWindow:
 		except Exception, detail:
 			print detail
 		window.hide()
-
-	def move_service(self, renderer, path, new_text):
-		old_text = renderer.get_property('text')
-		for s in self.services:
-			if s['name'] == old_text:
-				s.move(config_paths['user'] + new_text)
-				self.load_services()
-				return
 
 
 
