@@ -399,14 +399,6 @@ class mintUploadWindow:
 		if (combo != None):
 			self.reload_services(combo)
 
-	def move_service(self, renderer, path, new_text, treeview_services, treeview_services_system):
-		old_text = renderer.get_property('text')
-		for s in self.services:
-			if s['name'] == old_text:
-				s.move(config_paths['user'] + new_text)
-				self.load_services(treeview_services, treeview_services_system)
-				return
-
 	def comboChanged(self, widget):
 		'''Change the selected service'''
 
@@ -643,6 +635,14 @@ class servicesWindow:
 					s.remove()
 					self.services.remove(s)
 			model.remove(iter)
+
+	def move_service(self, renderer, path, new_text):
+		old_text = renderer.get_property('text')
+		for s in self.services:
+			if s['name'] == old_text:
+				s.move(config_paths['user'] + new_text)
+				self.load_services()
+				return
 
 
 
