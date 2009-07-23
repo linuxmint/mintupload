@@ -10,6 +10,11 @@
 
 
 
+__version_info__ = ('3', '6', '1')
+__version__ = '.'.join(__version_info__)
+
+
+
 import sys
 
 try:
@@ -309,8 +314,7 @@ class mintUploadWindow:
 	def open_about(self, widget):
 		dlg = gtk.AboutDialog()
 		dlg.set_title(_("About") + " - mintUpload")
-		version = commands.getoutput("mint-apt-version mintupload 2> /dev/null")
-		dlg.set_version(version)
+		dlg.set_version(__version__)
 		dlg.set_program_name("mintUpload")
 		dlg.set_comments(_("File uploader for Linux Mint"))
 		try:
@@ -580,7 +584,7 @@ if __name__ == "__main__":
 	if len(sys.argv) > 2:
 		print "too many files! using only the first!"
 	if sys.argv[1] == "--version":
-		print "mintupload: %s" % commands.getoutput("mint-apt-version mintupload 2> /dev/null")
+		print "mintupload: %s" % __version__
 		exit(0)
 	if sys.argv[1] in ["-h","--help"]:
 		print """Usage: mintupload.py path/to/filename"""
