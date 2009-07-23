@@ -410,6 +410,7 @@ class servicesWindow:
 		self.iconfile = iconfile
 		self.wTree = gtk.glade.XML(gladefile,"services_window")
 		self.mainwin = mainwin
+		self.gladefile = gladefile
 
 		self.treeview_services = self.wTree.get_widget("treeview_services")
 		self.treeview_services_system = self.wTree.get_widget("treeview_services_system")
@@ -442,7 +443,7 @@ class servicesWindow:
 	def close_window(self, widget, window, combo=None):
 		window.hide()
 		if (combo != None):
-			self.mainwin.rereload_services(combo)
+			self.mainwin.reload_services(combo)
 
 	def reload_services(self):
 		usermodel = gtk.TreeStore(str)
