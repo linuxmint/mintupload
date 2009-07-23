@@ -394,26 +394,6 @@ class mintUploadWindow:
 		self.load_services(treeview_services, treeview_services_system)
 		treeview_services.connect("row-activated", self.edit_service);
 
-	def load_services(self, treeview_services, treeview_services_system):
-		usermodel = gtk.TreeStore(str)
-		usermodel.set_sort_column_id( 0, gtk.SORT_ASCENDING )
-		sysmodel = gtk.TreeStore(str)
-		sysmodel.set_sort_column_id( 0, gtk.SORT_ASCENDING )
-		models = {
-			'user':usermodel,
-			'system':sysmodel
-		}
-		treeview_services.set_model(models['user'])
-		treeview_services_system.set_model(models['system'])
-
-		self.services = read_services()
-		for service in self.services:
-			iter = models[service['loc']].insert_before(None, None)
-			models[service['loc']].set_value(iter, 0, service['name'])
-
-		del usermodel
-		del sysmodel
-
 	def close_window(self, widget, window, combo=None):
 		window.hide()
 		if (combo != None):
@@ -643,6 +623,26 @@ class servicesWindow:
 		except Exception, detail:
 			print detail
 		window.hide()
+
+	def load_services(self):
+		usermodel = gtk.TreeStore(str)
+		usermodel.set_sort_column_id( 0, gtk.SORT_ASCENDING )
+		sysmodel = gtk.TreeStore(str)
+		sysmodel.set_sort_column_id( 0, gtk.SORT_ASCENDING )
+		models = {
+			'user':usermodel,
+			'system':sysmodel
+		}
+		self.treeview_services.set_model(models['user'])
+		self.treeview_services_system.set_model(models['system'])
+
+		self.services = read_services()
+		for service in self.services:
+			iter = models[service['loc']].insert_before(None, None)
+			models[service['loc']].set_value(iter, 0, service['name'])
+
+		del usermodel
+		del sysmodel
 
 
 
