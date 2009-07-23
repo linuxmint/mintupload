@@ -364,35 +364,7 @@ class mintUploadWindow:
 		dlg.show()
 
 	def open_services(self, widget, combo):
-		wTree = gtk.glade.XML(self.gladefile, "services_window")
-		treeview_services = wTree.get_widget("treeview_services")
-		treeview_services_system = wTree.get_widget("treeview_services_system")
-
-		wTree.get_widget("services_window").set_title(_("Services") + " - " + _("File Uploader"))
-		wTree.get_widget("services_window").set_icon_from_file(self.iconfile)
-		wTree.get_widget("services_window").show()
-
-		wTree.get_widget("button_close").connect("clicked", self.close_window, wTree.get_widget("services_window"), combo)
-		wTree.get_widget("services_window").connect("destroy", self.close_window, wTree.get_widget("services_window"), combo)
-		wTree.get_widget("toolbutton_add").connect("clicked", self.new_service_toolbutton, treeview_services)
-		wTree.get_widget("toolbutton_copy").connect("clicked", self.copy_service_toolbutton, treeview_services, treeview_services_system)
-		wTree.get_widget("toolbutton_edit").connect("clicked", self.edit_service_toolbutton, treeview_services)
-		wTree.get_widget("toolbutton_remove").connect("clicked", self.remove_service, treeview_services)
-
-		renderer = gtk.CellRendererText()
-		renderer.connect("edited", self.move_service, treeview_services, treeview_services_system)
-		renderer.set_property("editable", True)
-
-		column1 = gtk.TreeViewColumn(_("Services"), renderer, text=0)
-		column1.set_sort_column_id(0)
-		column1.set_resizable(True)
-		treeview_services.append_column(column1)
-		treeview_services.show()
-		column1 = gtk.TreeViewColumn(_("System-wide services"), gtk.CellRendererText(), text=0)
-		treeview_services_system.append_column(column1)
-		treeview_services_system.show()
-		self.load_services(treeview_services, treeview_services_system)
-		treeview_services.connect("row-activated", self.edit_service);
+		servicesWindow(self.gladefile, self.iconfile, self.services, self, combo)
 
 	def comboChanged(self, widget):
 		'''Change the selected service'''
@@ -434,7 +406,7 @@ class mintUploadWindow:
 class servicesWindow:
 	'''The preferences gui'''
 
-	def __init__(self, gladefile, iconfile, services, mainwin):
+	def __init__(self, gladefile, iconfile, services, mainwin, combo):
 		self.iconfile = iconfile
 		self.wTree = gtk.glade.XML(gladefile,"services_window")
 		self.services = services
