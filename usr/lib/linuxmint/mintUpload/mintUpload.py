@@ -437,7 +437,7 @@ class servicesWindow:
 		column1 = gtk.TreeViewColumn(_("System-wide services"), gtk.CellRendererText(), text=0)
 		self.treeview_services_system.append_column(column1)
 		self.treeview_services_system.show()
-		self.load_services(self.treeview_services, self.treeview_services_system)
+		self.load_services()
 
 	def close_window(self, widget, window, combo=None):
 		window.hide()
