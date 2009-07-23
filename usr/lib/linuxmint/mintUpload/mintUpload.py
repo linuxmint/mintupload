@@ -259,6 +259,7 @@ class mintUploadWindow:
 		self.progressbar = self.wTree.get_widget("progressbar")
 		CustomError.statusbar = self.statusbar
 
+		self.selected_service = {}
 		self.refresh()
 
 		#drag n drop
@@ -280,6 +281,10 @@ class mintUploadWindow:
 		for onefile in self.filenames:
 			self.filesize += os.path.getsize(onefile)
 		self.wTree.get_widget("txt_size").set_label(sizeStr(self.filesize))
+
+		if selected_service:
+			checker = gtkSpaceChecker(self.selected_service, self.filesize, self.statusbar, self.wTree)
+			checker.start()
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
@@ -525,8 +530,7 @@ class mintUploadWindow:
 		for service in self.services:
 			if service['name'] == selectedService:
 				self.selected_service = service
-				checker = gtkSpaceChecker(self.selected_service, self.filesize, self.statusbar, self.wTree)
-				checker.start()
+				self.refresh()
 				return True
 
 	def handle_drop(self, widget, context, x, y, selection, targetType, time ):
