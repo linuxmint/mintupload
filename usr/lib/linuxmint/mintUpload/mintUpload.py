@@ -582,9 +582,10 @@ class mintUploadWindow:
 class servicesWindow:
 	'''The preferences gui'''
 
-	def __init__(self, gladefile, iconfile):
+	def __init__(self, gladefile, iconfile, services):
 		self.iconfile = iconfile
 		self.wTree = gtk.glade.XML(gladefile,"services_window")
+		self.services = services
 
 		self.treeview_services = self.wTree.get_widget("treeview_services")
 		self.treeview_services_system = self.wTree.get_widget("treeview_services_system")
@@ -613,6 +614,35 @@ class servicesWindow:
 		self.treeview_services_system.append_column(column1)
 		self.treeview_services_system.show()
 		self.load_services(self.treeview_services, self.treeview_services_system)
+
+	def new_service_toolbutton(self, widget):
+		service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
+		sname = "New Service"
+		if os.path.exists(config_paths['user'] + sname):
+			sname += " 2"
+			while os.path.exists(config_paths['user'] + sname):
+				next = int(sname[-1:]) + 1
+				sname = sname[:-1] + str(next)
+		service.filename = config_paths['user'] + sname
+		service.write()
+
+		model = self.treeview_services.get_model()
+		iter = model.insert_before(None, None)
+		model.set_value(iter, 0, sname)
+		self.edit_service(model.get_path(iter), 0)
+
+	def copy_service_toolbutton(self, widget):
+		selection = self.treeview_services.get_selection()
+		(model, iter) = selection.get_selected()
+		sname = model.get_value(iter, 0)
+		for s in self.services:
+			if s['name'] == sname:
+				sname += " 2"
+				while os.path.exists(config_paths['user'] + sname):
+					next = int(sname[-1:]) + 1
+					sname = sname[:-1] + str(next)
+				s.copy(config_paths['user'] + sname)
+				self.load_services()
 
 
 
