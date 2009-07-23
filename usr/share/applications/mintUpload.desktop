@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=File Uploader
+Comment=Upload files to the internet
+Exec=mintupload
+Icon=/usr/lib/linuxmint/mintUpload/icon.png
+Terminal=false
+Type=Application
+Encoding=UTF-8
+Categories=Application;Utility;GTK
+StartupNotify=false
