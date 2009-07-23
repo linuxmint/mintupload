@@ -282,7 +282,7 @@ class mintUploadWindow:
 			self.filesize += os.path.getsize(onefile)
 		self.wTree.get_widget("txt_size").set_label(sizeStr(self.filesize))
 
-		if selected_service:
+		if self.selected_service:
 			checker = gtkSpaceChecker(self.selected_service, self.filesize, self.statusbar, self.wTree)
 			checker.start()
 
