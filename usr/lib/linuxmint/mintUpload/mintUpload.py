@@ -424,7 +424,7 @@ class servicesWindow:
 		self.wTree.get_widget("toolbutton_add").connect("clicked", self.new_service_toolbutton)
 		self.wTree.get_widget("toolbutton_copy").connect("clicked", self.copy_service_toolbutton)
 		self.wTree.get_widget("toolbutton_edit").connect("clicked", self.edit_service_toolbutton)
-		self.wTree.get_widget("toolbutton_remove").connect("clicked", self.remove_service)
+		self.wTree.get_widget("toolbutton_remove").connect("clicked", self.remove_service_toolbutton)
 
 		renderer = gtk.CellRendererText()
 		renderer.connect("edited", self.move_service)
@@ -478,6 +478,16 @@ class servicesWindow:
 		selection = self.treeview_services.get_selection()
 		(model, iter) = selection.get_selected()
 		self.edit_service(self.treeview_services, model.get_path(iter))
+
+	def remove_service_toolbutton(self, widget):
+		(model, iter) = self.treeview_services.get_selection().get_selected()
+		if (iter != None):
+			service = model.get_value(iter, 0)
+			for s in self.services:
+				if s['name'] == service:
+					s.remove()
+					self.services.remove(s)
+			model.remove(iter)
 
 	def edit_service(self, widget, path):
 		model = widget.get_model()
@@ -598,16 +608,6 @@ class servicesWindow:
 
 		del usermodel
 		del sysmodel
-
-	def remove_service(self, widget):
-		(model, iter) = self.treeview_services.get_selection().get_selected()
-		if (iter != None):
-			service = model.get_value(iter, 0)
-			for s in self.services:
-				if s['name'] == service:
-					s.remove()
-					self.services.remove(s)
-			model.remove(iter)
 
 	def move_service(self, renderer, path, new_text):
 		old_text = renderer.get_property('text')
