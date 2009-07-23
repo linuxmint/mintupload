@@ -407,16 +407,6 @@ class mintUploadWindow:
 				self.load_services(treeview_services, treeview_services_system)
 				return
 
-	def remove_service(self, widget, treeview_services):
-		(model, iter) = treeview_services.get_selection().get_selected()
-		if (iter != None):
-			service = model.get_value(iter, 0)
-			for s in self.services:
-				if s['name'] == service:
-					s.remove()
-					self.services.remove(s)
-			model.remove(iter)
-
 	def comboChanged(self, widget):
 		'''Change the selected service'''
 
@@ -643,6 +633,16 @@ class servicesWindow:
 
 		del usermodel
 		del sysmodel
+
+	def remove_service(self, widget):
+		(model, iter) = self.treeview_services.get_selection().get_selected()
+		if (iter != None):
+			service = model.get_value(iter, 0)
+			for s in self.services:
+				if s['name'] == service:
+					s.remove()
+					self.services.remove(s)
+			model.remove(iter)
 
 
 
