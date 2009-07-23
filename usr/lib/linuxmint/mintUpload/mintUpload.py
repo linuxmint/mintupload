@@ -314,7 +314,7 @@ class mintUploadWindow:
 		dlg.set_program_name("mintUpload")
 		dlg.set_comments(_("File uploader for Linux Mint"))
 		try:
-		    h = open('/usr/lib/linuxmint/mintSystem/GPL.txt','r')
+		    h = open('/usr/share/common-licenses/GPL')
 		    s = h.readlines()
 		    gpl = ""
 		    for line in s:
