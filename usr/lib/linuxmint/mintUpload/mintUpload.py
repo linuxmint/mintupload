@@ -394,11 +394,6 @@ class mintUploadWindow:
 		self.load_services(treeview_services, treeview_services_system)
 		treeview_services.connect("row-activated", self.edit_service);
 
-	def close_window(self, widget, window, combo=None):
-		window.hide()
-		if (combo != None):
-			self.reload_services(combo)
-
 	def comboChanged(self, widget):
 		'''Change the selected service'''
 
@@ -439,10 +434,11 @@ class mintUploadWindow:
 class servicesWindow:
 	'''The preferences gui'''
 
-	def __init__(self, gladefile, iconfile, services):
+	def __init__(self, gladefile, iconfile, services, mainwin):
 		self.iconfile = iconfile
 		self.wTree = gtk.glade.XML(gladefile,"services_window")
 		self.services = services
+		self.mainwin = mainwin
 
 		self.treeview_services = self.wTree.get_widget("treeview_services")
 		self.treeview_services_system = self.wTree.get_widget("treeview_services_system")
@@ -643,6 +639,11 @@ class servicesWindow:
 				s.move(config_paths['user'] + new_text)
 				self.load_services()
 				return
+
+	def close_window(self, widget, window, combo=None):
+		window.hide()
+		if (combo != None):
+			self.mainwin.reload_services(combo)
 
 
 
