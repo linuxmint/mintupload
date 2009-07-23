@@ -212,8 +212,8 @@ class gtkUploader(mintUploader):
 class mintUploadWindow:
 	"""This is the main class for the application"""
 
-	def __init__(self, filename):
-		self.filename = filename
+	def __init__(self, filenames):
+		self.filenames = filenames
 		self.iconfile = ICONFILE
 
 		# Set the Glade file
@@ -277,13 +277,6 @@ class mintUploadWindow:
 		self.wTree.get_widget("upload_button").connect("clicked", self.upload)
 		self.wTree.get_widget("cancel_button").connect("clicked", gtk.main_quit)
 
-		# Print the name of the file in the GUI
-		self.wTree.get_widget("txt_file").set_label(self.filename)
-
-		# Calculate the size of the file
-		self.filesize = os.path.getsize(self.filename)
-		self.wTree.get_widget("txt_size").set_label(sizeStr(self.filesize))
-
 		self.statusbar = self.wTree.get_widget("statusbar")
 		self.progressbar = self.wTree.get_widget("progressbar")
 
@@ -302,6 +295,33 @@ class mintUploadWindow:
 		if len(self.services) == 1:
 			self.wTree.get_widget("combo").set_active(0)
 			self.comboChanged(None)
+
+		self.selected_service = {}
+		self.refresh()
+
+		#drag n drop
+		self.wTree.get_widget("main_window").connect( "drag_data_received", self.handle_drop )
+		toButton = [ ( "text/uri-list", 0, 80 ) ]
+		self.wTree.get_widget("main_window").drag_dest_set( gtk.DEST_DEFAULT_MOTION |gtk.DEST_DEFAULT_HIGHLIGHT |gtk.DEST_DEFAULT_DROP, toButton, gtk.gdk.ACTION_COPY )
+
+	def refresh(self):
+		'''updates the GUI'''
+		# Print the name of the file in the GUI
+		labeltext = ""
+		for onefile in self.filenames:
+			labeltext += onefile + "\n"
+		labeltext = labeltext[:-1] #remove last \n
+		self.wTree.get_widget("txt_file").set_label(labeltext)
+
+		# Calculate the size of the file
+		self.filesize = 0
+		for onefile in self.filenames:
+			self.filesize += os.path.getsize(onefile)
+		self.wTree.get_widget("txt_size").set_label(sizeStr(self.filesize))
+
+		if self.selected_service and self.filenames:
+			checker = gtkSpaceChecker(self.selected_service, self.filesize, self.statusbar, self.wTree)
+			checker.start()
 
 	def reload_services(self, combo):
 		model = gtk.TreeStore(str)
@@ -565,32 +585,37 @@ class mintUploadWindow:
 		for service in self.services:
 			if service['name'] == selectedService:
 				self.selected_service = service
-				checker = gtkSpaceChecker(self.selected_service, self.filesize, self.statusbar, self.wTree)
-				checker.start()
+				self.refresh()
 				return True
+
+	def handle_drop(self, widget, context, x, y, selection, targetType, time ):
+		'''Handles the drop of files in the mintUpload window'''
+		from urlparse import urlparse
+		for tmp in selection.data.splitlines():
+			(scheme, netloc, path, params, query, fragment) = urlparse(tmp)
+			if not path in self.filenames:
+				self.filenames.append(path)
+			self.refresh()
 
 	def upload(self, widget):
 		'''Start the upload process'''
 
-		uploader = gtkUploader(self.selected_service, self.filename, self.progressbar, self.statusbar, self.wTree)
-		uploader.start()
+		for onefile in self.filenames:
+			uploader = gtkUploader(self.selected_service, onefile, self.progressbar, self.statusbar, self.wTree)
+			uploader.start()
+			uploader.join()
 		return True
 
 
 
 if __name__ == "__main__":
-	if len(sys.argv) < 2:
-		print "need a file to upload!"
-		exit(1)
-	if len(sys.argv) > 2:
-		print "too many files! using only the first!"
-	if sys.argv[1] == "--version":
+	if len(sys.argv) >=2 and sys.argv[1] == "--version":
 		print "mintupload: %s" % __version__
 		exit(0)
-	if sys.argv[1] in ["-h","--help"]:
+	if len(sys.argv) >=2 and sys.argv[1] in ["-h","--help"]:
 		print """Usage: mintupload.py path/to/filename"""
 		exit(0)
 
-	filename = sys.argv[1]
-	mainwin = mintUploadWindow(filename)
+	filenames = sys.argv[1:]
+	mainwin = mintUploadWindow(filenames)
 	gtk.main()
