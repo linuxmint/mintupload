@@ -437,14 +437,14 @@ class servicesWindow:
 		column1 = gtk.TreeViewColumn(_("System-wide services"), gtk.CellRendererText(), text=0)
 		self.treeview_services_system.append_column(column1)
 		self.treeview_services_system.show()
-		self.load_services()
+		self.reload_services()
 
 	def close_window(self, widget, window, combo=None):
 		window.hide()
 		if (combo != None):
-			self.mainwin.reload_services(combo)
+			self.mainwin.rereload_services(combo)
 
-	def load_services(self):
+	def reload_services(self):
 		usermodel = gtk.TreeStore(str)
 		usermodel.set_sort_column_id( 0, gtk.SORT_ASCENDING )
 		sysmodel = gtk.TreeStore(str)
@@ -469,7 +469,7 @@ class servicesWindow:
 		for s in self.services:
 			if s['name'] == old_text:
 				s.move(config_paths['user'] + new_text)
-				self.load_services()
+				self.reload_services()
 				return
 
 	def new_service_toolbutton(self, widget):
@@ -499,7 +499,7 @@ class servicesWindow:
 					next = int(sname[-1:]) + 1
 					sname = sname[:-1] + str(next)
 				s.copy(config_paths['user'] + sname)
-				self.load_services()
+				self.reload_services()
 
 	def edit_service_toolbutton(self, widget):
 		selection = self.treeview_services.get_selection()
