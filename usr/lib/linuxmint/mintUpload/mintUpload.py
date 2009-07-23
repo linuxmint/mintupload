@@ -316,7 +316,7 @@ class mintUploadWindow:
 		dlg.set_title(_("About") + " - mintUpload")
 		dlg.set_version(__version__)
 		dlg.set_program_name("mintUpload")
-		dlg.set_comments(_("File uploader for Linux Mint"))
+		dlg.set_comments(_("File Uploader"))
 		try:
 		    h = open('/usr/share/common-licenses/GPL')
 		    s = h.readlines()
@@ -347,7 +347,7 @@ class mintUploadWindow:
 		treeview_services = wTree.get_widget("treeview_services")
 		treeview_services_system = wTree.get_widget("treeview_services_system")
 
-		wTree.get_widget("services_window").set_title(_("Services") + " - mintUpload")
+		wTree.get_widget("services_window").set_title(_("Services") + " - " + _("File Uploader"))
 		wTree.get_widget("services_window").set_icon_from_file(self.iconfile)
 		wTree.get_widget("services_window").show()
 
@@ -447,7 +447,7 @@ class mintUploadWindow:
 		file = config_paths['user'] + sname
 
 		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
-		wTree.get_widget("dialog_edit_service").set_title(_("Edit service"))
+		wTree.get_widget("dialog_edit_service").set_title(_("Edit service") + " - " + _("File Uploader"))
 		wTree.get_widget("dialog_edit_service").set_icon_from_file(self.iconfile)
 		wTree.get_widget("dialog_edit_service").show()
 		wTree.get_widget("button_ok").connect("clicked", self.modify_service, wTree.get_widget("dialog_edit_service"), wTree, file)
