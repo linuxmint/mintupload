@@ -427,11 +427,6 @@ class mintUploadWindow:
 				self.load_services(treeview_services, treeview_services_system)
 				return
 
-	def edit_service_toolbutton(self, widget, treeview_services):
-		selection = treeview_services.get_selection()
-		(model, iter) = selection.get_selected()
-		self.edit_service(treeview_services, model.get_path(iter), 0)
-
 	def edit_service(self,widget, path, column):
 		model=widget.get_model()
 		iter = model.get_iter(path)
@@ -643,6 +638,11 @@ class servicesWindow:
 					sname = sname[:-1] + str(next)
 				s.copy(config_paths['user'] + sname)
 				self.load_services()
+
+	def edit_service_toolbutton(self, widget):
+		selection = self.treeview_services.get_selection()
+		(model, iter) = selection.get_selected()
+		self.edit_service(model.get_path(iter), 0)
 
 
 
