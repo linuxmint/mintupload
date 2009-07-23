@@ -218,7 +218,7 @@ class mintUploader(threading.Thread):
 			sftp = paramiko.SFTPClient.from_transport(transport)
 			self.progress(_("Uploading the file..."))
 			self.pct(0)
-			sftp.put(self.file, path + self.name)
+			sftp.put(self.file, path + self.name, self.pct)
 			self.pct(1)
 
 		finally:
@@ -262,7 +262,9 @@ class mintUploader(threading.Thread):
 	def progress(self, message):
 		print message
 
-	def pct(self, pct):
+	def pct(self, so_far, total=None):
+		if not total: total = self.filesize
+		pct = float(so_far)/total
 		pct = int(pct*100)
 		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(self.so_far) + "     ")
 		if pct == 100: #if finished
@@ -281,7 +283,7 @@ class mintUploader(threading.Thread):
 
 	def asciicallback(self, buffer):
 		self.so_far = self.so_far+len(buffer)-1
-		self.pct(float(self.so_far)/self.filesize)
+		self.pct(self.so_far)
 		return
 
 

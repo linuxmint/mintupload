@@ -201,8 +201,10 @@ class gtkUploader(mintUploader):
 		else:
 			self.statusbar.push(context_id, message)
 
-	def pct(self, pct):
-		mintUploader.pct(self, pct)
+	def pct(self, so_far, total=None):
+		if not total: total = self.filesize
+		mintUploader.pct(self, so_far, total)
+		pct = float(so_far)/total
 		pctStr = str(int(pct * 100))
 		self.progressbar.set_fraction(pct)
 		self.progressbar.set_text(pctStr + "%")
