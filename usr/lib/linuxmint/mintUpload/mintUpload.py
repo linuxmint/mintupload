@@ -523,10 +523,10 @@ class servicesWindow:
 		sname = model.get_value(iter, 0)
 		file = config_paths['user'] + sname
 
-		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_window")
-		wTree.get_widget("dialog_edit_window").set_title(_("Edit service") + " - " + _("File Uploader"))
-		wTree.get_widget("dialog_edit_window").set_icon_from_file(self.iconfile)
-		wTree.get_widget("dialog_edit_window").show()
+		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
+		wTree.get_widget("dialog_edit_service").set_title(_("Edit service") + " - " + _("File Uploader"))
+		wTree.get_widget("dialog_edit_service").set_icon_from_file(self.iconfile)
+		wTree.get_widget("dialog_edit_service").show()
 		wTree.get_widget("button_ok").connect("clicked", self.edit, wTree, file)
 		wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree)
 
@@ -615,7 +615,7 @@ class servicesWindow:
 			s.write()
 		except Exception, detail:
 			print detail
-		wTree.get_widget("dialog_edit_window").hide()
+		wTree.get_widget("dialog_edit_service").hide()
 
 
 
