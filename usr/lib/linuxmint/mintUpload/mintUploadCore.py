@@ -219,7 +219,6 @@ class mintUploader(threading.Thread):
 			self.progress(_("Uploading the file..."))
 			self.pct(0)
 			sftp.put(self.file, path + self.name, self.pct)
-			self.pct(self.filesize)
 
 		finally:
 			# Close any open connections
