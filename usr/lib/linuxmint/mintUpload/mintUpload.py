@@ -420,13 +420,13 @@ class servicesWindow:
 
 		self.wTree.get_widget("button_close").connect("clicked", self.close_window, self.wTree.get_widget("services_window"), combo)
 		self.wTree.get_widget("services_window").connect("destroy", self.close_window, self.wTree.get_widget("services_window"), combo)
-		self.wTree.get_widget("toolbutton_add").connect("clicked", self.new_service_toolbutton)
-		self.wTree.get_widget("toolbutton_copy").connect("clicked", self.copy_service_toolbutton)
-		self.wTree.get_widget("toolbutton_edit").connect("clicked", self.edit_service_toolbutton)
-		self.wTree.get_widget("toolbutton_remove").connect("clicked", self.remove_service_toolbutton)
+		self.wTree.get_widget("toolbutton_add").connect("clicked", self.button_new)
+		self.wTree.get_widget("toolbutton_copy").connect("clicked", self.button_copy)
+		self.wTree.get_widget("toolbutton_edit").connect("clicked", self.button_edit)
+		self.wTree.get_widget("toolbutton_remove").connect("clicked", self.button_remove)
 
 		renderer = gtk.CellRendererText()
-		renderer.connect("edited", self.move_service)
+		renderer.connect("edited", self.move)
 		renderer.set_property("editable", True)
 
 		column1 = gtk.TreeViewColumn(_("Services"), renderer, text=0)
@@ -464,7 +464,7 @@ class servicesWindow:
 		del usermodel
 		del sysmodel
 
-	def move_service(self, renderer, path, new_text):
+	def move(self, renderer, path, new_text):
 		old_text = renderer.get_property('text')
 		for s in self.services:
 			if s['name'] == old_text:
@@ -472,7 +472,7 @@ class servicesWindow:
 				self.reload_services()
 				return
 
-	def new_service_toolbutton(self, widget):
+	def button_new(self, widget):
 		service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
 		sname = "New Service"
 		if os.path.exists(config_paths['user'] + sname):
@@ -486,9 +486,9 @@ class servicesWindow:
 		model = self.treeview_services.get_model()
 		iter = model.insert_before(None, None)
 		model.set_value(iter, 0, sname)
-		self.edit_service(self.treeview_services, model.get_path(iter))
+		self.edit_window(self.treeview_services, model.get_path(iter))
 
-	def copy_service_toolbutton(self, widget):
+	def button_copy(self, widget):
 		selection = self.treeview_services.get_selection()
 		(model, iter) = selection.get_selected()
 		sname = model.get_value(iter, 0)
@@ -501,12 +501,12 @@ class servicesWindow:
 				s.copy(config_paths['user'] + sname)
 				self.reload_services()
 
-	def edit_service_toolbutton(self, widget):
+	def button_edit(self, widget):
 		selection = self.treeview_services.get_selection()
 		(model, iter) = selection.get_selected()
-		self.edit_service(self.treeview_services, model.get_path(iter))
+		self.edit_window(self.treeview_services, model.get_path(iter))
 
-	def remove_service_toolbutton(self, widget):
+	def button_remove(self, widget):
 		(model, iter) = self.treeview_services.get_selection().get_selected()
 		if (iter != None):
 			service = model.get_value(iter, 0)
@@ -516,18 +516,18 @@ class servicesWindow:
 					self.services.remove(s)
 			model.remove(iter)
 
-	def edit_service(self, widget, path):
+	def edit_window(self, widget, path):
 		model = widget.get_model()
 		iter = model.get_iter(path)
 		sname = model.get_value(iter, 0)
 		file = config_paths['user'] + sname
 
-		self.wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
-		self.wTree.get_widget("dialog_edit_service").set_title(_("Edit service") + " - " + _("File Uploader"))
-		self.wTree.get_widget("dialog_edit_service").set_icon_from_file(self.iconfile)
-		self.wTree.get_widget("dialog_edit_service").show()
-		self.wTree.get_widget("button_ok").connect("clicked", self.modify_service, self.wTree.get_widget("dialog_edit_service"), file)
-		self.wTree.get_widget("button_cancel").connect("clicked", self.close_window, self.wTree.get_widget("dialog_edit_service"))
+		self.wTree = gtk.glade.XML(self.gladefile, "dialog_edit_window")
+		self.wTree.get_widget("dialog_edit_window").set_title(_("Edit service") + " - " + _("File Uploader"))
+		self.wTree.get_widget("dialog_edit_window").set_icon_from_file(self.iconfile)
+		self.wTree.get_widget("dialog_edit_window").show()
+		self.wTree.get_widget("button_ok").connect("clicked", self.edit, self.wTree.get_widget("dialog_edit_window"), file)
+		self.wTree.get_widget("button_cancel").connect("clicked", self.close_window, self.wTree.get_widget("dialog_edit_window"))
 
 		#i18n
 		self.wTree.get_widget("lbl_type").set_label(_("Type:"))
@@ -593,7 +593,7 @@ class servicesWindow:
 		except Exception, detail:
 			print detail
 
-	def modify_service(self, widget, window, file):
+	def edit(self, widget, window, file):
 		try:
 			model = self.wTree.get_widget("combo_type").get_model()
 			iter = 	self.wTree.get_widget("combo_type").get_active_iter()
