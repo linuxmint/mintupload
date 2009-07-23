@@ -427,7 +427,7 @@ class servicesWindow:
 		self.wTree.get_widget("toolbutton_remove").connect("clicked", self.remove_service)
 
 		renderer = gtk.CellRendererText()
-		renderer.connect("edited", self.move_service, treeview_services, treeview_services_system)
+		renderer.connect("edited", self.move_service)
 		renderer.set_property("editable", True)
 
 		column1 = gtk.TreeViewColumn(_("Services"), renderer, text=0)
