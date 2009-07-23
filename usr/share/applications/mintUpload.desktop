@@ -1,6 +1,14 @@
 [Desktop Entry]
 Name=File Uploader
+Name[it]=File uploader
+Name[hu]=Fájlfeltöltő
+Name[cz]=Nahrávač souborů
+Name[de]=Dateiupload
 Comment=Upload files to the internet
+Comment[it]=Carica file in internet
+Comment[hu]=Fájlok feltöltése az internetre
+Comment[cz]=Nahrát soubory na internet
+Comment[de]=Dateien ins Internet stellen
 Exec=mintupload
 Icon=/usr/lib/linuxmint/mintUpload/icon.png
 Terminal=false
