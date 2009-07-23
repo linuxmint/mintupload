@@ -364,7 +364,7 @@ class mintUploadWindow:
 		dlg.show()
 
 	def open_services(self, widget, combo):
-		servicesWindow(self.gladefile, self.iconfile, self.services, self, combo)
+		servicesWindow(self.gladefile, self.iconfile, self, combo)
 
 	def comboChanged(self, widget):
 		'''Change the selected service'''
@@ -406,10 +406,9 @@ class mintUploadWindow:
 class servicesWindow:
 	'''The preferences gui'''
 
-	def __init__(self, gladefile, iconfile, services, mainwin, combo):
+	def __init__(self, gladefile, iconfile, mainwin, combo):
 		self.iconfile = iconfile
 		self.wTree = gtk.glade.XML(gladefile,"services_window")
-		self.services = services
 		self.mainwin = mainwin
 
 		self.treeview_services = self.wTree.get_widget("treeview_services")
