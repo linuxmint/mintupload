@@ -1,3 +1,14 @@
+mintupload (3.7) jaunty; urgency=low
+
+  * multiple file upload
+  * sftp now uses progress bar
+  * progress bar now turns into url on completion
+  * removed branding
+  * removed dependency on mintsystem
+  * misc GUI fixes
+
+ -- Philip Morrell <mintupload.emorrp1@mamber.net>  Thu,  23 Jul 2009 19:30:55 +0100
+
 mintupload (3.6.1) jaunty; urgency=low
 
   * fixes spaces in filename affecting url output
