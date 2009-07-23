@@ -222,6 +222,7 @@ class mintUploadWindow:
 
 		self.wTree.get_widget("main_window").connect("destroy", gtk.main_quit)
 		self.wTree.get_widget("main_window").set_icon_from_file(self.iconfile)
+		self.wTree.get_widget("main_window").set_title(_("File Uploader"))
 
 		# i18n
 		self.wTree.get_widget("label2").set_label("<b>" + _("Upload service") + "</b>")

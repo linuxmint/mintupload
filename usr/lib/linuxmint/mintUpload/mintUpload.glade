@@ -4,7 +4,6 @@
   <!-- interface-naming-policy toplevel-contextual -->
   <widget class="GtkWindow" id="main_window">
     <property name="visible">True</property>
-    <property name="title" translatable="yes">mintUpload</property>
     <property name="window_position">center</property>
     <child>
       <widget class="GtkVBox" id="vbox1">
