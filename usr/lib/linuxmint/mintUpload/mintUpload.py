@@ -454,7 +454,7 @@ class servicesWindow:
 		model = self.treeview_services.get_model()
 		iter = model.insert_before(None, None)
 		model.set_value(iter, 0, sname)
-		self.edit_service(self.treeview_services, model.get_path(iter), 0)
+		self.edit_service(self.treeview_services, model.get_path(iter))
 
 	def copy_service_toolbutton(self, widget):
 		selection = self.treeview_services.get_selection()
@@ -472,9 +472,9 @@ class servicesWindow:
 	def edit_service_toolbutton(self, widget):
 		selection = self.treeview_services.get_selection()
 		(model, iter) = selection.get_selected()
-		self.edit_service(self.treeview_services, model.get_path(iter), 0)
+		self.edit_service(self.treeview_services, model.get_path(iter))
 
-	def edit_service(self, widget, path, column):
+	def edit_service(self, widget, path):
 		model = widget.get_model()
 		iter = model.get_iter(path)
 		sname = model.get_value(iter, 0)
