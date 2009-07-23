@@ -1,12 +1,12 @@
 mintupload (3.7) jaunty; urgency=low
 
   * multiple file upload with drag and drop
+  * adding Menu launcher
+  * simplified adding/copying/renaming a new service
   * sftp now uses progress bar
-  * progress bar now turns into url on completion
+  * service autoselect on launch
   * removed branding
   * removed dependency on mintsystem
-  * misc GUI fixes
-  * adding Menu launcher
 
  -- Philip Morrell <mintupload.emorrp1@mamber.net>  Thu,  23 Jul 2009 19:30:55 +0100
 
