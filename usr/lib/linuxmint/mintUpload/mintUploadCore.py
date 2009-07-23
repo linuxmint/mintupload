@@ -142,7 +142,6 @@ class mintUploader(threading.Thread):
 		self.file = file
 		self.name = os.path.basename(self.file)
 		self.filesize = os.path.getsize(self.file)
-		self.so_far = 0
 
 		# Switch to required connect function, depending on service
 		self.upload = {
@@ -176,6 +175,7 @@ class mintUploader(threading.Thread):
 			f = open(self.file, "rb")
 			self.progress(_("Uploading the file..."))
 			self.pct(0)
+			self.so_far = 0
 			ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.asciicallback)
 			self.pct(1)
 
@@ -266,7 +266,7 @@ class mintUploader(threading.Thread):
 		if not total: total = self.filesize
 		pct = float(so_far)/total
 		pct = int(pct*100)
-		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(self.so_far) + "     ")
+		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(so_far) + "     ")
 		if pct == 100: #if finished
 			sys.stdout.write("\n")
 			# Print URL
@@ -275,7 +275,7 @@ class mintUploader(threading.Thread):
 
 			n = config['notification']
 			# If nofications are enabled AND the file is minimal x byte in size...
-			if n['enable'] == "True" and self.so_far >= int(n['min_filesize']):
+			if n['enable'] == "True" and so_far >= int(n['min_filesize']):
 				# If when_focused is true OR window has no focus
 				if n['when_focused'] == "True" or not self.wTree.get_widget("main_window").has_toplevel_focus():
 					mintNotifier().notify(_("File uploaded successfully."))
