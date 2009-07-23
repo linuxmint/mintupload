@@ -7,6 +7,6 @@ Standards-Version: 3.7.2
 
 Package: mintupload
 Architecture: all
-Depends: python (>= 2.5), python (<< 3), python-gtk2, python-glade2, python-pexpect, python-paramiko
+Depends: python (>= 2.5), python (<< 3), python-paramiko (>= 1.7.4), python-gtk2, python-glade2, python-pexpect
 Description: Uploads files on the Internet
  mintUpload allow you to upload files on the Internet. This makes it easier to share or send big files which would not fit in an email. 
