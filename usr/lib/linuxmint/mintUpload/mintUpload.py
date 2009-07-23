@@ -440,6 +440,11 @@ class servicesWindow:
 		self.treeview_services_system.show()
 		self.load_services(self.treeview_services, self.treeview_services_system)
 
+	def close_window(self, widget, window, combo=None):
+		window.hide()
+		if (combo != None):
+			self.mainwin.reload_services(combo)
+
 	def new_service_toolbutton(self, widget):
 		service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
 		sname = "New Service"
@@ -611,11 +616,6 @@ class servicesWindow:
 				s.move(config_paths['user'] + new_text)
 				self.load_services()
 				return
-
-	def close_window(self, widget, window, combo=None):
-		window.hide()
-		if (combo != None):
-			self.mainwin.reload_services(combo)
 
 
 
