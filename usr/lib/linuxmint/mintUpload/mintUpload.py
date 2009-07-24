@@ -240,7 +240,7 @@ class mintUploadWindow:
 		self.wTree.get_widget("lbl_url").set_label(_("URL:"))
 		self.wTree.get_widget("label1").set_label(_("_Upload"))
 
-		self.create_menubar()
+		self.create_menubar(self.wTree.get_widget("main_window"), self.wTree.get_widget("menubar1"))
 		self.reload_services(self.wTree.get_widget("combo"))
 
 		cell = gtk.CellRendererText()
@@ -277,21 +277,31 @@ class mintUploadWindow:
 		toButton = [ ( "text/uri-list", 0, 80 ) ]
 		self.wTree.get_widget("main_window").drag_dest_set( gtk.DEST_DEFAULT_MOTION |gtk.DEST_DEFAULT_HIGHLIGHT |gtk.DEST_DEFAULT_DROP, toButton, gtk.gdk.ACTION_COPY )
 	
-	def create_menubar(self):
+	def create_menubar(self, window, menubar):
+		# Setup shortcuts
+		agr = gtk.AccelGroup()
+		window.add_accel_group(agr)
+
 		# File menu
-		fileMenu = gtk.MenuItem(_("_File"))
-		fileSubmenu = gtk.Menu()
-		fileMenu.set_submenu(fileSubmenu)
+		filemenu = gtk.Menu()
+		filem = gtk.MenuItem(_("_File"))
+		filem.set_submenu(filemenu)
 
-		openMenuItem = gtk.ImageMenuItem(gtk.STOCK_OPEN)
-		openMenuItem.get_child().set_text(_("Open..."))
-		openMenuItem.connect("activate", self.menu_file_open)
-		fileSubmenu.append(openMenuItem)
+		open = gtk.ImageMenuItem(gtk.STOCK_OPEN, agr)
+		open.get_child().set_text(_("_Open..."))
+		key, mod = gtk.accelerator_parse(_("O"))
+		open.add_accelerator("activate", agr, key, mod, gtk.ACCEL_VISIBLE)
+		open.connect("activate", self.menu_file_open)
+		filemenu.append(open)
 
-		closeMenuItem = gtk.ImageMenuItem(gtk.STOCK_CLOSE)
-		closeMenuItem.get_child().set_text(_("Close"))
-		closeMenuItem.connect("activate", gtk.main_quit)
-		fileSubmenu.append(closeMenuItem)
+		quit = gtk.ImageMenuItem(gtk.STOCK_QUIT, agr)
+		quit.get_child().set_text(_("_Quit"))
+		key, mod = gtk.accelerator_parse(_("Q"))
+		quit.add_accelerator("activate", agr, key, mod, gtk.ACCEL_VISIBLE)
+		quit.connect("activate", gtk.main_quit)
+		filemenu.append(quit)
+
+		menubar.append(filem)
 
 		# Edit menu
 		editMenu = gtk.MenuItem(_("_Edit"))
@@ -302,6 +312,8 @@ class mintUploadWindow:
 		prefsMenuItem.connect("activate", self.menu_edit_services, self.wTree.get_widget("combo"))
 		editSubmenu.append(prefsMenuItem)
 
+		menubar.append(editMenu)
+
 		# Help menu
 		helpMenu = gtk.MenuItem(_("_Help"))
 		helpSubmenu = gtk.Menu()
@@ -311,10 +323,8 @@ class mintUploadWindow:
 		aboutMenuItem.connect("activate", self.menu_help_about)
 		helpSubmenu.append(aboutMenuItem)
 
-		self.wTree.get_widget("menubar1").append(fileMenu)
-		self.wTree.get_widget("menubar1").append(editMenu)
-		self.wTree.get_widget("menubar1").append(helpMenu)
-		self.wTree.get_widget("menubar1").show_all()
+		menubar.append(helpMenu)
+		menubar.show_all()
 
 	def refresh(self):
 		'''updates the GUI'''
