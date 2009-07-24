@@ -426,9 +426,13 @@ class servicesWindow:
 		self.wTree.get_widget("button_close").connect("clicked", self.close_window, self.wTree.get_widget("services_window"), combo)
 		self.wTree.get_widget("services_window").connect("destroy", self.close_window, self.wTree.get_widget("services_window"), combo)
 		self.wTree.get_widget("toolbutton_add").connect("clicked", self.button_new)
+		self.wTree.get_widget("toolbutton_add").set_tooltip_text(_("Create a new service"))
 		self.wTree.get_widget("toolbutton_copy").connect("clicked", self.button_copy)
+		self.wTree.get_widget("toolbutton_copy").set_tooltip_text(_("Duplicate the selected service"))
 		self.wTree.get_widget("toolbutton_edit").connect("clicked", self.button_edit)
+		self.wTree.get_widget("toolbutton_edit").set_tooltip_text(_("Edit the service's properties"))
 		self.wTree.get_widget("toolbutton_remove").connect("clicked", self.button_remove)
+		self.wTree.get_widget("toolbutton_remove").set_tooltip_text(_("Permanently remove the selected service"))
 
 		renderer = gtk.CellRendererText()
 		renderer.connect("edited", self.move)
