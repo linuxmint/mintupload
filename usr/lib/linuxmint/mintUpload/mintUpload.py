@@ -288,14 +288,14 @@ class mintUploadWindow:
 		filem.set_submenu(filemenu)
 
 		open = gtk.ImageMenuItem(gtk.STOCK_OPEN, agr)
-		open.get_child().set_text(_("_Open..."))
+		open.get_child().set_text(_("Open..."))
 		key, mod = gtk.accelerator_parse(_("O"))
 		open.add_accelerator("activate", agr, key, mod, gtk.ACCEL_VISIBLE)
 		open.connect("activate", self.menu_file_open)
 		filemenu.append(open)
 
 		quit = gtk.ImageMenuItem(gtk.STOCK_QUIT, agr)
-		quit.get_child().set_text(_("_Quit"))
+		quit.get_child().set_text(_("Quit"))
 		key, mod = gtk.accelerator_parse(_("Q"))
 		quit.add_accelerator("activate", agr, key, mod, gtk.ACCEL_VISIBLE)
 		quit.connect("activate", gtk.main_quit)
@@ -308,7 +308,7 @@ class mintUploadWindow:
 		editSubmenu = gtk.Menu()
 		editMenu.set_submenu(editSubmenu)
 		prefsMenuItem = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
-		prefsMenuItem.get_child().set_text(_("_Services"))
+		prefsMenuItem.get_child().set_text(_("Services"))
 		prefsMenuItem.connect("activate", self.menu_edit_services, self.wTree.get_widget("combo"))
 		editSubmenu.append(prefsMenuItem)
 
@@ -319,7 +319,7 @@ class mintUploadWindow:
 		helpSubmenu = gtk.Menu()
 		helpMenu.set_submenu(helpSubmenu)
 		aboutMenuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
-		aboutMenuItem.get_child().set_text(_("_About"))
+		aboutMenuItem.get_child().set_text(_("About"))
 		aboutMenuItem.connect("activate", self.menu_help_about)
 		helpSubmenu.append(aboutMenuItem)
 
