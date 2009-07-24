@@ -585,8 +585,8 @@ class servicesWindow:
 		wTree.get_widget("lbl_timestamp").set_label(_("Timestamp:"))
 		wTree.get_widget("lbl_path").set_label(_("Path:"))
 
-		wTree.get_widget("lbl_hostname").set_tooltip_text(_("Hostname or IP address, default: mint-space.com"))
-		wTree.get_widget("txt_hostname").set_tooltip_text(_("Hostname or IP address, default: mint-space.com"))
+		wTree.get_widget("lbl_hostname").set_tooltip_text(_("Hostname or IP address, default: ") + defaults['host'])
+		wTree.get_widget("txt_hostname").set_tooltip_text(_("Hostname or IP address, default: ") + defaults['host'])
 
 		wTree.get_widget("lbl_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
 		wTree.get_widget("txt_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
