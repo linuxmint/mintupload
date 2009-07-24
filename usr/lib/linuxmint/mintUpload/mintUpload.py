@@ -281,7 +281,6 @@ class mintUploadWindow:
 
 		self.wTree.get_widget("combo").connect("changed", self.comboChanged)
 		self.wTree.get_widget("upload_button").connect("clicked", self.upload)
-		self.wTree.get_widget("cancel_button").connect("clicked", gtk.main_quit)
 
 		self.statusbar = self.wTree.get_widget("statusbar")
 		self.progressbar = self.wTree.get_widget("progressbar")
