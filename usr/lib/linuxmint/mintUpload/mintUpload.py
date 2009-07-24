@@ -308,7 +308,7 @@ class mintUploadWindow:
 		editSubmenu = gtk.Menu()
 		editMenu.set_submenu(editSubmenu)
 		prefsMenuItem = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
-		prefsMenuItem.get_child().set_text(_("Services"))
+		prefsMenuItem.get_child().set_text(_("_Services"))
 		prefsMenuItem.connect("activate", self.menu_edit_services, self.wTree.get_widget("combo"))
 		editSubmenu.append(prefsMenuItem)
 
@@ -319,7 +319,7 @@ class mintUploadWindow:
 		helpSubmenu = gtk.Menu()
 		helpMenu.set_submenu(helpSubmenu)
 		aboutMenuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
-		aboutMenuItem.get_child().set_text(_("About"))
+		aboutMenuItem.get_child().set_text(_("_About"))
 		aboutMenuItem.connect("activate", self.menu_help_about)
 		helpSubmenu.append(aboutMenuItem)
 
