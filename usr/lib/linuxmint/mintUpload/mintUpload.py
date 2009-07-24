@@ -376,10 +376,16 @@ class mintUploadWindow:
 		chooser = gtk.FileChooserDialog(title=None, action=gtk.FILE_CHOOSER_ACTION_OPEN, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK))
 		chooser.set_current_folder(home)
 		chooser.set_select_multiple(True)
-		for file in chooser.get_filenames():
-			if not file in self.filenames:
-				self.filenames.append(file)
-		self.refresh()
+		chooser.set_default_response(gtk.RESPONSE_OK)
+
+		response = chooser.run()
+		if response == gtk.RESPONSE_OK:
+			for file in chooser.get_filenames():
+				if not file in self.filenames:
+					self.filenames.append(file)
+			self.refresh()
+
+		chooser.destroy()
 
 	def comboChanged(self, widget):
 		'''Change the selected service'''
