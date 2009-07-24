@@ -240,39 +240,7 @@ class mintUploadWindow:
 		self.wTree.get_widget("lbl_url").set_label(_("URL:"))
 		self.wTree.get_widget("label1").set_label(_("_Upload"))
 
-		fileMenu = gtk.MenuItem(_("_File"))
-		fileSubmenu = gtk.Menu()
-		fileMenu.set_submenu(fileSubmenu)
-		openMenuItem = gtk.ImageMenuItem(gtk.STOCK_OPEN)
-		openMenuItem.get_child().set_text(_("Open..."))
-		openMenuItem.connect("activate", self.menu_file_open)
-		fileSubmenu.append(openMenuItem)
-		closeMenuItem = gtk.ImageMenuItem(gtk.STOCK_CLOSE)
-		closeMenuItem.get_child().set_text(_("Close"))
-		closeMenuItem.connect("activate", gtk.main_quit)
-		fileSubmenu.append(closeMenuItem)
-
-		helpMenu = gtk.MenuItem(_("_Help"))
-		helpSubmenu = gtk.Menu()
-		helpMenu.set_submenu(helpSubmenu)
-		aboutMenuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
-		aboutMenuItem.get_child().set_text(_("About"))
-		aboutMenuItem.connect("activate", self.menu_help_about)
-		helpSubmenu.append(aboutMenuItem)
-
-		editMenu = gtk.MenuItem(_("_Edit"))
-		editSubmenu = gtk.Menu()
-		editMenu.set_submenu(editSubmenu)
-		prefsMenuItem = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
-		prefsMenuItem.get_child().set_text(_("Services"))
-		prefsMenuItem.connect("activate", self.menu_edit_services, self.wTree.get_widget("combo"))
-		editSubmenu.append(prefsMenuItem)
-
-		self.wTree.get_widget("menubar1").append(fileMenu)
-		self.wTree.get_widget("menubar1").append(editMenu)
-		self.wTree.get_widget("menubar1").append(helpMenu)
-		self.wTree.get_widget("menubar1").show_all()
-
+		self.create_menubar()
 		self.reload_services(self.wTree.get_widget("combo"))
 
 		cell = gtk.CellRendererText()
@@ -308,6 +276,45 @@ class mintUploadWindow:
 		self.wTree.get_widget("main_window").connect( "drag_data_received", self.handle_drop )
 		toButton = [ ( "text/uri-list", 0, 80 ) ]
 		self.wTree.get_widget("main_window").drag_dest_set( gtk.DEST_DEFAULT_MOTION |gtk.DEST_DEFAULT_HIGHLIGHT |gtk.DEST_DEFAULT_DROP, toButton, gtk.gdk.ACTION_COPY )
+	
+	def create_menubar(self):
+		# File menu
+		fileMenu = gtk.MenuItem(_("_File"))
+		fileSubmenu = gtk.Menu()
+		fileMenu.set_submenu(fileSubmenu)
+
+		openMenuItem = gtk.ImageMenuItem(gtk.STOCK_OPEN)
+		openMenuItem.get_child().set_text(_("Open..."))
+		openMenuItem.connect("activate", self.menu_file_open)
+		fileSubmenu.append(openMenuItem)
+
+		closeMenuItem = gtk.ImageMenuItem(gtk.STOCK_CLOSE)
+		closeMenuItem.get_child().set_text(_("Close"))
+		closeMenuItem.connect("activate", gtk.main_quit)
+		fileSubmenu.append(closeMenuItem)
+
+		# Edit menu
+		editMenu = gtk.MenuItem(_("_Edit"))
+		editSubmenu = gtk.Menu()
+		editMenu.set_submenu(editSubmenu)
+		prefsMenuItem = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
+		prefsMenuItem.get_child().set_text(_("Services"))
+		prefsMenuItem.connect("activate", self.menu_edit_services, self.wTree.get_widget("combo"))
+		editSubmenu.append(prefsMenuItem)
+
+		# Help menu
+		helpMenu = gtk.MenuItem(_("_Help"))
+		helpSubmenu = gtk.Menu()
+		helpMenu.set_submenu(helpSubmenu)
+		aboutMenuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
+		aboutMenuItem.get_child().set_text(_("About"))
+		aboutMenuItem.connect("activate", self.menu_help_about)
+		helpSubmenu.append(aboutMenuItem)
+
+		self.wTree.get_widget("menubar1").append(fileMenu)
+		self.wTree.get_widget("menubar1").append(editMenu)
+		self.wTree.get_widget("menubar1").append(helpMenu)
+		self.wTree.get_widget("menubar1").show_all()
 
 	def refresh(self):
 		'''updates the GUI'''
