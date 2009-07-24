@@ -253,7 +253,7 @@ class mintUploadWindow:
 		helpMenu.set_submenu(helpSubmenu)
 		aboutMenuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
 		aboutMenuItem.get_child().set_text(_("About"))
-		aboutMenuItem.connect("activate", self.open_about)
+		aboutMenuItem.connect("activate", self.menu_help_about)
 		helpSubmenu.append(aboutMenuItem)
 
 		editMenu = gtk.MenuItem(_("_Edit"))
@@ -261,7 +261,7 @@ class mintUploadWindow:
 		editMenu.set_submenu(editSubmenu)
 		prefsMenuItem = gtk.ImageMenuItem(gtk.STOCK_PREFERENCES)
 		prefsMenuItem.get_child().set_text(_("Services"))
-		prefsMenuItem.connect("activate", self.open_services, self.wTree.get_widget("combo"))
+		prefsMenuItem.connect("activate", self.menu_edit_services, self.wTree.get_widget("combo"))
 		editSubmenu.append(prefsMenuItem)
 
 		self.wTree.get_widget("menubar1").append(fileMenu)
@@ -334,7 +334,7 @@ class mintUploadWindow:
 			model.set_value(iter, 0, service['name'])
 		del model
 
-	def open_about(self, widget):
+	def menu_help_about(self, widget):
 		dlg = gtk.AboutDialog()
 		dlg.set_title(_("About") + " - mintUpload")
 		dlg.set_version(__version__)
@@ -365,7 +365,7 @@ class mintUploadWindow:
 		dlg.connect("response", close)
 		dlg.show()
 
-	def open_services(self, widget, combo):
+	def menu_edit_services(self, widget, combo):
 		servicesWindow(self.gladefile, self.iconfile, self, combo)
 
 	def comboChanged(self, widget):
