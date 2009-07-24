@@ -446,7 +446,9 @@ class servicesWindow:
 
 	def close_window(self, widget, window, combo=None):
 		window.hide()
-		if (combo != None):
+		if combo == None:
+			self.reload_services()
+		else:
 			self.mainwin.reload_services(combo)
 
 	def reload_services(self):
@@ -620,7 +622,7 @@ class servicesWindow:
 			s.write()
 		except Exception, detail:
 			print detail
-		wTree.get_widget("dialog_edit_service").hide()
+		self.close_window(widget, wTree.get_widget("dialog_edit_service"))
 
 
 
