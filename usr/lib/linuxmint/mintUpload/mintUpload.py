@@ -245,7 +245,7 @@ class mintUploadWindow:
 		fileMenu.set_submenu(fileSubmenu)
 		openMenuItem = gtk.ImageMenuItem(gtk.STOCK_OPEN)
 		openMenuItem.get_child().set_text(_("Open..."))
-		openMenuItem.connect("activate", gtk.menu_file_open)
+		openMenuItem.connect("activate", self.menu_file_open)
 		fileSubmenu.append(openMenuItem)
 		closeMenuItem = gtk.ImageMenuItem(gtk.STOCK_CLOSE)
 		closeMenuItem.get_child().set_text(_("Close"))
