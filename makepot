@@ -1,3 +1,0 @@
-#!/bin/bash
-
-xgettext --language=Python --keyword=_ --output=mintupload.pot usr/lib/linuxmint/mintUpload/mintUpload.py usr/lib/linuxmint/mintUpload/mintUploadCore.py

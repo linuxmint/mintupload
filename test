@@ -1,6 +1,0 @@
-#!/bin/bash
-
-sudo rm -rf /usr/lib/linuxmint/mintUpload
-sudo cp -R usr /
-sudo cp -R etc /
-mintupload ./test
