@@ -305,7 +305,7 @@ def read_services():
 
 
 
-ICONFILE = "/usr/lib/linuxmint/mintUpload/icon.png"
+ICONFILE = "/usr/lib/linuxmint/mintUpload/icon.svg"
 CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
 CONFIGFILE_USER = home + '/.linuxmint/mintUpload.conf'
 
