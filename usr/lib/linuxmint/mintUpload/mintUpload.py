@@ -359,7 +359,7 @@ class mintUploadWindow:
 		dlg.set_title(_("About") + " - mintUpload")
 		dlg.set_version(__version__)
 		dlg.set_program_name("mintUpload")
-		dlg.set_comments(_("File Uploader"))
+		dlg.set_comments(_("Upload files to the internet"))
 		try:
 		    h = open('/usr/share/common-licenses/GPL')
 		    s = h.readlines()
