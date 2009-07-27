@@ -570,7 +570,7 @@ class servicesWindow:
 		file = config_paths['user'] + sname
 
 		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
-		wTree.get_widget("dialog_edit_service").set_title(sname + _("Properties"))
+		wTree.get_widget("dialog_edit_service").set_title(_("%s Properties") % sname)
 		wTree.get_widget("dialog_edit_service").set_icon_from_file(self.iconfile)
 		wTree.get_widget("dialog_edit_service").show()
 		wTree.get_widget("button_ok").connect("clicked", self.edit, wTree, file)
