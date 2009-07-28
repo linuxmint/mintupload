@@ -10,7 +10,7 @@
 
 
 
-__version_info__ = ('3', '7', '0')
+__version_info__ = ('3', '7', '1')
 __version__ = '.'.join(__version_info__)
 
 
@@ -359,7 +359,7 @@ class mintUploadWindow:
 		dlg.set_title(_("About") + " - mintUpload")
 		dlg.set_version(__version__)
 		dlg.set_program_name("mintUpload")
-		dlg.set_comments(_("File Uploader"))
+		dlg.set_comments(_("Upload files to the internet"))
 		try:
 		    h = open('/usr/share/common-licenses/GPL')
 		    s = h.readlines()
@@ -570,7 +570,7 @@ class servicesWindow:
 		file = config_paths['user'] + sname
 
 		wTree = gtk.glade.XML(self.gladefile, "dialog_edit_service")
-		wTree.get_widget("dialog_edit_service").set_title(sname + _("Properties"))
+		wTree.get_widget("dialog_edit_service").set_title(_("%s Properties") % sname)
 		wTree.get_widget("dialog_edit_service").set_icon_from_file(self.iconfile)
 		wTree.get_widget("dialog_edit_service").show()
 		wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_edit_service"))

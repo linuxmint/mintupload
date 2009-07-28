@@ -1,3 +1,15 @@
+mintupload (3.7.1) jaunty; urgency=low
+
+  * adding file > Open menu item
+  * adding file menu keyboard shortcuts
+  * adding toolbar tooltips
+  * fixing about box
+  * fixing edit_services problem
+  * fixing host tooltip
+  * conforming to gnome HIGs more closely
+
+ -- Philip Morrell <mintupload.emorrp1@mamber.net>  Fri,  24 Jul 2009 13:49:22 +0100
+
 mintupload (3.7) jaunty; urgency=low
 
   * multiple file upload with drag and drop
