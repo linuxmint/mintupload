@@ -662,6 +662,13 @@ class servicesWindow:
 		except Exception, detail:
 			print detail
 		self.close_window(widget, wTree.get_widget("dialog_edit_service"))
+	
+	def change(self, widget, file):
+		wname = gtk.glade.get_widget_name(widget)
+		config = { wname[4:] : widget.get_text() }
+		s = Service(file)
+		s.merge(config)
+		s.write()
 
 
 
