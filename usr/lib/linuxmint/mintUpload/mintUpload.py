@@ -616,7 +616,7 @@ class servicesWindow:
 				while (iter != None and model.get_value(iter, 0) != config['type'].lower()):
 					iter = model.iter_next(iter)
 				wTree.get_widget("combo_type").set_active_iter(iter)
-				wTree.get_widget("combo_type").connect("focus-out-event", self.change, file)
+				wTree.get_widget("combo_type").connect("changed", self.change, None, file)
 			except:
 				pass
 			try:
