@@ -664,16 +664,20 @@ class servicesWindow:
 		self.close_window(widget, wTree.get_widget("dialog_edit_service"))
 	
 	def change(self, widget, file):
-		wname = gtk.glade.get_widget_name(widget)
-		if wname == "combo_type":
-			model = widget.get_model()
-			iter = 	widget.get_active_iter()
-			config = { 'type' : model.get_value(iter, 0) }
-		else:
-			config = { wname[4:] : widget.get_text() }
-		s = Service(file)
-		s.merge(config)
-		s.write()
+		try:
+			wname = gtk.glade.get_widget_name(widget)
+			if wname == "combo_type":
+				model = widget.get_model()
+				iter = 	widget.get_active_iter()
+				config = { 'type' : model.get_value(iter, 0) }
+			else:
+				config = { wname[4:] : widget.get_text() }
+			s = Service(file)
+			s.merge(config)
+			s.write()
+		except:
+			try:    raise CustomError(_("Could not save configuration change"))
+			except: pass
 
 
 
