@@ -573,7 +573,6 @@ class servicesWindow:
 		wTree.get_widget("dialog_edit_service").set_title(sname + _("Properties"))
 		wTree.get_widget("dialog_edit_service").set_icon_from_file(self.iconfile)
 		wTree.get_widget("dialog_edit_service").show()
-		wTree.get_widget("button_ok").connect("clicked", self.edit, wTree, file)
 		wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_edit_service"))
 
 		#i18n
