@@ -665,7 +665,12 @@ class servicesWindow:
 	
 	def change(self, widget, file):
 		wname = gtk.glade.get_widget_name(widget)
-		config = { wname[4:] : widget.get_text() }
+		if wname == "combo_type":
+			model = widget.get_model()
+			iter = 	widget.get_active_iter()
+			config = { 'type' : model.get_value(iter, 0) }
+		else:
+			config = { wname[4:] : widget.get_text() }
 		s = Service(file)
 		s.merge(config)
 		s.write()
