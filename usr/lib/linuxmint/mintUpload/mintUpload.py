@@ -587,21 +587,27 @@ class servicesWindow:
 
 		wTree.get_widget("lbl_hostname").set_tooltip_text(_("Hostname or IP address, default: ") + defaults['host'])
 		wTree.get_widget("txt_host").set_tooltip_text(_("Hostname or IP address, default: ") + defaults['host'])
+		wTree.get_widget("txt_host").connect("focus-out-event", self.change, file)
 
 		wTree.get_widget("lbl_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
 		wTree.get_widget("txt_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
+		wTree.get_widget("txt_port").connect("focus-out-event", self.change, file)
 
 		wTree.get_widget("lbl_username").set_tooltip_text(_("Username, defaults to your local username"))
 		wTree.get_widget("txt_user").set_tooltip_text(_("Username, defaults to your local username"))
+		wTree.get_widget("txt_user").connect("focus-out-event", self.change, file)
 
 		wTree.get_widget("lbl_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
 		wTree.get_widget("txt_pass").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
+		wTree.get_widget("txt_pass").connect("focus-out-event", self.change, file)
 
 		wTree.get_widget("lbl_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
 		wTree.get_widget("txt_format").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
+		wTree.get_widget("txt_format").connect("focus-out-event", self.change, file)
 
 		wTree.get_widget("lbl_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
 		wTree.get_widget("txt_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
+		wTree.get_widget("txt_path").connect("focus-out-event", self.change, file)
 
 		try:
 			config = Service(file)
@@ -611,6 +617,7 @@ class servicesWindow:
 				while (iter != None and model.get_value(iter, 0) != config['type'].lower()):
 					iter = model.iter_next(iter)
 				wTree.get_widget("combo_type").set_active_iter(iter)
+				wTree.get_widget("combo_type").connect("focus-out-event", self.change, file)
 			except:
 				pass
 			try:
