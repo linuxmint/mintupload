@@ -645,29 +645,6 @@ class servicesWindow:
 				wTree.get_widget("txt_path").set_text("")
 		except Exception, detail:
 			print detail
-
-	def edit(self, widget, wTree, file):
-		try:
-			model = wTree.get_widget("combo_type").get_model()
-			iter = 	wTree.get_widget("combo_type").get_active_iter()
-
-			# Get configuration
-			config = {}
-			config['type'] = model.get_value(iter, 0)
-			config['host'] = wTree.get_widget("txt_host").get_text()
-			config['port'] = wTree.get_widget("txt_port").get_text()
-			config['user'] = wTree.get_widget("txt_user").get_text()
-			config['pass'] = wTree.get_widget("txt_pass").get_text()
-			config['format'] = wTree.get_widget("txt_format").get_text()
-			config['path'] = wTree.get_widget("txt_path").get_text()
-
-			# Write to service's config file
-			s = Service(file)
-			s.merge(config)
-			s.write()
-		except Exception, detail:
-			print detail
-		self.close_window(widget, wTree.get_widget("dialog_edit_service"))
 	
 	def change(self, widget, event, file):
 		try:
