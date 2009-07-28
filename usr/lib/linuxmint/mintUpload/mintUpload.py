@@ -618,7 +618,7 @@ class servicesWindow:
 			except:
 				wTree.get_widget("txt_hostname").set_text("")
 			try:
-				wTree.get_widget("txt_port").set_text(config['port'])
+				wTree.get_widget("txt_port").set_text(str(config['port']))
 			except:
 				wTree.get_widget("txt_port").set_text("")
 			try:
