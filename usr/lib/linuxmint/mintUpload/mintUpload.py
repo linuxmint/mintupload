@@ -671,7 +671,7 @@ class servicesWindow:
 	
 	def change(self, widget, event, file):
 		try:
-			wname = gtk.glade.get_widget_name(widget)
+			wname = widget.get_name()
 			if wname == "combo_type":
 				model = widget.get_model()
 				iter = 	widget.get_active_iter()
