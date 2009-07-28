@@ -663,7 +663,7 @@ class servicesWindow:
 			print detail
 		self.close_window(widget, wTree.get_widget("dialog_edit_service"))
 	
-	def change(self, widget, file):
+	def change(self, widget, event, file):
 		try:
 			wname = gtk.glade.get_widget_name(widget)
 			if wname == "combo_type":
