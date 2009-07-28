@@ -255,6 +255,7 @@ class mintUploadWindow:
 
 		CustomError.addObserver(gtkErrorObserver(self.statusbar))
 
+		self.selected_service = {}
 		# If service autoselect is enabled, use it
 		autoselect = config['autoupload']['autoselect']
 		if autoselect != "False":
@@ -268,8 +269,6 @@ class mintUploadWindow:
 		if len(self.services) == 1:
 			self.wTree.get_widget("combo").set_active(0)
 			self.comboChanged(None)
-
-		self.selected_service = {}
 		self.refresh()
 
 		#drag n drop
