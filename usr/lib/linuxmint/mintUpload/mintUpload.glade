@@ -601,7 +601,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkEntry" id="txt_hostname">
+              <widget class="GtkEntry" id="txt_host">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="invisible_char">&#x25CF;</property>
@@ -657,7 +657,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkEntry" id="txt_username">
+              <widget class="GtkEntry" id="txt_user">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="invisible_char">&#x25CF;</property>
@@ -670,7 +670,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkEntry" id="txt_password">
+              <widget class="GtkEntry" id="txt_pass">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="visibility">False</property>
@@ -684,7 +684,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkEntry" id="txt_timestamp">
+              <widget class="GtkEntry" id="txt_format">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="invisible_char">&#x25CF;</property>
