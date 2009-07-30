@@ -12,6 +12,8 @@
 
 __version_info__ = ('3', '7', '1')
 __version__ = '.'.join(__version_info__)
+menuName = _("File Uploader")
+menuComment = _("Upload files to the internet")
 
 
 
@@ -224,7 +226,7 @@ class mintUploadWindow:
 
 		self.wTree.get_widget("main_window").connect("destroy", gtk.main_quit)
 		self.wTree.get_widget("main_window").set_icon_from_file(self.iconfile)
-		self.wTree.get_widget("main_window").set_title(_("File Uploader"))
+		self.wTree.get_widget("main_window").set_title(menuName)
 
 		# i18n
 		self.wTree.get_widget("label2").set_label("<b>" + _("Upload service") + "</b>")
@@ -358,7 +360,7 @@ class mintUploadWindow:
 		dlg.set_title(_("About") + " - mintUpload")
 		dlg.set_version(__version__)
 		dlg.set_program_name("mintUpload")
-		dlg.set_comments(_("Upload files to the internet"))
+		dlg.set_comments(menuName)
 		try:
 		    h = open('/usr/share/common-licenses/GPL')
 		    s = h.readlines()
