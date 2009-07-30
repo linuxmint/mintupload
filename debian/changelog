@@ -1,4 +1,4 @@
-mintupload (3.7.2) jaunty; urgency=low
+mintupload (3.7.2) helena; urgency=low
 
   * fully implemented generic-branding
   * making edit window use instant-apply (HIG)
