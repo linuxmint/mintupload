@@ -142,6 +142,7 @@ class mintUploader(threading.Thread):
 		self.file = file
 		self.name = os.path.basename(self.file)
 		self.filesize = os.path.getsize(self.file)
+		self.focused = True
 
 		# Switch to required connect function, depending on service
 		self.upload = {
@@ -276,7 +277,7 @@ class mintUploader(threading.Thread):
 			# If nofications are enabled AND the file is minimal x byte in size...
 			if n['enable'] == "True" and so_far >= int(n['min_filesize']):
 				# If when_focused is true OR window has no focus
-				if n['when_focused'] == "True" or not self.wTree.get_widget("main_window").has_toplevel_focus():
+				if n['when_focused'] == "True" or not self.focused:
 					mintNotifier().notify(_("File uploaded successfully."))
 		sys.stdout.flush()
 

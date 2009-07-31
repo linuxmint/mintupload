@@ -204,6 +204,7 @@ class gtkUploader(mintUploader):
 			self.statusbar.push(context_id, message)
 
 	def pct(self, so_far, total=None):
+		self.focused = self.wTree.get_widget("main_window").has_toplevel_focus():
 		if not total: total = self.filesize
 		mintUploader.pct(self, so_far, total)
 		pct = float(so_far)/total
