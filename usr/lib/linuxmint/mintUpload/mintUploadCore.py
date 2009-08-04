@@ -1,4 +1,3 @@
-
 # mintUpload
 #	Clement Lefebvre <root@linuxmint.com>
 #
@@ -24,6 +23,8 @@ from configobj import ConfigObj
 
 
 
+VERSION = "3.7.3"
+__version__ = VERSION
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 

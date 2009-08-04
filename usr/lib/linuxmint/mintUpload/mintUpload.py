@@ -10,11 +10,6 @@
 
 
 
-__version_info__ = ('3', '7', '2')
-__version__ = '.'.join(__version_info__)
-
-
-
 import sys
 
 try:
@@ -37,7 +32,7 @@ except:
 
 
 gtk.gdk.threads_init()
-
+__version__ = VERSION
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 menuName = _("File Uploader")
