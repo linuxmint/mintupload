@@ -12,8 +12,6 @@
 
 __version_info__ = ('3', '7', '2')
 __version__ = '.'.join(__version_info__)
-menuName = _("File Uploader")
-menuComment = _("Upload files to the internet")
 
 
 
@@ -42,6 +40,8 @@ gtk.gdk.threads_init()
 
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
+menuName = _("File Uploader")
+menuComment = _("Upload files to the internet")
 
 
 
