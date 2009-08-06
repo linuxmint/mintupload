@@ -178,7 +178,7 @@ class gtkUploader(mintUploader):
 					if config['clipboard']['when_unfocused'] == "True" or self.wTree.get_widget("main_window").has_toplevel_focus():
 						try:  gtk.Clipboard().set_text(self.service['url'])
 						except:
-							try:    raise CustomError(_("Could not copy URL to keyboard"))
+							try:    raise CustomError(_("Could not copy URL to clipboard"))
 							except: pass
 						else: self.progress(_("Copied URL to clipboard"))
 
