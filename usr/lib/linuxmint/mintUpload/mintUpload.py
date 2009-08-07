@@ -358,13 +358,7 @@ class mintUploadWindow:
 		dlg.set_program_name("mintUpload")
 		dlg.set_comments(menuName)
 		try:
-		    h = open('/usr/share/common-licenses/GPL')
-		    s = h.readlines()
-		    gpl = ""
-		    for line in s:
-		    	gpl += line
-		    h.close()
-		    dlg.set_license(gpl)
+			dlg.set_license(open('/usr/share/common-licenses/GPL').read())
 		except Exception, detail:
 		    print detail
 
