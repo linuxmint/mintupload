@@ -24,10 +24,10 @@ try:
 	import os
 	import gettext
 	import commands
-	import logging , logging.handlers
 	from mintUploadCore import *
-except:
+except Exception as e:
 	print "You do not have all the dependencies!"
+	print str(e)
 	sys.exit(1)
 
 

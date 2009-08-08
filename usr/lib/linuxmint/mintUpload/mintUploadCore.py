@@ -18,6 +18,8 @@ import paramiko
 import pexpect
 import threading
 import pynotify
+import logging , logging.handlers
+
 from user import home
 from configobj import ConfigObj
 
