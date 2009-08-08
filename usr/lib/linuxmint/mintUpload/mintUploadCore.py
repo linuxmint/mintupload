@@ -312,7 +312,7 @@ ICONFILE = "/usr/lib/linuxmint/mintUpload/icon.svg"
 CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
 CONFIGFILE_USER = home + '/.linuxmint/mintUpload.conf'
 LOGFILE = home + '/.linuxmint/mintUpload.log'
-
+LINUXMINTDIR = home + 	'/.linuxmint'
 
 config = ConfigObj(CONFIGFILE_GLOBAL)
 if os.path.exists(CONFIGFILE_USER):
@@ -332,13 +332,15 @@ config_paths['user'] = config_paths['user'].replace('<HOME>',home)
 defaults = config['defaults']
 defaults['user'] = defaults['user'].replace('<USER>',os.environ['LOGNAME'])
 
-
+if not os.path.exists(LINUXMINTDIR):
+	os.makedirs(LINUXMINTDIR)
 log = logging.getLogger("")
 os.popen("touch %s"%LOGFILE)
 hdlr = logging.handlers.RotatingFileHandler(LOGFILE, "a", 1000000, 3)
 fmt = logging.Formatter("%(asctime)s %(message)s", "%x %X")
 hdlr.setFormatter(fmt)
 log.addHandler(hdlr)
+log.setLevel(logging.INFO) #set verbosity to show all messages of severity >= DEBUG
 
 class Service(ConfigObj):
 	'''Object representing an upload service'''
