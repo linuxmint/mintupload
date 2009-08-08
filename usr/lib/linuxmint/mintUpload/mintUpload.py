@@ -24,6 +24,7 @@ try:
 	import os
 	import gettext
 	import commands
+	import logging , logging.handlers
 	from mintUploadCore import *
 except:
 	print "You do not have all the dependencies!"

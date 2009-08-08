@@ -22,7 +22,6 @@ from user import home
 from configobj import ConfigObj
 
 
-
 VERSION = "3.7.3"
 __version__ = VERSION
 # i18n
@@ -291,7 +290,7 @@ class mintUploader(threading.Thread):
 
 def read_services():
 	'''Get all defined services'''
-
+	log.debug("reading services")
 	services = []
 	for loc, path in config_paths.iteritems():
 		os.system("mkdir -p " + path)
@@ -310,6 +309,8 @@ def read_services():
 ICONFILE = "/usr/lib/linuxmint/mintUpload/icon.svg"
 CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
 CONFIGFILE_USER = home + '/.linuxmint/mintUpload.conf'
+LOGFILE = home + '/.linuxmint/mintUpload.log'
+
 
 config = ConfigObj(CONFIGFILE_GLOBAL)
 if os.path.exists(CONFIGFILE_USER):
@@ -330,6 +331,12 @@ defaults = config['defaults']
 defaults['user'] = defaults['user'].replace('<USER>',os.environ['LOGNAME'])
 
 
+log = logging.getLogger("")
+os.popen("touch %s"%LOGFILE)
+hdlr = logging.handlers.RotatingFileHandler(LOGFILE, "a", 1000000, 3)
+fmt = logging.Formatter("%(asctime)s %(message)s", "%x %X")
+hdlr.setFormatter(fmt)
+log.addHandler(hdlr)
 
 class Service(ConfigObj):
 	'''Object representing an upload service'''
