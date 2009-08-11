@@ -217,7 +217,6 @@ class mintUploader(threading.Thread):
 			else:
 				transport.connect(username = self.service['user'], pkey = rsa_key)
 			self.progress(self.service['type'] + " " + _("connection successfully established"))
-			log.info(_("connection successfully established"))
 
 			# Create full remote path
 			path = self.service['path']
@@ -226,7 +225,6 @@ class mintUploader(threading.Thread):
 
 			sftp = paramiko.SFTPClient.from_transport(transport)
 			self.progress(_("Uploading the file..."))
-			log.info(_("Uploading the file..."))
 			self.pct(0)
 			sftp.put(self.file, path + self.name, self.pct)
 
@@ -269,6 +267,7 @@ class mintUploader(threading.Thread):
 			except:	pass
 
 	def progress(self, message):
+		log.info(message)
 		print message
 
 	def pct(self, so_far, total=None):
