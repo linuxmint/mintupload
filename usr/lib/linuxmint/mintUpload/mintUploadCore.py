@@ -346,7 +346,9 @@ hdlr = logging.handlers.RotatingFileHandler(LOGFILE, "a", 1000000, 3)
 fmt = logging.Formatter("%(asctime)s %(message)s", "%x %X")
 hdlr.setFormatter(fmt)
 log.addHandler(hdlr)
-log.setLevel(logging.INFO) #set verbosity to show all messages of severity >= DEBUG
+log.setLevel(logging.DEBUG) #set verbosity to show all messages of severity >= DEBUG
+
+log.debug("logging initialized, continue starting persy")
 
 class Service(ConfigObj):
 	'''Object representing an upload service'''
