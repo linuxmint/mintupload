@@ -348,7 +348,7 @@ hdlr.setFormatter(fmt)
 log.addHandler(hdlr)
 log.setLevel(logging.DEBUG) #set verbosity to show all messages of severity >= DEBUG
 
-log.debug("logging initialized, continue starting persy")
+log.debug("logging initialized, continue starting mintupload(!!)")
 
 class Service(ConfigObj):
 	'''Object representing an upload service'''
