@@ -38,6 +38,7 @@ class CustomError(Exception):
 
 	def __init__(self, detail):
 		type = self.__class__.__name__
+		log.critical(detail)
 		for observer in self.observers:
 			observer.error(type, detail)
 
