@@ -1,3 +1,11 @@
+mintupload (3.7.3) helena; urgency=low
+
+  * fixing gettext bug preventing startup
+  * fixing version number usage
+  * fixing erroneous wTree usage in Core (notifications)
+
+ -- Philip Morrell <mintupload.emorrp1@mamber.net>  Tue, 04 Aug 2009 20:52:29 +0100
+
 mintupload (3.7.2) helena; urgency=low
 
   * fully implemented generic-branding

@@ -10,13 +10,6 @@
 
 
 
-__version_info__ = ('3', '7', '2')
-__version__ = '.'.join(__version_info__)
-menuName = _("File Uploader")
-menuComment = _("Upload files to the internet")
-
-
-
 import sys
 
 try:
@@ -39,9 +32,11 @@ except:
 
 
 gtk.gdk.threads_init()
-
+__version__ = VERSION
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
+menuName = _("File Uploader")
+menuComment = _("Upload files to the internet")
 
 
 
@@ -183,7 +178,7 @@ class gtkUploader(mintUploader):
 					if config['clipboard']['when_unfocused'] == "True" or self.wTree.get_widget("main_window").has_toplevel_focus():
 						try:  gtk.Clipboard().set_text(self.service['url'])
 						except:
-							try:    raise CustomError(_("Could not copy URL to keyboard"))
+							try:    raise CustomError(_("Could not copy URL to clipboard"))
 							except: pass
 						else: self.progress(_("Copied URL to clipboard"))
 
@@ -204,7 +199,7 @@ class gtkUploader(mintUploader):
 			self.statusbar.push(context_id, message)
 
 	def pct(self, so_far, total=None):
-		self.focused = self.wTree.get_widget("main_window").has_toplevel_focus():
+		self.focused = self.wTree.get_widget("main_window").has_toplevel_focus()
 		if not total: total = self.filesize
 		mintUploader.pct(self, so_far, total)
 		pct = float(so_far)/total
