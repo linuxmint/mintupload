@@ -19,7 +19,7 @@ gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 def parse_args():
 	parser = OptionParser(
 			version=VERSION,
-			description=_("File Uploader") + " - " + _("Upload files to the internet"))
+			description=menuName + " - " + menuComment)
 	parser.add_option('-s', '--service', help=_("Upload to %s")%"SERVICE")
 	parser.add_option('-f', '--file', action="append", help=_("Add %s to list of files to upload")%"FILE")
 	return parser.parse_args()
