@@ -34,8 +34,9 @@ def cliUpload(filenames, servicename=None):
 			servicename = services[0]['name']
 	for service in services:
 		if service['name'] == servicename:
-			from os.path import getsize
+			from os.path import getsize, normpath
 			for filename in filenames:
+				filename = normpath(filename)
 				# Check there is enough space on the service, ignore threading
 				filesize = getsize(filename)
 				checker = mintSpaceChecker(service, filesize)
