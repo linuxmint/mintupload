@@ -3,6 +3,7 @@
 
 
 try:
+	from optparse import OptionParser
 	from mintUploadCore import *
 except:
 	print "You do not have all the dependencies!"
@@ -16,7 +17,6 @@ gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
 
 
 def parse_args():
-	from optparse import OptionParser
 	parser = OptionParser(
 			version="3.7.2",
 			description=_("File Uploader") + " - " + _("Upload files to the internet"))
