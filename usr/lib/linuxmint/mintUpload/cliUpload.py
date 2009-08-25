@@ -52,12 +52,7 @@ def cliUpload(filenames, servicename=None):
 
 
 if __name__ == "__main__":
-	from sys import argv
-	if '--service' in argv:
-		sname_i = argv.index('--service') + 1
-		servicename = argv[sname_i]
-		filenames = argv[sname_i+1:]
-	else:
-		servicename = None
-		filenames = argv[1:]
-	cliUpload(filenames, servicename)
+	options, args = parse_args()
+	for f in args:
+		options.file.append(f)
+	cliUpload(options.file, options.service)
