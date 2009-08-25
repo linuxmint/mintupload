@@ -53,6 +53,8 @@ def cliUpload(filenames, servicename=None):
 
 if __name__ == "__main__":
 	options, args = parse_args()
+	if not options.file:
+		options.file = []
 	for f in args:
 		options.file.append(f)
 	cliUpload(options.file, options.service)
