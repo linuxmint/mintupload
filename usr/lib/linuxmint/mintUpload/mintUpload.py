@@ -162,29 +162,6 @@ class gtkUploader(mintUploader):
 		except:
 			try:    raise CustomError(_("Upload failed."))
 			except: pass
-
-		else:
-			#If service is Mint then show the URL
-			if self.service.has_key('url'):
-				self.wTree.get_widget("txt_url").set_text(self.url)
-				self.progressbar.hide()
-				self.wTree.get_widget("label190").hide()
-				self.wTree.get_widget("txt_url").show()
-				self.wTree.get_widget("lbl_url").show()
-
-				# Autocopy URL
-				if config['clipboard']['autocopy'] == "True":
-					# If when_unfocused is true OR window has focus
-					if config['clipboard']['when_unfocused'] == "True" or self.wTree.get_widget("main_window").has_toplevel_focus():
-						try:  gtk.Clipboard().set_text(self.url)
-						except:
-							try:    raise CustomError(_("Could not copy URL to clipboard"))
-							except: pass
-						else: self.progress(_("Copied URL to clipboard"))
-
-			# Report success
-			self.progress(_("File uploaded successfully."), "green")
-
 		finally:
 			self.wTree.get_widget("main_window").window.set_cursor(None)
 
@@ -206,6 +183,29 @@ class gtkUploader(mintUploader):
 		pctStr = str(int(pct * 100))
 		self.progressbar.set_fraction(pct)
 		self.progressbar.set_text(pctStr + "%")
+
+	def success(self):
+		mintUploader.success(self)
+		#If necessary, show the URL
+		if self.service.has_key('url'):
+			self.wTree.get_widget("txt_url").set_text(self.url)
+			self.progressbar.hide()
+			self.wTree.get_widget("label190").hide()
+			self.wTree.get_widget("txt_url").show()
+			self.wTree.get_widget("lbl_url").show()
+
+			# Autocopy URL
+			if config['clipboard']['autocopy'] == "True":
+				# If when_unfocused is true OR window has focus
+				if config['clipboard']['when_unfocused'] == "True" or self.wTree.get_widget("main_window").has_toplevel_focus():
+					try:  gtk.Clipboard().set_text(self.url)
+					except:
+						try:    raise CustomError(_("Could not copy URL to clipboard"))
+						except: pass
+					else: self.progress(_("Copied URL to clipboard"))
+
+		# Report success
+		self.progress(_("File uploaded successfully."), "green")
 
 
 
