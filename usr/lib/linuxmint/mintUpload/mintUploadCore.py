@@ -144,6 +144,9 @@ class mintUploader(threading.Thread):
 		self.name = os.path.basename(self.file)
 		self.filesize = os.path.getsize(self.file)
 		self.focused = True
+		if self.service.has_key('url'):
+			url = self.service['url'].replace('<FILE>', self.name)
+			self.url = url.replace(' ', '%20')
 
 		# Switch to required connect function, depending on service
 		self.upload = {
@@ -272,7 +275,7 @@ class mintUploader(threading.Thread):
 			sys.stdout.write("\n")
 			# Print URL
 			if self.service.has_key('url'):
-				self.progress( _("URL:") + " " + self.service['url'])
+				self.progress( _("URL:") + " " + self.url)
 
 			n = config['notification']
 			# If nofications are enabled AND the file is minimal x byte in size...
@@ -398,7 +401,6 @@ class Service(ConfigObj):
 		if s.has_key('url'):
 			url_replace = {
 				'<TIMESTAMP>':timestamp,
-				'<FILE>':os.path.basename(file),
 				'<PATH>':s['path']
 			}
 			url = s['url']

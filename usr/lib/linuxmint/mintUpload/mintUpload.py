@@ -166,7 +166,7 @@ class gtkUploader(mintUploader):
 		else:
 			#If service is Mint then show the URL
 			if self.service.has_key('url'):
-				self.wTree.get_widget("txt_url").set_text(self.service['url'])
+				self.wTree.get_widget("txt_url").set_text(self.url)
 				self.progressbar.hide()
 				self.wTree.get_widget("label190").hide()
 				self.wTree.get_widget("txt_url").show()
@@ -176,7 +176,7 @@ class gtkUploader(mintUploader):
 				if config['clipboard']['autocopy'] == "True":
 					# If when_unfocused is true OR window has focus
 					if config['clipboard']['when_unfocused'] == "True" or self.wTree.get_widget("main_window").has_toplevel_focus():
-						try:  gtk.Clipboard().set_text(self.service['url'])
+						try:  gtk.Clipboard().set_text(self.url)
 						except:
 							try:    raise CustomError(_("Could not copy URL to clipboard"))
 							except: pass
