@@ -272,18 +272,21 @@ class mintUploader(threading.Thread):
 		pct = int(pct*100)
 		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(so_far) + "     ")
 		if pct == 100: #if finished
-			sys.stdout.write("\n")
-			# Print URL
-			if self.service.has_key('url'):
-				self.progress( _("URL:") + " " + self.url)
-
-			n = config['notification']
-			# If nofications are enabled AND the file is minimal x byte in size...
-			if n['enable'] == "True" and so_far >= int(n['min_filesize']):
-				# If when_focused is true OR window has no focus
-				if n['when_focused'] == "True" or not self.focused:
-					mintNotifier().notify(_("File uploaded successfully."))
+			self.success()
 		sys.stdout.flush()
+
+	def success(self):
+		sys.stdout.write("\n")
+		# Print URL
+		if self.service.has_key('url'):
+			self.progress( _("URL:") + " " + self.url)
+
+		n = config['notification']
+		# If nofications are enabled AND the file is minimal x byte in size...
+		if n['enable'] == "True" and so_far >= int(n['min_filesize']):
+			# If when_focused is true OR window has no focus
+			if n['when_focused'] == "True" or not self.focused:
+				mintNotifier().notify(_("File uploaded successfully."))
 
 	def asciicallback(self, buffer):
 		self.so_far = self.so_far+len(buffer)-1
