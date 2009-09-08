@@ -283,7 +283,7 @@ class mintUploader(threading.Thread):
 
 		n = config['notification']
 		# If nofications are enabled AND the file is minimal x byte in size...
-		if n['enable'] == "True" and so_far >= int(n['min_filesize']):
+		if n['enable'] == "True" and self.filesize >= int(n['min_filesize']):
 			# If when_focused is true OR window has no focus
 			if n['when_focused'] == "True" or not self.focused:
 				mintNotifier().notify(_("File uploaded successfully."))
