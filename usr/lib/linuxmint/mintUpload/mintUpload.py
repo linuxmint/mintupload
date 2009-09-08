@@ -179,7 +179,8 @@ class gtkUploader(mintUploader):
 		self.focused = self.wTree.get_widget("main_window").has_toplevel_focus()
 		if not total: total = self.filesize
 		mintUploader.pct(self, so_far, total)
-		pct = float(so_far)/total
+		if total: pct = float(so_far)/total
+		else:     pct = 1.0
 		pctStr = str(int(pct * 100))
 		self.progressbar.set_fraction(pct)
 		self.progressbar.set_text(pctStr + "%")

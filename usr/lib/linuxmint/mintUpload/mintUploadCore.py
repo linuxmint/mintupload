@@ -268,7 +268,8 @@ class mintUploader(threading.Thread):
 
 	def pct(self, so_far, total=None):
 		if not total: total = self.filesize
-		pct = float(so_far)/total
+		if total: pct = float(so_far)/total
+		else:     pct = 1.0
 		pct = int(pct*100)
 		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(so_far) + "     ")
 		if pct == 100: #if finished
