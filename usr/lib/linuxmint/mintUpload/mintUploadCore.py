@@ -182,7 +182,7 @@ class mintUploader(threading.Thread):
 			self.pct(0)
 			self.so_far = 0
 			ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.asciicallback)
-			self.pct(self.filesize)
+			self.success()
 
 		finally:
 			# Close any open connections
@@ -256,7 +256,7 @@ class mintUploader(threading.Thread):
 			if received == 1:
 				scp.sendline(' ')
 				raise ConnectionError(_("This service requires a password."))
-			self.pct(self.filesize)
+			self.success()
 
 		finally:
 			# Close any open connections
