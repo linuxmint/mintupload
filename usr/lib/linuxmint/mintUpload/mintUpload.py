@@ -48,7 +48,7 @@ class gtkErrorObserver:
 
 	def error(self, err):
 		context_id = self.statusbar.get_context_id("mintUpload")
-		message = "<span color='red'>" + err.detail + "</span>"
+		message = "<span color='red'>" + err.message + "</span>"
 		self.statusbar.push(context_id, message)
 		self.statusbar.get_children()[0].get_children()[0].set_use_markup(True)
 
