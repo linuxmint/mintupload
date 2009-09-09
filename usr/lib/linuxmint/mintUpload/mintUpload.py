@@ -159,8 +159,8 @@ class gtkUploader(mintUploader):
 
 		try:
 			self.upload()
-		except:
-			try:    raise CustomError(_("Upload failed."))
+		except Exception as e:
+			try:    raise CustomError(_("Upload failed."), e)
 			except: pass
 		finally:
 			self.wTree.get_widget("main_window").window.set_cursor(None)
@@ -200,8 +200,8 @@ class gtkUploader(mintUploader):
 				# If when_unfocused is true OR window has focus
 				if config['clipboard']['when_unfocused'] == "True" or self.wTree.get_widget("main_window").has_toplevel_focus():
 					try:  gtk.Clipboard().set_text(self.url)
-					except:
-						try:    raise CustomError(_("Could not copy URL to clipboard"))
+					except Exception as e:
+						try:    raise CustomError(_("Could not copy URL to clipboard"), e)
 						except: pass
 					else: self.progress(_("Copied URL to clipboard"))
 
@@ -650,8 +650,8 @@ class servicesWindow:
 			s = Service(file)
 			s.merge(config)
 			s.write()
-		except:
-			try:    raise CustomError(_("Could not save configuration change"))
+		except Exception as e:
+			try:    raise CustomError(_("Could not save configuration change"), e)
 			except: pass
 
 

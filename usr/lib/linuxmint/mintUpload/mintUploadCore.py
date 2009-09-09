@@ -131,8 +131,8 @@ class mintSpaceChecker(threading.Thread):
 				spaceInfo = spaceInfo.split("/")
 				self.available = int(spaceInfo[0])
 				self.total = int(spaceInfo[1])
-			except:
-				raise ConnectionError(_("Could not get available space"))
+			except Exception as e:
+				raise ConnectionError(_("Could not get available space"), e)
 
 			if self.filesize > self.available:
 				raise FilesizeError(_("File larger than service's available space"))
