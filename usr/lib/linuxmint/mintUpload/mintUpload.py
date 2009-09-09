@@ -111,12 +111,8 @@ class gtkSpaceChecker(mintSpaceChecker):
 			try:
 				self.check()
 
-			except ConnectionError:
-				self.statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
-
-			except FilesizeError:
-				self.statusbar.push(context_id, "<span color='red'>" + _("File too big or not enough space on the service.") + "</span>")
-				self.display_space()
+			except ConnectionError: pass # already reported
+			except FilesizeError:   self.display_space()
 
 			else:
 				self.display_space()
