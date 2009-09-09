@@ -356,8 +356,9 @@ class mintUploadWindow:
 		dlg.set_comments(menuName)
 		try:
 			dlg.set_license(open('/usr/share/common-licenses/GPL').read())
-		except Exception, detail:
-		    print detail
+		except:
+			try:    raise CustomError(_('Could not find GPL'))
+			except: pass
 
 		dlg.set_authors([
 			"Clement Lefebvre <root@linuxmint.com>",
