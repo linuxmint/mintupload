@@ -356,8 +356,8 @@ class mintUploadWindow:
 		dlg.set_comments(menuName)
 		try:
 			dlg.set_license(open('/usr/share/common-licenses/GPL').read())
-		except:
-			try:    raise CustomError(_('Could not find GPL'))
+		except Exception as e:
+			try:    raise CustomError(_('Could not find GPL'), e)
 			except: pass
 
 		dlg.set_authors([
