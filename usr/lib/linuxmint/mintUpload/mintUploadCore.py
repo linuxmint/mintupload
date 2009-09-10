@@ -136,28 +136,33 @@ class mintSpaceChecker(threading.Thread):
 class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
 
-	def __init__(self, service, file):
+	def __init__(self, service, files):
 		threading.Thread.__init__(self)
 		service = service.for_upload()
 		self.service = service
-		self.file = file
-		self.name = os.path.basename(self.file)
-		self.filesize = os.path.getsize(self.file)
 		self.focused = True
-		if self.service.has_key('url'):
-			url = self.service['url'].replace('<FILE>', self.name)
-			self.url = url.replace(' ', '%20')
+		self.files = files
 
 		# Switch to required connect function, depending on service
-		self.upload = {
+		self.uploader = {
 			'MINT': self._ftp, # For backwards compatiblity
 			'FTP' : self._ftp,
 			'SFTP': self._sftp,
 			'SCP' : self._scp}[self.service['type']]
 
 	def run(self):
-		self.upload()
+		for f in self.files:
+			self.upload(f)
 		self.progress( _("File uploaded successfully."))
+
+	def upload(self, file):
+		self.file = file
+		self.name = os.path.basename(self.file)
+		self.filesize = os.path.getsize(self.file)
+		if self.service.has_key('url'):
+			url = self.service['url'].replace('<FILE>', self.name)
+			self.url = url.replace(' ', '%20')
+		self.uploader()
 
 	def _ftp(self):
 		'''Connection process for FTP services'''
