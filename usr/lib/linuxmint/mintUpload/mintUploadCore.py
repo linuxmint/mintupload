@@ -160,6 +160,7 @@ class mintUploader(threading.Thread):
 		self.name = os.path.basename(self.file)
 		self.filesize = os.path.getsize(self.file)
 		self.uploader()
+		self.success()
 
 	def _ftp(self):
 		'''Connection process for FTP services'''
@@ -184,7 +185,6 @@ class mintUploader(threading.Thread):
 			self.pct(0)
 			self.so_far = 0
 			ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.asciicallback)
-			self.success()
 
 		finally:
 			# Close any open connections
@@ -226,7 +226,6 @@ class mintUploader(threading.Thread):
 			self.progress(_("Uploading the file..."))
 			self.pct(0)
 			sftp.put(self.file, path + self.name, self.pct)
-			self.success()
 
 		finally:
 			# Close any open connections
@@ -259,7 +258,6 @@ class mintUploader(threading.Thread):
 			if received == 1:
 				scp.sendline(' ')
 				raise ConnectionError(_("This service requires a password."))
-			self.success()
 
 		finally:
 			# Close any open connections
