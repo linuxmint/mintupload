@@ -141,8 +141,8 @@ class gtkSpaceChecker(mintSpaceChecker):
 class gtkUploader(mintUploader):
 	'''Wrapper for the gtk management of mintUploader'''
 
-	def __init__(self, service, file, progressbar, statusbar, wTree):
-		mintUploader.__init__(self, service, file)
+	def __init__(self, service, files, progressbar, statusbar, wTree):
+		mintUploader.__init__(self, service, files)
 		self.progressbar = progressbar
 		self.statusbar = statusbar
 		self.wTree = wTree
@@ -153,13 +153,14 @@ class gtkUploader(mintUploader):
 		self.wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 		self.wTree.get_widget("frame_progress").show()
 
-		try:
-			self.upload()
-		except:
-			try:    raise CustomError(_("Upload failed."))
-			except: pass
-		finally:
-			self.wTree.get_widget("main_window").window.set_cursor(None)
+		for f in self.files:
+			try:
+				self.upload(f)
+			except:
+				try:    raise CustomError(_("Upload failed."))
+				except: pass
+
+		self.wTree.get_widget("main_window").window.set_cursor(None)
 
 	def progress(self, message, color=None):
 		context_id = self.statusbar.get_context_id("mintUpload")
@@ -421,12 +422,8 @@ class mintUploadWindow:
 	def upload(self, widget):
 		'''Start the upload process'''
 
-		f = self.filenames.pop()
-		uploader = gtkUploader(self.selected_service, f, self.progressbar, self.statusbar, self.wTree)
+		uploader = gtkUploader(self.selected_service, self.filenames, self.progressbar, self.statusbar, self.wTree)
 		uploader.start()
-		for onefile in self.filenames:
-			uploader = gtkUploader(self.selected_service, onefile, gtk.ProgressBar(), gtk.Statusbar(), self.wTree)
-			uploader.start()
 		return True
 
 
