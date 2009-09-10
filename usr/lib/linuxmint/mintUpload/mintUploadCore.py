@@ -159,6 +159,7 @@ class mintUploader(threading.Thread):
 		self.file = file
 		self.name = os.path.basename(self.file)
 		self.filesize = os.path.getsize(self.file)
+		self.pct(0)
 		self.uploader()
 		self.success()
 
@@ -182,7 +183,6 @@ class mintUploader(threading.Thread):
 
 			f = open(self.file, "rb")
 			self.progress(_("Uploading the file..."))
-			self.pct(0)
 			self.so_far = 0
 			ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.asciicallback)
 
@@ -224,7 +224,6 @@ class mintUploader(threading.Thread):
 
 			sftp = paramiko.SFTPClient.from_transport(transport)
 			self.progress(_("Uploading the file..."))
-			self.pct(0)
 			sftp.put(self.file, path + self.name, self.pct)
 
 		finally:
@@ -253,7 +252,6 @@ class mintUploader(threading.Thread):
 			self.progress(self.service['type'] + " " + _("connection successfully established"))
 
 			scp.timeout = None
-			self.pct(0)
 			received = scp.expect(['.*100\%.*','.*password:.*',pexpect.EOF])
 			if received == 1:
 				scp.sendline(' ')
