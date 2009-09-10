@@ -138,7 +138,7 @@ class mintUploader(threading.Thread):
 
 	def __init__(self, service, file):
 		threading.Thread.__init__(self)
-		service = service.for_upload(file)
+		service = service.for_upload()
 		self.service = service
 		self.file = file
 		self.name = os.path.basename(self.file)
@@ -392,7 +392,7 @@ class Service(ConfigObj):
 			if self.has_key(k):
 				self[k] = int(self[k])
 
-	def for_upload(self, file):
+	def for_upload(self):
 		'''Prepare a service for uploading'''
 
 		s = defaults
