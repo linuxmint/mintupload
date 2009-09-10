@@ -159,9 +159,6 @@ class mintUploader(threading.Thread):
 		self.file = file
 		self.name = os.path.basename(self.file)
 		self.filesize = os.path.getsize(self.file)
-		if self.service.has_key('url'):
-			url = self.service['url'].replace('<FILE>', self.name)
-			self.url = url.replace(' ', '%20')
 		self.uploader()
 
 	def _ftp(self):
@@ -285,6 +282,8 @@ class mintUploader(threading.Thread):
 		sys.stdout.write("\n")
 		# Print URL
 		if self.service.has_key('url'):
+			url = self.service['url'].replace('<FILE>', self.name)
+			self.url = url.replace(' ', '%20')
 			self.progress( _("URL:") + " " + self.url)
 
 		n = config['notification']
