@@ -226,6 +226,7 @@ class mintUploader(threading.Thread):
 			self.progress(_("Uploading the file..."))
 			self.pct(0)
 			sftp.put(self.file, path + self.name, self.pct)
+			self.success()
 
 		finally:
 			# Close any open connections
@@ -274,8 +275,6 @@ class mintUploader(threading.Thread):
 		else:     pct = 1.0
 		pct = int(pct*100)
 		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(so_far) + "     ")
-		if pct == 100: #if finished
-			self.success()
 		sys.stdout.flush()
 
 	def success(self):
