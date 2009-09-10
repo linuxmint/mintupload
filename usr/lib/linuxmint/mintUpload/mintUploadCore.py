@@ -271,6 +271,7 @@ class mintUploader(threading.Thread):
 		pct = int(pct*100)
 		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(so_far) + "     ")
 		sys.stdout.flush()
+		return pct
 
 	def success(self):
 		self.pct(self.filesize)
