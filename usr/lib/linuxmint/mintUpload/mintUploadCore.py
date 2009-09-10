@@ -156,14 +156,13 @@ class mintUploader(threading.Thread):
 		self.progress( _("File uploaded successfully."))
 
 	def upload(self, file):
-		self.file = file
-		self.name = os.path.basename(self.file)
-		self.filesize = os.path.getsize(self.file)
+		self.name = os.path.basename(file)
+		self.filesize = os.path.getsize(file)
 		self.pct(0)
-		self.uploader()
+		self.uploader(file)
 		self.success()
 
-	def _ftp(self):
+	def _ftp(self, file):
 		'''Connection process for FTP services'''
 
 		if not self.service.has_key('port'):
@@ -181,7 +180,7 @@ class mintUploader(threading.Thread):
 				except:	pass
 				ftp.cwd(dir)
 
-			f = open(self.file, "rb")
+			f = open(file, "rb")
 			self.progress(_("Uploading the file..."))
 			self.so_far = 0
 			ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.asciicallback)
@@ -200,7 +199,7 @@ class mintUploader(threading.Thread):
 			if os.path.exists(f):
 				return paramiko.RSAKey.from_private_key_file(f)
 
-	def _sftp(self):
+	def _sftp(self, file):
 		'''Connection process for SFTP services'''
 
 		if not self.service['pass']:
@@ -224,7 +223,7 @@ class mintUploader(threading.Thread):
 
 			sftp = paramiko.SFTPClient.from_transport(transport)
 			self.progress(_("Uploading the file..."))
-			sftp.put(self.file, path + self.name, self.pct)
+			sftp.put(file, path + self.name, self.pct)
 
 		finally:
 			# Close any open connections
@@ -233,14 +232,14 @@ class mintUploader(threading.Thread):
 			try:	transport.close()
 			except:	pass
 
-	def _scp(self):
+	def _scp(self, file):
 		'''Connection process for SCP services'''
 
 		if not self.service.has_key('port'):
 			self.service['port'] = 22
 		try:
 			# Attempting to connect
-			self.service['file'] = self.file
+			self.service['file'] = file
 			scp_cmd = "scp -P %(port)i %(file)s %(user)s@%(host)s:%(path)s"%self.service
 			scp = pexpect.spawn(scp_cmd)
 
