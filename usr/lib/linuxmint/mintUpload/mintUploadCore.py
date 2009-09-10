@@ -278,6 +278,7 @@ class mintUploader(threading.Thread):
 		sys.stdout.flush()
 
 	def success(self):
+		self.pct(self.filesize)
 		sys.stdout.write("\n")
 		# Print URL
 		if self.service.has_key('url'):
