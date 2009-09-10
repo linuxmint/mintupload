@@ -154,6 +154,8 @@ class gtkUploader(mintUploader):
 		self.wTree.get_widget("frame_progress").show()
 
 		for f in self.files:
+			self.wTree.get_widget("label190").show()
+			self.progressbar.show()
 			try:
 				self.upload(f)
 			except:
