@@ -1,3 +1,13 @@
+mintupload (3.7.4) helena; urgency=low
+
+  * more detailed error messages in terminal
+  * multiuploads are now single-threaded
+  * fixed multiupload url reporting
+  * removing backwards compatible messages
+  * misc fixes
+
+ -- Philip Morrell <mintupload.emorrp1@mamber.net>  Thu, 10 Sep 2009 12:33:03 +0100
+
 mintupload (3.7.3) helena; urgency=low
 
   * fixing gettext bug preventing startup
