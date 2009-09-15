@@ -44,9 +44,9 @@ class gtkErrorObserver:
 	def __init__(self, statusbar):
 		self.statusbar = statusbar
 
-	def error(self, type, detail):
+	def error(self, err):
 		context_id = self.statusbar.get_context_id("mintUpload")
-		message = "<span color='red'>" + detail + "</span>"
+		message = "<span color='red'>" + err.summary + "</span>"
 		self.statusbar.push(context_id, message)
 		self.statusbar.get_children()[0].get_children()[0].set_use_markup(True)
 
@@ -109,12 +109,8 @@ class gtkSpaceChecker(mintSpaceChecker):
 			try:
 				self.check()
 
-			except ConnectionError:
-				self.statusbar.push(context_id, "<span color='red'>" + _("Could not connect to the service.") + "</span>")
-
-			except FilesizeError:
-				self.statusbar.push(context_id, "<span color='red'>" + _("File too big or not enough space on the service.") + "</span>")
-				self.display_space()
+			except ConnectionError: pass # already reported
+			except FilesizeError:   self.display_space()
 
 			else:
 				self.display_space()
@@ -143,8 +139,8 @@ class gtkSpaceChecker(mintSpaceChecker):
 class gtkUploader(mintUploader):
 	'''Wrapper for the gtk management of mintUploader'''
 
-	def __init__(self, service, file, progressbar, statusbar, wTree):
-		mintUploader.__init__(self, service, file)
+	def __init__(self, service, files, progressbar, statusbar, wTree):
+		mintUploader.__init__(self, service, files)
 		self.progressbar = progressbar
 		self.statusbar = statusbar
 		self.wTree = wTree
@@ -155,36 +151,16 @@ class gtkUploader(mintUploader):
 		self.wTree.get_widget("main_window").window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 		self.wTree.get_widget("frame_progress").show()
 
-		try:
-			self.upload()
-		except:
-			try:    raise CustomError(_("Upload failed."))
-			except: pass
+		for f in self.files:
+			self.wTree.get_widget("label190").show()
+			self.progressbar.show()
+			try:
+				self.upload(f)
+			except Exception as e:
+				try:    raise CustomError(_("Upload failed."), e)
+				except: pass
 
-		else:
-			#If service is Mint then show the URL
-			if self.service.has_key('url'):
-				self.wTree.get_widget("txt_url").set_text(self.service['url'])
-				self.progressbar.hide()
-				self.wTree.get_widget("label190").hide()
-				self.wTree.get_widget("txt_url").show()
-				self.wTree.get_widget("lbl_url").show()
-
-				# Autocopy URL
-				if config['clipboard']['autocopy'] == "True":
-					# If when_unfocused is true OR window has focus
-					if config['clipboard']['when_unfocused'] == "True" or self.wTree.get_widget("main_window").has_toplevel_focus():
-						try:  gtk.Clipboard().set_text(self.service['url'])
-						except:
-							try:    raise CustomError(_("Could not copy URL to clipboard"))
-							except: pass
-						else: self.progress(_("Copied URL to clipboard"))
-
-			# Report success
-			self.progress(_("File uploaded successfully."), "green")
-
-		finally:
-			self.wTree.get_widget("main_window").window.set_cursor(None)
+		self.wTree.get_widget("main_window").window.set_cursor(None)
 
 	def progress(self, message, color=None):
 		context_id = self.statusbar.get_context_id("mintUpload")
@@ -198,12 +174,32 @@ class gtkUploader(mintUploader):
 
 	def pct(self, so_far, total=None):
 		self.focused = self.wTree.get_widget("main_window").has_toplevel_focus()
-		if not total: total = self.filesize
-		mintUploader.pct(self, so_far, total)
-		pct = float(so_far)/total
-		pctStr = str(int(pct * 100))
-		self.progressbar.set_fraction(pct)
-		self.progressbar.set_text(pctStr + "%")
+		pct = mintUploader.pct(self, so_far, total)
+		self.progressbar.set_fraction(float(pct)/100)
+		self.progressbar.set_text(str(pct) + "%")
+
+	def success(self):
+		mintUploader.success(self)
+		#If necessary, show the URL
+		if self.service.has_key('url'):
+			self.wTree.get_widget("txt_url").set_text(self.url)
+			self.progressbar.hide()
+			self.wTree.get_widget("label190").hide()
+			self.wTree.get_widget("txt_url").show()
+			self.wTree.get_widget("lbl_url").show()
+
+			# Autocopy URL
+			if config['clipboard']['autocopy'] == "True":
+				# If when_unfocused is true OR window has focus
+				if config['clipboard']['when_unfocused'] == "True" or self.wTree.get_widget("main_window").has_toplevel_focus():
+					try:  gtk.Clipboard().set_text(self.url)
+					except Exception as e:
+						try:    raise CustomError(_("Could not copy URL to clipboard"), e)
+						except: pass
+					else: self.progress(_("Copied URL to clipboard"))
+
+		# Report success
+		self.progress(_("File uploaded successfully."), "green")
 
 
 
@@ -356,15 +352,10 @@ class mintUploadWindow:
 		dlg.set_program_name("mintUpload")
 		dlg.set_comments(menuName)
 		try:
-		    h = open('/usr/share/common-licenses/GPL')
-		    s = h.readlines()
-		    gpl = ""
-		    for line in s:
-		    	gpl += line
-		    h.close()
-		    dlg.set_license(gpl)
-		except Exception, detail:
-		    print detail
+			dlg.set_license(open('/usr/share/common-licenses/GPL').read())
+		except Exception as e:
+			try:    raise CustomError(_('Could not find GPL'), e)
+			except: pass
 
 		dlg.set_authors([
 			"Clement Lefebvre <root@linuxmint.com>",
@@ -427,12 +418,8 @@ class mintUploadWindow:
 	def upload(self, widget):
 		'''Start the upload process'''
 
-		f = self.filenames.pop()
-		uploader = gtkUploader(self.selected_service, f, self.progressbar, self.statusbar, self.wTree)
+		uploader = gtkUploader(self.selected_service, self.filenames, self.progressbar, self.statusbar, self.wTree)
 		uploader.start()
-		for onefile in self.filenames:
-			uploader = gtkUploader(self.selected_service, onefile, gtk.ProgressBar(), gtk.Statusbar(), self.wTree)
-			uploader.start()
 		return True
 
 
@@ -653,8 +640,8 @@ class servicesWindow:
 			s = Service(file)
 			s.merge(config)
 			s.write()
-		except:
-			try:    raise CustomError(_("Could not save configuration change"))
+		except Exception as e:
+			try:    raise CustomError(_("Could not save configuration change"), e)
 			except: pass
 
 

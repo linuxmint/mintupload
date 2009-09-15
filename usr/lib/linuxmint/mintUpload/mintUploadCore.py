@@ -37,10 +37,13 @@ class CustomError(Exception):
 
 	observers = []
 
-	def __init__(self, detail):
-		type = self.__class__.__name__
+	def __init__(self, summary, err=None):
+		self.type = self.__class__.__name__
+		self.summary = summary
+		if err: self.detail = repr(err)
+		else:   self.detail = ''
 		for observer in self.observers:
-			observer.error(type, detail)
+			observer.error(self)
 
 	@classmethod
 	def addObserver(cls, observer):
@@ -50,8 +53,11 @@ class CustomError(Exception):
 
 class cliErrorObserver:
 	'''All custom defined errors, using stderr'''
-	def error(self, type, detail):
-		sys.stderr.write(os.linesep + type + ': ' + detail + os.linesep*2)
+	def error(self, err):
+		sys.stderr.write(os.linesep + err.type + ': ' + err.summary)
+		if err.detail:
+			sys.stderr.write(os.linesep + '\tDetail: ' + err.detail)
+		sys.stderr.write(os.linesep*2)
 
 CustomError.addObserver(cliErrorObserver())
 
@@ -127,8 +133,8 @@ class mintSpaceChecker(threading.Thread):
 				spaceInfo = spaceInfo.split("/")
 				self.available = int(spaceInfo[0])
 				self.total = int(spaceInfo[1])
-			except:
-				raise ConnectionError(_("Could not get available space"))
+			except Exception as e:
+				raise ConnectionError(_("Could not get available space"), e)
 
 			if self.filesize > self.available:
 				raise FilesizeError(_("File larger than service's available space"))
@@ -138,27 +144,32 @@ class mintSpaceChecker(threading.Thread):
 class mintUploader(threading.Thread):
 	'''Uploads the file to the selected service'''
 
-	def __init__(self, service, file):
+	def __init__(self, service, files):
 		threading.Thread.__init__(self)
-		service = service.for_upload(file)
+		service = service.for_upload()
 		self.service = service
-		self.file = file
-		self.name = os.path.basename(self.file)
-		self.filesize = os.path.getsize(self.file)
 		self.focused = True
+		self.files = files
 
 		# Switch to required connect function, depending on service
-		self.upload = {
+		self.uploader = {
 			'MINT': self._ftp, # For backwards compatiblity
 			'FTP' : self._ftp,
 			'SFTP': self._sftp,
 			'SCP' : self._scp}[self.service['type']]
 
 	def run(self):
-		self.upload()
+		for f in self.files:
+			self.upload(f)
 		self.progress( _("File uploaded successfully."))
 
-	def _ftp(self):
+	def upload(self, file):
+		self.name = os.path.basename(file)
+		self.filesize = os.path.getsize(file)
+		self.uploader(file)
+		self.success()
+
+	def _ftp(self, file):
 		'''Connection process for FTP services'''
 
 		if not self.service.has_key('port'):
@@ -176,12 +187,11 @@ class mintUploader(threading.Thread):
 				except:	pass
 				ftp.cwd(dir)
 
-			f = open(self.file, "rb")
+			f = open(file, "rb")
 			self.progress(_("Uploading the file..."))
 			self.pct(0)
 			self.so_far = 0
 			ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.asciicallback)
-			self.pct(self.filesize)
 
 		finally:
 			# Close any open connections
@@ -197,7 +207,7 @@ class mintUploader(threading.Thread):
 			if os.path.exists(f):
 				return paramiko.RSAKey.from_private_key_file(f)
 
-	def _sftp(self):
+	def _sftp(self, file):
 		'''Connection process for SFTP services'''
 
 		if not self.service['pass']:
@@ -222,7 +232,7 @@ class mintUploader(threading.Thread):
 			sftp = paramiko.SFTPClient.from_transport(transport)
 			self.progress(_("Uploading the file..."))
 			self.pct(0)
-			sftp.put(self.file, path + self.name, self.pct)
+			sftp.put(file, path + self.name, self.pct)
 
 		finally:
 			# Close any open connections
@@ -231,14 +241,14 @@ class mintUploader(threading.Thread):
 			try:	transport.close()
 			except:	pass
 
-	def _scp(self):
+	def _scp(self, file):
 		'''Connection process for SCP services'''
 
 		if not self.service.has_key('port'):
 			self.service['port'] = 22
 		try:
 			# Attempting to connect
-			self.service['file'] = self.file
+			self.service['file'] = file
 			scp_cmd = "scp -P %(port)i %(file)s %(user)s@%(host)s:%(path)s"%self.service
 			scp = pexpect.spawn(scp_cmd)
 
@@ -255,7 +265,6 @@ class mintUploader(threading.Thread):
 			if received == 1:
 				scp.sendline(' ')
 				raise ConnectionError(_("This service requires a password."))
-			self.pct(self.filesize)
 
 		finally:
 			# Close any open connections
@@ -267,22 +276,28 @@ class mintUploader(threading.Thread):
 
 	def pct(self, so_far, total=None):
 		if not total: total = self.filesize
-		pct = float(so_far)/total
+		if total: pct = float(so_far)/total
+		else:     pct = 1.0
 		pct = int(pct*100)
 		sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(so_far) + "     ")
-		if pct == 100: #if finished
-			sys.stdout.write("\n")
-			# Print URL
-			if self.service.has_key('url'):
-				self.progress( _("URL:") + " " + self.service['url'])
-
-			n = config['notification']
-			# If nofications are enabled AND the file is minimal x byte in size...
-			if n['enable'] == "True" and so_far >= int(n['min_filesize']):
-				# If when_focused is true OR window has no focus
-				if n['when_focused'] == "True" or not self.focused:
-					mintNotifier().notify(_("File uploaded successfully."))
 		sys.stdout.flush()
+		return pct
+
+	def success(self):
+		self.pct(self.filesize)
+		sys.stdout.write("\n")
+		# Print URL
+		if self.service.has_key('url'):
+			url = self.service['url'].replace('<FILE>', self.name)
+			self.url = url.replace(' ', '%20')
+			self.progress( _("URL:") + " " + self.url)
+
+		n = config['notification']
+		# If nofications are enabled AND the file is minimal x byte in size...
+		if n['enable'] == "True" and self.filesize >= int(n['min_filesize']):
+			# If when_focused is true OR window has no focus
+			if n['when_focused'] == "True" or not self.focused:
+				mintNotifier().notify(_("File uploaded successfully."))
 
 	def asciicallback(self, buffer):
 		self.so_far = self.so_far+len(buffer)-1
@@ -387,7 +402,7 @@ class Service(ConfigObj):
 			if self.has_key(k):
 				self[k] = int(self[k])
 
-	def for_upload(self, file):
+	def for_upload(self):
 		'''Prepare a service for uploading'''
 
 		s = defaults
@@ -400,7 +415,6 @@ class Service(ConfigObj):
 		if s.has_key('url'):
 			url_replace = {
 				'<TIMESTAMP>':timestamp,
-				'<FILE>':os.path.basename(file),
 				'<PATH>':s['path']
 			}
 			url = s['url']
