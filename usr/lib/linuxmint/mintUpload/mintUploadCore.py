@@ -23,7 +23,7 @@ from configobj import ConfigObj
 
 
 
-VERSION = "3.7.3"
+VERSION = "3.7.4"
 __version__ = VERSION
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
