@@ -35,20 +35,18 @@ def cliUpload(filenames, servicename=None):
 	for service in services:
 		if service['name'] == servicename:
 			from os.path import getsize, normpath
-			for filename in filenames:
-				filename = normpath(filename)
-				# Check there is enough space on the service, ignore threading
-				filesize = getsize(filename)
-				checker = mintSpaceChecker(service, filesize)
-				try:    proceed = checker.run()
-				except: raise CustomError(_("Upload failed."))
+			filesize = 0
+			for onefile in filenames:
+				onefile = normpath(onefile)
+				filesize += getsize(onefile)
+			print _('Size:') + ' ' + sizeStr(filesize)
 
-				if proceed:
-					# Upload
-					uploader = mintUploader(service, filename)
-					uploader.start()
-				else:
-					raise CustomError(_("Upload failed."))
+			checker = mintSpaceChecker(service, filesize)
+			if checker.run():
+				uploader = mintUploader(service, filenames)
+				uploader.start()
+			else:
+				raise CustomError(_("Upload failed."))
 
 
 
