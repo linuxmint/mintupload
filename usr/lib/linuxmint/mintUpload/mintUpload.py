@@ -25,8 +25,9 @@ try:
 	import gettext
 	import commands
 	from mintUploadCore import *
-except:
+except Exception as e:
 	print "You do not have all the dependencies!"
+	print str(e)
 	sys.exit(1)
 
 

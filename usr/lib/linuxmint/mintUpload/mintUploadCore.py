@@ -18,6 +18,8 @@ import paramiko
 import pexpect
 import threading
 import pynotify
+import logging , logging.handlers
+
 from user import home
 from configobj import ConfigObj
 
@@ -42,6 +44,8 @@ class CustomError(Exception):
 		self.summary = summary
 		if err: self.detail = repr(err)
 		else:   self.detail = ''
+		log.critical(summary)
+		log.info(detail)
 		for observer in self.observers:
 			observer.error(self)
 
@@ -146,6 +150,10 @@ class mintUploader(threading.Thread):
 
 	def __init__(self, service, files):
 		threading.Thread.__init__(self)
+		if service.has_key('url'):
+			log.info("uploading " + file + " to " + service['host'] + " available under " + service['url'])
+		else:
+			log.info("uploading " + file + " to " + service['host'])
 		service = service.for_upload()
 		self.service = service
 		self.focused = True
@@ -272,6 +280,7 @@ class mintUploader(threading.Thread):
 			except:	pass
 
 	def progress(self, message):
+		log.info(message)
 		print message
 
 	def pct(self, so_far, total=None):
@@ -308,7 +317,7 @@ class mintUploader(threading.Thread):
 
 def read_services():
 	'''Get all defined services'''
-
+	log.debug("reading services")
 	services = []
 	for loc, path in config_paths.iteritems():
 		os.system("mkdir -p " + path)
@@ -327,6 +336,8 @@ def read_services():
 ICONFILE = "/usr/lib/linuxmint/mintUpload/icon.svg"
 CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
 CONFIGFILE_USER = home + '/.linuxmint/mintUpload.conf'
+LOGFILE = home + '/.linuxmint/mintUpload.log'
+LINUXMINTDIR = home + 	'/.linuxmint'
 
 config = ConfigObj(CONFIGFILE_GLOBAL)
 if os.path.exists(CONFIGFILE_USER):
@@ -346,7 +357,17 @@ config_paths['user'] = config_paths['user'].replace('<HOME>',home)
 defaults = config['defaults']
 defaults['user'] = defaults['user'].replace('<USER>',os.environ['LOGNAME'])
 
+if not os.path.exists(LINUXMINTDIR):
+	os.makedirs(LINUXMINTDIR)
+log = logging.getLogger("")
+os.popen("touch %s"%LOGFILE)
+hdlr = logging.handlers.RotatingFileHandler(LOGFILE, "a", 1000000, 3)
+fmt = logging.Formatter("%(asctime)s %(message)s", "%x %X")
+hdlr.setFormatter(fmt)
+log.addHandler(hdlr)
+log.setLevel(logging.DEBUG) #set verbosity to show all messages of severity >= DEBUG
 
+log.debug("logging initialized, continue starting mintupload(!!)")
 
 class Service(ConfigObj):
 	'''Object representing an upload service'''
