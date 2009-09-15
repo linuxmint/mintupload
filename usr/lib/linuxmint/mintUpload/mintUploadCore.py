@@ -27,6 +27,8 @@ VERSION = "3.7.4"
 __version__ = VERSION
 # i18n
 gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
+menuName = _("File Uploader")
+menuComment = _("Upload files to the internet")
 
 
 
