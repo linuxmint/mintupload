@@ -150,10 +150,6 @@ class mintUploader(threading.Thread):
 
 	def __init__(self, service, files):
 		threading.Thread.__init__(self)
-		if service.has_key('url'):
-			log.info("uploading " + file + " to " + service['host'] + " available under " + service['url'])
-		else:
-			log.info("uploading " + file + " to " + service['host'])
 		service = service.for_upload()
 		self.service = service
 		self.focused = True
@@ -174,6 +170,11 @@ class mintUploader(threading.Thread):
 	def upload(self, file):
 		self.name = os.path.basename(file)
 		self.filesize = os.path.getsize(file)
+		message = "uploading " + file + " to " + self.service['host']
+		if self.service.has_key('url'):
+			url = self.service['url'].replace('<FILE>', self.name)
+			message += " available under " + url
+		log.info(message)
 		self.uploader(file)
 		self.success()
 
