@@ -1,10 +1,10 @@
 [Desktop Entry]
-Name=Upload Manager
+Name=File Uploader
 Comment=Upload files on the Internet
-Exec=mintupload-manager
+Exec=mintupload-file-uploader
 Icon=/usr/lib/linuxmint/mintUpload/icon.svg
 Terminal=false
 Type=Application
 Encoding=UTF-8
-Categories=Application;System;Settings
+Categories=Application;Utility
 StartupNotify=false

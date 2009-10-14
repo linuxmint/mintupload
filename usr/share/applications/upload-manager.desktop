@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Upload Manager
+Comment=Define upload services
+Exec=mintupload-manager
+Icon=/usr/lib/linuxmint/mintUpload/icon.svg
+Terminal=false
+Type=Application
+Encoding=UTF-8
+Categories=Application;System;Settings
+StartupNotify=false
