@@ -34,11 +34,7 @@ except:
 gtk.gdk.threads_init()
 __version__ = VERSION
 # i18n
-gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
-menuName = _("File Uploader")
-menuComment = _("Upload files to the internet")
-
-
+gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
 class gtkErrorObserver:
 	'''All custom defined errors, using the statusbar'''

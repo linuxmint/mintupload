@@ -8,12 +8,11 @@ pygtk.require("2.0")
 from mintUploadCore import *
 
 # i18n
-gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
+gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
 # i18n for menu item
 menuName = _("Upload Manager")
-menuGenericName = _("File Uploader")
-menuComment = _("Upload files on the Internet")
+menuComment = _("Define upload services")
 
 
 class ManagerWindow:

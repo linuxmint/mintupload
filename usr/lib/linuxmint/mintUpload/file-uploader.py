@@ -12,7 +12,10 @@ from pyinotify import WatchManager, Notifier, ThreadedNotifier, EventsCodes, Pro
 import threading
 
 # i18n
-gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
+gettext.install("mintupload", "/usr/share/linuxmint/locale")
+
+menuName = _("File Uploader")
+menuComment = _("Upload files on the Internet")
 
 class NotifyThread(threading.Thread):
 	def __init__(self, mainClass):

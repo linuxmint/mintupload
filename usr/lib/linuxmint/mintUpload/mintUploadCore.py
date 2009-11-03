@@ -25,10 +25,9 @@ from configobj import ConfigObj
 
 VERSION = "3.7.4"
 __version__ = VERSION
+
 # i18n
-gettext.install("messages", "/usr/lib/linuxmint/mintUpload/locale")
-
-
+gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
 class CustomError(Exception):
 	'''All custom defined errors'''
@@ -46,7 +45,6 @@ class CustomError(Exception):
 	@classmethod
 	def addObserver(cls, observer):
 		cls.observers.append(observer)
-
 
 
 class cliErrorObserver:
