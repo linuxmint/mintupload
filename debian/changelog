@@ -1,3 +1,10 @@
+mintupload (3.7.5) helena; urgency=low
+
+  * New GUI, functional for Mint 8.
+  * Lost support for url, will have to be added again.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 3 Nov 2009 17:51:00 +0000
+
 mintupload (3.7.4) helena; urgency=low
 
   * more detailed error messages in terminal

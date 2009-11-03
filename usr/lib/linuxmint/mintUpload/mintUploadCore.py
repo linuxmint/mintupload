@@ -159,6 +159,7 @@ class mintUploader(threading.Thread):
 			self.upload(f)
 		self.progress( _("File uploaded successfully."))
 
+
 	def upload(self, file):
 		self.name = os.path.basename(file)
 		self.filesize = os.path.getsize(file)

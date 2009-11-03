@@ -8,7 +8,8 @@ pygtk.require("2.0")
 import gettext
 import time
 from mintUploadCore import *
-from pyinotify import WatchManager, Notifier, ThreadedNotifier, EventsCodes, ProcessEvent
+import pyinotify
+from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent
 import threading
 
 # i18n
@@ -24,7 +25,7 @@ class NotifyThread(threading.Thread):
 
 	def run(self):
 		wm = WatchManager()
-		mask = EventsCodes.IN_DELETE | EventsCodes.IN_CREATE | EventsCodes.IN_MODIFY
+		mask = pyinotify.IN_DELETE | pyinotify.IN_CREATE | pyinotify.IN_MODIFY
 		notifier = Notifier(wm, PTmp(self.mainClass))
 		for loc, path in config_paths.iteritems():
 			wdd = wm.add_watch(path, mask, rec=True)
@@ -184,9 +185,17 @@ class DropZone():
 		context.finish(True, False, time)
 		return True
 
-	def drop_data_received_cb(self, widget, context, x, y, selection, targetType, time):
-		#print "Received: " + selection.data
-		os.system("mintupload " + self.service['name'] + " " + selection.data + " &")
+	def drop_data_received_cb(self, widget, context, x, y, selection, targetType, time):	
+		filenames = []
+		files = selection.data.split('\n')
+		for f in files:
+			if not f:
+				continue
+			f = f.strip()
+			f = f.replace("file://", "")
+			filenames.append(f)
+
+		os.system("mintupload \"" + self.service['name'] + "\" " + " ".join(filenames) + " &")
 
 	def destroy_cb(self, wid):
 		del self.dropZones[self.service['name']]
