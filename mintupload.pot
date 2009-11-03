@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-03 17:34+0000\n"
+"POT-Creation-Date: 2009-11-03 17:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,22 +22,27 @@ msgstr ""
 msgid "File Uploader"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:62
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:60
+#, python-format
+msgid "Uploading %(file)s to %(service)s"
+msgstr ""
+
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:64
 #, python-format
 msgid "Upload to %s failed: "
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:69
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:71
 #, python-format
 msgid "Upload to %s successful"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:110
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:112
 #, python-format
 msgid "Unknown service: %s"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:117
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:120
 #, python-format
 msgid "Uploading to %s"
 msgstr ""
