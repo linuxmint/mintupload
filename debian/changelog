@@ -1,3 +1,9 @@
+mintupload (3.7.6) helena; urgency=low
+
+  * Added /etc/linuxmint/mintUpload/services dir by default
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 12 Apr 2010 10:47:00 +0000
+
 mintupload (3.7.5) helena; urgency=low
 
   * New GUI, functional for Mint 8.
