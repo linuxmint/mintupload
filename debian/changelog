@@ -1,4 +1,4 @@
-mintupload (3.7.6) helena; urgency=low
+mintupload (3.7.6) isadora; urgency=low
 
   * Added /etc/linuxmint/mintUpload/services dir by default
 
