@@ -8,8 +8,8 @@ pygtk.require("2.0")
 import gettext
 import time
 from mintUploadCore import *
-import pyinotify
-from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent
+#import pyinotify
+#from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent
 import threading
 
 # i18n
@@ -18,48 +18,56 @@ gettext.install("mintupload", "/usr/share/linuxmint/locale")
 menuName = _("File Uploader")
 menuComment = _("Upload files on the Internet")
 
+global shutdown_flag
+shutdown_flag = False
+
 class NotifyThread(threading.Thread):
 	def __init__(self, mainClass):
 		threading.Thread.__init__(self)
 		self.mainClass = mainClass
 
 	def run(self):
-		wm = WatchManager()
-		mask = pyinotify.IN_DELETE | pyinotify.IN_CREATE | pyinotify.IN_MODIFY
-		notifier = Notifier(wm, PTmp(self.mainClass))
-		for loc, path in config_paths.iteritems():
-			wdd = wm.add_watch(path, mask, rec=True)
-		while True:  # loop forever
+		#wm = WatchManager()
+		#mask = pyinotify.IN_DELETE | pyinotify.IN_CREATE | pyinotify.IN_MODIFY
+		#notifier = Notifier(wm, PTmp(self.mainClass))
+		#for loc, path in config_paths.iteritems():
+		#	wdd = wm.add_watch(path, mask, rec=True)		
+		global shutdown_flag
+		while not shutdown_flag:
 			try:
+				time.sleep(1)
+				self.mainClass.reload_services()
 				# process the queue of events as explained above
-				notifier.process_events()
-				if notifier.check_events():
-					# read notified events and enqeue them
-					notifier.read_events()
-			except KeyboardInterrupt:
+				#notifier.process_events()
+				#if notifier.check_events():
+				#	# read notified events and enqeue them
+				#	notifier.read_events()
+			except:
 				# destroy the inotify's instance on this interrupt (stop monitoring)
-				notifier.stop()
-				break
+				#notifier.stop()
+				#break
+				pass
+		#print "out of the loop"
 
-class PTmp(ProcessEvent):
-	def __init__(self, mainClass):
-		self.mainClass = mainClass
-
-	def process_IN_CREATE(self, event):
-		#print "Create: %s" %  os.path.join(event.path, event.name)
-		self.mainClass.reload_services()
-
-	def process_IN_DELETE(self, event):
-		#print "Remove: %s" %  os.path.join(event.path, event.name)
-		self.mainClass.reload_services()
-
-	def process_IN_MODIFY(self, event):
-		#print "Modify: %s" %  os.path.join(event.path, event.name)
-		self.mainClass.reload_services()
-
-	def process_default(self, event):
-		#print "Default event on: %s" %  os.path.join(event.path, event.name)
-		self.mainClass.reload_services()
+#class PTmp(ProcessEvent):
+#	def __init__(self, mainClass):
+#		self.mainClass = mainClass
+#
+#	def process_IN_CREATE(self, event):
+#		#print "Create: %s" %  os.path.join(event.path, event.name)
+#		self.mainClass.reload_services()
+#
+#	def process_IN_DELETE(self, event):
+#		#print "Remove: %s" %  os.path.join(event.path, event.name)
+#		self.mainClass.reload_services()
+#
+#	def process_IN_MODIFY(self, event):
+#		#print "Modify: %s" %  os.path.join(event.path, event.name)
+#		self.mainClass.reload_services()
+#
+#	def process_default(self, event):
+#		#print "Default event on: %s" %  os.path.join(event.path, event.name)
+#		self.mainClass.reload_services()
 
 class MainClass:
 
@@ -105,8 +113,7 @@ class MainClass:
 		menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
 		menuItem.connect('activate', self.quit_cb)
 		self.menu.append(menuItem)
-		self.menu.show_all()
-		#print "Reloading services"
+		self.menu.show_all()		
 
 	def launch_manager(self, widget):
 		os.system("/usr/lib/linuxmint/mintUpload/upload-manager.py &")
@@ -120,8 +127,10 @@ class MainClass:
 
 	def quit_cb(self, widget):
 		self.statusIcon.set_visible(False)
+		global shutdown_flag	
+		shutdown_flag = True		
 		gtk.main_quit()
-		sys.exit(0)
+		sys.exit(0)		
 
 	def show_menu_cb(self, widget):
 		self.menu.popup(None, None, self.menu_pos, 0, gtk.get_current_event_time())
