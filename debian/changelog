@@ -1,3 +1,9 @@
+mintupload (3.7.8) isadora; urgency=low
+
+  * Updated desktop file
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 14 May 2010 10:55:00 +0000
+
 mintupload (3.7.7) isadora; urgency=low
 
   * Doesn't hang when closed anymore (replaced calls to pyinotify with in-house loop)
