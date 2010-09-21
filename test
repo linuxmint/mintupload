@@ -3,4 +3,4 @@
 sudo rm -rf /usr/lib/linuxmint/mintUpload
 sudo cp -R usr /
 sudo cp -R etc /
-/usr/lib/linuxmint/mintUpload/file-uploader.py
+mintupload-manager

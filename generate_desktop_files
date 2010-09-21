@@ -2,7 +2,7 @@
 
 import commands, os
 
-sourceFile = "usr/lib/linuxmint/mintUpload/file-uploader.py"
+sourceFile = "usr/lib/linuxmint/mintUpload/upload-manager.py"
 
 menuName = commands.getoutput("cat " + sourceFile + " | grep menuName")
 menuName = menuName.replace("menuName", "")
@@ -20,32 +20,8 @@ menuComment = menuComment.replace("\"", "")
 menuComment = menuComment.replace(")", "")
 menuComment = menuComment.strip()
 
-
-sourceFile2 = "usr/lib/linuxmint/mintUpload/upload-manager.py"
-
-menuName2 = commands.getoutput("cat " + sourceFile2 + " | grep menuName")
-menuName2 = menuName2.replace("menuName", "")
-menuName2 = menuName2.replace("=", "")
-menuName2 = menuName2.replace("_(", "")
-menuName2 = menuName2.replace("\"", "")
-menuName2 = menuName2.replace(")", "")
-menuName2 = menuName2.strip()
-
-menuComment2 = commands.getoutput("cat " + sourceFile2 + " | grep menuComment")
-menuComment2 = menuComment2.replace("menuComment", "")
-menuComment2 = menuComment2.replace("=", "")
-menuComment2 = menuComment2.replace("_(", "")
-menuComment2 = menuComment2.replace("\"", "")
-menuComment2 = menuComment2.replace(")", "")
-menuComment2 = menuComment2.strip()
-
-
-desktopFile = open("usr/share/applications/file-uploader.desktop", "w")
-desktopFile2 = open("usr/share/applications/upload-manager.desktop", "w")
+desktopFile = open("usr/share/applications/upload-manager.desktop", "w")
 desktopFile.writelines("""[Desktop Entry]
-Name=File Uploader
-""")
-desktopFile2.writelines("""[Desktop Entry]
 Name=Upload Manager
 """)
 
@@ -56,34 +32,23 @@ for directory in os.listdir("/usr/share/linuxmint/locale"):
 	if os.path.isdir(os.path.join("/usr/share/linuxmint/locale", directory)):
 		try:
 			language = gettext.translation('mintupload', "/usr/share/linuxmint/locale", languages=[directory])
-			language.install()
+			language.install()			
 			desktopFile.writelines("Name[%s]=%s\n" % (directory, _(menuName)))
-			desktopFile2.writelines("Name[%s]=%s\n" % (directory, _(menuName2)))
 		except:
 			pass
 
-desktopFile.writelines("Comment=Upload files on the Internet\n")
-desktopFile2.writelines("Comment=Define upload services\n")
+desktopFile.writelines("Comment=Define upload services\n")
 
 for directory in os.listdir("/usr/share/linuxmint/locale"):
 	if os.path.isdir(os.path.join("/usr/share/linuxmint/locale", directory)):
 		try:
 			language = gettext.translation('mintupload', "/usr/share/linuxmint/locale", languages=[directory])
-			language.install()			
+			language.install()						
 			desktopFile.writelines("Comment[%s]=%s\n" % (directory, _(menuComment)))
-			desktopFile2.writelines("Comment[%s]=%s\n" % (directory, _(menuComment2)))
 		except:
 			pass
 
-desktopFile.writelines("""Exec=mintupload-file-uploader
-Icon=/usr/lib/linuxmint/mintUpload/icon.svg
-Terminal=false
-Type=Application
-Encoding=UTF-8
-Categories=Application;Utility
-StartupNotify=false
-""")
-desktopFile2.writelines("""Exec=mintupload-manager
+desktopFile.writelines("""Exec=mintupload-manager
 Icon=/usr/lib/linuxmint/mintUpload/icon.svg
 Terminal=false
 Type=Application

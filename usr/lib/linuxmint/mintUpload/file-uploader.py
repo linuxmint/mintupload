@@ -15,9 +15,6 @@ import threading
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
-menuName = _("File Uploader")
-menuComment = _("Upload files on the Internet")
-
 global shutdown_flag
 shutdown_flag = False
 
