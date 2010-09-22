@@ -1,3 +1,12 @@
+mintupload (3.8.0) julia; urgency=low
+
+  * Check connection
+  * UI improvements
+  * Cancel on-going upload
+  * Overall progress, speed and ETA
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed, 22 Sep 2010 16:56:00 +0000
+
 mintupload (3.7.9) julia; urgency=low
 
   * Only the manager is in the menu now, the systray icon is launched by XDG.

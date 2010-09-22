@@ -188,7 +188,7 @@ class mintUploader(threading.Thread):
 			self.progress(_("Uploading the file..."))
 			self.pct(0)
 			self.so_far = 0
-			ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.asciicallback)
+			ftp.storbinary('STOR ' + self.name, f, 1024, callback=self.mycallback)
 
 		finally:
 			# Close any open connections
@@ -296,7 +296,7 @@ class mintUploader(threading.Thread):
 			if n['when_focused'] == "True" or not self.focused:
 				mintNotifier().notify(_("File uploaded successfully."))
 
-	def asciicallback(self, buffer):
+	def mycallback(self, buffer):
 		self.so_far = self.so_far+len(buffer)-1
 		self.pct(self.so_far)
 		return
