@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-22 16:55+0100\n"
+"POT-Creation-Date: 2010-09-22 17:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,106 +24,122 @@ msgstr ""
 msgid "Upload Manager"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:70
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:71
 #, python-format
 msgid "The upload to '%(service)s' was cancelled"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:81
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:83
 #, python-format
 msgid "Upload to '%s' failed: "
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:87
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:89
 #, python-format
 msgid "Successfully uploaded %(number)d files to '%(service)s'"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:89
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:91
 #, python-format
 msgid "Successfully uploaded 1 file to '%(service)s'"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:97
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:102
 msgid "Do you want to cancel this upload?"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:98
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:103
 msgid "Cancel"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:99
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:104
 msgid "Run in the background"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:120
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:107
+msgid "Cancel upload?"
+msgstr ""
+
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:127
 #, python-format
 msgid "Uploading %(number)d files to %(service)s"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:122
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:128
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:236
+#, python-format
+msgid "%(percentage)s of %(number)d files - Uploading to %(service)s"
+msgstr ""
+
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:130
 #, python-format
 msgid "Uploading 1 file to %(service)s"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:141
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:131
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:238
+#, python-format
+msgid "%(percentage)s of 1 file - Uploading to %(service)s"
+msgstr ""
+
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:149
 #, python-format
 msgid ""
 "%(size_so_far)s of %(total_size)s - %(time_remaining)s left (%(speed)s/sec)"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:143
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:151
 #, python-format
 msgid "%(size_so_far)s of %(total_size)s"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:160
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:178
 #: usr/lib/linuxmint/mintUpload/mintUploadCore.py:82
 #: usr/lib/linuxmint/mintUpload/mintUploadCore.py:84
 msgid "B"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:162
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:180
 #: usr/lib/linuxmint/mintUpload/mintUploadCore.py:84
 msgid "KB"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:164
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:182
 #: usr/lib/linuxmint/mintUpload/mintUploadCore.py:84
 msgid "MB"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:166
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:184
 #: usr/lib/linuxmint/mintUpload/mintUploadCore.py:84
 msgid "GB"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:173
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:191
 #, python-format
 msgid "%(hours)d hours, %(minutes)d minutes"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:175
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:193
 #, python-format
 msgid "1 hour, %d minutes"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:177
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:195
 #, python-format
 msgid "%(minutes)d minutes, %(seconds)d seconds"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:179
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:197
 #, python-format
 msgid "1 minute, %d seconds"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:181
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:199
 #, python-format
 msgid "%d seconds"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUpload.py:211
+#: usr/lib/linuxmint/mintUpload/mintUpload.py:229
 #, python-format
 msgid "Unknown service: %s"
 msgstr ""
@@ -180,8 +196,8 @@ msgstr ""
 msgid "URL:"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/mintUploadCore.py:333
-#: usr/lib/linuxmint/mintUpload/mintUploadCore.py:337
+#: usr/lib/linuxmint/mintUpload/mintUploadCore.py:334
+#: usr/lib/linuxmint/mintUpload/mintUploadCore.py:338
 #, python-format
 msgid "%(1)s is not set in the config file found under %(2)s or %(3)s"
 msgstr ""

@@ -57,6 +57,7 @@ class gtkUploader(mintUploader):
         self.num_files_left = len(self.files)
         self.total_size = 0
         self.size_so_far = 0
+        self.size_of_finished_files_so_far = 0
         self.percentage = 0
         self.cancel_required = False
         self.start_time = time.time()
@@ -76,6 +77,7 @@ class gtkUploader(mintUploader):
                     self.upload(f)
 
                 self.num_files_left -= 1
+                self.size_of_finished_files_so_far += os.path.getsize(f)
 
             except Exception, e:
                 notify((_("Upload to '%s' failed: ") % service['name']) + str(e))
@@ -91,15 +93,19 @@ class gtkUploader(mintUploader):
         sys.exit(0)
         
     def close_window(self, widget=None, event=None):
-        gladefile = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
-        self.wTree_cancel = gtk.glade.XML(gladefile,"close_dialog")
-        self.wTree_cancel.get_widget("close_dialog").set_icon_from_file(ICONFILE)
-        self.wTree_cancel.get_widget("label_cancel").set_text(_("Do you want to cancel this upload?"))
-        self.wTree_cancel.get_widget("cancel_button").set_label(_("Cancel"))
-        self.wTree_cancel.get_widget("continue_button").set_label(_("Run in the background"))
-        self.wTree_cancel.get_widget("cancel_button").connect("clicked", self.hide_window, True)
-        self.wTree_cancel.get_widget("continue_button").connect("clicked", self.hide_window, False) 
-        self.wTree_cancel.get_widget("close_dialog").show()
+        if self.cancel_required:
+            self.wTree.get_widget("main_window").hide()
+        else:
+            gladefile = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
+            self.wTree_cancel = gtk.glade.XML(gladefile,"close_dialog")
+            self.wTree_cancel.get_widget("close_dialog").set_icon_from_file(ICONFILE)
+            self.wTree_cancel.get_widget("label_cancel").set_text(_("Do you want to cancel this upload?"))
+            self.wTree_cancel.get_widget("cancel_button").set_label(_("Cancel"))
+            self.wTree_cancel.get_widget("continue_button").set_label(_("Run in the background"))
+            self.wTree_cancel.get_widget("cancel_button").connect("clicked", self.hide_window, True)
+            self.wTree_cancel.get_widget("continue_button").connect("clicked", self.hide_window, False) 
+            self.wTree_cancel.get_widget("close_dialog").set_title(_("Cancel upload?"))
+            self.wTree_cancel.get_widget("close_dialog").show()
         return True
     
     def hide_window(self, widget, cancel):
@@ -116,10 +122,13 @@ class gtkUploader(mintUploader):
         pass       
 
     def pct(self, so_far, total=None):
-        if self.num_files_left > 1:
+        percentage = str(int(self.percentage * 100)) + "%"
+        if self.num_files_left > 1:            
             message = _("Uploading %(number)d files to %(service)s") % {'number':self.num_files_left, 'service':"\""+service['name']+"\""}
+            title = _("%(percentage)s of %(number)d files - Uploading to %(service)s") % {'percentage':percentage, 'number':self.num_files_left, 'service':"\""+service['name']+"\""}
         else:
             message = _("Uploading 1 file to %(service)s") % {'service':"\""+service['name']+"\""}
+            title = _("%(percentage)s of 1 file - Uploading to %(service)s") % {'percentage':percentage, 'service':"\""+service['name']+"\""}
         
         self.percentage = float(self.size_so_far) / float(self.total_size)
         gtk.gdk.threads_enter()
@@ -127,13 +136,12 @@ class gtkUploader(mintUploader):
             self.progressbar.set_fraction(self.percentage)
             self.progressbar.set_text(str(int(self.percentage*100)) + "%")
             self.wTree.get_widget("upload_label").set_text(message)
-            self.wTree.get_widget("main_window").set_title("%s - %s" % (str(int(self.percentage * 100)) + "%", message))
+            self.wTree.get_widget("main_window").set_title(title)
         finally:
             gtk.gdk.threads_leave()
         pass
-
-    def mycallback(self, buffer):
-        self.size_so_far += len(buffer) -1
+        
+    def common_callback(self):
         self.pct(self.size_so_far, self.total_size)
         self.calculate_time() 
         
@@ -147,6 +155,16 @@ class gtkUploader(mintUploader):
             self.wTree.get_widget("label_details").set_text(message)
         finally:
             gtk.gdk.threads_leave()
+        return
+
+    def my_ftp_callback(self, buffer):
+        self.size_so_far += len(buffer) -1
+        self.common_callback()
+        return
+        
+    def my_sftp_callback(self, so_far, total=None):                            
+        self.size_so_far = self.size_of_finished_files_so_far + so_far
+        self.common_callback()
         return
 
     def success(self):
@@ -214,6 +232,11 @@ if __name__ == "__main__":
         gladefile = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
         wTree = gtk.glade.XML(gladefile,"main_window")        
         wTree.get_widget("main_window").set_icon_from_file(ICONFILE)
+        if len(filenames) > 1:                        
+            title = _("%(percentage)s of %(number)d files - Uploading to %(service)s") % {'percentage': '0%', 'number':len(filenames), 'service':"\""+service['name']+"\""}
+        else:        
+            title = _("%(percentage)s of 1 file - Uploading to %(service)s") % {'percentage': '0%', 'service':"\""+service['name']+"\""}
+        wTree.get_widget("main_window").set_title(title)
         uploader = gtkUploader(service, filenames, wTree)
         uploader.start()
         gtk.main()
