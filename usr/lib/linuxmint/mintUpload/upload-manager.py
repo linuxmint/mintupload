@@ -169,6 +169,7 @@ class ManagerWindow:
         wTree.get_widget("dialog_edit_service").set_title(_("%s Properties") % sname)
         wTree.get_widget("dialog_edit_service").set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
         wTree.get_widget("dialog_edit_service").show()
+        wTree.get_widget("label_advanced").set_text(_("Advanced settings"))
         wTree.get_widget("button_verify").set_label(_("Check connection"))
         wTree.get_widget("button_verify").connect("clicked",  self.check_connection, file)
         wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_edit_service"))

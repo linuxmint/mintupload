@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-22 17:47+0100\n"
+"POT-Creation-Date: 2010-09-22 17:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -262,71 +262,75 @@ msgid "%s Properties"
 msgstr ""
 
 #: usr/lib/linuxmint/mintUpload/upload-manager.py:172
+msgid "Advanced settings"
+msgstr ""
+
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:173
 msgid "Check connection"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:177
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:178
 msgid "Type:"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:178
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:179
 msgid "Host:"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:179
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:180
 msgid "Port:"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:180
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:181
 msgid "User:"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:181
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:182
 msgid "Password:"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:182
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:183
 msgid "Timestamp:"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:183
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:184
 msgid "Path:"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:185
 #: usr/lib/linuxmint/mintUpload/upload-manager.py:186
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:187
 msgid "Hostname or IP address, default: "
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:189
 #: usr/lib/linuxmint/mintUpload/upload-manager.py:190
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:191
 msgid "Remote port, default is 21 for FTP, 22 for SFTP and SCP"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:193
 #: usr/lib/linuxmint/mintUpload/upload-manager.py:194
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:195
 msgid "Username, defaults to your local username"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:197
 #: usr/lib/linuxmint/mintUpload/upload-manager.py:198
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:199
 msgid ""
 "Password, by default: password-less SCP connection, null-string FTP "
 "connection, ~/.ssh keys used for SFTP connections"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:201
 #: usr/lib/linuxmint/mintUpload/upload-manager.py:202
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:203
 msgid "Timestamp format (strftime). By default:"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:205
 #: usr/lib/linuxmint/mintUpload/upload-manager.py:206
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:207
 msgid ""
 "Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, "
 "following the timestamp format given. By default: ."
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:264
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:265
 msgid "Could not save configuration change"
 msgstr ""

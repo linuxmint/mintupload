@@ -1,3 +1,9 @@
+mintupload (3.8.1) julia; urgency=low
+
+  * Fixed gettext issue
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed, 22 Sep 2010 17:56:00 +0000
+
 mintupload (3.8.0) julia; urgency=low
 
   * Check connection
