@@ -1,3 +1,9 @@
+mintupload (3.8.3) julia; urgency=low
+
+  * Added dependency on libnotify-bin
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 30 Sep 2010 10:44:00 +0000
+
 mintupload (3.8.2) julia; urgency=low
 
   * Monochrome tray icon (using icon name "up")
