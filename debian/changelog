@@ -1,3 +1,10 @@
+mintupload (3.8.4) julia; urgency=low
+
+  * Drag and drop compatibility with KDE
+  * Changed icon to suit KDE.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 17 Feb 2011 13:45:00 +0000
+
 mintupload (3.8.3) julia; urgency=low
 
   * Added dependency on libnotify-bin

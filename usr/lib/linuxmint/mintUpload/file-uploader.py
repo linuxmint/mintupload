@@ -72,7 +72,10 @@ class MainClass:
         self.dropZones = {}
 
         self.statusIcon = gtk.StatusIcon()
-        self.statusIcon.set_from_icon_name("up")
+        self.statusIcon.set_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
+        if os.path.exists("/etc/linuxmint/info"):
+			if "Gnome" in commands.getoutput("grep DESKTOP /etc/linuxmint/info"):
+				self.statusIcon.set_from_icon_name("up")        
         self.statusIcon.set_tooltip(_("Upload services"))
         self.statusIcon.set_visible(True)
 
@@ -149,7 +152,7 @@ class DropZone():
         self.w = gtk.Window()
 
         TARGET_TYPE_TEXT = 80
-        self.w.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_HIGHLIGHT | gtk.DEST_DEFAULT_DROP, [ ( "text/plain", 0, TARGET_TYPE_TEXT ) ], gtk.gdk.ACTION_COPY)
+        self.w.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_HIGHLIGHT | gtk.DEST_DEFAULT_DROP, [ ( "text/plain", 0, TARGET_TYPE_TEXT ) ], gtk.gdk.ACTION_MOVE|gtk.gdk.ACTION_COPY)
         self.w.connect('drag_motion', self.motion_cb)
         self.w.connect('drag_drop', self.drop_cb)
         self.w.connect('drag_data_received', self.drop_data_received_cb)
