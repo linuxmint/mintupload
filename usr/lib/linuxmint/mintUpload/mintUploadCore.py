@@ -342,7 +342,7 @@ config_paths = config['paths']
 config_paths['user'] = config_paths['user'].replace('<HOME>',home)
 
 defaults = config['defaults']
-defaults['user'] = defaults['user'].replace('<USER>',os.environ['LOGNAME'])
+defaults['user'] = defaults['user'].replace('<USER>',os.environ['USER'])
 
 
 
