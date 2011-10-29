@@ -73,9 +73,12 @@ class MainClass:
 
         self.statusIcon = gtk.StatusIcon()
         self.statusIcon.set_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
-        if os.path.exists("/etc/linuxmint/info"):
-			if "Gnome" in commands.getoutput("grep DESKTOP /etc/linuxmint/info"):
-				self.statusIcon.set_from_icon_name("up")        
+        try:
+            desktop = os.environ["DESKTOP_SESSION"].lower()  
+            if desktop == "mate":
+	       self.statusIcon.set_from_icon_name("up")
+        except Exception, detail:
+            print detail
         self.statusIcon.set_tooltip(_("Upload services"))
         self.statusIcon.set_visible(True)
 
