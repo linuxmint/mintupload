@@ -7,4 +7,3 @@ Exec=/usr/lib/linuxmint/mintUpload/launch-file-uploader.py
 Terminal=false
 Type=Application
 Categories=
-OnlyShowIn=GNOME;XFCE;KDE;

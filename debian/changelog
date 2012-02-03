@@ -1,3 +1,9 @@
+mintupload (3.8.7) lisa; urgency=low
+
+  * Removed onlyShowIn clause in XDG autostart
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 03 Feb 2012 18:18:06 +0000
+
 mintupload (3.8.6) lisa; urgency=low
 
   * In Gnome use the colored icon
