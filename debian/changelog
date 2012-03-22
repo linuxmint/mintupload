@@ -1,3 +1,9 @@
+mintupload (3.8.8) maya; urgency=low
+
+  * Maya
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 22 Mar 2012 13:49:00 +0000
+
 mintupload (3.8.7) lisa; urgency=low
 
   * Removed onlyShowIn clause in XDG autostart
