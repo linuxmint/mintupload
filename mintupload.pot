@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-22 17:56+0100\n"
+"POT-Creation-Date: 2013-08-30 16:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -202,29 +203,26 @@ msgstr ""
 msgid "%(1)s is not set in the config file found under %(2)s or %(3)s"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/file-uploader.py:76
-msgid "File Uploader"
+#: usr/lib/linuxmint/mintUpload/file-uploader.py:82
+#: usr/lib/linuxmint/mintUpload/upload-manager.py:30
+msgid "Upload services"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/file-uploader.py:91
+#: usr/lib/linuxmint/mintUpload/file-uploader.py:97
 msgid "Services:"
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/file-uploader.py:104
+#: usr/lib/linuxmint/mintUpload/file-uploader.py:110
 msgid "Upload manager..."
 msgstr ""
 
-#: usr/lib/linuxmint/mintUpload/file-uploader.py:170
+#: usr/lib/linuxmint/mintUpload/file-uploader.py:176
 #, python-format
 msgid "Drag &amp; Drop here to upload to %s"
 msgstr ""
 
 #: usr/lib/linuxmint/mintUpload/upload-manager.py:15
 msgid "Define upload services"
-msgstr ""
-
-#: usr/lib/linuxmint/mintUpload/upload-manager.py:30
-msgid "Upload services"
 msgstr ""
 
 #: usr/lib/linuxmint/mintUpload/upload-manager.py:47
@@ -253,7 +251,7 @@ msgid "Service name:"
 msgstr ""
 
 #: usr/lib/linuxmint/mintUpload/upload-manager.py:111
-msgid "<i>Try to avoid spaces and funny characters...</i>"
+msgid "<i>Try to avoid spaces and special characters...</i>"
 msgstr ""
 
 #: usr/lib/linuxmint/mintUpload/upload-manager.py:169
