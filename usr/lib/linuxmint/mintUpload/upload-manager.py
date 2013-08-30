@@ -108,7 +108,7 @@ class ManagerWindow:
         hbox = gtk.HBox()
         hbox.pack_start(gtk.Label(_("Service name:")), False, 5, 5)
         hbox.pack_end(entry)
-        dialog.format_secondary_markup(_("<i>Try to avoid spaces and funny characters...</i>"))
+        dialog.format_secondary_markup(_("<i>Try to avoid spaces and special characters...</i>"))
         dialog.vbox.pack_end(hbox, True, True, 0)
         dialog.show_all()
         dialog.run()
