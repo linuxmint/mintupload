@@ -72,7 +72,7 @@ class MainClass:
         self.dropZones = {}
 
         self.statusIcon = gtk.StatusIcon()
-        self.statusIcon.set_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
+        self.statusIcon.set_from_file("/usr/lib/linuxmint/mintUpload/systray.svg")
         try:
             desktop = os.environ["DESKTOP_SESSION"].lower()  
             if desktop == "mate":
