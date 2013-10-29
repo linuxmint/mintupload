@@ -166,6 +166,7 @@ class ManagerWindow:
         file = config_paths['user'] + sname
 
         wTree = gtk.glade.XML("/usr/lib/linuxmint/mintUpload/mintUpload.glade", "dialog_edit_service")
+        self.wTree = wTree
         wTree.get_widget("dialog_edit_service").set_title(_("%s Properties") % sname)
         wTree.get_widget("dialog_edit_service").set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
         wTree.get_widget("dialog_edit_service").show()
@@ -249,13 +250,22 @@ class ManagerWindow:
         service = Service(file)
         os.system("mintupload \"" + service['name'] + "\" /usr/lib/linuxmint/mintUpload/mintupload.readme &")        
 
+    def get_port_for_service(self, type):
+        if type in ("Mint", "FTP"):
+            num = "21"
+        else:
+            num = "22"
+        self.wTree.get_widget("txt_port").set_text(num)
+        return num
+
     def change(self, widget, event, file):
         try:
             wname = widget.get_name()
             if wname == "combo_type":
                 model = widget.get_model()
                 iter =  widget.get_active_iter()
-                config = { 'type' : model.get_value(iter, 0).lower() }
+                config = { 'type' : model.get_value(iter, 0).lower(),
+                           'port' : self.get_port_for_service(model.get_value(iter, 0)) }
             else:
                 config = { wname[4:] : widget.get_text() }
             s = Service(file)
