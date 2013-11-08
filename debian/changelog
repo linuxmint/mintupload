@@ -1,3 +1,9 @@
+mintupload (3.9.4) petra; urgency=low
+
+  * Fix desktop file
+
+ -- Frédéric Gaudet <fred@linuxmint.com>  Fri, 08 Nov 2013 10:03:37 +0100
+
 mintupload (3.9.3) petra; urgency=low
 
   * Fixed pixelated alt-tab icon
