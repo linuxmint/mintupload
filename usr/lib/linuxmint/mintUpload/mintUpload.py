@@ -61,12 +61,12 @@ class gtkUploader(mintUploader):
         self.percentage = 0
         self.cancel_required = False
         self.start_time = time.time()
-        
-        for f in self.files:
-            self.total_size += os.path.getsize(f)
 
-        for f in self.files:
-            try:
+        try:
+            for f in self.files:
+                self.total_size += os.path.getsize(f)
+
+            for f in self.files:
                 if self.cancel_required:
                     notify(_("The upload to '%(service)s' was cancelled") % {'service':service['name']})
                     gtk.main_quit()
@@ -79,11 +79,11 @@ class gtkUploader(mintUploader):
                 self.num_files_left -= 1
                 self.size_of_finished_files_so_far += os.path.getsize(f)
 
-            except Exception, e:
-                notify((_("Upload to '%s' failed: ") % service['name']) + str(e))
-                traceback.print_exc()
-                gtk.main_quit()
-                sys.exit(0)
+        except Exception, e:
+            notify((_("Upload to '%s' failed: ") % service['name']) + str(e))
+            traceback.print_exc()
+            gtk.main_quit()
+            sys.exit(0)
                 
         if (len(self.files) > 1):
             notify(_("Successfully uploaded %(number)d files to '%(service)s'") % {'number':len(self.files), 'service':service['name']})
