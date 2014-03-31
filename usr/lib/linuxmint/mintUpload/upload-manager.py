@@ -99,7 +99,7 @@ class ManagerWindow:
         dialog.response(response)
 
     def add_service(self, widget, treeview_services):
-        dialog = gtk.MessageDialog(None, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_QUESTION, gtk.BUTTONS_OK, None)
+        dialog = gtk.MessageDialog(None, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_QUESTION, gtk.BUTTONS_OK_CANCEL, None)
         dialog.set_title(_("Upload Manager"))
         dialog.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
         dialog.set_markup(_("<b>Please enter a name for the new upload service:</b>"))
@@ -111,23 +111,25 @@ class ManagerWindow:
         dialog.format_secondary_markup(_("<i>Try to avoid spaces and special characters...</i>"))
         dialog.vbox.pack_end(hbox, True, True, 0)
         dialog.show_all()
-        dialog.run()
-        sname = entry.get_text()
+        response = dialog.run()
+        if response == gtk.RESPONSE_OK:
+            sname = entry.get_text()
         dialog.destroy()
 
-        service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
-        if os.path.exists(config_paths['user'] + sname):
-            sname += " 2"
-            while os.path.exists(config_paths['user'] + sname):
-                next = int(sname[-1:]) + 1
-                sname = sname[:-1] + str(next)
-        service.filename = config_paths['user'] + sname
-        service.write()
-        self.services.append(service)
-        model = treeview_services.get_model()
-        iter = model.insert_before(None, None)
-        model.set_value(iter, 0, sname)
-        self.edit_service(treeview_services, model.get_path(iter))
+        if response == gtk.RESPONSE_OK:
+            service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
+            if os.path.exists(config_paths['user'] + sname):
+                sname += " 2"
+                while os.path.exists(config_paths['user'] + sname):
+                    next = int(sname[-1:]) + 1
+                    sname = sname[:-1] + str(next)
+            service.filename = config_paths['user'] + sname
+            service.write()
+            self.services.append(service)
+            model = treeview_services.get_model()
+            iter = model.insert_before(None, None)
+            model.set_value(iter, 0, sname)
+            self.edit_service(treeview_services, model.get_path(iter))
 
     def remove_service(self, widget, treeview_services):
         (model, iter) = treeview_services.get_selection().get_selected()
