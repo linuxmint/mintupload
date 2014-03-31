@@ -205,6 +205,8 @@ class DropZone():
                 continue
             f = f.strip()
             f = f.replace("file://", "")
+            f = f.replace("'", r"'\''")
+            f = "'" + f + "'"
             filenames.append(f)
 
         os.system("mintupload \"" + self.service['name'] + "\" " + " ".join(filenames) + " &")
