@@ -11,6 +11,7 @@ from mintUploadCore import *
 #import pyinotify
 #from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent
 import threading
+import urllib
 
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
@@ -155,7 +156,7 @@ class DropZone():
         self.w = gtk.Window()
 
         TARGET_TYPE_TEXT = 80
-        self.w.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_HIGHLIGHT | gtk.DEST_DEFAULT_DROP, [ ( "text/plain", 0, TARGET_TYPE_TEXT ) ], gtk.gdk.ACTION_MOVE|gtk.gdk.ACTION_COPY)
+        self.w.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_HIGHLIGHT | gtk.DEST_DEFAULT_DROP, [ ( "text/uri-list", 0, TARGET_TYPE_TEXT ) ], gtk.gdk.ACTION_MOVE|gtk.gdk.ACTION_COPY)
         self.w.connect('drag_motion', self.motion_cb)
         self.w.connect('drag_drop', self.drop_cb)
         self.w.connect('drag_data_received', self.drop_data_received_cb)
@@ -203,7 +204,8 @@ class DropZone():
         for f in files:
             if not f:
                 continue
-            f = f.strip()
+            f = urllib.url2pathname(f)
+            f = f.strip('\r')
             f = f.replace("file://", "")
             f = f.replace("'", r"'\''")
             f = "'" + f + "'"
