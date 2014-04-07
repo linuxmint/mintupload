@@ -1,3 +1,9 @@
+mintupload (3.9.5) qiana; urgency=medium
+
+  * Multiple fixes from Monsta
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 07 Apr 2014 14:35:50 +0100
+
 mintupload (3.9.4) petra; urgency=low
 
   * Fix desktop file
