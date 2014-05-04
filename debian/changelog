@@ -1,3 +1,9 @@
+mintupload (3.9.6) qiana; urgency=medium
+
+  * Updated desktop file
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sun, 04 May 2014 15:24:24 +0100
+
 mintupload (3.9.5) qiana; urgency=medium
 
   * Multiple fixes from Monsta
