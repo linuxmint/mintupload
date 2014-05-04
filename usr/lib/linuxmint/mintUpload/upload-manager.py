@@ -10,11 +10,6 @@ from mintUploadCore import *
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
-# i18n for menu item
-menuName = _("Upload Manager")
-menuComment = _("Define upload services")
-
-
 class ManagerWindow:
 
     def __init__(self):
