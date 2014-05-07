@@ -21,4 +21,4 @@ Categories=Application;System;Settings
 StartupNotify=false
 """
 
-additionalfiles.generate(DOMAIN, PATH, "usr/share/applications/upload-manager.desktop", prefix, _("Upload Manager"), _("Define upload services"), suffix)
+additionalfiles.generate(DOMAIN, PATH, "usr/share/applications/mintupload.desktop", prefix, _("Upload Manager"), _("Define upload services"), suffix, genericName=_("Define upload services"))
