@@ -19,7 +19,7 @@ Type=Application
 Encoding=UTF-8
 Categories=Application;System;Settings
 StartupNotify=false
-NotShowIn=KDE
+NotShowIn=KDE;
 """
 
 additionalfiles.generate(DOMAIN, PATH, "usr/share/applications/mintupload.desktop", prefix, _("Upload Manager"), _("Define upload services"), suffix)
@@ -33,7 +33,7 @@ Type=Application
 Encoding=UTF-8
 Categories=Qt;KDE;Settings;
 X-KDE-StartupNotify=false
-OnlyShowIn=KDE
+OnlyShowIn=KDE;
 """
 
 additionalfiles.generate(DOMAIN, PATH, "usr/share/applications/kde4/mintupload.desktop", prefix, _("Upload Manager"), _("Define upload services"), suffix, genericName=_("Define upload services"))
