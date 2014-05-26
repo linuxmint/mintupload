@@ -1,3 +1,11 @@
+mintupload (3.9.8) qiana; urgency=low
+
+  * [e3a2188] KDE desktop file generation
+  * [d1e354f] GNOME based desktop file hidden in KDE
+  * [b60e258] New KDE4 desktop file
+
+ -- Frédéric Gaudet <fred@linuxmint.com>  Mon, 26 May 2014 11:50:40 +0200
+
 mintupload (3.9.7) qiana; urgency=medium
 
   * Updated desktop file
