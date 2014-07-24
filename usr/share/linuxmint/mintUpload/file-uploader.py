@@ -73,7 +73,7 @@ class MainClass:
         self.dropZones = {}
 
         self.statusIcon = gtk.StatusIcon()
-        self.statusIcon.set_from_file("/usr/lib/linuxmint/mintUpload/systray.svg")
+        self.statusIcon.set_from_file("/usr/share/linuxmint/mintUpload/systray.svg")
         try:
             desktop = os.environ["DESKTOP_SESSION"].lower()  
             if desktop == "mate":
@@ -120,7 +120,7 @@ class MainClass:
         self.menu.show_all()
 
     def launch_manager(self, widget):
-        os.system("/usr/lib/linuxmint/mintUpload/upload-manager.py &")
+        os.system("/usr/share/linuxmint/mintUpload/upload-manager.py &")
 
     def createDropZone(self, widget, service):
         if service['name'] not in self.dropZones.keys():
@@ -161,7 +161,7 @@ class DropZone():
         self.w.connect('drag_drop', self.drop_cb)
         self.w.connect('drag_data_received', self.drop_data_received_cb)
         self.w.connect('destroy', self.destroy_cb)  
-        self.w.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
+        self.w.set_icon_from_file("/usr/share/linuxmint/mintUpload/icon.svg")
         self.w.set_title(self.service['name'])
         self.w.set_keep_above(True)
         self.w.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_UTILITY)

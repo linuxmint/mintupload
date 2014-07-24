@@ -1,5 +1,4 @@
-#!/bin/bash
-
-/usr/lib/linuxmint/mintUpload/upload-manager.py &
-/usr/lib/linuxmint/mintUpload/file-uploader.py &
+#!/bin/sh
+/usr/share/linuxmint/mintUpload/upload-manager.py &
+/usr/share/linuxmint/mintUpload/file-uploader.py &
 

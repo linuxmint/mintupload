@@ -27,7 +27,7 @@ __version__ = VERSION
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
 def notify(message, timeout=3000):
-    os.system("notify-send \"" + _("Upload Manager") + "\" \"" + message + "\" -i /usr/lib/linuxmint/mintUpload/icon.svg -t " + str(timeout))
+    os.system("notify-send \"" + _("Upload Manager") + "\" \"" + message + "\" -i /usr/share/linuxmint/mintUpload/icon.svg -t " + str(timeout))
     
 
 class gtkUploader(mintUploader):
@@ -96,7 +96,7 @@ class gtkUploader(mintUploader):
         if self.cancel_required:
             self.wTree.get_widget("main_window").hide()
         else:
-            gladefile = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
+            gladefile = "/usr/share/linuxmint/mintUpload/mintUpload.glade"
             self.wTree_cancel = gtk.glade.XML(gladefile,"close_dialog")
             self.wTree_cancel.get_widget("close_dialog").set_icon_from_file(ICONFILE)
             self.wTree_cancel.get_widget("label_cancel").set_text(_("Do you want to cancel this upload?"))
@@ -229,7 +229,7 @@ if __name__ == "__main__":
         os.system("notify-send \"" + _("Unknown service: %s") % service_name + "\"")
     else:
         filenames = sys.argv[2:]
-        gladefile = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
+        gladefile = "/usr/share/linuxmint/mintUpload/mintUpload.glade"
         wTree = gtk.glade.XML(gladefile,"main_window")        
         wTree.get_widget("main_window").set_icon_from_file(ICONFILE)
         if len(filenames) > 1:                        
