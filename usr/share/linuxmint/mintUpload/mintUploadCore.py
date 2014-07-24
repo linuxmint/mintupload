@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # mintUpload
 #       Clement Lefebvre <root@linuxmint.com>
 #
@@ -322,7 +324,7 @@ def read_services():
     return services
 
 
-ICONFILE = "/usr/lib/linuxmint/mintUpload/icon.svg"
+ICONFILE = "/usr/share/linuxmint/mintUpload/icon.svg"
 CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
 CONFIGFILE_USER = home + '/.linuxmint/mintUpload.conf'
 

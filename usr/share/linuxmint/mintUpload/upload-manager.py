@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import sys, os
 import commands
@@ -14,12 +14,12 @@ class ManagerWindow:
 
     def __init__(self):
         #Set the Glade file
-        gladefile = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
+        gladefile = "/usr/share/linuxmint/mintUpload/mintUpload.glade"
         wTree = gtk.glade.XML(gladefile, "manager_window")
         wTree.get_widget("manager_window").set_title(_("Upload Manager"))
         vbox = wTree.get_widget("vbox_main")
         treeview_services = wTree.get_widget("treeview_services")
-        wTree.get_widget("manager_window").set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
+        wTree.get_widget("manager_window").set_icon_from_file("/usr/share/linuxmint/mintUpload/icon.svg")
 
         # the treeview
         column1 = gtk.TreeViewColumn(_("Upload services"), gtk.CellRendererText(), text=0)
@@ -82,8 +82,8 @@ class ManagerWindow:
                         "Manuel Sandoval <manuel@slashvar.com>",
                         "Dennis Schwertel <s@digitalkultur.net>"
         ])
-        dlg.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
-        dlg.set_logo(gtk.gdk.pixbuf_new_from_file("/usr/lib/linuxmint/mintUpload/icon.svg"))
+        dlg.set_icon_from_file("/usr/share/linuxmint/mintUpload/icon.svg")
+        dlg.set_logo(gtk.gdk.pixbuf_new_from_file("/usr/share/linuxmint/mintUpload/icon.svg"))
         def close(w, res):
             if res == gtk.RESPONSE_CANCEL:
                 w.hide()
@@ -96,7 +96,7 @@ class ManagerWindow:
     def add_service(self, widget, treeview_services):
         dialog = gtk.MessageDialog(None, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_QUESTION, gtk.BUTTONS_OK_CANCEL, None)
         dialog.set_title(_("Upload Manager"))
-        dialog.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
+        dialog.set_icon_from_file("/usr/share/linuxmint/mintUpload/icon.svg")
         dialog.set_markup(_("<b>Please enter a name for the new upload service:</b>"))
         entry = gtk.Entry()
         entry.connect("activate", self.responseToDialog, dialog, gtk.RESPONSE_OK)
@@ -112,7 +112,7 @@ class ManagerWindow:
         dialog.destroy()
 
         if response == gtk.RESPONSE_OK:
-            service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
+            service = Service('/usr/share/linuxmint/mintUpload/sample.service')
             if os.path.exists(config_paths['user'] + sname):
                 sname += " 2"
                 while os.path.exists(config_paths['user'] + sname):
@@ -162,10 +162,10 @@ class ManagerWindow:
         sname = model.get_value(iter, 0)
         file = config_paths['user'] + sname
 
-        wTree = gtk.glade.XML("/usr/lib/linuxmint/mintUpload/mintUpload.glade", "dialog_edit_service")
+        wTree = gtk.glade.XML("/usr/share/linuxmint/mintUpload/mintUpload.glade", "dialog_edit_service")
         self.wTree = wTree
         wTree.get_widget("dialog_edit_service").set_title(_("%s Properties") % sname)
-        wTree.get_widget("dialog_edit_service").set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
+        wTree.get_widget("dialog_edit_service").set_icon_from_file("/usr/share/linuxmint/mintUpload/icon.svg")
         wTree.get_widget("dialog_edit_service").show()
         wTree.get_widget("label_advanced").set_text(_("Advanced settings"))
         wTree.get_widget("button_verify").set_label(_("Check connection"))
@@ -245,7 +245,7 @@ class ManagerWindow:
             
     def check_connection(self, widget, file):
         service = Service(file)
-        os.system("mintupload \"" + service['name'] + "\" /usr/lib/linuxmint/mintUpload/mintupload.readme &")        
+        os.system("mintupload \"" + service['name'] + "\" /usr/share/linuxmint/mintUpload/mintupload.readme &")        
 
     def get_port_for_service(self, type):
         if type in ("Mint", "FTP"):
