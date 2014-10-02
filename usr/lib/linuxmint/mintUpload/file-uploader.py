@@ -217,5 +217,7 @@ class DropZone():
         del self.dropZones[self.service['name']]
 
 gtk.gdk.threads_init()
+gtk.gdk.threads_enter()
 MainClass()
 gtk.main()
+gtk.gdk.threads_leave()
