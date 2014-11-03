@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, sys, commands
+import os, sys
 import gtk
 import gtk.glade
 import pygtk
