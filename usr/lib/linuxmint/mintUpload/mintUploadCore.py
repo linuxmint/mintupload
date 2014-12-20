@@ -200,9 +200,16 @@ class mintUploader(threading.Thread):
     def getPrivateKey(self):
         '''Find a private key in ~/.ssh'''
         key_files = [home + '/.ssh/id_rsa', home + '/.ssh/id_dsa']
+        key = None
         for f in key_files:
             if os.path.exists(f):
-                return paramiko.RSAKey.from_private_key_file(f)
+                try:
+                    key = paramiko.RSAKey.from_private_key_file(f)
+                except:
+                    key = paramiko.DSSKey.from_private_key_file(f)
+                if key is not None:
+                    return key
+        return key
 
     def _sftp(self, file):
         '''Connection process for SFTP services'''
@@ -246,8 +253,9 @@ class mintUploader(threading.Thread):
         try:
             # Attempting to connect
             self.service['file'] = file
-            scp_cmd = "scp -P %(port)i %(file)s %(user)s@%(host)s:%(path)s"%self.service
-            scp = pexpect.spawn(scp_cmd)
+            scp = pexpect.spawn("scp", ["-P", "%(port)i"%self.service,
+                                        "%(file)s"%self.service,
+                                        "%(user)s@%(host)s:%(path)s"%self.service])
 
             # If password is not defined, or is the empty string, use password-less scp
             if self.service['pass']:
