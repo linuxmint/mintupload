@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, os
+import os
 import commands
 import gtk, gtk.glade, gettext
 import pygtk
