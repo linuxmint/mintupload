@@ -5,6 +5,7 @@ import commands
 import gtk, gtk.glade, gettext
 import pygtk
 pygtk.require("2.0")
+import string
 from mintUploadCore import *
 
 # i18n
@@ -99,7 +100,7 @@ class ManagerWindow:
         dialog.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
         dialog.set_markup(_("<b>Please enter a name for the new upload service:</b>"))
         entry = gtk.Entry()
-        entry.connect("activate", self.responseToDialog, dialog, gtk.RESPONSE_OK)
+        entry.connect("changed", self.check_service_name, dialog)
         hbox = gtk.HBox()
         hbox.pack_start(gtk.Label(_("Service name:")), False, 5, 5)
         hbox.pack_end(entry)
@@ -125,6 +126,18 @@ class ManagerWindow:
             iter = model.insert_before(None, None)
             model.set_value(iter, 0, sname)
             self.edit_service(treeview_services, model.get_path(iter))
+
+    def check_service_name(self, entry, dialog):
+        text = entry.get_text()
+        valid = True
+        if text == "":
+            valid = False
+        if " " in text:
+            valid = False
+        invalidChars = set(string.punctuation.replace("_", ""))
+        if any(char in invalidChars for char in text):
+            valid = False
+        dialog.get_widget_for_response(gtk.RESPONSE_OK).set_sensitive(valid)
 
     def remove_service(self, widget, treeview_services):
         (model, iter) = treeview_services.get_selection().get_selected()
