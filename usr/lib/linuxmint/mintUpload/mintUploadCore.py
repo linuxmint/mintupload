@@ -18,9 +18,10 @@ import paramiko
 import pexpect
 import threading
 import pynotify
-from user import home
 sys.path.append('/usr/lib/linuxmint/common')
 from configobj import ConfigObj
+
+HOME = os.path.expanduser("~")
 
 
 VERSION = "3.7.4"
