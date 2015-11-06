@@ -1,3 +1,20 @@
+mintupload (4.0.2) rosa; urgency=medium
+
+  [ monsta ]
+  * Don't crash with glib >= 2.41
+  * removed unused import
+
+  [ Brian Millham ]
+  * Fixes both spaces in filename problems and allows DSA authentication.
+
+  [ Clement Lefebvre ]
+  * Specify python version in shebangs, and updated desktop file
+  * Changed default hostname from mint-space.com to hostname.com
+  * Add service: Don't allow special chars or spaces in service name
+  * Updated desktop files
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 06 Nov 2015 18:10:22 +0000
+
 mintupload (4.0.1) rebecca; urgency=medium
 
   * Updated Debian files
