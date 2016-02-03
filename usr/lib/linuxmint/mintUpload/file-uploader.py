@@ -1,6 +1,7 @@
 #!/usr/bin/python2
 
-import os, sys
+import os
+import sys
 import gtk
 import gtk.glade
 import pygtk
@@ -19,7 +20,9 @@ gettext.install("mintupload", "/usr/share/linuxmint/locale")
 global shutdown_flag
 shutdown_flag = False
 
+
 class NotifyThread(threading.Thread):
+
     def __init__(self, mainClass):
         threading.Thread.__init__(self)
         self.mainClass = mainClass
@@ -67,6 +70,7 @@ class NotifyThread(threading.Thread):
 #               #print "Default event on: %s" %  os.path.join(event.path, event.name)
 #               self.mainClass.reload_services()
 
+
 class MainClass:
 
     def __init__(self):
@@ -75,9 +79,9 @@ class MainClass:
         self.statusIcon = gtk.StatusIcon()
         self.statusIcon.set_from_file("/usr/lib/linuxmint/mintUpload/systray.svg")
         try:
-            desktop = os.environ["DESKTOP_SESSION"].lower()  
+            desktop = os.environ["DESKTOP_SESSION"].lower()
             if desktop == "mate":
-	       self.statusIcon.set_from_icon_name("up")
+                self.statusIcon.set_from_icon_name("up")
         except Exception, detail:
             print detail
         self.statusIcon.set_tooltip(_("Upload services"))
@@ -156,11 +160,11 @@ class DropZone():
         self.w = gtk.Window()
 
         TARGET_TYPE_TEXT = 80
-        self.w.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_HIGHLIGHT | gtk.DEST_DEFAULT_DROP, [ ( "text/uri-list", 0, TARGET_TYPE_TEXT ) ], gtk.gdk.ACTION_MOVE|gtk.gdk.ACTION_COPY)
+        self.w.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_HIGHLIGHT | gtk.DEST_DEFAULT_DROP, [("text/uri-list", 0, TARGET_TYPE_TEXT)], gtk.gdk.ACTION_MOVE | gtk.gdk.ACTION_COPY)
         self.w.connect('drag_motion', self.motion_cb)
         self.w.connect('drag_drop', self.drop_cb)
         self.w.connect('drag_data_received', self.drop_data_received_cb)
-        self.w.connect('destroy', self.destroy_cb)  
+        self.w.connect('destroy', self.destroy_cb)
         self.w.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
         self.w.set_title(self.service['name'])
         self.w.set_keep_above(True)

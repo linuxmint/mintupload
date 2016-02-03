@@ -7,7 +7,6 @@
 # of the License.
 
 
-
 import sys
 import urllib
 import ftplib
@@ -29,7 +28,9 @@ __version__ = VERSION
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
+
 class CustomError(Exception):
+
     '''All custom defined errors'''
 
     observers = []
@@ -38,7 +39,7 @@ class CustomError(Exception):
         self.type = self.__class__.__name__
         self.summary = summary
         if err: self.detail = repr(err)
-        else:   self.detail = ''
+        else: self.detail = ''
         for observer in self.observers:
             observer.error(self)
 
@@ -48,27 +49,28 @@ class CustomError(Exception):
 
 
 class cliErrorObserver:
+
     '''All custom defined errors, using stderr'''
+
     def error(self, err):
         sys.stderr.write(os.linesep + err.type + ': ' + err.summary)
         if err.detail:
             sys.stderr.write(os.linesep + '\tDetail: ' + err.detail)
-        sys.stderr.write(os.linesep*2)
+        sys.stderr.write(os.linesep * 2)
 
 CustomError.addObserver(cliErrorObserver())
 
 
-
 class ConnectionError(CustomError):
+
     '''Raised when an error has occured with an external connection'''
     pass
 
 
-
 class FilesizeError(CustomError):
+
     '''Raised when the file is too large or too small'''
     pass
-
 
 
 def sizeStr(size, acc=None, factor=None):
@@ -79,20 +81,21 @@ def sizeStr(size, acc=None, factor=None):
     if not acc:
         acc = int(config['filesize']['accuracy'])
     if config['filesize']['binary_units'] == "True":
-        thresholds = [_("B"),_("KiB"),_("MiB"),_("GiB")]
+        thresholds = [_("B"), _("KiB"), _("MiB"), _("GiB")]
     else:
-        thresholds = [_("B"),_("KB"),_("MB"),_("GB")]
+        thresholds = [_("B"), _("KB"), _("MB"), _("GB")]
     size = float(size)
-    for i in reversed(range(1,len(thresholds))):
+    for i in reversed(range(1, len(thresholds))):
         if size >= factor**i:
-            rounded = round(size/factor**i, acc)
+            rounded = round(size / factor**i, acc)
             return str(rounded) + thresholds[i]
     return str(int(size)) + thresholds[0]
 
 
-
 class mintNotifier:
+
     '''Enables integration with external notifiers'''
+
     def __init__(self):
         pynotify.init("mintUpload")
 
@@ -100,8 +103,8 @@ class mintNotifier:
         pynotify.Notification("mintUpload", detail, ICONFILE).show()
 
 
-
 class mintSpaceChecker(threading.Thread):
+
     '''Checks that the filesize is ok'''
 
     def __init__(self, service, filesize):
@@ -136,8 +139,8 @@ class mintSpaceChecker(threading.Thread):
                 raise FilesizeError(_("File larger than service's available space"))
 
 
-
 class mintUploader(threading.Thread):
+
     '''Uploads the file to the selected service'''
 
     def __init__(self, service, files):
@@ -149,16 +152,15 @@ class mintUploader(threading.Thread):
 
         # Switch to required connect function, depending on service
         self.uploader = {
-                'MINT': self._ftp, # For backwards compatiblity
-                'FTP' : self._ftp,
-                'SFTP': self._sftp,
-                'SCP' : self._scp}[self.service['type']]
+            'MINT': self._ftp,  # For backwards compatiblity
+            'FTP': self._ftp,
+            'SFTP': self._sftp,
+            'SCP': self._scp}[self.service['type']]
 
     def run(self):
         for f in self.files:
             self.upload(f)
-        self.progress( _("File uploaded successfully."))
-
+        self.progress(_("File uploaded successfully."))
 
     def upload(self, file):
         self.name = os.path.basename(file)
@@ -180,7 +182,7 @@ class mintUploader(threading.Thread):
 
             # Create full path
             for dir in self.service['path'].split(os.sep):
-                try:    ftp.mkd(dir)
+                try: ftp.mkd(dir)
                 except: pass
                 ftp.cwd(dir)
 
@@ -192,9 +194,9 @@ class mintUploader(threading.Thread):
 
         finally:
             # Close any open connections
-            try:    f.close()
+            try: f.close()
             except: pass
-            try:    ftp.quit()
+            try: ftp.quit()
             except: pass
 
     def getPrivateKey(self):
@@ -223,14 +225,14 @@ class mintUploader(threading.Thread):
             # Attempting to connect
             transport = paramiko.Transport((self.service['host'], self.service['port']))
             if self.service['pass']:
-                transport.connect(username = self.service['user'], password = self.service['pass'])
+                transport.connect(username=self.service['user'], password=self.service['pass'])
             else:
-                transport.connect(username = self.service['user'], pkey = rsa_key)
+                transport.connect(username=self.service['user'], pkey=rsa_key)
             self.progress(self.service['type'] + " " + _("connection successfully established"))
 
             # Create full remote path
             path = self.service['path']
-            try:    transport.open_session().exec_command('mkdir -p ' + path)
+            try: transport.open_session().exec_command('mkdir -p ' + path)
             except: pass
 
             sftp = paramiko.SFTPClient.from_transport(transport)
@@ -240,9 +242,9 @@ class mintUploader(threading.Thread):
 
         finally:
             # Close any open connections
-            try:    sftp.close()
+            try: sftp.close()
             except: pass
-            try:    transport.close()
+            try: transport.close()
             except: pass
 
     def _scp(self, file):
@@ -253,9 +255,9 @@ class mintUploader(threading.Thread):
         try:
             # Attempting to connect
             self.service['file'] = file
-            scp = pexpect.spawn("scp", ["-P", "%(port)i"%self.service,
-                                        "%(file)s"%self.service,
-                                        "%(user)s@%(host)s:%(path)s"%self.service])
+            scp = pexpect.spawn("scp", ["-P", "%(port)i" % self.service,
+                                        "%(file)s" % self.service,
+                                        "%(user)s@%(host)s:%(path)s" % self.service])
 
             # If password is not defined, or is the empty string, use password-less scp
             if self.service['pass']:
@@ -266,14 +268,14 @@ class mintUploader(threading.Thread):
 
             scp.timeout = None
             self.pct(0)
-            received = scp.expect(['.*100\%.*','.*password:.*',pexpect.EOF])
+            received = scp.expect(['.*100\%.*', '.*password:.*', pexpect.EOF])
             if received == 1:
                 scp.sendline(' ')
                 raise ConnectionError(_("This service requires a password."))
 
         finally:
             # Close any open connections
-            try:    scp.close()
+            try: scp.close()
             except: pass
 
     def progress(self, message):
@@ -281,10 +283,10 @@ class mintUploader(threading.Thread):
 
     def pct(self, so_far, total=None):
         if not total: total = self.filesize
-        if total: pct = float(so_far)/total
-        else:     pct = 1.0
-        pct = int(pct*100)
-        sys.stdout.write("\r " + str(pct) + "% [" + (pct/2)*"=" + ">" + (50-(pct/2)) * " " + "] " + sizeStr(so_far) + "     ")
+        if total: pct = float(so_far) / total
+        else: pct = 1.0
+        pct = int(pct * 100)
+        sys.stdout.write("\r " + str(pct) + "% [" + (pct / 2) * "=" + ">" + (50 - (pct / 2)) * " " + "] " + sizeStr(so_far) + "     ")
         sys.stdout.flush()
         return pct
 
@@ -295,7 +297,7 @@ class mintUploader(threading.Thread):
         if self.service.has_key('url'):
             url = self.service['url'].replace('<FILE>', self.name)
             self.url = url.replace(' ', '%20')
-            self.progress( _("URL:") + " " + self.url)
+            self.progress(_("URL:") + " " + self.url)
 
         n = config['notification']
         # If nofications are enabled AND the file is minimal x byte in size...
@@ -305,7 +307,7 @@ class mintUploader(threading.Thread):
                 mintNotifier().notify(_("File uploaded successfully."))
 
     def my_ftp_callback(self, buffer):
-        self.so_far = self.so_far+len(buffer)-1
+        self.so_far = self.so_far + len(buffer) - 1
         self.pct(self.so_far)
         return
 
@@ -339,22 +341,22 @@ if os.path.exists(CONFIGFILE_USER):
     config.merge(ConfigObj(CONFIGFILE_USER))
 
 if not config.has_key('paths'):
-    print _("%(1)s is not set in the config file found under %(2)s or %(3)s") % {'1':'paths', '2':CONFIGFILE_GLOBAL, '3':CONFIGFILE_USER}
+    print _("%(1)s is not set in the config file found under %(2)s or %(3)s") % {'1': 'paths', '2': CONFIGFILE_GLOBAL, '3': CONFIGFILE_USER}
     sys.exit(1)
 
 if not config.has_key('defaults'):
-    print _("%(1)s is not set in the config file found under %(2)s or %(3)s") % {'1':'defaults', '2':CONFIGFILE_GLOBAL, '3':CONFIGFILE_USER}
+    print _("%(1)s is not set in the config file found under %(2)s or %(3)s") % {'1': 'defaults', '2': CONFIGFILE_GLOBAL, '3': CONFIGFILE_USER}
     sys.exit(1)
 
 config_paths = config['paths']
-config_paths['user'] = config_paths['user'].replace('<HOME>',home)
+config_paths['user'] = config_paths['user'].replace('<HOME>', home)
 
 defaults = config['defaults']
-defaults['user'] = defaults['user'].replace('<USER>',os.environ['USER'])
-
+defaults['user'] = defaults['user'].replace('<USER>', os.environ['USER'])
 
 
 class Service(ConfigObj):
+
     '''Object representing an upload service'''
 
     def __init__(self, *args):
@@ -383,7 +385,7 @@ class Service(ConfigObj):
     def _fix(self):
         '''Format values correctly'''
 
-        for k,v in self.iteritems():
+        for k, v in self.iteritems():
             if v:
                 if type(v) is list:
                     self[k] = ','.join(v)
@@ -415,19 +417,19 @@ class Service(ConfigObj):
         s.merge(self)
 
         timestamp = datetime.datetime.utcnow().strftime(s['format'])
-        s['path'] = s['path'].replace('<TIMESTAMP>',timestamp)
+        s['path'] = s['path'].replace('<TIMESTAMP>', timestamp)
 
         # Replace placeholders in url
         if s.has_key('url'):
             url_replace = {
-                    '<TIMESTAMP>':timestamp,
-                    '<PATH>':s['path']
+                '<TIMESTAMP>': timestamp,
+                '<PATH>': s['path']
             }
             url = s['url']
-            for k,v in url_replace.iteritems():
-                url = url.replace(k,v)
+            for k, v in url_replace.iteritems():
+                url = url.replace(k, v)
             # Must be done after other replaces to function correctly
-            url = url.replace(' ','%20')
+            url = url.replace(' ', '%20')
             s['url'] = url
 
         # Ensure trailing '/', after url <PATH> replace
@@ -438,7 +440,6 @@ class Service(ConfigObj):
         s['path'] += os.sep
 
         return s
-
 
 
 def my_storbinary(self, cmd, fp, blocksize=8192, callback=None):
@@ -453,6 +454,7 @@ def my_storbinary(self, cmd, fp, blocksize=8192, callback=None):
         if callback: callback(buf)
     conn.close()
     return self.voidresp()
+
 
 def my_storlines(self, cmd, fp, callback=None):
     '''Store a file in line mode.'''

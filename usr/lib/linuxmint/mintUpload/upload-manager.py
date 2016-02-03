@@ -2,7 +2,9 @@
 
 import os
 import commands
-import gtk, gtk.glade, gettext
+import gtk
+import gtk.glade
+import gettext
 import pygtk
 pygtk.require("2.0")
 import string
@@ -10,6 +12,7 @@ from mintUploadCore import *
 
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
+
 
 class ManagerWindow:
 
@@ -68,7 +71,7 @@ class ManagerWindow:
         dlg.set_program_name("mintUpload")
         dlg.set_comments(_("Upload Manager"))
         try:
-            h = open('/usr/share/common-licenses/GPL','r')
+            h = open('/usr/share/common-licenses/GPL', 'r')
             s = h.readlines()
             gpl = ""
             for line in s:
@@ -82,9 +85,10 @@ class ManagerWindow:
                         "Philip Morrell <mintupload.emorrp1@mamber.net>",
                         "Manuel Sandoval <manuel@slashvar.com>",
                         "Dennis Schwertel <s@digitalkultur.net>"
-        ])
+                        ])
         dlg.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
         dlg.set_logo(gtk.gdk.pixbuf_new_from_file("/usr/lib/linuxmint/mintUpload/icon.svg"))
+
         def close(w, res):
             if res == gtk.RESPONSE_CANCEL:
                 w.hide()
@@ -151,7 +155,7 @@ class ManagerWindow:
 
     def reload_services(self, treeview_services):
         model = gtk.TreeStore(str)
-        model.set_sort_column_id( 0, gtk.SORT_ASCENDING )
+        model.set_sort_column_id(0, gtk.SORT_ASCENDING)
         treeview_services.set_model(model)
 
         self.services = read_services()
@@ -182,7 +186,7 @@ class ManagerWindow:
         wTree.get_widget("dialog_edit_service").show()
         wTree.get_widget("label_advanced").set_text(_("Advanced settings"))
         wTree.get_widget("button_verify").set_label(_("Check connection"))
-        wTree.get_widget("button_verify").connect("clicked",  self.check_connection, file)
+        wTree.get_widget("button_verify").connect("clicked", self.check_connection, file)
         wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_edit_service"))
 
         #i18n
@@ -255,10 +259,10 @@ class ManagerWindow:
                 wTree.get_widget("txt_path").set_text("")
         except Exception, detail:
             print detail
-            
+
     def check_connection(self, widget, file):
         service = Service(file)
-        os.system("mintupload \"" + service['name'] + "\" /usr/lib/linuxmint/mintUpload/mintupload.readme &")        
+        os.system("mintupload \"" + service['name'] + "\" /usr/lib/linuxmint/mintUpload/mintupload.readme &")
 
     def get_port_for_service(self, type):
         if type in ("Mint", "FTP"):
@@ -273,16 +277,16 @@ class ManagerWindow:
             wname = widget.get_name()
             if wname == "combo_type":
                 model = widget.get_model()
-                iter =  widget.get_active_iter()
-                config = { 'type' : model.get_value(iter, 0).lower(),
-                           'port' : self.get_port_for_service(model.get_value(iter, 0)) }
+                iter = widget.get_active_iter()
+                config = {'type': model.get_value(iter, 0).lower(),
+                          'port': self.get_port_for_service(model.get_value(iter, 0))}
             else:
-                config = { wname[4:] : widget.get_text() }
+                config = {wname[4:]: widget.get_text()}
             s = Service(file)
             s.merge(config)
             s.write()
         except Exception as e:
-            try:    raise CustomError(_("Could not save configuration change"), e)
+            try: raise CustomError(_("Could not save configuration change"), e)
             except: pass
 
     def close_window(self, widget, window):
