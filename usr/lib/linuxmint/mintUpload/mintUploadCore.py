@@ -17,10 +17,9 @@ import paramiko
 import pexpect
 import threading
 import pynotify
-from user import home
-sys.path.append('/usr/lib/linuxmint/common')
 from configobj import ConfigObj
 
+USER_HOME = os.path.expanduser('~')
 
 VERSION = "3.7.4"
 __version__ = VERSION
@@ -44,7 +43,7 @@ class CustomError(Exception):
             observer.error(self)
 
     @classmethod
-    def addObserver(cls, observer):
+    def add_observer(cls, observer):
         cls.observers.append(observer)
 
 
@@ -58,7 +57,7 @@ class cliErrorObserver:
             sys.stderr.write(os.linesep + '\tDetail: ' + err.detail)
         sys.stderr.write(os.linesep * 2)
 
-CustomError.addObserver(cliErrorObserver())
+CustomError.add_observer(cliErrorObserver())
 
 
 class ConnectionError(CustomError):
@@ -73,7 +72,7 @@ class FilesizeError(CustomError):
     pass
 
 
-def sizeStr(size, acc=None, factor=None):
+def get_size_str(size, acc=None, factor=None):
     '''Converts integer filesize in bytes to textual repr'''
 
     if not factor:
@@ -92,7 +91,7 @@ def sizeStr(size, acc=None, factor=None):
     return str(int(size)) + thresholds[0]
 
 
-class mintNotifier:
+class MintNotifier:
 
     '''Enables integration with external notifiers'''
 
@@ -103,7 +102,7 @@ class mintNotifier:
         pynotify.Notification("mintUpload", detail, ICONFILE).show()
 
 
-class mintSpaceChecker(threading.Thread):
+class MintSpaceChecker(threading.Thread):
 
     '''Checks that the filesize is ok'''
 
@@ -139,7 +138,7 @@ class mintSpaceChecker(threading.Thread):
                 raise FilesizeError(_("File larger than service's available space"))
 
 
-class mintUploader(threading.Thread):
+class MintUploader(threading.Thread):
 
     '''Uploads the file to the selected service'''
 
@@ -199,9 +198,9 @@ class mintUploader(threading.Thread):
             try: ftp.quit()
             except: pass
 
-    def getPrivateKey(self):
+    def get_private_key(self):
         '''Find a private key in ~/.ssh'''
-        key_files = [home + '/.ssh/id_rsa', home + '/.ssh/id_dsa']
+        key_files = [USER_HOME + '/.ssh/id_rsa', USER_HOME + '/.ssh/id_dsa']
         key = None
         for f in key_files:
             if os.path.exists(f):
@@ -217,7 +216,7 @@ class mintUploader(threading.Thread):
         '''Connection process for SFTP services'''
 
         if not self.service['pass']:
-            rsa_key = self.getPrivateKey()
+            rsa_key = self.get_private_key()
             if not rsa_key: raise ConnectionError(_("This service requires a password or private key."))
         if not self.service.has_key('port'):
             self.service['port'] = 22
@@ -286,7 +285,7 @@ class mintUploader(threading.Thread):
         if total: pct = float(so_far) / total
         else: pct = 1.0
         pct = int(pct * 100)
-        sys.stdout.write("\r " + str(pct) + "% [" + (pct / 2) * "=" + ">" + (50 - (pct / 2)) * " " + "] " + sizeStr(so_far) + "     ")
+        sys.stdout.write("\r " + str(pct) + "% [" + (pct / 2) * "=" + ">" + (50 - (pct / 2)) * " " + "] " + get_size_str(so_far) + "     ")
         sys.stdout.flush()
         return pct
 
@@ -304,7 +303,7 @@ class mintUploader(threading.Thread):
         if n['enable'] == "True" and self.filesize >= int(n['min_filesize']):
             # If when_focused is true OR window has no focus
             if n['when_focused'] == "True" or not self.focused:
-                mintNotifier().notify(_("File uploaded successfully."))
+                MintNotifier().notify(_("File uploaded successfully."))
 
     def my_ftp_callback(self, buffer):
         self.so_far = self.so_far + len(buffer) - 1
@@ -334,7 +333,7 @@ def read_services():
 
 ICONFILE = "/usr/lib/linuxmint/mintUpload/icon.svg"
 CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
-CONFIGFILE_USER = home + '/.linuxmint/mintUpload.conf'
+CONFIGFILE_USER = USER_HOME + '/.linuxmint/mintUpload.conf'
 
 config = ConfigObj(CONFIGFILE_GLOBAL)
 if os.path.exists(CONFIGFILE_USER):
@@ -349,7 +348,7 @@ if not config.has_key('defaults'):
     sys.exit(1)
 
 config_paths = config['paths']
-config_paths['user'] = config_paths['user'].replace('<HOME>', home)
+config_paths['user'] = config_paths['user'].replace('<HOME>', USER_HOME)
 
 defaults = config['defaults']
 defaults['user'] = defaults['user'].replace('<USER>', os.environ['USER'])
@@ -447,7 +446,7 @@ def my_storbinary(self, cmd, fp, blocksize=8192, callback=None):
 
     self.voidcmd('TYPE I')
     conn = self.transfercmd(cmd)
-    while 1:
+    while True:
         buf = fp.read(blocksize)
         if not buf: break
         conn.sendall(buf)

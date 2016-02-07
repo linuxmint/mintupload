@@ -29,12 +29,12 @@ def notify(message, timeout=3000):
     os.system("notify-send \"" + _("Upload Manager") + "\" \"" + message + "\" -i /usr/lib/linuxmint/mintUpload/icon.svg -t " + str(timeout))
 
 
-class gtkUploader(mintUploader):
+class GtkUploader(MintUploader):
 
-    '''Wrapper for the gtk management of mintUploader'''
+    '''Wrapper for the gtk management of MintUploader'''
 
     def __init__(self, service, files, wTree):
-        mintUploader.__init__(self, service, files)
+        MintUploader.__init__(self, service, files)
         gtk.gdk.threads_enter()
         try:
             self.progressbar = wTree.get_widget("progressbar")
@@ -85,7 +85,7 @@ class gtkUploader(mintUploader):
             gtk.main_quit()
             sys.exit(0)
 
-        if (len(self.files) > 1):
+        if len(self.files) > 1:
             notify(_("Successfully uploaded %(number)d files to '%(service)s'") % {'number': len(self.files), 'service': service['name']})
         else:
             notify(_("Successfully uploaded 1 file to '%(service)s'") % {'service': service['name']})
@@ -236,6 +236,6 @@ if __name__ == "__main__":
         else:
             title = _("%(percentage)s of 1 file - Uploading to %(service)s") % {'percentage': '0%', 'service': "\"" + service['name'] + "\""}
         wTree.get_widget("main_window").set_title(title)
-        uploader = gtkUploader(service, filenames, wTree)
+        uploader = GtkUploader(service, filenames, wTree)
         uploader.start()
         gtk.main()

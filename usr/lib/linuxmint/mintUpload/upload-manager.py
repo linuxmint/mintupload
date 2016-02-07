@@ -2,11 +2,11 @@
 
 import os
 import commands
-import gtk
-import gtk.glade
 import gettext
 import pygtk
 pygtk.require("2.0")
+import gtk
+import gtk.glade
 import string
 from mintUploadCore import *
 
@@ -17,7 +17,7 @@ gettext.install("mintupload", "/usr/share/linuxmint/locale")
 class ManagerWindow:
 
     def __init__(self):
-        #Set the Glade file
+        # Set the Glade file
         gladefile = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
         wTree = gtk.glade.XML(gladefile, "manager_window")
         wTree.get_widget("manager_window").set_title(_("Upload Manager"))
@@ -95,7 +95,7 @@ class ManagerWindow:
         dlg.connect("response", close)
         dlg.show()
 
-    def responseToDialog(self, entry, dialog, response):
+    def response_to_dialog(self, entry, dialog, response):
         dialog.response(response)
 
     def add_service(self, widget, treeview_services):

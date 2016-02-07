@@ -2,10 +2,10 @@
 
 import os
 import sys
-import gtk
-import gtk.glade
 import pygtk
 pygtk.require("2.0")
+import gtk
+import gtk.glade
 import gettext
 import time
 from mintUploadCore import *
@@ -107,7 +107,7 @@ class MainClass:
         self.menu.append(servicesMenuItem)
         for service in self.services:
             serviceMenuItem = gtk.MenuItem(label="   " + service['name'])
-            serviceMenuItem.connect("activate", self.createDropZone, service)
+            serviceMenuItem.connect("activate", self.create_drop_zone, service)
             self.menu.append(serviceMenuItem)
 
         self.menu.append(gtk.SeparatorMenuItem())
@@ -126,7 +126,7 @@ class MainClass:
     def launch_manager(self, widget):
         os.system("/usr/lib/linuxmint/mintUpload/upload-manager.py &")
 
-    def createDropZone(self, widget, service):
+    def create_drop_zone(self, widget, service):
         if service['name'] not in self.dropZones.keys():
             dropZone = DropZone(self.statusIcon, self.menu, service, self.dropZones)
             self.dropZones[service['name']] = dropZone
@@ -150,7 +150,7 @@ class MainClass:
         return gtk.status_icon_position_menu(self.menu, self.statusIcon)
 
 
-class DropZone():
+class DropZone:
 
     def __init__(self, statusIcon, menu, service, dropZones):
         self.service = service
