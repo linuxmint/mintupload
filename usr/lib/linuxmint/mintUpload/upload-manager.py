@@ -145,7 +145,7 @@ class ManagerWindow:
 
     def remove_service(self, widget, treeview_services):
         (model, iter) = treeview_services.get_selection().get_selected()
-        if (iter != None):
+        if iter != None:
             service = model.get_value(iter, 0)
             for s in self.services:
                 if s['name'] == service:
@@ -265,10 +265,8 @@ class ManagerWindow:
         os.system("mintupload \"" + service['name'] + "\" /usr/lib/linuxmint/mintUpload/mintupload.readme &")
 
     def get_port_for_service(self, type):
-        if type in ("Mint", "FTP"):
-            num = "21"
-        else:
-            num = "22"
+        num = "21" if type in ("Mint", "FTP") else "22"
+
         self.wTree.get_widget("txt_port").set_text(num)
         return num
 
@@ -286,8 +284,10 @@ class ManagerWindow:
             s.merge(config)
             s.write()
         except Exception as e:
-            try: raise CustomError(_("Could not save configuration change"), e)
-            except: pass
+            try:
+                raise CustomError(_("Could not save configuration change"), e)
+            except:
+                pass
 
     def close_window(self, widget, window):
         window.hide()

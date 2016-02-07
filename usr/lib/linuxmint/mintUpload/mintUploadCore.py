@@ -37,8 +37,9 @@ class CustomError(Exception):
     def __init__(self, summary, err=None):
         self.type = self.__class__.__name__
         self.summary = summary
-        if err: self.detail = repr(err)
-        else: self.detail = ''
+
+        self.detail = '' if not err else repr(err)
+
         for observer in self.observers:
             observer.error(self)
 
@@ -53,8 +54,10 @@ class cliErrorObserver:
 
     def error(self, err):
         sys.stderr.write(os.linesep + err.type + ': ' + err.summary)
+
         if err.detail:
             sys.stderr.write(os.linesep + '\tDetail: ' + err.detail)
+
         sys.stderr.write(os.linesep * 2)
 
 CustomError.add_observer(cliErrorObserver())
@@ -159,6 +162,7 @@ class MintUploader(threading.Thread):
     def run(self):
         for f in self.files:
             self.upload(f)
+
         self.progress(_("File uploaded successfully."))
 
     def upload(self, file):
@@ -181,8 +185,10 @@ class MintUploader(threading.Thread):
 
             # Create full path
             for dir in self.service['path'].split(os.sep):
-                try: ftp.mkd(dir)
-                except: pass
+                try:
+                    ftp.mkd(dir)
+                except:
+                    pass
                 ftp.cwd(dir)
 
             f = open(file, "rb")
@@ -193,10 +199,15 @@ class MintUploader(threading.Thread):
 
         finally:
             # Close any open connections
-            try: f.close()
-            except: pass
-            try: ftp.quit()
-            except: pass
+            try:
+                f.close()
+            except:
+                pass
+
+            try:
+                ftp.quit()
+            except:
+                pass
 
     def get_private_key(self):
         '''Find a private key in ~/.ssh'''
@@ -217,9 +228,12 @@ class MintUploader(threading.Thread):
 
         if not self.service['pass']:
             rsa_key = self.get_private_key()
-            if not rsa_key: raise ConnectionError(_("This service requires a password or private key."))
+            if not rsa_key:
+                raise ConnectionError(_("This service requires a password or private key."))
+
         if not self.service.has_key('port'):
             self.service['port'] = 22
+
         try:
             # Attempting to connect
             transport = paramiko.Transport((self.service['host'], self.service['port']))
@@ -231,8 +245,11 @@ class MintUploader(threading.Thread):
 
             # Create full remote path
             path = self.service['path']
-            try: transport.open_session().exec_command('mkdir -p ' + path)
-            except: pass
+
+            try:
+                transport.open_session().exec_command('mkdir -p ' + path)
+            except:
+                pass
 
             sftp = paramiko.SFTPClient.from_transport(transport)
             self.progress(_("Uploading the file..."))
@@ -241,16 +258,22 @@ class MintUploader(threading.Thread):
 
         finally:
             # Close any open connections
-            try: sftp.close()
-            except: pass
-            try: transport.close()
-            except: pass
+            try:
+                sftp.close()
+            except:
+                pass
+
+            try:
+                transport.close()
+            except:
+                pass
 
     def _scp(self, file):
         '''Connection process for SCP services'''
 
         if not self.service.has_key('port'):
             self.service['port'] = 22
+
         try:
             # Attempting to connect
             self.service['file'] = file
@@ -268,22 +291,30 @@ class MintUploader(threading.Thread):
             scp.timeout = None
             self.pct(0)
             received = scp.expect(['.*100\%.*', '.*password:.*', pexpect.EOF])
+
             if received == 1:
                 scp.sendline(' ')
                 raise ConnectionError(_("This service requires a password."))
 
         finally:
             # Close any open connections
-            try: scp.close()
-            except: pass
+            try:
+                scp.close()
+            except:
+                pass
 
     def progress(self, message):
         print message
 
     def pct(self, so_far, total=None):
-        if not total: total = self.filesize
-        if total: pct = float(so_far) / total
-        else: pct = 1.0
+        if not total:
+            total = self.filesize
+
+        if total:
+            pct = float(so_far) / total
+        else:
+            pct = 1.0
+
         pct = int(pct * 100)
         sys.stdout.write("\r " + str(pct) + "% [" + (pct / 2) * "=" + ">" + (50 - (pct / 2)) * " " + "] " + get_size_str(so_far) + "     ")
         sys.stdout.flush()
@@ -448,9 +479,15 @@ def my_storbinary(self, cmd, fp, blocksize=8192, callback=None):
     conn = self.transfercmd(cmd)
     while True:
         buf = fp.read(blocksize)
-        if not buf: break
+
+        if not buf:
+            break
+
         conn.sendall(buf)
-        if callback: callback(buf)
+
+        if callback:
+            callback(buf)
+
     conn.close()
     return self.voidresp()
 
@@ -462,12 +499,15 @@ def my_storlines(self, cmd, fp, callback=None):
     conn = self.transfercmd(cmd)
     while 1:
         buf = fp.readline()
-        if not buf: break
+        if not buf:
+            break
         if buf[-2:] != CRLF:
-            if buf[-1] in CRLF: buf = buf[:-1]
+            if buf[-1] in CRLF:
+                buf = buf[:-1]
             buf = buf + CRLF
         conn.sendall(buf)
-        if callback: callback(buf)
+        if callback:
+            callback(buf)
     conn.close()
     return self.voidresp()
 
