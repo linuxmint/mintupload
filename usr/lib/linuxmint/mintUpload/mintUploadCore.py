@@ -472,7 +472,7 @@ class Service(ConfigObj):
         return s
 
 
-def my_storbinary(self, cmd, fp, blocksize=8192, callback=None):
+def _my_storbinary(self, cmd, fp, blocksize=8192, callback=None):
     '''Store a file in binary mode.'''
 
     self.voidcmd('TYPE I')
@@ -492,7 +492,7 @@ def my_storbinary(self, cmd, fp, blocksize=8192, callback=None):
     return self.voidresp()
 
 
-def my_storlines(self, cmd, fp, callback=None):
+def _my_storlines(self, cmd, fp, callback=None):
     '''Store a file in line mode.'''
 
     self.voidcmd('TYPE A')
@@ -501,8 +501,8 @@ def my_storlines(self, cmd, fp, callback=None):
         buf = fp.readline()
         if not buf:
             break
-        if buf[-2:] != CRLF:
-            if buf[-1] in CRLF:
+        if buf[-2:] != CRLF:     # CRLF is defined in ftplib.  This code is valid
+            if buf[-1] in CRLF:  # after being patched into that context.  See below
                 buf = buf[:-1]
             buf = buf + CRLF
         conn.sendall(buf)
@@ -512,5 +512,5 @@ def my_storlines(self, cmd, fp, callback=None):
     return self.voidresp()
 
 # Use the patched versions
-ftplib.FTP.storbinary = my_storbinary
-ftplib.FTP.storlines = my_storlines
+ftplib.FTP.storbinary = _my_storbinary
+ftplib.FTP.storlines = _my_storlines
