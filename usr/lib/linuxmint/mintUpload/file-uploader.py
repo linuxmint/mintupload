@@ -2,15 +2,17 @@
 
 import os
 import sys
+import gettext
+import time
+import threading
+import urllib
+
 import pygtk
 pygtk.require("2.0")
 import gtk
 import gtk.glade
-import gettext
-import time
+
 from mintUploadCore import *
-import threading
-import urllib
 
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")

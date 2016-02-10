@@ -1,23 +1,20 @@
 #!/usr/bin/python2
 
 import sys
+import os
+import time
+import traceback
 
 try:
     import pygtk
     pygtk.require("2.0")
-except:
-    pass
-
-try:
     import gtk
     import gtk.glade
-    import os
-    import time
-    import traceback
-    from mintUploadCore import *
 except:
     print "You do not have all the dependencies!"
     sys.exit(1)
+
+from mintUploadCore import *
 
 gtk.gdk.threads_init()
 __version__ = VERSION

@@ -7,10 +7,10 @@
 # of the License.
 
 
+import os
 import sys
 import urllib
 import ftplib
-import os
 import datetime
 import gettext
 import paramiko

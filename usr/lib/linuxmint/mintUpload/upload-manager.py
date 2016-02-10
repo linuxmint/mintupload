@@ -3,11 +3,13 @@
 import os
 import commands
 import gettext
+import string
+
 import pygtk
 pygtk.require("2.0")
 import gtk
 import gtk.glade
-import string
+
 from mintUploadCore import *
 
 # i18n
