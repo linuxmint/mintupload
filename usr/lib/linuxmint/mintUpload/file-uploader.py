@@ -1,17 +1,18 @@
 #!/usr/bin/python2
 
-import os, sys
-import gtk
-import gtk.glade
-import pygtk
-pygtk.require("2.0")
+import os
+import sys
 import gettext
 import time
-from mintUploadCore import *
-#import pyinotify
-#from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent
 import threading
 import urllib
+
+import pygtk
+pygtk.require("2.0")
+import gtk
+import gtk.glade
+
+from mintUploadCore import *
 
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
@@ -19,53 +20,22 @@ gettext.install("mintupload", "/usr/share/linuxmint/locale")
 global shutdown_flag
 shutdown_flag = False
 
+
 class NotifyThread(threading.Thread):
+
     def __init__(self, mainClass):
         threading.Thread.__init__(self)
         self.mainClass = mainClass
 
     def run(self):
-        #wm = WatchManager()
-        #mask = pyinotify.IN_DELETE | pyinotify.IN_CREATE | pyinotify.IN_MODIFY
-        #notifier = Notifier(wm, PTmp(self.mainClass))
-        #for loc, path in config_paths.iteritems():
-        #       wdd = wm.add_watch(path, mask, rec=True)
         global shutdown_flag
         while not shutdown_flag:
             try:
                 time.sleep(1)
                 self.mainClass.reload_services()
-                # process the queue of events as explained above
-                #notifier.process_events()
-                #if notifier.check_events():
-                #       # read notified events and enqeue them
-                #       notifier.read_events()
             except:
-                # destroy the inotify's instance on this interrupt (stop monitoring)
-                #notifier.stop()
-                #break
                 pass
-        #print "out of the loop"
 
-#class PTmp(ProcessEvent):
-#       def __init__(self, mainClass):
-#               self.mainClass = mainClass
-#
-#       def process_IN_CREATE(self, event):
-#               #print "Create: %s" %  os.path.join(event.path, event.name)
-#               self.mainClass.reload_services()
-#
-#       def process_IN_DELETE(self, event):
-#               #print "Remove: %s" %  os.path.join(event.path, event.name)
-#               self.mainClass.reload_services()
-#
-#       def process_IN_MODIFY(self, event):
-#               #print "Modify: %s" %  os.path.join(event.path, event.name)
-#               self.mainClass.reload_services()
-#
-#       def process_default(self, event):
-#               #print "Default event on: %s" %  os.path.join(event.path, event.name)
-#               self.mainClass.reload_services()
 
 class MainClass:
 
@@ -74,12 +44,14 @@ class MainClass:
 
         self.statusIcon = gtk.StatusIcon()
         self.statusIcon.set_from_file("/usr/lib/linuxmint/mintUpload/systray.svg")
+
         try:
-            desktop = os.environ["DESKTOP_SESSION"].lower()  
+            desktop = os.environ["DESKTOP_SESSION"].lower()
             if desktop == "mate":
-	       self.statusIcon.set_from_icon_name("up")
+                self.statusIcon.set_from_icon_name("up")
         except Exception, detail:
             print detail
+
         self.statusIcon.set_tooltip(_("Upload services"))
         self.statusIcon.set_visible(True)
 
@@ -101,9 +73,10 @@ class MainClass:
         title.set_use_markup(True)
         servicesMenuItem.add(title)
         self.menu.append(servicesMenuItem)
+
         for service in self.services:
             serviceMenuItem = gtk.MenuItem(label="   " + service['name'])
-            serviceMenuItem.connect("activate", self.createDropZone, service)
+            serviceMenuItem.connect("activate", self.create_drop_zone, service)
             self.menu.append(serviceMenuItem)
 
         self.menu.append(gtk.SeparatorMenuItem())
@@ -122,7 +95,7 @@ class MainClass:
     def launch_manager(self, widget):
         os.system("/usr/lib/linuxmint/mintUpload/upload-manager.py &")
 
-    def createDropZone(self, widget, service):
+    def create_drop_zone(self, widget, service):
         if service['name'] not in self.dropZones.keys():
             dropZone = DropZone(self.statusIcon, self.menu, service, self.dropZones)
             self.dropZones[service['name']] = dropZone
@@ -146,7 +119,7 @@ class MainClass:
         return gtk.status_icon_position_menu(self.menu, self.statusIcon)
 
 
-class DropZone():
+class DropZone:
 
     def __init__(self, statusIcon, menu, service, dropZones):
         self.service = service
@@ -156,11 +129,11 @@ class DropZone():
         self.w = gtk.Window()
 
         TARGET_TYPE_TEXT = 80
-        self.w.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_HIGHLIGHT | gtk.DEST_DEFAULT_DROP, [ ( "text/uri-list", 0, TARGET_TYPE_TEXT ) ], gtk.gdk.ACTION_MOVE|gtk.gdk.ACTION_COPY)
+        self.w.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_HIGHLIGHT | gtk.DEST_DEFAULT_DROP, [("text/uri-list", 0, TARGET_TYPE_TEXT)], gtk.gdk.ACTION_MOVE | gtk.gdk.ACTION_COPY)
         self.w.connect('drag_motion', self.motion_cb)
         self.w.connect('drag_drop', self.drop_cb)
         self.w.connect('drag_data_received', self.drop_data_received_cb)
-        self.w.connect('destroy', self.destroy_cb)  
+        self.w.connect('destroy', self.destroy_cb)
         self.w.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
         self.w.set_title(self.service['name'])
         self.w.set_keep_above(True)
@@ -184,6 +157,7 @@ class DropZone():
 
         if self.w.is_composited():
             self.w.set_opacity(0.5)
+
         self.w.show_all()
 
     def show(self):

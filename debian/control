@@ -2,18 +2,21 @@ Source: mintupload
 Section: admin
 Priority: optional
 Maintainer: Philip Morrell <mintupload.emorrp1@mamber.net>
-Build-Depends: debhelper (>= 9), python
+Build-Depends: debhelper (>= 9)
 Standards-Version: 3.9.5
 
 Package: mintupload
 Architecture: all
-Depends:
- ${python:Depends}, ${misc:Depends},
- python (>= 2.5), python (<< 3),
- python-paramiko (>= 1.7.4),
- python-gtk2, python-glade2, python-pexpect,
- mint-common, libnotify-bin, python-notify
+Depends: python (>= 2.5), python (<< 3),
+         python-paramiko (>= 1.7.4),
+         python-gtk2,
+         python-glade2,
+         python-pexpect,
+         python-notify,
+         python-configobj,
+         libnotify-bin,
+         ${misc:Depends}
 Description: Uploads files on the Internet
  mintUpload allow you to upload files on the Internet.
  This makes it easier to share or send big files which
- would not fit in an email. 
+ would not fit in an email.
