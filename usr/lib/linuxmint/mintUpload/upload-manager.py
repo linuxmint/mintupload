@@ -5,69 +5,70 @@ import commands
 import gettext
 import string
 
-import pygtk
-pygtk.require("2.0")
-import gtk
-import gtk.glade
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 from mintUploadCore import *
 
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
-# Set the Glade file
-GLADEFILE = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
+# Set the ui file
+UI_FILE = "/usr/lib/linuxmint/mintUpload/mintUpload.ui"
 
 
 class ManagerWindow:
 
     def __init__(self):
-        wTree = gtk.glade.XML(GLADEFILE, "manager_window")
-        wTree.get_widget("manager_window").set_title(_("Upload Manager"))
-        vbox = wTree.get_widget("vbox_main")
-        treeview_services = wTree.get_widget("treeview_services")
-        wTree.get_widget("manager_window").set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
+        self.builder = Gtk.Builder()
+        self.builder.add_from_file(UI_FILE)
+
+        self.builder.get_object("manager_window").set_title(_("Upload Manager"))
+        # vbox = self.builder.get_object("vbox_main")
+        self.builder.get_object("manager_window").set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
+        treeview_services = self.builder.get_object("treeview_services")
 
         # the treeview
-        column1 = gtk.TreeViewColumn(_("Upload services"), gtk.CellRendererText(), text=0)
+        column1 = Gtk.TreeViewColumn(_("Upload services"), Gtk.CellRendererText(), text=0)
         column1.set_sort_column_id(0)
         column1.set_resizable(True)
-        treeview_services.append_column(column1)
-        treeview_services.set_headers_clickable(True)
-        treeview_services.set_reorderable(False)
-        treeview_services.show()
+        self.builder.get_object("treeview_services").append_column(column1)
+        self.builder.get_object("treeview_services").set_headers_clickable(True)
+        self.builder.get_object("treeview_services").set_reorderable(False)
+        self.builder.get_object("treeview_services").show()
 
         self.reload_services(treeview_services)
 
-        wTree.get_widget("manager_window").connect("delete_event", gtk.main_quit)
-        wTree.get_widget("button_close").connect("clicked", gtk.main_quit)
-        wTree.get_widget("toolbutton_add").connect("clicked", self.add_service, treeview_services)
-        wTree.get_widget("toolbutton_edit").connect("clicked", self.edit_service_from_button, treeview_services)
-        wTree.get_widget("toolbutton_remove").connect("clicked", self.remove_service, treeview_services)
+        self.builder.get_object("manager_window").connect("delete_event", Gtk.main_quit)
+        self.builder.get_object("button_close").connect("clicked", Gtk.main_quit)
+        self.builder.get_object("toolbutton_add").connect("clicked", self.add_service, treeview_services)
+        self.builder.get_object("toolbutton_edit").connect("clicked", self.edit_service_from_button, treeview_services)
+        self.builder.get_object("toolbutton_remove").connect("clicked", self.remove_service, treeview_services)
         treeview_services.connect("row_activated", self.edit_service_from_tree, treeview_services)
 
-        fileMenu = gtk.MenuItem(_("_File"))
-        fileSubmenu = gtk.Menu()
+        fileMenu = Gtk.MenuItem(_("_File"))
+        fileSubmenu = Gtk.Menu()
         fileMenu.set_submenu(fileSubmenu)
-        closeMenuItem = gtk.ImageMenuItem(gtk.STOCK_CLOSE)
+        closeMenuItem = Gtk.ImageMenuItem(Gtk.STOCK_CLOSE)
         closeMenuItem.get_child().set_text(_("Close"))
-        closeMenuItem.connect("activate", gtk.main_quit)
+        closeMenuItem.connect("activate", Gtk.main_quit)
         fileSubmenu.append(closeMenuItem)
 
-        helpMenu = gtk.MenuItem(_("_Help"))
-        helpSubmenu = gtk.Menu()
+        helpMenu = Gtk.MenuItem(_("_Help"))
+        helpSubmenu = Gtk.Menu()
         helpMenu.set_submenu(helpSubmenu)
-        aboutMenuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
+        aboutMenuItem = Gtk.ImageMenuItem(Gtk.STOCK_ABOUT)
         aboutMenuItem.get_child().set_text(_("About"))
         aboutMenuItem.connect("activate", self.open_about)
         helpSubmenu.append(aboutMenuItem)
 
-        wTree.get_widget("menubar1").append(fileMenu)
-        wTree.get_widget("menubar1").append(helpMenu)
-        wTree.get_widget("manager_window").show_all()
+        self.builder.get_object("menubar1").append(fileMenu)
+        self.builder.get_object("menubar1").append(helpMenu)
+        self.builder.get_object("manager_window").show_all()
 
     def open_about(self, widget):
-        dlg = gtk.AboutDialog()
+        dlg = Gtk.AboutDialog()
         dlg.set_title(_("About") + " - mintUpload")
         version = commands.getoutput("/usr/lib/linuxmint/common/version.py mintupload")
         dlg.set_version(version)
@@ -90,10 +91,10 @@ class ManagerWindow:
                         "Dennis Schwertel <s@digitalkultur.net>"
                         ])
         dlg.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
-        dlg.set_logo(gtk.gdk.pixbuf_new_from_file("/usr/lib/linuxmint/mintUpload/icon.svg"))
+        dlg.set_logo(GdkPixbuf.Pixbuf.new_from_file("/usr/lib/linuxmint/mintUpload/icon.svg"))
 
         def close(w, res):
-            if res == gtk.RESPONSE_CANCEL:
+            if res == Gtk.ResponseType.CANCEL:
                 w.hide()
         dlg.connect("response", close)
         dlg.show()
@@ -102,24 +103,24 @@ class ManagerWindow:
         dialog.response(response)
 
     def add_service(self, widget, treeview_services):
-        dialog = gtk.MessageDialog(None, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_QUESTION, gtk.BUTTONS_OK_CANCEL, None)
+        dialog = Gtk.MessageDialog(None, Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT, Gtk.MessageType.QUESTION, Gtk.ButtonsType.OK_CANCEL, None)
         dialog.set_title(_("Upload Manager"))
         dialog.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
         dialog.set_markup(_("<b>Please enter a name for the new upload service:</b>"))
-        entry = gtk.Entry()
+        entry = Gtk.Entry()
         entry.connect("changed", self.check_service_name, dialog)
-        hbox = gtk.HBox()
-        hbox.pack_start(gtk.Label(_("Service name:")), False, 5, 5)
-        hbox.pack_end(entry)
+        hbox = Gtk.HBox()
+        hbox.pack_start(Gtk.Label(_("Service name:", True, True, 0)), False, 5, 5)
+        hbox.pack_end(entry, True, True, 0)
         dialog.format_secondary_markup(_("<i>Try to avoid spaces and special characters...</i>"))
         dialog.vbox.pack_end(hbox, True, True, 0)
         dialog.show_all()
         response = dialog.run()
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             sname = entry.get_text()
         dialog.destroy()
 
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
             if os.path.exists(config_paths['user'] + sname):
                 sname += " 2"
@@ -144,7 +145,7 @@ class ManagerWindow:
         invalidChars = set(string.punctuation.replace("_", ""))
         if any(char in invalidChars for char in text):
             valid = False
-        dialog.get_widget_for_response(gtk.RESPONSE_OK).set_sensitive(valid)
+        dialog.get_object_for_response(Gtk.ResponseType.OK).set_sensitive(valid)
 
     def remove_service(self, widget, treeview_services):
         (model, iter) = treeview_services.get_selection().get_selected()
@@ -157,8 +158,8 @@ class ManagerWindow:
             model.remove(iter)
 
     def reload_services(self, treeview_services):
-        model = gtk.TreeStore(str)
-        model.set_sort_column_id(0, gtk.SORT_ASCENDING)
+        model = Gtk.TreeStore(str)
+        model.set_sort_column_id(0, Gtk.SortType.ASCENDING)
         treeview_services.set_model(model)
 
         self.services = read_services()
@@ -182,84 +183,82 @@ class ManagerWindow:
         sname = model.get_value(iter, 0)
         file = config_paths['user'] + sname
 
-        wTree = gtk.glade.XML("/usr/lib/linuxmint/mintUpload/mintUpload.glade", "dialog_edit_service")
-        self.wTree = wTree
-        wTree.get_widget("dialog_edit_service").set_title(_("%s Properties") % sname)
-        wTree.get_widget("dialog_edit_service").set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
-        wTree.get_widget("dialog_edit_service").show()
-        wTree.get_widget("label_advanced").set_text(_("Advanced settings"))
-        wTree.get_widget("button_verify").set_label(_("Check connection"))
-        wTree.get_widget("button_verify").connect("clicked", self.check_connection, file)
-        wTree.get_widget("button_cancel").connect("clicked", self.close_window, wTree.get_widget("dialog_edit_service"))
+        self.builder.get_object("dialog_edit_service").set_title(_("%s Properties") % sname)
+        self.builder.get_object("dialog_edit_service").set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
+        self.builder.get_object("dialog_edit_service").show()
+        self.builder.get_object("label_advanced").set_text(_("Advanced settings"))
+        self.builder.get_object("button_verify").set_label(_("Check connection"))
+        self.builder.get_object("button_verify").connect("clicked", self.check_connection, file)
+        self.builder.get_object("button_cancel").connect("clicked", self.close_window, self.builder.get_object("dialog_edit_service"))
 
         #i18n
-        wTree.get_widget("lbl_type").set_label(_("Type:"))
-        wTree.get_widget("lbl_hostname").set_label(_("Host:"))
-        wTree.get_widget("lbl_port").set_label(_("Port:"))
-        wTree.get_widget("lbl_username").set_label(_("User:"))
-        wTree.get_widget("lbl_password").set_label(_("Password:"))
-        wTree.get_widget("lbl_timestamp").set_label(_("Timestamp:"))
-        wTree.get_widget("lbl_path").set_label(_("Path:"))
+        self.builder.get_object("lbl_type").set_label(_("Type:"))
+        self.builder.get_object("lbl_hostname").set_label(_("Host:"))
+        self.builder.get_object("lbl_port").set_label(_("Port:"))
+        self.builder.get_object("lbl_username").set_label(_("User:"))
+        self.builder.get_object("lbl_password").set_label(_("Password:"))
+        self.builder.get_object("lbl_timestamp").set_label(_("Timestamp:"))
+        self.builder.get_object("lbl_path").set_label(_("Path:"))
 
-        wTree.get_widget("lbl_hostname").set_tooltip_text(_("Hostname or IP address, default: ") + defaults['host'])
-        wTree.get_widget("txt_host").set_tooltip_text(_("Hostname or IP address, default: ") + defaults['host'])
-        wTree.get_widget("txt_host").connect("focus-out-event", self.change, file)
+        self.builder.get_object("lbl_hostname").set_tooltip_text(_("Hostname or IP address, default: ") + defaults['host'])
+        self.builder.get_object("txt_host").set_tooltip_text(_("Hostname or IP address, default: ") + defaults['host'])
+        self.builder.get_object("txt_host").connect("focus-out-event", self.change, file)
 
-        wTree.get_widget("lbl_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
-        wTree.get_widget("txt_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
-        wTree.get_widget("txt_port").connect("focus-out-event", self.change, file)
+        self.builder.get_object("lbl_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
+        self.builder.get_object("txt_port").set_tooltip_text(_("Remote port, default is 21 for FTP, 22 for SFTP and SCP"))
+        self.builder.get_object("txt_port").connect("focus-out-event", self.change, file)
 
-        wTree.get_widget("lbl_username").set_tooltip_text(_("Username, defaults to your local username"))
-        wTree.get_widget("txt_user").set_tooltip_text(_("Username, defaults to your local username"))
-        wTree.get_widget("txt_user").connect("focus-out-event", self.change, file)
+        self.builder.get_object("lbl_username").set_tooltip_text(_("Username, defaults to your local username"))
+        self.builder.get_object("txt_user").set_tooltip_text(_("Username, defaults to your local username"))
+        self.builder.get_object("txt_user").connect("focus-out-event", self.change, file)
 
-        wTree.get_widget("lbl_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
-        wTree.get_widget("txt_pass").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
-        wTree.get_widget("txt_pass").connect("focus-out-event", self.change, file)
+        self.builder.get_object("lbl_password").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
+        self.builder.get_object("txt_pass").set_tooltip_text(_("Password, by default: password-less SCP connection, null-string FTP connection, ~/.ssh keys used for SFTP connections"))
+        self.builder.get_object("txt_pass").connect("focus-out-event", self.change, file)
 
-        wTree.get_widget("lbl_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
-        wTree.get_widget("txt_format").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
-        wTree.get_widget("txt_format").connect("focus-out-event", self.change, file)
+        self.builder.get_object("lbl_timestamp").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
+        self.builder.get_object("txt_format").set_tooltip_text(_("Timestamp format (strftime). By default:") + defaults['format'])
+        self.builder.get_object("txt_format").connect("focus-out-event", self.change, file)
 
-        wTree.get_widget("lbl_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
-        wTree.get_widget("txt_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
-        wTree.get_widget("txt_path").connect("focus-out-event", self.change, file)
+        self.builder.get_object("lbl_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
+        self.builder.get_object("txt_path").set_tooltip_text(_("Directory to upload to. <TIMESTAMP> is replaced with the current timestamp, following the timestamp format given. By default: ."))
+        self.builder.get_object("txt_path").connect("focus-out-event", self.change, file)
 
         try:
             config = Service(file)
             try:
-                model = wTree.get_widget("combo_type").get_model()
+                model = self.builder.get_object("combo_type").get_model()
                 iter = model.get_iter_first()
                 while (iter != None and model.get_value(iter, 0).lower() != config['type'].lower()):
                     iter = model.iter_next(iter)
-                wTree.get_widget("combo_type").set_active_iter(iter)
-                wTree.get_widget("combo_type").connect("changed", self.change, None, file)
+                self.builder.get_object("combo_type").set_active_iter(iter)
+                self.builder.get_object("combo_type").connect("changed", self.change, None, file)
             except:
                 pass
             try:
-                wTree.get_widget("txt_host").set_text(config['host'])
+                self.builder.get_object("txt_host").set_text(config['host'])
             except:
-                wTree.get_widget("txt_host").set_text("")
+                self.builder.get_object("txt_host").set_text("")
             try:
-                wTree.get_widget("txt_port").set_text(str(config['port']))
+                self.builder.get_object("txt_port").set_text(str(config['port']))
             except:
-                wTree.get_widget("txt_port").set_text("")
+                self.builder.get_object("txt_port").set_text("")
             try:
-                wTree.get_widget("txt_user").set_text(config['user'])
+                self.builder.get_object("txt_user").set_text(config['user'])
             except:
-                wTree.get_widget("txt_user").set_text("")
+                self.builder.get_object("txt_user").set_text("")
             try:
-                wTree.get_widget("txt_pass").set_text(config['pass'])
+                self.builder.get_object("txt_pass").set_text(config['pass'])
             except:
-                wTree.get_widget("txt_pass").set_text("")
+                self.builder.get_object("txt_pass").set_text("")
             try:
-                wTree.get_widget("txt_format").set_text(config['format'])
+                self.builder.get_object("txt_format").set_text(config['format'])
             except:
-                wTree.get_widget("txt_format").set_text("")
+                self.builder.get_object("txt_format").set_text("")
             try:
-                wTree.get_widget("txt_path").set_text(config['path'])
+                self.builder.get_object("txt_path").set_text(config['path'])
             except:
-                wTree.get_widget("txt_path").set_text("")
+                self.builder.get_object("txt_path").set_text("")
         except Exception, detail:
             print detail
 
@@ -270,7 +269,7 @@ class ManagerWindow:
     def get_port_for_service(self, type):
         num = "21" if type in ("Mint", "FTP") else "22"
 
-        self.wTree.get_widget("txt_port").set_text(num)
+        self.builder.get_object("txt_port").set_text(num)
         return num
 
     def change(self, widget, event, file):
@@ -297,4 +296,4 @@ class ManagerWindow:
 
 
 window = ManagerWindow()
-gtk.main()
+Gtk.main()

@@ -7,10 +7,9 @@ import time
 import threading
 import urllib
 
-import pygtk
-pygtk.require("2.0")
-import gtk
-import gtk.glade
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk, Gdk
 
 from mintUploadCore import *
 
@@ -42,7 +41,7 @@ class MainClass:
     def __init__(self):
         self.dropZones = {}
 
-        self.statusIcon = gtk.StatusIcon()
+        self.statusIcon = Gtk.StatusIcon()
         self.statusIcon.set_from_file("/usr/lib/linuxmint/mintUpload/systray.svg")
 
         try:
@@ -52,7 +51,7 @@ class MainClass:
         except Exception, detail:
             print detail
 
-        self.statusIcon.set_tooltip(_("Upload services"))
+        self.statusIcon.set_tooltip_text(_("Upload services"))
         self.statusIcon.set_visible(True)
 
         self.statusIcon.connect('popup-menu', self.popup_menu_cb)
@@ -64,30 +63,30 @@ class MainClass:
 
     def reload_services(self):
         self.services = read_services()
-        self.menu = gtk.Menu()
-        servicesMenuItem = gtk.ImageMenuItem()
-        title = gtk.Label()
+        self.menu = Gtk.Menu()
+        servicesMenuItem = Gtk.ImageMenuItem()
+        title = Gtk.Label()
         title.set_text("<b><span foreground=\"grey\">" + _("Services:") + "</span></b>")
-        title.set_justify(gtk.JUSTIFY_LEFT)
+        title.set_justify(Gtk.Justification.LEFT)
         title.set_alignment(0, 0.5)
         title.set_use_markup(True)
         servicesMenuItem.add(title)
         self.menu.append(servicesMenuItem)
 
         for service in self.services:
-            serviceMenuItem = gtk.MenuItem(label="   " + service['name'])
+            serviceMenuItem = Gtk.MenuItem(label="   " + service['name'])
             serviceMenuItem.connect("activate", self.create_drop_zone, service)
             self.menu.append(serviceMenuItem)
 
-        self.menu.append(gtk.SeparatorMenuItem())
+        self.menu.append(Gtk.SeparatorMenuItem())
 
-        uploadManagerMenuItem = gtk.MenuItem(_("Upload manager..."))
+        uploadManagerMenuItem = Gtk.MenuItem(_("Upload manager..."))
         uploadManagerMenuItem.connect('activate', self.launch_manager)
         self.menu.append(uploadManagerMenuItem)
 
-        self.menu.append(gtk.SeparatorMenuItem())
+        self.menu.append(Gtk.SeparatorMenuItem())
 
-        menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+        menuItem = Gtk.ImageMenuItem(Gtk.STOCK_QUIT)
         menuItem.connect('activate', self.quit_cb)
         self.menu.append(menuItem)
         self.menu.show_all()
@@ -106,17 +105,17 @@ class MainClass:
         self.statusIcon.set_visible(False)
         global shutdown_flag
         shutdown_flag = True
-        gtk.main_quit()
+        Gtk.main_quit()
         sys.exit(0)
 
     def show_menu_cb(self, widget):
-        self.menu.popup(None, None, self.menu_pos, 0, gtk.get_current_event_time())
+        self.menu.popup(None, None, self.menu_pos, None, 0, Gtk.get_current_event_time())
 
     def popup_menu_cb(self, widget, button, activate_time):
-        self.menu.popup(None, None, self.menu_pos, button, activate_time)
+        self.menu.popup(None, None, self.menu_pos, None, button, activate_time)
 
-    def menu_pos(self, menu):
-        return gtk.status_icon_position_menu(self.menu, self.statusIcon)
+    def menu_pos(self, menu, fake):
+        return self.statusIcon.position_menu(self.menu, self.statusIcon)
 
 
 class DropZone:
@@ -126,10 +125,10 @@ class DropZone:
         self.statusIcon = statusIcon
         self.dropZones = dropZones
         self.menu = menu
-        self.w = gtk.Window()
+        self.w = Gtk.Window()
 
         TARGET_TYPE_TEXT = 80
-        self.w.drag_dest_set(gtk.DEST_DEFAULT_MOTION | gtk.DEST_DEFAULT_HIGHLIGHT | gtk.DEST_DEFAULT_DROP, [("text/uri-list", 0, TARGET_TYPE_TEXT)], gtk.gdk.ACTION_MOVE | gtk.gdk.ACTION_COPY)
+        self.w.drag_dest_set(Gtk.DestDefaults.MOTION | Gtk.DestDefaults.HIGHLIGHT | Gtk.DestDefaults.DROP, [("text/uri-list", 0, TARGET_TYPE_TEXT)], Gdk.DragAction.MOVE | Gdk.DragAction.COPY)
         self.w.connect('drag_motion', self.motion_cb)
         self.w.connect('drag_drop', self.drop_cb)
         self.w.connect('drag_data_received', self.drop_data_received_cb)
@@ -137,16 +136,16 @@ class DropZone:
         self.w.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
         self.w.set_title(self.service['name'])
         self.w.set_keep_above(True)
-        self.w.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_UTILITY)
+        self.w.set_type_hint(Gdk.WindowTypeHint.UTILITY)
         self.w.set_skip_pager_hint(True)
         self.w.set_skip_taskbar_hint(True)
         self.w.stick()
 
-        pos = gtk.status_icon_position_menu(self.menu, self.statusIcon)
+        pos = Gtk.status_icon_position_menu(self.menu, self.statusIcon)
         posY = len(self.dropZones) * 80
         self.w.move(pos[0], pos[1] + 50 - posY)
 
-        self.label = gtk.Label()
+        self.label = Gtk.Label()
         self.label.set_text("<small>" + _("Drag &amp; Drop here to upload to %s") % self.service['name'] + "</small>")
         self.label.set_line_wrap(True)
         self.label.set_use_markup(True)
@@ -165,7 +164,7 @@ class DropZone:
         self.w.present()
 
     def motion_cb(self, wid, context, x, y, time):
-        context.drag_status(gtk.gdk.ACTION_COPY, time)
+        context.drag_status(Gdk.DragAction.COPY, time)
         return True
 
     def drop_cb(self, wid, context, x, y, time):
@@ -190,8 +189,8 @@ class DropZone:
     def destroy_cb(self, wid):
         del self.dropZones[self.service['name']]
 
-gtk.gdk.threads_init()
-gtk.gdk.threads_enter()
+Gdk.threads_init()
+Gdk.threads_enter()
 MainClass()
-gtk.main()
-gtk.gdk.threads_leave()
+Gtk.main()
+Gdk.threads_leave()

@@ -16,7 +16,7 @@ import gettext
 import paramiko
 import pexpect
 import threading
-import pynotify
+from gi.repository import Notify
 from configobj import ConfigObj
 
 USER_HOME = os.path.expanduser('~')
@@ -99,10 +99,10 @@ class MintNotifier:
     '''Enables integration with external notifiers'''
 
     def __init__(self):
-        pynotify.init("mintUpload")
+        Notify.init("mintUpload")
 
     def notify(self, detail):
-        pynotify.Notification("mintUpload", detail, ICONFILE).show()
+        Notify.Notification("mintUpload", detail, ICONFILE).show()
 
 
 class MintSpaceChecker(threading.Thread):
