@@ -15,13 +15,14 @@ from mintUploadCore import *
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
+# Set the Glade file
+GLADEFILE = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
+
 
 class ManagerWindow:
 
     def __init__(self):
-        # Set the Glade file
-        gladefile = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
-        wTree = gtk.glade.XML(gladefile, "manager_window")
+        wTree = gtk.glade.XML(GLADEFILE, "manager_window")
         wTree.get_widget("manager_window").set_title(_("Upload Manager"))
         vbox = wTree.get_widget("vbox_main")
         treeview_services = wTree.get_widget("treeview_services")

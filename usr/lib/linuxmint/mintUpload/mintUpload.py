@@ -21,6 +21,8 @@ __version__ = VERSION
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
+GLADEFILE = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
+
 
 def notify(message, timeout=3000):
     os.system("notify-send \"" + _("Upload Manager") + "\" \"" + message + "\" -i /usr/lib/linuxmint/mintUpload/icon.svg -t " + str(timeout))
@@ -30,12 +32,20 @@ class GtkUploader(MintUploader):
 
     '''Wrapper for the gtk management of MintUploader'''
 
-    def __init__(self, service, files, wTree):
+    def __init__(self, service, files):
         MintUploader.__init__(self, service, files)
         gtk.gdk.threads_enter()
         try:
-            self.progressbar = wTree.get_widget("progressbar")
-            self.wTree = wTree
+            self.wTree = gtk.glade.XML(GLADEFILE, "main_window")
+            if len(filenames) > 1:
+                title = _("%(percentage)s of %(number)d files - Uploading to %(service)s") % {'percentage': '0%', 'number': len(filenames), 'service': "\"" + service['name'] + "\""}
+            else:
+                title = _("%(percentage)s of 1 file - Uploading to %(service)s") % {'percentage': '0%', 'service': "\"" + service['name'] + "\""}
+            self.wTree.get_widget("main_window").set_title(title)
+            self.wTree.get_widget("main_window").set_icon_from_file(ICONFILE)
+
+            self.progressbar = self.wTree.get_widget("progressbar")
+
             self.wTree.get_widget("main_window").connect("destroy", self.close_window)
             self.wTree.get_widget("main_window").connect("delete_event", self.close_window)
             self.wTree.get_widget("cancel_button").connect("clicked", self.cancel)
@@ -93,8 +103,7 @@ class GtkUploader(MintUploader):
         if self.cancel_required:
             self.wTree.get_widget("main_window").hide()
         else:
-            gladefile = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
-            self.wTree_cancel = gtk.glade.XML(gladefile, "close_dialog")
+            self.wTree_cancel = gtk.glade.XML(GLADEFILE, "close_dialog")
             self.wTree_cancel.get_widget("close_dialog").set_icon_from_file(ICONFILE)
             self.wTree_cancel.get_widget("label_cancel").set_text(_("Do you want to cancel this upload?"))
             self.wTree_cancel.get_widget("cancel_button").set_label(_("Cancel"))
@@ -225,14 +234,7 @@ if __name__ == "__main__":
         os.system("notify-send \"" + _("Unknown service: %s") % service_name + "\"")
     else:
         filenames = sys.argv[2:]
-        gladefile = "/usr/lib/linuxmint/mintUpload/mintUpload.glade"
-        wTree = gtk.glade.XML(gladefile, "main_window")
-        wTree.get_widget("main_window").set_icon_from_file(ICONFILE)
-        if len(filenames) > 1:
-            title = _("%(percentage)s of %(number)d files - Uploading to %(service)s") % {'percentage': '0%', 'number': len(filenames), 'service': "\"" + service['name'] + "\""}
-        else:
-            title = _("%(percentage)s of 1 file - Uploading to %(service)s") % {'percentage': '0%', 'service': "\"" + service['name'] + "\""}
-        wTree.get_widget("main_window").set_title(title)
-        uploader = GtkUploader(service, filenames, wTree)
+
+        uploader = GtkUploader(service, filenames)
         uploader.start()
         gtk.main()
