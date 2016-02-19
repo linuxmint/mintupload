@@ -1,3 +1,16 @@
+mintupload (4.0.3) sarah; urgency=medium
+
+  [ Daniel Alley ]
+  * PEP8 formatting
+  * minor refactoring (mostly naming consistency)
+  * remove dh_python from the build process
+  * removed dead code
+  * left a comment to explain mysterious code
+  * rearranged imports
+  * refactoring for better encapsulation
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 19 Feb 2016 12:21:10 +0000
+
 mintupload (4.0.2) rosa; urgency=medium
 
   [ monsta ]
