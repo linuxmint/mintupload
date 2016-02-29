@@ -105,7 +105,7 @@
     <property name="skip_taskbar_hint">True</property>
     <property name="gravity">center</property>
     <child>
-      <object class="GtkVBox" id="vbox_main">
+      <object class="GtkVBox" id="vbox_main1">
         <property name="visible">True</property>
         <property name="resize_mode">queue</property>
         <child>
@@ -113,7 +113,7 @@
             <property name="visible">True</property>
             <property name="toolbar_style">both</property>
             <child>
-              <object class="GtkToolButton" id="toolbutton_add">
+              <object class="GtkToolButton" id="toolbutton_add1">
                 <property name="visible">True</property>
                 <property name="stock_id">gtk-add</property>
               </object>
@@ -123,7 +123,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="toolbutton_copy">
+              <object class="GtkToolButton" id="toolbutton_copy1">
                 <property name="visible">True</property>
                 <property name="stock_id">gtk-copy</property>
               </object>
@@ -133,7 +133,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="toolbutton_edit">
+              <object class="GtkToolButton" id="toolbutton_edit1">
                 <property name="visible">True</property>
                 <property name="stock_id">gtk-edit</property>
               </object>
@@ -143,7 +143,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="toolbutton_remove">
+              <object class="GtkToolButton" id="toolbutton_remove1">
                 <property name="visible">True</property>
                 <property name="stock_id">gtk-remove</property>
               </object>
@@ -167,7 +167,7 @@
             <property name="vscrollbar_policy">automatic</property>
             <property name="shadow_type">in</property>
             <child>
-              <object class="GtkTreeView" id="treeview_services">
+              <object class="GtkTreeView" id="treeview_services1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="has_focus">True</property>
@@ -210,7 +210,7 @@
             <property name="border_width">6</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="button_close">
+              <object class="GtkButton" id="button_close1">
                 <property name="label">gtk-close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -339,7 +339,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkHBox" id="hbox1">
+              <object class="GtkHBox" id="hbox2">
                 <property name="visible">True</property>
                 <property name="spacing">3</property>
                 <child>
@@ -522,7 +522,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToolbar" id="toolbar1">
+          <object class="GtkToolbar" id="toolbar">
             <property name="visible">True</property>
             <property name="toolbar_style">both</property>
             <child>
@@ -562,7 +562,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkScrolledWindow" id="scrolledwindow2">
+          <object class="GtkScrolledWindow" id="scrolledwindow3">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="border_width">6</property>
@@ -583,7 +583,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHButtonBox" id="hbuttonbox1">
+          <object class="GtkHButtonBox" id="hbuttonbox2">
             <property name="visible">True</property>
             <property name="border_width">6</property>
             <property name="layout_style">end</property>
@@ -617,16 +617,16 @@
     <property name="window_position">center</property>
     <property name="destroy_with_parent">True</property>
     <child>
-      <object class="GtkVBox" id="vbox1">
+      <object class="GtkVBox" id="vbox2">
         <property name="visible">True</property>
         <property name="border_width">10</property>
         <property name="spacing">6</property>
         <child>
-          <object class="GtkHBox" id="hbox1">
+          <object class="GtkHBox" id="hbox3">
             <property name="visible">True</property>
             <property name="spacing">6</property>
             <child>
-              <object class="GtkImage" id="image1">
+              <object class="GtkImage" id="image2">
                 <property name="visible">True</property>
                 <property name="stock">gtk-dialog-question</property>
                 <property name="icon-size">6</property>
@@ -653,11 +653,11 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHButtonBox" id="hbuttonbox1">
+          <object class="GtkHButtonBox" id="hbuttonbox3">
             <property name="visible">True</property>
             <property name="layout_style">spread</property>
             <child>
-              <object class="GtkButton" id="cancel_button">
+              <object class="GtkButton" id="cancel_button1">
                 <property name="label" translatable="yes">button</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
