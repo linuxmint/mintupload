@@ -148,7 +148,7 @@ class ManagerWindow:
         invalidChars = set(string.punctuation.replace("_", ""))
         if any(char in invalidChars for char in text):
             valid = False
-        dialog.get_object_for_response(Gtk.ResponseType.OK).set_sensitive(valid)
+        dialog.get_widget_for_response(Gtk.ResponseType.OK).set_sensitive(valid)
 
     def remove_service(self, widget, treeview_services):
         (model, iter) = treeview_services.get_selection().get_selected()
