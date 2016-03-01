@@ -9,16 +9,18 @@
     <property name="window_position">center</property>
     <property name="destroy_with_parent">True</property>
     <child>
-      <object class="GtkVBox" id="vbox2">
+      <object class="GtkBox" id="vbox2">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="border_width">10</property>
         <property name="spacing">6</property>
+        <property name="orientation">vertical</property>
         <child>
-          <object class="GtkHBox" id="hbox3">
+          <object class="GtkBox" id="hbox3">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="spacing">6</property>
+            <property name="orientation">horizontal</property>
             <child>
               <object class="GtkImage" id="image2">
                 <property name="visible">True</property>
@@ -53,10 +55,11 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHButtonBox" id="hbuttonbox3">
+          <object class="GtkButtonBox" id="hbuttonbox3">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="layout_style">spread</property>
+            <property name="orientation">horizontal</property>
             <child>
               <object class="GtkButton" id="cancel_button1">
                 <property name="label" translatable="yes">button</property>
@@ -103,11 +106,12 @@
     <property name="type_hint">dialog</property>
     <property name="deletable">False</property>
     <child>
-      <object class="GtkVBox" id="vbox1">
+      <object class="GtkBox" id="vbox1">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="border_width">10</property>
         <property name="spacing">6</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkLabel" id="upload_label">
             <property name="visible">True</property>
@@ -122,10 +126,11 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHBox" id="hbox1">
+          <object class="GtkBox" id="hbox1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="spacing">3</property>
+            <property name="orientation">horizontal</property>
             <child>
               <object class="GtkProgressBar" id="progressbar">
                 <property name="visible">True</property>
@@ -207,10 +212,11 @@
     <property name="skip_taskbar_hint">True</property>
     <property name="gravity">center</property>
     <child>
-      <object class="GtkVBox" id="vbox_main1">
+      <object class="GtkBox" id="vbox_main1">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="resize_mode">queue</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkToolbar" id="toolbar1">
             <property name="visible">True</property>
@@ -320,11 +326,12 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHButtonBox" id="hbuttonbox1">
+          <object class="GtkButtonBox" id="hbuttonbox1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="border_width">6</property>
             <property name="layout_style">end</property>
+            <property name="orientation">horizontal</property>
             <child>
               <object class="GtkButton" id="button_close1">
                 <property name="label">gtk-close</property>
