@@ -7,7 +7,7 @@ import string
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, GdkPixbuf
 
 from mintUploadCore import *
 
@@ -15,7 +15,7 @@ from mintUploadCore import *
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
 # Set the ui file
-UI_FILE = "/usr/lib/linuxmint/mintUpload/mintUpload.ui"
+UI_FILE = "/usr/lib/linuxmint/mintUpload/managerWindow.ui"
 
 
 class ManagerWindow:
@@ -47,19 +47,21 @@ class ManagerWindow:
         self.builder.get_object("toolbutton_remove").connect("clicked", self.remove_service, treeview_services)
         treeview_services.connect("row_activated", self.edit_service_from_tree, treeview_services)
 
-        fileMenu = Gtk.MenuItem(_("_File"))
+        fileMenu = Gtk.MenuItem.new_with_mnemonic(_("_File"))
         fileSubmenu = Gtk.Menu()
         fileMenu.set_submenu(fileSubmenu)
         closeMenuItem = Gtk.ImageMenuItem(Gtk.STOCK_CLOSE)
-        closeMenuItem.get_child().set_text(_("Close"))
+        closeMenuItem.set_use_stock(True)
+        closeMenuItem.set_label(_("Close"))
         closeMenuItem.connect("activate", Gtk.main_quit)
         fileSubmenu.append(closeMenuItem)
 
-        helpMenu = Gtk.MenuItem(_("_Help"))
+        helpMenu = Gtk.MenuItem.new_with_mnemonic(_("_Help"))
         helpSubmenu = Gtk.Menu()
         helpMenu.set_submenu(helpSubmenu)
         aboutMenuItem = Gtk.ImageMenuItem(Gtk.STOCK_ABOUT)
-        aboutMenuItem.get_child().set_text(_("About"))
+        aboutMenuItem.set_use_stock(True)
+        aboutMenuItem.set_label(_("About"))
         aboutMenuItem.connect("activate", self.open_about)
         helpSubmenu.append(aboutMenuItem)
 
@@ -109,8 +111,9 @@ class ManagerWindow:
         dialog.set_markup(_("<b>Please enter a name for the new upload service:</b>"))
         entry = Gtk.Entry()
         entry.connect("changed", self.check_service_name, dialog)
-        hbox = Gtk.HBox()
-        hbox.pack_start(Gtk.Label(_("Service name:", True, True, 0)), False, 5, 5)
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        label = Gtk.Label(_("Service name:"))
+        hbox.pack_start(label, False, 5, 5)
         hbox.pack_end(entry, True, True, 0)
         dialog.format_secondary_markup(_("<i>Try to avoid spaces and special characters...</i>"))
         dialog.vbox.pack_end(hbox, True, True, 0)
@@ -186,7 +189,6 @@ class ManagerWindow:
         self.builder.get_object("dialog_edit_service").set_title(_("%s Properties") % sname)
         self.builder.get_object("dialog_edit_service").set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
         self.builder.get_object("dialog_edit_service").show()
-        self.builder.get_object("label_advanced").set_text(_("Advanced settings"))
         self.builder.get_object("button_verify").set_label(_("Check connection"))
         self.builder.get_object("button_verify").connect("clicked", self.check_connection, file)
         self.builder.get_object("button_cancel").connect("clicked", self.close_window, self.builder.get_object("dialog_edit_service"))
