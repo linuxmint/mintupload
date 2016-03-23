@@ -9,7 +9,7 @@ import urllib
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk, Gdk, GLib
 
 from mintUploadCore import *
 
@@ -31,7 +31,7 @@ class NotifyThread(threading.Thread):
         while not shutdown_flag:
             try:
                 time.sleep(1)
-                self.mainClass.reload_services()
+                GLib.idle_add(self.mainClass.reload_services)
             except:
                 pass
 
@@ -189,8 +189,5 @@ class DropZone:
     def destroy_cb(self, wid):
         del self.dropZones[self.service['name']]
 
-Gdk.threads_init()
-Gdk.threads_enter()
 MainClass()
 Gtk.main()
-Gdk.threads_leave()
