@@ -20,11 +20,12 @@ __version__ = VERSION
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
-UI_FILE = "/usr/lib/linuxmint/mintUpload/mintUpload.ui"
+# Location of the UI file
+UI_FILE = "/usr/share/linuxmint/mintupload/mintUpload.ui"
 
 
 def notify(message, timeout=3000):
-    os.system("notify-send \"" + _("Upload Manager") + "\" \"" + message + "\" -i /usr/lib/linuxmint/mintUpload/icon.svg -t " + str(timeout))
+    os.system("notify-send \"" + _("Upload Manager") + "\" \"" + message + "\" -i /usr/share/pixmaps/mintupload/icon.svg -t " + str(timeout))
 
 
 class GtkUploader(MintUploader):

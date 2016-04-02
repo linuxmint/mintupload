@@ -14,8 +14,8 @@ from mintUploadCore import *
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
-# Set the ui file
-UI_FILE = "/usr/lib/linuxmint/mintUpload/managerWindow.ui"
+# Location of the ui file
+UI_FILE = "/usr/share/linuxmint/mintupload/managerWindow.ui"
 
 
 class ManagerWindow:
@@ -26,7 +26,7 @@ class ManagerWindow:
 
         self.builder.get_object("manager_window").set_title(_("Upload Manager"))
         # vbox = self.builder.get_object("vbox_main")
-        self.builder.get_object("manager_window").set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
+        self.builder.get_object("manager_window").set_icon_from_file(ICONFILE)
         treeview_services = self.builder.get_object("treeview_services")
 
         # the treeview
@@ -71,11 +71,12 @@ class ManagerWindow:
 
     def open_about(self, widget):
         dlg = Gtk.AboutDialog()
-        dlg.set_title(_("About") + " - mintUpload")
+        dlg.set_title(_("About") + " - mintupload")
         version = commands.getoutput("/usr/lib/linuxmint/common/version.py mintupload")
         dlg.set_version(version)
-        dlg.set_program_name("mintUpload")
+        dlg.set_program_name("mintupload")
         dlg.set_comments(_("Upload Manager"))
+
         try:
             h = open('/usr/share/common-licenses/GPL', 'r')
             s = h.readlines()
@@ -86,18 +87,20 @@ class ManagerWindow:
             dlg.set_license(gpl)
         except Exception, detail:
             print detail
+
         dlg.set_authors([
                         "Clement Lefebvre <root@linuxmint.com>",
                         "Philip Morrell <mintupload.emorrp1@mamber.net>",
                         "Manuel Sandoval <manuel@slashvar.com>",
                         "Dennis Schwertel <s@digitalkultur.net>"
                         ])
-        dlg.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
-        dlg.set_logo(GdkPixbuf.Pixbuf.new_from_file("/usr/lib/linuxmint/mintUpload/icon.svg"))
+        dlg.set_icon_from_file(ICONFILE)
+        dlg.set_logo(GdkPixbuf.Pixbuf.new_from_file(ICONFILE))
 
         def close(w, res):
             if res == Gtk.ResponseType.CANCEL:
                 w.hide()
+
         dlg.connect("response", close)
         dlg.show()
 
@@ -107,7 +110,7 @@ class ManagerWindow:
     def add_service(self, widget, treeview_services):
         dialog = Gtk.MessageDialog(None, Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT, Gtk.MessageType.QUESTION, Gtk.ButtonsType.OK_CANCEL, None)
         dialog.set_title(_("Upload Manager"))
-        dialog.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
+        dialog.set_icon_from_file(ICONFILE)
         dialog.set_markup(_("<b>Please enter a name for the new upload service:</b>"))
         entry = Gtk.Entry()
         entry.connect("changed", self.check_service_name, dialog)
@@ -124,7 +127,7 @@ class ManagerWindow:
         dialog.destroy()
 
         if response == Gtk.ResponseType.OK:
-            service = Service('/usr/lib/linuxmint/mintUpload/sample.service')
+            service = Service('/usr/share/linuxmint/mintupload/sample.service')
             if os.path.exists(config_paths['user'] + sname):
                 sname += " 2"
                 while os.path.exists(config_paths['user'] + sname):
@@ -187,7 +190,7 @@ class ManagerWindow:
         file = config_paths['user'] + sname
 
         self.builder.get_object("dialog_edit_service").set_title(_("%s Properties") % sname)
-        self.builder.get_object("dialog_edit_service").set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
+        self.builder.get_object("dialog_edit_service").set_icon_from_file(ICONFILE)
         self.builder.get_object("dialog_edit_service").show()
         self.builder.get_object("button_verify").set_label(_("Check connection"))
         self.builder.get_object("button_verify").connect("clicked", self.check_connection, file)
@@ -266,7 +269,7 @@ class ManagerWindow:
 
     def check_connection(self, widget, file):
         service = Service(file)
-        os.system("mintupload \"" + service['name'] + "\" /usr/lib/linuxmint/mintUpload/mintupload.readme &")
+        os.system("mintupload \"" + service['name'] + "\" /usr/share/linuxmint/mintupload/mintupload.readme &")
 
     def get_port_for_service(self, type):
         num = "21" if type in ("Mint", "FTP") else "22"

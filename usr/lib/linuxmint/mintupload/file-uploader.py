@@ -16,6 +16,9 @@ from mintUploadCore import *
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
+# Location of the systray icon file
+SYSTRAY_ICON = "/usr/share/pixmaps/mintupload/systray.svg"
+
 global shutdown_flag
 shutdown_flag = False
 
@@ -42,7 +45,7 @@ class MainClass:
         self.dropZones = {}
 
         self.statusIcon = Gtk.StatusIcon()
-        self.statusIcon.set_from_file("/usr/lib/linuxmint/mintUpload/systray.svg")
+        self.statusIcon.set_from_file(SYSTRAY_ICON)
 
         try:
             desktop = os.environ["DESKTOP_SESSION"].lower()
@@ -92,7 +95,7 @@ class MainClass:
         self.menu.show_all()
 
     def launch_manager(self, widget):
-        os.system("/usr/lib/linuxmint/mintUpload/upload-manager.py &")
+        os.system("/usr/lib/linuxmint/mintupload/upload-manager.py &")
 
     def create_drop_zone(self, widget, service):
         if service['name'] not in self.dropZones.keys():
@@ -133,7 +136,7 @@ class DropZone:
         self.w.connect('drag_drop', self.drop_cb)
         self.w.connect('drag_data_received', self.drop_data_received_cb)
         self.w.connect('destroy', self.destroy_cb)
-        self.w.set_icon_from_file("/usr/lib/linuxmint/mintUpload/icon.svg")
+        self.w.set_icon_from_file(SYSTRAY_ICON)
         self.w.set_title(self.service['name'])
         self.w.set_keep_above(True)
         self.w.set_type_hint(Gdk.WindowTypeHint.UTILITY)

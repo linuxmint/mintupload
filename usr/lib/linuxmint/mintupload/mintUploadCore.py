@@ -27,6 +27,10 @@ __version__ = VERSION
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
+ICONFILE = "/usr/share/pixmaps/mintupload/icon.svg"
+CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
+CONFIGFILE_USER = USER_HOME + '/.linuxmint/mintUpload.conf'
+
 
 class CustomError(Exception):
 
@@ -361,10 +365,6 @@ def read_services():
                 services.append(s)
     return services
 
-
-ICONFILE = "/usr/lib/linuxmint/mintUpload/icon.svg"
-CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
-CONFIGFILE_USER = USER_HOME + '/.linuxmint/mintUpload.conf'
 
 config = ConfigObj(CONFIGFILE_GLOBAL)
 if os.path.exists(CONFIGFILE_USER):
