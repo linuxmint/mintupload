@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 
 import os
-from mintUploadCore import *
+from mintupload_core import *
 
 services = read_services()
 if len(services) > 0:

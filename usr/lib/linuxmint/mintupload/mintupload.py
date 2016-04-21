@@ -13,7 +13,7 @@ except:
     print "You do not have all the dependencies!"
     sys.exit(1)
 
-from mintUploadCore import *
+from mintupload_core import *
 
 Gdk.threads_init()
 __version__ = VERSION
@@ -21,7 +21,7 @@ __version__ = VERSION
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
 # Location of the UI file
-UI_FILE = "/usr/share/linuxmint/mintupload/mintUpload.ui"
+UI_FILE = "/usr/share/linuxmint/mintupload/mintupload.ui"
 
 
 def notify(message, timeout=3000):

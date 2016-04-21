@@ -9,13 +9,13 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GdkPixbuf
 
-from mintUploadCore import *
+from mintupload_core import *
 
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
 # Location of the ui file
-UI_FILE = "/usr/share/linuxmint/mintupload/managerWindow.ui"
+UI_FILE = "/usr/share/linuxmint/mintupload/manager_window.ui"
 
 
 class ManagerWindow:

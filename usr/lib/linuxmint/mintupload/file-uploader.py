@@ -11,7 +11,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GLib
 
-from mintUploadCore import *
+from mintupload_core import *
 
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
@@ -25,16 +25,16 @@ shutdown_flag = False
 
 class NotifyThread(threading.Thread):
 
-    def __init__(self, mainClass):
+    def __init__(self, main_class):
         threading.Thread.__init__(self)
-        self.mainClass = mainClass
+        self.main_class = main_class
 
     def run(self):
         global shutdown_flag
         while not shutdown_flag:
             try:
                 time.sleep(1)
-                GLib.idle_add(self.mainClass.reload_services)
+                GLib.idle_add(self.main_class.reload_services)
             except:
                 pass
 
@@ -42,23 +42,23 @@ class NotifyThread(threading.Thread):
 class MainClass:
 
     def __init__(self):
-        self.dropZones = {}
+        self.drop_zones = {}
 
-        self.statusIcon = Gtk.StatusIcon()
-        self.statusIcon.set_from_file(SYSTRAY_ICON)
+        self.status_icon = Gtk.StatusIcon()
+        self.status_icon.set_from_file(SYSTRAY_ICON)
 
         try:
             desktop = os.environ["DESKTOP_SESSION"].lower()
             if desktop == "mate":
-                self.statusIcon.set_from_icon_name("up")
+                self.status_icon.set_from_icon_name("up")
         except Exception, detail:
             print detail
 
-        self.statusIcon.set_tooltip_text(_("Upload services"))
-        self.statusIcon.set_visible(True)
+        self.status_icon.set_tooltip_text(_("Upload services"))
+        self.status_icon.set_visible(True)
 
-        self.statusIcon.connect('popup-menu', self.popup_menu_cb)
-        self.statusIcon.connect('activate', self.show_menu_cb)
+        self.status_icon.connect('popup-menu', self.popup_menu_cb)
+        self.status_icon.connect('activate', self.show_menu_cb)
 
         self.reload_services()
         notifyT = NotifyThread(self)
@@ -98,14 +98,14 @@ class MainClass:
         os.system("/usr/lib/linuxmint/mintupload/upload-manager.py &")
 
     def create_drop_zone(self, widget, service):
-        if service['name'] not in self.dropZones.keys():
-            dropZone = DropZone(self.statusIcon, self.menu, service, self.dropZones)
-            self.dropZones[service['name']] = dropZone
+        if service['name'] not in self.drop_zones.keys():
+            drop_zone = DropZone(self.status_icon, self.menu, service, self.drop_zones)
+            self.drop_zones[service['name']] = drop_zone
         else:
-            self.dropZones[service['name']].show()
+            self.drop_zones[service['name']].show()
 
     def quit_cb(self, widget):
-        self.statusIcon.set_visible(False)
+        self.status_icon.set_visible(False)
         global shutdown_flag
         shutdown_flag = True
         Gtk.main_quit()
@@ -118,15 +118,15 @@ class MainClass:
         self.menu.popup(None, None, self.menu_pos, None, button, activate_time)
 
     def menu_pos(self, menu, fake):
-        return self.statusIcon.position_menu(self.menu, self.statusIcon)
+        return self.status_icon.position_menu(self.menu, self.status_icon)
 
 
 class DropZone:
 
-    def __init__(self, statusIcon, menu, service, dropZones):
+    def __init__(self, status_icon, menu, service, drop_zones):
         self.service = service
-        self.statusIcon = statusIcon
-        self.dropZones = dropZones
+        self.status_icon = status_icon
+        self.drop_zones = drop_zones
         self.menu = menu
         self.w = Gtk.Window()
 
@@ -144,8 +144,8 @@ class DropZone:
         self.w.set_skip_taskbar_hint(True)
         self.w.stick()
 
-        pos = Gtk.status_icon_position_menu(self.menu, self.statusIcon)
-        posY = len(self.dropZones) * 80
+        pos = Gtk.status_icon_position_menu(self.menu, self.status_icon)
+        posY = len(self.drop_zones) * 80
         self.w.move(pos[0], pos[1] + 50 - posY)
 
         self.label = Gtk.Label()
@@ -190,7 +190,7 @@ class DropZone:
         os.system("mintupload \"" + self.service['name'] + "\" " + " ".join(filenames) + " &")
 
     def destroy_cb(self, wid):
-        del self.dropZones[self.service['name']]
+        del self.drop_zones[self.service['name']]
 
 MainClass()
 Gtk.main()
