@@ -26,8 +26,9 @@ shutdown_flag = False
 class NotifyThread(threading.Thread):
 
     def __init__(self, main_class):
-        threading.Thread.__init__(self)
+        super(NotifyThread, self).__init__()
         self.main_class = main_class
+        self.daemon = True
 
     def run(self):
         global shutdown_flag
