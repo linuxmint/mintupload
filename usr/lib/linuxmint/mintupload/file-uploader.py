@@ -68,31 +68,31 @@ class MainClass:
     def reload_services(self):
         self.services = read_services()
         self.menu = Gtk.Menu()
-        servicesMenuItem = Gtk.ImageMenuItem()
+        services_menuitem = Gtk.ImageMenuItem()
         title = Gtk.Label()
         title.set_text("<b><span foreground=\"grey\">" + _("Services:") + "</span></b>")
         title.set_justify(Gtk.Justification.LEFT)
         title.set_alignment(0, 0.5)
         title.set_use_markup(True)
-        servicesMenuItem.add(title)
-        self.menu.append(servicesMenuItem)
+        services_menuitem.add(title)
+        self.menu.append(services_menuitem)
 
         for service in self.services:
-            serviceMenuItem = Gtk.MenuItem(label="   " + service['name'])
-            serviceMenuItem.connect("activate", self.create_drop_zone, service)
-            self.menu.append(serviceMenuItem)
+            service_menuitem = Gtk.MenuItem(label="   " + service['name'])
+            service_menuitem.connect("activate", self.create_drop_zone, service)
+            self.menu.append(service_menuitem)
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
-        uploadManagerMenuItem = Gtk.MenuItem(_("Upload manager..."))
-        uploadManagerMenuItem.connect('activate', self.launch_manager)
-        self.menu.append(uploadManagerMenuItem)
+        upload_manager_menuitem = Gtk.MenuItem(_("Upload manager..."))
+        upload_manager_menuitem.connect('activate', self.launch_manager)
+        self.menu.append(upload_manager_menuitem)
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
-        menuItem = Gtk.ImageMenuItem(Gtk.STOCK_QUIT)
-        menuItem.connect('activate', self.quit_cb)
-        self.menu.append(menuItem)
+        menu_item = Gtk.ImageMenuItem(Gtk.STOCK_QUIT)
+        menu_item.connect('activate', self.quit_cb)
+        self.menu.append(menu_item)
         self.menu.show_all()
 
     def launch_manager(self, widget):
