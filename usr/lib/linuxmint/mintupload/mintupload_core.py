@@ -55,7 +55,7 @@ class CustomError(Exception):
         cls.observers.append(observer)
 
 
-class cliErrorObserver:
+class CliErrorObserver:
 
     '''All custom defined errors, using stderr'''
 
@@ -67,7 +67,7 @@ class cliErrorObserver:
 
         sys.stderr.write(os.linesep * 2)
 
-CustomError.add_observer(cliErrorObserver())
+CustomError.add_observer(CliErrorObserver())
 
 
 class ConnectionError(CustomError):

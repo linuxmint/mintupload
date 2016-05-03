@@ -99,6 +99,7 @@ class GtkUploader(MintUploader):
             notify(_("Successfully uploaded %(number)d files to '%(service)s'") % {'number': len(self.files), 'service': service['name']})
         else:
             notify(_("Successfully uploaded 1 file to '%(service)s'") % {'service': service['name']})
+            
         Gtk.main_quit()
         sys.exit(0)
 

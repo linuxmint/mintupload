@@ -200,6 +200,7 @@ class ManagerWindow:
         dialog_edit_service.set_title(_("%s Properties") % sname)
         dialog_edit_service.set_icon_from_file(ICONFILE)
         dialog_edit_service.show()
+        
         self.builder.get_object("button_verify").set_label(_("Check connection"))
         self.builder.get_object("button_verify").connect("clicked", self.check_connection, file)
         self.builder.get_object("button_cancel").connect("clicked", self.close_window, self.builder.get_object("dialog_edit_service"))
