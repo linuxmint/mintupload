@@ -16,7 +16,10 @@ import gettext
 import paramiko
 import pexpect
 import threading
+import gi
+gi.require_version('Notify', '0.7')
 from gi.repository import Notify
+
 from configobj import ConfigObj
 
 USER_HOME = os.path.expanduser('~')

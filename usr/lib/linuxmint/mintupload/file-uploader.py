@@ -9,6 +9,7 @@ import urllib
 
 import gi
 gi.require_version("Gtk", "3.0")
+gi.require_version("Notify", "0.7")
 from gi.repository import Gtk, Gdk, GLib
 
 from mintupload_core import *
@@ -18,26 +19,6 @@ gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
 # Location of the systray icon file
 SYSTRAY_ICON = "/usr/share/pixmaps/mintupload/systray.svg"
-
-global shutdown_flag
-shutdown_flag = False
-
-
-class NotifyThread(threading.Thread):
-
-    def __init__(self, main_class):
-        super(NotifyThread, self).__init__()
-        self.main_class = main_class
-        self.daemon = True
-
-    def run(self):
-        global shutdown_flag
-        while not shutdown_flag:
-            try:
-                time.sleep(1)
-                GLib.idle_add(self.main_class.reload_services)
-            except:
-                pass
 
 
 class MainClass:
@@ -62,8 +43,10 @@ class MainClass:
         self.status_icon.connect('activate', self.show_menu_cb)
 
         self.reload_services()
-        notifyT = NotifyThread(self)
-        notifyT.start()
+        # Refresh list of services in the menu every 3 seconds
+        GLib.timeout_add_seconds(3, self.reload_services)
+
+
 
     def reload_services(self):
         self.services = read_services()
@@ -95,6 +78,8 @@ class MainClass:
         self.menu.append(menu_item)
         self.menu.show_all()
 
+        return True
+
     def launch_manager(self, widget):
         os.system("/usr/lib/linuxmint/mintupload/upload-manager.py &")
 
@@ -107,8 +92,6 @@ class MainClass:
 
     def quit_cb(self, widget):
         self.status_icon.set_visible(False)
-        global shutdown_flag
-        shutdown_flag = True
         Gtk.main_quit()
         sys.exit(0)
 
@@ -118,8 +101,8 @@ class MainClass:
     def popup_menu_cb(self, widget, button, activate_time):
         self.menu.popup(None, None, self.menu_pos, None, button, activate_time)
 
-    def menu_pos(self, menu, fake):
-        return self.status_icon.position_menu(self.menu, self.status_icon)
+    def menu_pos(self, menu, x, y, *args):
+        return self.status_icon.position_menu(self.menu, x, y, self.status_icon)
 
 
 class DropZone:
