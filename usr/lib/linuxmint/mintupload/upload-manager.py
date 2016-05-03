@@ -288,13 +288,15 @@ class ManagerWindow:
     def change(self, widget, event, file):
         try:
             wname = widget.get_name()
-            if wname == "combo_type":
+
+            if wname == "GtkComboBox":
                 model = widget.get_model()
                 iter = widget.get_active_iter()
                 config = {'type': model.get_value(iter, 0).lower(),
                           'port': self.get_port_for_service(model.get_value(iter, 0))}
-            else:
+            elif wname == "GtkEntry":
                 config = {wname[4:]: widget.get_text()}
+
             s = Service(file)
             s.merge(config)
             s.write()
