@@ -124,11 +124,18 @@ class DropZone:
         self.w = Gtk.Window()
 
         TARGET_TYPE_TEXT = 80
-        self.w.drag_dest_set(Gtk.DestDefaults.MOTION | Gtk.DestDefaults.HIGHLIGHT | Gtk.DestDefaults.DROP, [("text/uri-list", 0, TARGET_TYPE_TEXT)], Gdk.DragAction.MOVE | Gdk.DragAction.COPY)
+
+        self.w.drag_dest_set(
+            Gtk.DestDefaults.ALL,  # Motion, Highlight, Drop
+            [Gtk.TargetEntry.new("text/uri-list", 0, TARGET_TYPE_TEXT)],
+            Gdk.DragAction.MOVE | Gdk.DragAction.COPY
+        )
+
         self.w.connect('drag_motion', self.motion_cb)
         self.w.connect('drag_drop', self.drop_cb)
         self.w.connect('drag_data_received', self.drop_data_received_cb)
         self.w.connect('destroy', self.destroy_cb)
+
         self.w.set_icon_from_file(SYSTRAY_ICON)
         self.w.set_title(self.service['name'])
         self.w.set_keep_above(True)
@@ -137,7 +144,10 @@ class DropZone:
         self.w.set_skip_taskbar_hint(True)
         self.w.stick()
 
-        pos = Gtk.status_icon_position_menu(self.menu, self.status_icon)
+        # Gtk's bindings are f'ed up and they don't care because this functionality is deprecated
+        # The x and y arguments ("0, 0") are int pointers to return a location for the position of the icon
+        # Obviously this is a problem because Python does not have pointers...
+        pos = Gtk.StatusIcon.position_menu(self.menu, 0, 0, self.status_icon)
         posY = len(self.drop_zones) * 80
         self.w.move(pos[0], pos[1] + 50 - posY)
 
