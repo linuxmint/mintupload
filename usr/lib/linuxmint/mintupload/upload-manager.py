@@ -155,6 +155,8 @@ class ManagerWindow:
 
     def remove_service(self, widget, treeview_services):
         (model, iter) = treeview_services.get_selection().get_selected()
+        self.services = read_services()
+        
         if iter != None:
             service = model.get_value(iter, 0)
             for s in self.services:
