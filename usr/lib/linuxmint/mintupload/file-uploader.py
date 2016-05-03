@@ -42,13 +42,14 @@ class MainClass:
         self.status_icon.connect('popup-menu', self.popup_menu_cb)
         self.status_icon.connect('activate', self.show_menu_cb)
 
-        self.reload_services()
+        self.menu = Gtk.Menu()
         # Refresh list of services in the menu every 3 seconds
         GLib.timeout_add_seconds(3, self.reload_services)
 
-
-
     def reload_services(self):
+        if self.menu.is_visible():
+            return True
+
         self.services = read_services()
         self.menu = Gtk.Menu()
         services_menuitem = Gtk.ImageMenuItem()
