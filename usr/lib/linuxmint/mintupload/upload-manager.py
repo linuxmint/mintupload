@@ -24,27 +24,30 @@ class ManagerWindow:
         self.builder = Gtk.Builder()
         self.builder.add_from_file(UI_FILE)
 
-        self.builder.get_object("manager_window").set_title(_("Upload Manager"))
-        # vbox = self.builder.get_object("vbox_main")
-        self.builder.get_object("manager_window").set_icon_from_file(ICONFILE)
+        self.manager_window = self.builder.get_object("manager_window")
+        self.manager_window.set_title(_("Upload Manager"))
+        self.manager_window.set_icon_from_file(ICONFILE)
+        self.manager_window.connect("delete_event", Gtk.main_quit)
+
         treeview_services = self.builder.get_object("treeview_services")
 
         # the treeview
         column1 = Gtk.TreeViewColumn(_("Upload services"), Gtk.CellRendererText(), text=0)
         column1.set_sort_column_id(0)
         column1.set_resizable(True)
-        self.builder.get_object("treeview_services").append_column(column1)
-        self.builder.get_object("treeview_services").set_headers_clickable(True)
-        self.builder.get_object("treeview_services").set_reorderable(False)
-        self.builder.get_object("treeview_services").show()
+
+        treeview_services.append_column(column1)
+        treeview_services.set_headers_clickable(True)
+        treeview_services.set_reorderable(False)
+        treeview_services.show()
 
         self.reload_services(treeview_services)
 
-        self.builder.get_object("manager_window").connect("delete_event", Gtk.main_quit)
         self.builder.get_object("button_close").connect("clicked", Gtk.main_quit)
         self.builder.get_object("toolbutton_add").connect("clicked", self.add_service, treeview_services)
         self.builder.get_object("toolbutton_edit").connect("clicked", self.edit_service_from_button, treeview_services)
         self.builder.get_object("toolbutton_remove").connect("clicked", self.remove_service, treeview_services)
+
         treeview_services.connect("row_activated", self.edit_service_from_tree, treeview_services)
 
         fileMenu = Gtk.MenuItem.new_with_mnemonic(_("_File"))
@@ -109,6 +112,7 @@ class ManagerWindow:
 
     def add_service(self, widget, treeview_services):
         dialog = Gtk.MessageDialog(None, Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT, Gtk.MessageType.QUESTION, Gtk.ButtonsType.OK_CANCEL, None)
+        dialog.set_transient_for(self.manager_window)
         dialog.set_title(_("Upload Manager"))
         dialog.set_icon_from_file(ICONFILE)
         dialog.set_markup(_("<b>Please enter a name for the new upload service:</b>"))
@@ -156,7 +160,7 @@ class ManagerWindow:
     def remove_service(self, widget, treeview_services):
         (model, iter) = treeview_services.get_selection().get_selected()
         self.services = read_services()
-        
+
         if iter != None:
             service = model.get_value(iter, 0)
             for s in self.services:
@@ -191,9 +195,11 @@ class ManagerWindow:
         sname = model.get_value(iter, 0)
         file = config_paths['user'] + sname
 
-        self.builder.get_object("dialog_edit_service").set_title(_("%s Properties") % sname)
-        self.builder.get_object("dialog_edit_service").set_icon_from_file(ICONFILE)
-        self.builder.get_object("dialog_edit_service").show()
+        dialog_edit_service = self.builder.get_object("dialog_edit_service")
+        dialog_edit_service.set_transient_for(self.manager_window)
+        dialog_edit_service.set_title(_("%s Properties") % sname)
+        dialog_edit_service.set_icon_from_file(ICONFILE)
+        dialog_edit_service.show()
         self.builder.get_object("button_verify").set_label(_("Check connection"))
         self.builder.get_object("button_verify").connect("clicked", self.check_connection, file)
         self.builder.get_object("button_cancel").connect("clicked", self.close_window, self.builder.get_object("dialog_edit_service"))
