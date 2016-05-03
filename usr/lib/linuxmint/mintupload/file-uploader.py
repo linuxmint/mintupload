@@ -42,14 +42,21 @@ class MainClass:
         self.status_icon.connect('popup-menu', self.popup_menu_cb)
         self.status_icon.connect('activate', self.show_menu_cb)
 
-        self.menu = Gtk.Menu()
-        # Refresh list of services in the menu every 3 seconds
-        GLib.timeout_add_seconds(3, self.reload_services)
+        self.services = None
+
+        self.build_services_menu()
+        # Refresh list of services in the menu every 2 seconds
+        GLib.timeout_add_seconds(2, self.reload_services)
 
     def reload_services(self):
-        if self.menu.is_visible():
-            return True
+        has_changed = read_services() != self.services
 
+        if has_changed and not self.menu.is_visible():
+            self.build_services_menu()
+
+        return True        
+
+    def build_services_menu(self):
         self.services = read_services()
         self.menu = Gtk.Menu()
         services_menuitem = Gtk.ImageMenuItem()
@@ -78,8 +85,6 @@ class MainClass:
         menu_item.connect('activate', self.quit_cb)
         self.menu.append(menu_item)
         self.menu.show_all()
-
-        return True
 
     def launch_manager(self, widget):
         os.system("/usr/lib/linuxmint/mintupload/upload-manager.py &")
