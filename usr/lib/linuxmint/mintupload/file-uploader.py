@@ -59,7 +59,7 @@ class MainClass:
     def build_services_menu(self):
         self.services = read_services()
         self.menu = Gtk.Menu()
-        services_menuitem = Gtk.ImageMenuItem()
+        services_menuitem = Gtk.MenuItem()
         title = Gtk.Label()
         title.set_text("<b><span foreground=\"grey\">" + _("Services:") + "</span></b>")
         title.set_justify(Gtk.Justification.LEFT)
@@ -81,7 +81,10 @@ class MainClass:
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
-        menu_item = Gtk.ImageMenuItem(Gtk.STOCK_QUIT)
+        menu_item = Gtk.MenuItem()
+        menu_item = Gtk.ImageMenuItem(Gtk.STOCK_CLOSE)
+        menu_item.set_use_stock(True)
+        menu_item.set_label(_("Quit"))
         menu_item.connect('activate', self.quit_cb)
         self.menu.append(menu_item)
         self.menu.show_all()
