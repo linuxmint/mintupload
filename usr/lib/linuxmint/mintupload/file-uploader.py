@@ -131,9 +131,9 @@ class DropZone:
             Gdk.DragAction.MOVE | Gdk.DragAction.COPY
         )
 
-        self.w.connect('drag_motion', self.motion_cb)
-        self.w.connect('drag_drop', self.drop_cb)
-        self.w.connect('drag_data_received', self.drop_data_received_cb)
+        self.w.connect('drag-motion', self.motion_cb)
+        self.w.connect('drag-drop', self.drop_cb)
+        self.w.connect('drag-data-received', self.drop_data_received_cb)
         self.w.connect('destroy', self.destroy_cb)
 
         self.w.set_icon_from_file(SYSTRAY_ICON)
@@ -170,7 +170,7 @@ class DropZone:
         self.w.present()
 
     def motion_cb(self, wid, context, x, y, time):
-        context.drag_status(Gdk.DragAction.COPY, time)
+        Gdk.drag_status(context, Gdk.DragAction.COPY, time)
         return True
 
     def drop_cb(self, wid, context, x, y, time):
@@ -178,8 +178,11 @@ class DropZone:
         return True
 
     def drop_data_received_cb(self, widget, context, x, y, selection, targetType, time):
+        data = selection.get_data()
+
         filenames = []
-        files = selection.data.split('\n')
+        files = data.split('\n')
+
         for f in files:
             if not f:
                 continue
