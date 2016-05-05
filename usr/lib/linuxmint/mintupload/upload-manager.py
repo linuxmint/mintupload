@@ -243,8 +243,10 @@ class ManagerWindow:
             try:
                 model = self.builder.get_object("combo_type").get_model()
                 iter = model.get_iter_first()
+
                 while (iter != None and model.get_value(iter, 0).lower() != config['type'].lower()):
                     iter = model.iter_next(iter)
+
                 self.builder.get_object("combo_type").set_active_iter(iter)
                 self.builder.get_object("combo_type").connect("changed", self.change, None, file)
             except:
@@ -288,14 +290,14 @@ class ManagerWindow:
 
     def change(self, widget, event, file):
         try:
-            wname = widget.get_name()
+            wname = Gtk.Buildable.get_name(widget)
 
-            if wname == "GtkComboBox":
+            if wname == "combo_type":
                 model = widget.get_model()
                 iter = widget.get_active_iter()
                 config = {'type': model.get_value(iter, 0).lower(),
                           'port': self.get_port_for_service(model.get_value(iter, 0))}
-            elif wname == "GtkEntry":
+            else:
                 config = {wname[4:]: widget.get_text()}
 
             s = Service(file)
