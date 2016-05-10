@@ -74,6 +74,7 @@ class ManagerWindow:
 
     def open_about(self, widget):
         dlg = Gtk.AboutDialog()
+        dlg.set_transient_for(self.manager_window)
         dlg.set_title(_("About") + " - mintupload")
         version = commands.getoutput("/usr/lib/linuxmint/common/version.py mintupload")
         dlg.set_version(version)
@@ -101,8 +102,8 @@ class ManagerWindow:
         dlg.set_logo(GdkPixbuf.Pixbuf.new_from_file(ICONFILE))
 
         def close(w, res):
-            if res == Gtk.ResponseType.CANCEL:
-                w.hide()
+            if res == Gtk.ResponseType.DELETE_EVENT:
+                w.destroy()
 
         dlg.connect("response", close)
         dlg.show()
@@ -200,7 +201,7 @@ class ManagerWindow:
         dialog_edit_service.set_title(_("%s Properties") % sname)
         dialog_edit_service.set_icon_from_file(ICONFILE)
         dialog_edit_service.show()
-        
+
         self.builder.get_object("button_verify").set_label(_("Check connection"))
         self.builder.get_object("button_verify").connect("clicked", self.check_connection, file)
         self.builder.get_object("button_cancel").connect("clicked", self.close_window, self.builder.get_object("dialog_edit_service"))
