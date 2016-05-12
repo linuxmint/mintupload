@@ -116,6 +116,7 @@ class ManagerWindow:
         dialog.set_transient_for(self.manager_window)
         dialog.set_title(_("Upload Manager"))
         dialog.set_icon_from_file(ICONFILE)
+        dialog.set_border_width(6)
         dialog.set_markup(_("<b>Please enter a name for the new upload service:</b>"))
         entry = Gtk.Entry()
         entry.connect("changed", self.check_service_name, dialog)
@@ -127,8 +128,10 @@ class ManagerWindow:
         dialog.vbox.pack_end(hbox, True, True, 0)
         dialog.show_all()
         response = dialog.run()
+
         if response == Gtk.ResponseType.OK:
             sname = entry.get_text()
+
         dialog.destroy()
 
         if response == Gtk.ResponseType.OK:
