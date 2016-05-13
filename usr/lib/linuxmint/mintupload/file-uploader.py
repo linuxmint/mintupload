@@ -54,7 +54,7 @@ class MainClass:
         if has_changed and not self.menu.is_visible():
             self.build_services_menu()
 
-        return True        
+        return True
 
     def build_services_menu(self):
         self.services = read_services()
@@ -110,8 +110,12 @@ class MainClass:
     def popup_menu_cb(self, widget, button, activate_time):
         self.menu.popup(None, None, self.menu_pos, None, button, activate_time)
 
-    def menu_pos(self, menu, x, y, *args):
-        return self.status_icon.position_menu(self.menu, x, y, self.status_icon)
+    def menu_pos(self, menu, *args):
+        # Done this way for compatibility across multiple versions of Gtk 3 / Mint
+        try:
+            return Gtk.StatusIcon.position_menu(self.menu, self.status_icon)
+        except (AttributeError, TypeError):
+            return Gtk.StatusIcon.position_menu(self.menu, 0, 0, self.status_icon)
 
 
 class DropZone:
