@@ -3,7 +3,9 @@
 DOMAIN = "mintupload"
 PATH = "/usr/share/linuxmint/locale"
 
-import os, gettext, sys
+import os
+import gettext
+import sys
 sys.path.append('/usr/lib/linuxmint/common')
 import additionalfiles
 
@@ -13,7 +15,7 @@ gettext.install(DOMAIN, PATH)
 prefix = "[Desktop Entry]\n"
 
 suffix = """Exec=mintupload-manager
-Icon=/usr/lib/linuxmint/mintUpload/icon.svg
+Icon=/usr/share/pixmaps/mintupload/icon.svg
 Terminal=false
 Type=Application
 Encoding=UTF-8
@@ -26,8 +28,8 @@ additionalfiles.generate(DOMAIN, PATH, "usr/share/applications/mintupload.deskto
 
 prefix = "[Desktop Entry]\n"
 
-suffix= """Exec=mintupload-manager
-Icon=/usr/lib/linuxmint/mintUpload/icon.svg
+suffix = """Exec=mintupload-manager
+Icon=/usr/share/pixmaps/mintupload/icon.svg
 Terminal=false
 Type=Application
 Encoding=UTF-8

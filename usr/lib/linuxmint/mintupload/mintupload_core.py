@@ -16,7 +16,10 @@ import gettext
 import paramiko
 import pexpect
 import threading
-import pynotify
+import gi
+gi.require_version('Notify', '0.7')
+from gi.repository import Notify
+
 from configobj import ConfigObj
 
 USER_HOME = os.path.expanduser('~')
@@ -26,6 +29,10 @@ __version__ = VERSION
 
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
+
+ICONFILE = "/usr/share/pixmaps/mintupload/icon.svg"
+CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
+CONFIGFILE_USER = USER_HOME + '/.linuxmint/mintUpload.conf'
 
 
 class CustomError(Exception):
@@ -48,7 +55,7 @@ class CustomError(Exception):
         cls.observers.append(observer)
 
 
-class cliErrorObserver:
+class CliErrorObserver:
 
     '''All custom defined errors, using stderr'''
 
@@ -60,7 +67,7 @@ class cliErrorObserver:
 
         sys.stderr.write(os.linesep * 2)
 
-CustomError.add_observer(cliErrorObserver())
+CustomError.add_observer(CliErrorObserver())
 
 
 class ConnectionError(CustomError):
@@ -99,10 +106,10 @@ class MintNotifier:
     '''Enables integration with external notifiers'''
 
     def __init__(self):
-        pynotify.init("mintUpload")
+        Notify.init("mintUpload")
 
     def notify(self, detail):
-        pynotify.Notification("mintUpload", detail, ICONFILE).show()
+        Notify.Notification("mintUpload", detail, ICONFILE).show()
 
 
 class MintSpaceChecker(threading.Thread):
@@ -361,10 +368,6 @@ def read_services():
                 services.append(s)
     return services
 
-
-ICONFILE = "/usr/lib/linuxmint/mintUpload/icon.svg"
-CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
-CONFIGFILE_USER = USER_HOME + '/.linuxmint/mintUpload.conf'
 
 config = ConfigObj(CONFIGFILE_GLOBAL)
 if os.path.exists(CONFIGFILE_USER):

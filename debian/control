@@ -9,8 +9,7 @@ Package: mintupload
 Architecture: all
 Depends: python (>= 2.5), python (<< 3),
          python-paramiko (>= 1.7.4),
-         python-gtk2,
-         python-glade2,
+         python-gi,
          python-pexpect,
          python-notify,
          python-configobj,
