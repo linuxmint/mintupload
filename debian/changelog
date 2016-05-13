@@ -1,3 +1,38 @@
+mintupload (4.0.5) sarah; urgency=medium
+
+  [ Daniel Alley ]
+  * Gtk3 conversion
+  * Fixed duplicate object IDs causing GtkBuilder name conflicts
+  * JosephM's Gtk3 fixes
+  * Fix mistake made by the pygi-convert.sh script
+  * Removed unused UI configuration code
+  * Replaced deprecated widgets
+  * Added horizontal/vertical expansion to the hostname text box
+  * Added primary-toolbar stle class to the manager toolbar
+  * Fixed threading issue in file-uploader.py
+  * Converted name from camelCase to lowercase, moved icons and ui files from /usr/lib to /usr/share, recreated pot and desktop files accordingly
+  * Refactoring names
+  * Turned NotifyThread into daemon thead
+  * Minor refactoring
+  * Remove separate threading code in favor of built-in GLib funcitonality, un-broke menu positioning for Gtk 3.18
+  * Fixed issue with service manager menu hiding while it was open
+  * Only rebuild the menu if it needs to
+  * Fixed quit menu item on file-uploader.py
+  * Fixed issue where services would not be removed properly
+  * Fixed Gtk warning - Dialog without 'set_transient_for'
+  * Fixed Drop Zones
+  * Fixed editing services failure
+  * Minor refactoring
+  * Fixed Gtk's breakage of saving settings
+  * Fix warnings
+  * Removed vestigial UI xml
+  * Makepot
+  * Fixed closing the About Dialog
+  * Added border width to add service dialog
+  * Add back compatibility for Mint 17
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 13 May 2016 10:10:09 +0100
+
 mintupload (4.0.4) sarah; urgency=medium
 
   * Updated generated files
