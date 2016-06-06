@@ -2,8 +2,8 @@
 Encoding=UTF-8
 Name=mintUpload
 Comment=Linux Mint Upload Manager
-Icon=/usr/lib/linuxmint/mintUpload/icon.svg
-Exec=/usr/lib/linuxmint/mintUpload/launch-file-uploader.py
+Icon=/usr/share/pixmaps/mintupload/icon.svg
+Exec=/usr/lib/linuxmint/mintupload/launch-file-uploader.py
 Terminal=false
 Type=Application
 Categories=
