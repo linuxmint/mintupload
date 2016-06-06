@@ -1,3 +1,10 @@
+mintupload (4.0.6) sarah; urgency=medium
+
+  * Fixed exec path and icon in XDG autostart
+  * Fixed debian/links
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 06 Jun 2016 11:10:04 +0100
+
 mintupload (4.0.5) sarah; urgency=medium
 
   [ Daniel Alley ]
