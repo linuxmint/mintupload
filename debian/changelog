@@ -1,3 +1,9 @@
+mintupload (4.0.7) sarah; urgency=medium
+
+  * Manager: Fixed edit window getting destroyed when closing it from its window frame
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 13 Jun 2016 13:40:45 +0100
+
 mintupload (4.0.6) sarah; urgency=medium
 
   * Fixed exec path and icon in XDG autostart
