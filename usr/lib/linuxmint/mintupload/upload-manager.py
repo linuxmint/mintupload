@@ -203,7 +203,6 @@ class ManagerWindow:
         dialog_edit_service.set_transient_for(self.manager_window)
         dialog_edit_service.set_title(_("%s Properties") % sname)
         dialog_edit_service.set_icon_from_file(ICONFILE)
-        dialog_edit_service.show()
 
         self.builder.get_object("button_verify").set_label(_("Check connection"))
         self.builder.get_object("button_verify").connect("clicked", self.check_connection, file)
@@ -282,6 +281,9 @@ class ManagerWindow:
         except Exception, detail:
             print detail
 
+        dialog_edit_service.run()
+        dialog_edit_service.hide()
+
     def check_connection(self, widget, file):
         service = Service(file)
         os.system("mintupload \"" + service['name'] + "\" /usr/share/linuxmint/mintupload/mintupload.readme &")
@@ -315,7 +317,6 @@ class ManagerWindow:
 
     def close_window(self, widget, window):
         window.hide()
-
 
 window = ManagerWindow()
 Gtk.main()
