@@ -216,52 +216,23 @@ class MintUploader(threading.Thread):
             except:
                 pass
 
-    def get_private_key(self):
-        '''Find a private key in ~/.ssh'''
-        key_files = [USER_HOME + '/.ssh/id_rsa', USER_HOME + '/.ssh/id_dsa']
-        key = None
-        for f in key_files:
-            if os.path.exists(f):
-                try:
-                    key = paramiko.RSAKey.from_private_key_file(f)
-                except:
-                    key = paramiko.DSSKey.from_private_key_file(f)
-                if key is not None:
-                    return key
-        return key
-
     def _sftp(self, file):
         '''Connection process for SFTP services'''
-
-        if not self.service['pass']:
-            rsa_key = self.get_private_key()
-            if not rsa_key:
-                raise ConnectionError(_("This service requires a password or private key."))
-
         if not self.service.has_key('port'):
             self.service['port'] = 22
-
         try:
-            # Attempting to connect
-            transport = paramiko.Transport((self.service['host'], self.service['port']))
-            if self.service['pass']:
-                transport.connect(username=self.service['user'], password=self.service['pass'])
+            ssh = paramiko.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            key_filename = os.path.expanduser("~/.ssh/id_rsa")
+            if os.path.exists(key_filename):
+                ssh.connect(self.service['host'], username=self.service['user'], password=self.service['pass'], port=self.service['port'], key_filename=key_filename)
             else:
-                transport.connect(username=self.service['user'], pkey=rsa_key)
-            self.progress(self.service['type'] + " " + _("connection successfully established"))
+                ssh.connect(self.service['host'], username=self.service['user'], password=self.service['pass'], port=self.service['port'])      
 
-            # Create full remote path
-            path = self.service['path']
-
-            try:
-                transport.open_session().exec_command('mkdir -p ' + path)
-            except:
-                pass
-
-            sftp = paramiko.SFTPClient.from_transport(transport)
+            sftp = ssh.open_sftp()
             self.progress(_("Uploading the file..."))
             self.pct(0)
-            sftp.put(file, path + self.name, self.my_sftp_callback)
+            sftp.put(file, self.service['path'] + self.name, self.my_sftp_callback)
 
         finally:
             # Close any open connections
@@ -271,7 +242,7 @@ class MintUploader(threading.Thread):
                 pass
 
             try:
-                transport.close()
+                ssh.close()
             except:
                 pass
 
