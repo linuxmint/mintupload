@@ -1,3 +1,10 @@
+mintupload (4.0.8) sarah; urgency=medium
+
+  * SFTP: Connect via SSH using key_filename if appropriate
+  * Switch from StatusIcon to Indicator
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 16 Aug 2016 16:55:43 +0200
+
 mintupload (4.0.7) sarah; urgency=medium
 
   * Manager: Fixed edit window getting destroyed when closing it from its window frame
