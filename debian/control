@@ -14,6 +14,7 @@ Depends: python (>= 2.5), python (<< 3),
          python-notify,
          python-configobj,
          libnotify-bin,
+         gir1.2-appindicator3-0.1,
          ${misc:Depends}
 Description: Uploads files on the Internet
  mintUpload allow you to upload files on the Internet.
