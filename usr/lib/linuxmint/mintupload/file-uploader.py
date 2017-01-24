@@ -19,7 +19,7 @@ from mintupload_core import *
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
 # Location of the systray icon file
-SYSTRAY_ICON = "/usr/share/pixmaps/mintupload/systray.svg"
+SYSTRAY_ICON = "/usr/share/pixmaps/mintupload/systray.png"
 
 class MainClass:
 
