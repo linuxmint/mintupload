@@ -10,31 +10,41 @@ import urllib
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Notify", "0.7")
-gi.require_version("AppIndicator3", "0.1")
 from gi.repository import Gtk, Gdk, GLib
-from gi.repository import AppIndicator3 as AppIndicator
+
 from mintupload_core import *
 
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
 # Location of the systray icon file
-SYSTRAY_ICON = "/usr/share/pixmaps/mintupload/systray.png"
+SYSTRAY_ICON = "/usr/share/pixmaps/mintupload/systray.svg"
+
+import subprocess, signal
+p = subprocess.Popen(['ps', '-A'], stdout=subprocess.PIPE)
+out, err = p.communicate()
+
 
 class MainClass:
 
     def __init__(self):
         self.drop_zones = {}
-        self.status_icon = AppIndicator.Indicator.new("mintupload", _("Upload services"), AppIndicator.IndicatorCategory.APPLICATION_STATUS)
-        self.status_icon.set_status(AppIndicator.IndicatorStatus.ACTIVE)
-        self.status_icon.set_icon(SYSTRAY_ICON)
-        self.status_icon.set_title(_("Upload services"))
+
+        self.status_icon = Gtk.StatusIcon()
+        self.status_icon.set_from_file(SYSTRAY_ICON)
 
         try:
-            if os.environ["XDG_CURRENT_DESKTOP"].lower() == "mate":
-                self.status_icon.set_icon("up")
+            desktop = os.environ["DESKTOP_SESSION"].lower()
+            if desktop == "mate":
+                self.status_icon.set_from_icon_name("up")
         except Exception, detail:
             print detail
+
+        self.status_icon.set_tooltip_text(_("Upload services"))
+        self.status_icon.set_visible(True)
+
+        self.status_icon.connect('popup-menu', self.popup_menu_cb)
+        self.status_icon.connect('activate', self.show_menu_cb)
 
         self.services = None
 
@@ -82,27 +92,48 @@ class MainClass:
         menu_item.connect('activate', self.quit_cb)
         self.menu.append(menu_item)
         self.menu.show_all()
-        self.status_icon.set_menu(self.menu)
+
 
     def launch_manager(self, widget):
         os.system("/usr/lib/linuxmint/mintupload/upload-manager.py &")
 
     def create_drop_zone(self, widget, service):
         if service['name'] not in self.drop_zones.keys():
-            drop_zone = DropZone(service, self.drop_zones)
+            drop_zone = DropZone(self.status_icon, self.menu, service, self.drop_zones)
             self.drop_zones[service['name']] = drop_zone
         else:
             self.drop_zones[service['name']].show()
 
     def quit_cb(self, widget):
+        self.status_icon.set_visible(False)
+        for line in out.splitlines():
+            if 'upload-manager' in line:
+                pid = int(line.split(None, 1)[0])
+                os.kill(pid, signal.SIGKILL)
         Gtk.main_quit()
         sys.exit(0)
 
+    def show_menu_cb(self, widget):
+        self.menu.popup(None, None, self.menu_pos, None, 0, Gtk.get_current_event_time())
+
+    def popup_menu_cb(self, widget, button, activate_time):
+        self.menu.popup(None, None, self.menu_pos, None, button, activate_time)
+
+    def menu_pos(self, menu, *args):
+        # Done this way for compatibility across multiple versions of Gtk 3 / Mint
+        try:
+            return Gtk.StatusIcon.position_menu(self.menu, self.status_icon)
+        except (AttributeError, TypeError):
+            return Gtk.StatusIcon.position_menu(self.menu, 0, 0, self.status_icon)
+
+
 class DropZone:
 
-    def __init__(self, service, drop_zones):
+    def __init__(self, status_icon, menu, service, drop_zones):
         self.service = service
+        self.status_icon = status_icon
         self.drop_zones = drop_zones
+        self.menu = menu
         self.w = Gtk.Window()
 
         TARGET_TYPE_TEXT = 80
@@ -126,9 +157,12 @@ class DropZone:
         self.w.set_skip_taskbar_hint(True)
         self.w.stick()
 
-        display = Gdk.Display.get_default()
-        (screen, x, y, mods) = display.get_pointer()
-        self.w.move(x-50, y-50)
+        # Gtk's bindings are f'ed up and they don't care because this functionality is deprecated
+        # The x and y arguments ("0, 0") are int pointers to return a location for the position of the icon
+        # Obviously this is a problem because Python does not have pointers...
+        pos = Gtk.StatusIcon.position_menu(self.menu, 0, 0, self.status_icon)
+        posY = len(self.drop_zones) * 80
+        self.w.move(pos[0], pos[1] + 50 - posY)
 
         self.label = Gtk.Label()
         self.label.set_text("<small>" + _("Drag &amp; Drop here to upload to %s") % self.service['name'] + "</small>")
