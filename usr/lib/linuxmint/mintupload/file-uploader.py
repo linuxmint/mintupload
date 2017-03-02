@@ -105,13 +105,13 @@ class MainClass:
             self.drop_zones[service['name']].show()
 
     def quit_cb(self, widget):
-        self.status_icon.set_visible(False)
-        for line in out.splitlines():
-            if 'upload-manager' in line:
-                pid = int(line.split(None, 1)[0])
-                os.kill(pid, signal.SIGKILL)
-        Gtk.main_quit()
-        sys.exit(0)
+        self.status_icon.set_visible(False)	#Removing the tray icon
+        for line in out.splitlines():	#for all the process running at the instant
+            if 'upload-manager' in line:	#search for the process of 'upload-manager' in the current running processes.
+                pid = int(line.split(None, 1)[0])	#get the pid of the running process
+                os.kill(pid, signal.SIGKILL)	#kill the process of the encountered pid above
+        Gtk.main_quit()	
+        sys.exit(0)	#exiting the process
 
     def show_menu_cb(self, widget):
         self.menu.popup(None, None, self.menu_pos, None, 0, Gtk.get_current_event_time())
