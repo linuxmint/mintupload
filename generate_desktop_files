@@ -15,7 +15,7 @@ gettext.install(DOMAIN, PATH)
 prefix = "[Desktop Entry]\n"
 
 suffix = """Exec=mintupload-manager
-Icon=/usr/share/pixmaps/mintupload/icon.svg
+Icon=mintupload
 Terminal=false
 Type=Application
 Encoding=UTF-8
@@ -29,7 +29,7 @@ additionalfiles.generate(DOMAIN, PATH, "usr/share/applications/mintupload.deskto
 prefix = "[Desktop Entry]\n"
 
 suffix = """Exec=mintupload-manager
-Icon=/usr/share/pixmaps/mintupload/icon.svg
+Icon=mintupload
 Terminal=false
 Type=Application
 Encoding=UTF-8
