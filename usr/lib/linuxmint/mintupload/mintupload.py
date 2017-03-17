@@ -25,7 +25,7 @@ UI_FILE = "/usr/share/linuxmint/mintupload/mintupload.ui"
 
 
 def notify(message, timeout=3000):
-    os.system("notify-send \"" + _("Upload Manager") + "\" \"" + message + "\" -i /usr/share/pixmaps/mintupload/icon.svg -t " + str(timeout))
+    os.system("notify-send \"" + _("Upload Manager") + "\" \"" + message + "\" -i mintupload -t " + str(timeout))
 
 
 class GtkUploader(MintUploader):
