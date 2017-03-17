@@ -30,7 +30,7 @@ __version__ = VERSION
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
-ICONFILE = "/usr/share/pixmaps/mintupload/icon.svg"
+ICONFILE = "mintupload"
 CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
 CONFIGFILE_USER = USER_HOME + '/.linuxmint/mintUpload.conf'
 
