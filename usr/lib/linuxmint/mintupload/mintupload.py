@@ -25,7 +25,7 @@ UI_FILE = "/usr/share/linuxmint/mintupload/mintupload.ui"
 
 
 def notify(message, timeout=3000):
-    os.system("notify-send \"" + _("Upload Manager") + "\" \"" + message + "\" -i /usr/share/pixmaps/mintupload/icon.svg -t " + str(timeout))
+    os.system("notify-send \"" + _("Upload Manager") + "\" \"" + message + "\" -t " + str(timeout))
 
 
 class GtkUploader(MintUploader):
@@ -45,7 +45,7 @@ class GtkUploader(MintUploader):
                 title = _("%(percentage)s of 1 file - Uploading to %(service)s") % {'percentage': '0%', 'service': "\"" + service['name'] + "\""}
 
             self.builder.get_object("main_window").set_title(title)
-            self.builder.get_object("main_window").set_icon_from_file(ICONFILE)
+            self.builder.get_object("main_window").set_icon_name(ICON)
 
             self.progressbar = self.builder.get_object("progressbar")
 
@@ -108,7 +108,7 @@ class GtkUploader(MintUploader):
             self.builder.get_object("main_window").hide()
         else:
             self.builder_cancel = self.builder.get_object("close_dialog")
-            self.builder_cancel.get_object("close_dialog").set_icon_from_file(ICONFILE)
+            self.builder_cancel.get_object("close_dialog").set_icon_name(ICON)
             self.builder_cancel.get_object("label_cancel").set_text(_("Do you want to cancel this upload?"))
             self.builder_cancel.get_object("cancel_button").set_label(_("Cancel"))
             self.builder_cancel.get_object("continue_button").set_label(_("Run in the background"))

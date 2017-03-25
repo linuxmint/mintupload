@@ -26,7 +26,7 @@ class ManagerWindow:
 
         self.manager_window = self.builder.get_object("manager_window")
         self.manager_window.set_title(_("Upload Manager"))
-        self.manager_window.set_icon_from_file(ICONFILE)
+        self.manager_window.set_icon_name(ICON)
         self.manager_window.connect("delete_event", Gtk.main_quit)
 
         treeview_services = self.builder.get_object("treeview_services")
@@ -98,8 +98,8 @@ class ManagerWindow:
                         "Manuel Sandoval <manuel@slashvar.com>",
                         "Dennis Schwertel <s@digitalkultur.net>"
                         ])
-        dlg.set_icon_from_file(ICONFILE)
-        dlg.set_logo(GdkPixbuf.Pixbuf.new_from_file(ICONFILE))
+        dlg.set_icon_name(ICON)
+        dlg.set_logo_icon_name(ICON)
 
         def close(w, res):
             if res == Gtk.ResponseType.DELETE_EVENT:
@@ -115,7 +115,7 @@ class ManagerWindow:
         dialog = Gtk.MessageDialog(None, Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT, Gtk.MessageType.QUESTION, Gtk.ButtonsType.OK_CANCEL, None)
         dialog.set_transient_for(self.manager_window)
         dialog.set_title(_("Upload Manager"))
-        dialog.set_icon_from_file(ICONFILE)
+        dialog.set_icon_name(ICON)
         dialog.set_border_width(6)
         dialog.set_markup(_("<b>Please enter a name for the new upload service:</b>"))
         entry = Gtk.Entry()
@@ -202,7 +202,7 @@ class ManagerWindow:
         dialog_edit_service = self.builder.get_object("dialog_edit_service")
         dialog_edit_service.set_transient_for(self.manager_window)
         dialog_edit_service.set_title(_("%s Properties") % sname)
-        dialog_edit_service.set_icon_from_file(ICONFILE)
+        dialog_edit_service.set_icon_name(ICON)
 
         self.builder.get_object("button_verify").set_label(_("Check connection"))
         self.builder.get_object("button_verify").connect("clicked", self.check_connection, file)
