@@ -18,8 +18,8 @@ from mintupload_core import *
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
-# Location of the systray icon file
-SYSTRAY_ICON = "/usr/share/pixmaps/mintupload/systray.png"
+# Name of the icon used by the indicator
+SYSTRAY_ICON = "mintupload-tray"
 
 class MainClass:
 
@@ -118,7 +118,7 @@ class DropZone:
         self.w.connect('drag-data-received', self.drop_data_received_cb)
         self.w.connect('destroy', self.destroy_cb)
 
-        self.w.set_icon_from_file(SYSTRAY_ICON)
+        self.w.set_icon_name(SYSTRAY_ICON)
         self.w.set_title(self.service['name'])
         self.w.set_keep_above(True)
         self.w.set_type_hint(Gdk.WindowTypeHint.UTILITY)

@@ -30,7 +30,7 @@ __version__ = VERSION
 # i18n
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
-ICONFILE = "/usr/share/pixmaps/mintupload/icon.svg"
+ICON = "mintupload"
 CONFIGFILE_GLOBAL = '/etc/linuxmint/mintUpload.conf'
 CONFIGFILE_USER = USER_HOME + '/.linuxmint/mintUpload.conf'
 
@@ -109,7 +109,7 @@ class MintNotifier:
         Notify.init("mintUpload")
 
     def notify(self, detail):
-        Notify.Notification("mintUpload", detail, ICONFILE).show()
+        Notify.Notification("mintUpload", detail, ICON).show()
 
 
 class MintSpaceChecker(threading.Thread):
