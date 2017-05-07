@@ -1,3 +1,14 @@
+mintupload (4.1.0) sonya; urgency=medium
+
+  [ JosephMcc ]
+  * Use a themable icon for the application and tray icon
+
+  [ Clement Lefebvre ]
+  * l10n: Update POT file
+  * l10n: Generate desktop files
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sun, 07 May 2017 13:04:00 +0100
+
 mintupload (4.0.9) serena; urgency=medium
 
   * Use 22px PNG in indicator
