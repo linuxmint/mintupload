@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-07 13:03+0100\n"
+"POT-Creation-Date: 2017-07-19 15:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: usr/lib/linuxmint/mintupload/mintupload.py:28
 #: usr/lib/linuxmint/mintupload/upload-manager.py:28
@@ -117,30 +118,28 @@ msgstr ""
 
 #: usr/lib/linuxmint/mintupload/mintupload.py:201
 #, python-format
-msgid "%(hours)d hours, %(minutes)d minutes"
-msgstr ""
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] ""
+msgstr[1] ""
 
-#: usr/lib/linuxmint/mintupload/mintupload.py:203
+#: usr/lib/linuxmint/mintupload/mintupload.py:202
+#: usr/lib/linuxmint/mintupload/mintupload.py:204
 #, python-format
-msgid "1 hour, %d minutes"
-msgstr ""
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+msgstr[1] ""
 
 #: usr/lib/linuxmint/mintupload/mintupload.py:205
-#, python-format
-msgid "%(minutes)d minutes, %(seconds)d seconds"
-msgstr ""
-
 #: usr/lib/linuxmint/mintupload/mintupload.py:207
 #, python-format
-msgid "1 minute, %d seconds"
-msgstr ""
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] ""
+msgstr[1] ""
 
-#: usr/lib/linuxmint/mintupload/mintupload.py:209
-#, python-format
-msgid "%d seconds"
-msgstr ""
-
-#: usr/lib/linuxmint/mintupload/mintupload.py:238
+#: usr/lib/linuxmint/mintupload/mintupload.py:236
 #, python-format
 msgid "Unknown service: %s"
 msgstr ""
