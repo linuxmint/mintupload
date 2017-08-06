@@ -11,10 +11,12 @@ Depends: python (>= 2.5), python (<< 3),
          python-paramiko (>= 1.7.4),
          python-gi,
          python-pexpect,
-         python-notify,
          python-configobj,
          libnotify-bin,
          gir1.2-appindicator3-0.1,
+         gir1.2-glib-2.0,
+         gir1.2-gtk-3.0,
+         gir1.2-notify-0.7,
          ${misc:Depends}
 Description: Uploads files on the Internet
  mintUpload allow you to upload files on the Internet.
