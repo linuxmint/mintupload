@@ -28,13 +28,6 @@ class MainClass:
         self.status_icon.set_status(AppIndicator.IndicatorStatus.ACTIVE)
         self.status_icon.set_icon(SYSTRAY_ICON)
         self.status_icon.set_title(_("Upload services"))
-
-        try:
-            if os.environ["XDG_CURRENT_DESKTOP"].lower() == "mate":
-                self.status_icon.set_icon("up")
-        except Exception, detail:
-            print detail
-
         self.services = None
 
         self.build_services_menu()
