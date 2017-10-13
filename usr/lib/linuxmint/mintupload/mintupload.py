@@ -99,7 +99,7 @@ class GtkUploader(MintUploader):
             notify(_("Successfully uploaded %(number)d files to '%(service)s'") % {'number': len(self.files), 'service': service['name']})
         else:
             notify(_("Successfully uploaded 1 file to '%(service)s'") % {'service': service['name']})
-            
+
         Gtk.main_quit()
         sys.exit(0)
 
@@ -197,16 +197,14 @@ class GtkUploader(MintUploader):
     def time_to_string(self, time):
         hours, remainder = divmod(time, 3600)
         minutes, seconds = divmod(remainder, 60)
-        if time > 7200:
-            str = _("%(hours)d hours, %(minutes)d minutes") % {'hours': hours, 'minutes': minutes}
-        elif time > 3600:
-            str = _("1 hour, %d minutes") % minutes
-        elif time > 120:
-            str = _("%(minutes)d minutes, %(seconds)d seconds") % {'minutes': minutes, 'seconds': seconds}
+        if time > 3600:
+            str = gettext.ngettext("%d hour", "%d hours", hours) % hours
+            str += ", " + gettext.ngettext("%d minute", "%d minutes", minutes) % minutes
         elif time > 60:
-            str = _("1 minute, %d seconds") % seconds
+            str = gettext.ngettext("%d minute", "%d minutes", minutes) % minutes
+            str += ", " + gettext.ngettext("%d second", "%d seconds", seconds) % seconds
         else:
-            str = _("%d seconds") % seconds
+            str = gettext.ngettext("%d second", "%d seconds", seconds) % seconds
         return str
 
     def calculate_time(self):
