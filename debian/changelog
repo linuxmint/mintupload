@@ -1,3 +1,21 @@
+mintupload (4.1.1) sylvia; urgency=medium
+
+  [ monsta ]
+  * fix runtime dependencies
+  * remove unused import
+  * remove unused gi.require_version
+
+  [ JosephMcc ]
+  * Don't special case the systray icon in Mate (#34)
+
+  [ NikoKrause ]
+  * Translation: fetch time string with ngettext (#35)
+
+  [ Clement Lefebvre ]
+  * l10n: Update additional files
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 27 Oct 2017 13:17:18 +0100
+
 mintupload (4.1.0) sonya; urgency=medium
 
   [ JosephMcc ]
