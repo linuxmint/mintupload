@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-19 15:28+0200\n"
+"POT-Creation-Date: 2017-10-27 13:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -197,25 +197,25 @@ msgstr ""
 msgid "%(1)s is not set in the config file found under %(2)s or %(3)s"
 msgstr ""
 
-#: usr/lib/linuxmint/mintupload/file-uploader.py:28
-#: usr/lib/linuxmint/mintupload/file-uploader.py:31
+#: usr/lib/linuxmint/mintupload/file-uploader.py:27
+#: usr/lib/linuxmint/mintupload/file-uploader.py:30
 #: usr/lib/linuxmint/mintupload/upload-manager.py:35
 msgid "Upload services"
 msgstr ""
 
-#: usr/lib/linuxmint/mintupload/file-uploader.py:58
+#: usr/lib/linuxmint/mintupload/file-uploader.py:50
 msgid "Services:"
 msgstr ""
 
-#: usr/lib/linuxmint/mintupload/file-uploader.py:72
+#: usr/lib/linuxmint/mintupload/file-uploader.py:64
 msgid "Upload manager..."
 msgstr ""
 
-#: usr/lib/linuxmint/mintupload/file-uploader.py:81
+#: usr/lib/linuxmint/mintupload/file-uploader.py:73
 msgid "Quit"
 msgstr ""
 
-#: usr/lib/linuxmint/mintupload/file-uploader.py:134
+#: usr/lib/linuxmint/mintupload/file-uploader.py:126
 #, python-format
 msgid "Drag &amp; Drop here to upload to %s"
 msgstr ""
