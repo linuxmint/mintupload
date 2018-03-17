@@ -18,7 +18,7 @@ from mintupload_core import *
 Gdk.threads_init()
 __version__ = VERSION
 # i18n
-gettext.install("mintupload", "/usr/share/linuxmint/locale")
+gettext.install("mintupload", "/usr/share/linuxmint/locale", names="ngettext")
 
 # Location of the UI file
 UI_FILE = "/usr/share/linuxmint/mintupload/mintupload.ui"
@@ -198,13 +198,13 @@ class GtkUploader(MintUploader):
         hours, remainder = divmod(time, 3600)
         minutes, seconds = divmod(remainder, 60)
         if time > 3600:
-            str = gettext.ngettext("%d hour", "%d hours", hours) % hours
-            str += ", " + gettext.ngettext("%d minute", "%d minutes", minutes) % minutes
+            str = ngettext("%d hour", "%d hours", hours) % hours
+            str += ", " + ngettext("%d minute", "%d minutes", minutes) % minutes
         elif time > 60:
-            str = gettext.ngettext("%d minute", "%d minutes", minutes) % minutes
-            str += ", " + gettext.ngettext("%d second", "%d seconds", seconds) % seconds
+            str = ngettext("%d minute", "%d minutes", minutes) % minutes
+            str += ", " + ngettext("%d second", "%d seconds", seconds) % seconds
         else:
-            str = gettext.ngettext("%d second", "%d seconds", seconds) % seconds
+            str = ngettext("%d second", "%d seconds", seconds) % seconds
         return str
 
     def calculate_time(self):
