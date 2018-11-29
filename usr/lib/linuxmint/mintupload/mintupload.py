@@ -8,7 +8,8 @@ import traceback
 try:
     import gi
     gi.require_version("Gtk", "3.0")
-    from gi.repository import Gtk, Gdk
+    gi.require_version('XApp', '1.0')
+    from gi.repository import Gtk, Gdk, XApp
 except:
     print "You do not have all the dependencies!"
     sys.exit(1)
@@ -38,19 +39,20 @@ class GtkUploader(MintUploader):
         try:
             self.builder = Gtk.Builder()
             self.builder.add_from_file(UI_FILE)
+            self.window = self.builder.get_object("main_window")
 
             if len(filenames) > 1:
                 title = _("%(percentage)s of %(number)d files - Uploading to %(service)s") % {'percentage': '0%', 'number': len(filenames), 'service': "\"" + service['name'] + "\""}
             else:
                 title = _("%(percentage)s of 1 file - Uploading to %(service)s") % {'percentage': '0%', 'service': "\"" + service['name'] + "\""}
 
-            self.builder.get_object("main_window").set_title(title)
-            self.builder.get_object("main_window").set_icon_name(ICON)
+            self.window.set_title(title)
+            self.window.set_icon_name(ICON)
 
             self.progressbar = self.builder.get_object("progressbar")
 
-            self.builder.get_object("main_window").connect("destroy", self.close_window)
-            self.builder.get_object("main_window").connect("delete_event", self.close_window)
+            self.window.connect("destroy", self.close_window)
+            self.window.connect("delete_event", self.close_window)
             self.builder.get_object("cancel_button").connect("clicked", self.cancel)
         finally:
             Gdk.threads_leave()
@@ -105,7 +107,7 @@ class GtkUploader(MintUploader):
 
     def close_window(self, widget=None, event=None):
         if self.cancel_required:
-            self.builder.get_object("main_window").hide()
+            self.window.hide()
         else:
             self.builder_cancel = self.builder.get_object("close_dialog")
             self.builder_cancel.get_object("close_dialog").set_icon_name(ICON)
@@ -122,7 +124,7 @@ class GtkUploader(MintUploader):
         self.builder_cancel.get_object("close_dialog").hide()
         if cancel:
             self.cancel(widget)
-        self.builder.get_object("main_window").hide()
+        self.window.hide()
 
     def cancel(self, widget):
         self.cancel_required = True
@@ -143,10 +145,11 @@ class GtkUploader(MintUploader):
         self.percentage = float(self.size_so_far) / float(self.total_size)
         Gdk.threads_enter()
         try:
+            XApp.set_window_progress(self.window, int(self.percentage * 100))
             self.progressbar.set_fraction(self.percentage)
             self.progressbar.set_text(str(int(self.percentage * 100)) + "%")
             self.builder.get_object("upload_label").set_text(message)
-            self.builder.get_object("main_window").set_title(title)
+            self.window.set_title(title)
         finally:
             Gdk.threads_leave()
         pass

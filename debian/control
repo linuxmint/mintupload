@@ -1,7 +1,7 @@
 Source: mintupload
 Section: admin
 Priority: optional
-Maintainer: Philip Morrell <mintupload.emorrp1@mamber.net>
+Maintainer: Linux Mint <root@linuxmint.com>
 Build-Depends: debhelper (>= 9)
 Standards-Version: 3.9.5
 
@@ -17,6 +17,7 @@ Depends: python (>= 2.5), python (<< 3),
          gir1.2-glib-2.0,
          gir1.2-gtk-3.0,
          gir1.2-notify-0.7,
+         gir1.2-xapp-1.0
          ${misc:Depends}
 Description: Uploads files on the Internet
  mintUpload allow you to upload files on the Internet.
