@@ -1,3 +1,9 @@
+mintupload (4.1.3) tessa; urgency=medium
+
+  * Add support for window progress
+
+ -- Clement Lefebvre <root@linuxmint.com>  Thu, 29 Nov 2018 15:07:01 +0000
+
 mintupload (4.1.2) tara; urgency=medium
 
   [ NikoKrause ]
