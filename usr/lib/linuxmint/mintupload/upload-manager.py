@@ -76,7 +76,7 @@ class ManagerWindow:
         dlg = Gtk.AboutDialog()
         dlg.set_transient_for(self.manager_window)
         dlg.set_title(_("About") + " - mintupload")
-        version = commands.getoutput("/usr/lib/linuxmint/common/version.py mintupload")
+        version = commands.getoutput("/usr/lib/python3/dist-packages/mintcommon/version.py mintupload")
         dlg.set_version(version)
         dlg.set_program_name("mintupload")
         dlg.set_comments(_("Upload Manager"))
