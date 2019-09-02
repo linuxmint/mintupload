@@ -9,9 +9,8 @@ import urllib
 
 import gi
 gi.require_version("Gtk", "3.0")
-gi.require_version("AppIndicator3", "0.1")
-from gi.repository import Gtk, Gdk, GLib
-from gi.repository import AppIndicator3 as AppIndicator
+gi.require_version("XApp", "1.0")
+from gi.repository import Gtk, Gdk, GLib, XApp
 from mintupload_core import *
 
 # i18n
@@ -24,15 +23,33 @@ class MainClass:
 
     def __init__(self):
         self.drop_zones = {}
-        self.status_icon = AppIndicator.Indicator.new("mintupload", _("Upload services"), AppIndicator.IndicatorCategory.APPLICATION_STATUS)
-        self.status_icon.set_status(AppIndicator.IndicatorStatus.ACTIVE)
-        self.status_icon.set_icon(SYSTRAY_ICON)
-        self.status_icon.set_title(_("Upload services"))
         self.services = None
 
         self.build_services_menu()
         # Refresh list of services in the menu every 2 seconds
         GLib.timeout_add_seconds(2, self.reload_services)
+
+        self.status_icon = XApp.StatusIcon()
+        self.status_icon.set_name("mintupload")
+        self.status_icon.set_icon_name(SYSTRAY_ICON)
+        self.status_icon.set_tooltip_text(_("Upload services"))
+        self.status_icon.connect("button-release-event", self.on_statusicon_button_release)
+
+    def on_statusicon_button_release(self, icon, x, y, button, time, position):
+        if position == -1:
+            # The position and coordinates are unknown. This is the
+            # case when the XAppStatusIcon fallbacks as a Gtk.StatusIcon
+            self.menu.popup(None, None, None, None, button, time)
+        else:
+            def position_menu_cb(menu, pointer_x, pointer_y, user_data):
+                [x, y, position] = user_data;
+                if (position == Gtk.PositionType.BOTTOM):
+                    y = y - self.menu.get_allocation().height;
+                if (position == Gtk.PositionType.RIGHT):
+                    x = x - self.menu.get_allocation().width;
+                return (x, y, False)
+            device = Gdk.Display.get_default().get_device_manager().get_client_pointer()
+            self.menu.popup_for_device(device, None, None, position_menu_cb, [x, y, position], button, time)
 
     def reload_services(self):
         has_changed = read_services() != self.services
@@ -74,7 +91,6 @@ class MainClass:
         menu_item.connect('activate', self.quit_cb)
         self.menu.append(menu_item)
         self.menu.show_all()
-        self.status_icon.set_menu(self.menu)
 
     def launch_manager(self, widget):
         os.system("/usr/lib/linuxmint/mintupload/upload-manager.py &")
