@@ -33,23 +33,8 @@ class MainClass:
         self.status_icon.set_name("mintupload")
         self.status_icon.set_icon_name(SYSTRAY_ICON)
         self.status_icon.set_tooltip_text(_("Upload services"))
-        self.status_icon.connect("button-release-event", self.on_statusicon_button_release)
-
-    def on_statusicon_button_release(self, icon, x, y, button, time, position):
-        if position == -1:
-            # The position and coordinates are unknown. This is the
-            # case when the XAppStatusIcon fallbacks as a Gtk.StatusIcon
-            self.menu.popup(None, None, None, None, button, time)
-        else:
-            def position_menu_cb(menu, pointer_x, pointer_y, user_data):
-                [x, y, position] = user_data;
-                if (position == Gtk.PositionType.BOTTOM):
-                    y = y - self.menu.get_allocation().height;
-                if (position == Gtk.PositionType.RIGHT):
-                    x = x - self.menu.get_allocation().width;
-                return (x, y, False)
-            device = Gdk.Display.get_default().get_device_manager().get_client_pointer()
-            self.menu.popup_for_device(device, None, None, position_menu_cb, [x, y, position], button, time)
+        self.status_icon.set_primary_menu(self.menu)
+        self.status_icon.set_secondary_menu(self.menu)
 
     def reload_services(self):
         has_changed = read_services() != self.services
