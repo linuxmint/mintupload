@@ -1,3 +1,10 @@
+mintupload (4.1.5) tricia; urgency=medium
+
+  * Add support for XAppStatusIcon
+  * StatusIcon: Use new set_menu functions
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed, 13 Nov 2019 11:57:07 +0100
+
 mintupload (4.1.4) tina; urgency=medium
 
   * About dialog: Fix the path for mintcommon's version.py
