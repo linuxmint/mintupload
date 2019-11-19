@@ -17,7 +17,7 @@ from mintupload_core import *
 gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
 # Name of the icon used by the indicator
-SYSTRAY_ICON = "mintupload-tray"
+SYSTRAY_ICON = "mintupload-tray-symbolic"
 
 class MainClass:
 

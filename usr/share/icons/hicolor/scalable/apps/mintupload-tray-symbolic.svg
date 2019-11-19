@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg7384"
+   height="16"
+   width="16"
+   version="1.1"
+   sodipodi:docname="2.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <defs
+     id="defs12" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1355"
+     id="namedview10"
+     showgrid="false"
+     inkscape:zoom="14.75"
+     inkscape:cx="8"
+     inkscape:cy="8"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer13" />
+  <g
+     id="layer13"
+     transform="translate(-501 -195)">
+    <path
+       id="path11142"
+       style="color:#bebebe;text-indent:0;text-transform:none;fill:#bebebe;enable-background:new"
+       d="m 503,203 v -1 c -1.2e-4,-0.0104 -4.6e-4,-0.0208 0,-0.0313 0.0112,-0.25495 0.12858,-0.50987 0.3125,-0.6875 l 5.2188,-5.2812 0.96875,0.003 5.2188,5.278 c 0.18819,0.18821 0.28125,0.45351 0.28125,0.7188 v 1 h -1.7071 c -0.26529,0 -0.53058,-0.0931 -0.71875,-0.28125 l -3.4503,-3.7156 -0.10825,-1.5 -0.12389,1.5 -3.4788,3.7156 c -0.19463,0.21074 -0.46925,0.30316 -0.75,0.28125 z"
+       inkscape:connector-curvature="0" />
+    <rect
+       id="rect81861"
+       style="color:#000000;fill:#bebebe;enable-background:new"
+       rx="0.5"
+       ry="0.5"
+       height="2"
+       width="2"
+       y="-204"
+       x="508"
+       transform="scale(1,-1)" />
+    <rect
+       id="rect81863"
+       style="color:#000000;fill:#bebebe;enable-background:new"
+       rx="1"
+       ry="1"
+       height="2"
+       width="2"
+       y="-210"
+       x="508"
+       transform="scale(1,-1)" />
+    <rect
+       id="rect81886"
+       style="color:#000000;fill:#bebebe;enable-background:new"
+       rx="0.6875"
+       ry="0.6875"
+       height="2"
+       width="2"
+       y="-207"
+       x="508"
+       transform="scale(1,-1)" />
+  </g>
+</svg>
