@@ -1,3 +1,9 @@
+mintupload (4.1.6) tricia; urgency=medium
+
+  * Switch tray to symbolic
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 19 Nov 2019 14:24:50 +0000
+
 mintupload (4.1.5) tricia; urgency=medium
 
   * Add support for XAppStatusIcon
