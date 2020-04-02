@@ -1,17 +1,17 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 
 import sys
 import os
 import time
 import traceback
-
+import gettext
 try:
     import gi
     gi.require_version("Gtk", "3.0")
     gi.require_version('XApp', '1.0')
     from gi.repository import Gtk, Gdk, XApp
 except:
-    print "You do not have all the dependencies!"
+    print("You do not have all the dependencies!")
     sys.exit(1)
 
 from mintupload_core import *
@@ -19,7 +19,7 @@ from mintupload_core import *
 Gdk.threads_init()
 __version__ = VERSION
 # i18n
-gettext.install("mintupload", "/usr/share/linuxmint/locale", names="ngettext")
+gettext.install("mintupload", "/usr/share/linuxmint/locale")
 
 # Location of the UI file
 UI_FILE = "/usr/share/linuxmint/mintupload/mintupload.ui"
@@ -91,7 +91,7 @@ class GtkUploader(MintUploader):
                 self.num_files_left -= 1
                 self.size_of_finished_files_so_far += os.path.getsize(f)
 
-        except Exception, e:
+        except Exception as e:
             notify((_("Upload to '%s' failed: ") % service['name']) + str(e))
             traceback.print_exc()
             Gtk.main_quit()
@@ -201,13 +201,13 @@ class GtkUploader(MintUploader):
         hours, remainder = divmod(time, 3600)
         minutes, seconds = divmod(remainder, 60)
         if time > 3600:
-            str = ngettext("%d hour", "%d hours", hours) % hours
-            str += ", " + ngettext("%d minute", "%d minutes", minutes) % minutes
+            str = gettext.ngettext("%d hour", "%d hours", hours) % hours
+            str += ", " + gettext.ngettext("%d minute", "%d minutes", minutes) % minutes
         elif time > 60:
-            str = ngettext("%d minute", "%d minutes", minutes) % minutes
-            str += ", " + ngettext("%d second", "%d seconds", seconds) % seconds
+            str = gettext.ngettext("%d minute", "%d minutes", minutes) % minutes
+            str += ", " + gettext.ngettext("%d second", "%d seconds", seconds) % seconds
         else:
-            str = ngettext("%d second", "%d seconds", seconds) % seconds
+            str = gettext.ngettext("%d second", "%d seconds", seconds) % seconds
         return str
 
     def calculate_time(self):
@@ -224,7 +224,7 @@ class GtkUploader(MintUploader):
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print """Usage: mintupload service file [more files]"""
+        print("""Usage: mintupload service file [more files]""")
         exit(0)
 
     service_name = sys.argv[1]
@@ -235,7 +235,7 @@ if __name__ == "__main__":
             service = known_service
 
     if service is None:
-        print "Unknown service: " + service_name
+        print("Unknown service: " + service_name)
         os.system("notify-send \"" + _("Unknown service: %s") % service_name + "\"")
     else:
         filenames = sys.argv[2:]

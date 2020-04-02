@@ -7,11 +7,11 @@ Standards-Version: 3.9.5
 
 Package: mintupload
 Architecture: all
-Depends: python (>= 2.5), python (<< 3),
-         python-paramiko (>= 1.7.4),
-         python-gi,
-         python-pexpect,
-         python-configobj,
+Depends: python3,
+         python3-paramiko (>= 1.7.4),
+         python3-gi,
+         python3-pexpect,
+         python3-configobj,
          libnotify-bin,
          gir1.2-glib-2.0,
          gir1.2-gtk-3.0,

@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 
 import os
 import gettext
@@ -87,8 +87,8 @@ class ManagerWindow:
                 gpl += line
             h.close()
             dlg.set_license(gpl)
-        except Exception, detail:
-            print detail
+        except Exception as detail:
+            print(detail)
 
         dlg.set_authors([
                         "Clement Lefebvre <root@linuxmint.com>",
@@ -276,8 +276,8 @@ class ManagerWindow:
                 self.builder.get_object("txt_path").set_text(config['path'])
             except:
                 self.builder.get_object("txt_path").set_text("")
-        except Exception, detail:
-            print detail
+        except Exception as detail:
+            print(detail)
 
         dialog_edit_service.run()
         dialog_edit_service.hide()

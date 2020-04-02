@@ -1,11 +1,11 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 
 import os
 import sys
 import gettext
 import time
 import threading
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -81,7 +81,7 @@ class MainClass:
         os.system("/usr/lib/linuxmint/mintupload/upload-manager.py &")
 
     def create_drop_zone(self, widget, service):
-        if service['name'] not in self.drop_zones.keys():
+        if service['name'] not in list(self.drop_zones.keys()):
             drop_zone = DropZone(service, self.drop_zones)
             self.drop_zones[service['name']] = drop_zone
         else:
@@ -150,15 +150,14 @@ class DropZone:
         return True
 
     def drop_data_received_cb(self, widget, context, x, y, selection, targetType, time):
-        data = selection.get_data()
-
+        data = selection.get_data().decode()
         filenames = []
         files = data.split('\n')
 
         for f in files:
             if not f:
                 continue
-            f = urllib.url2pathname(f)
+            f = urllib.request.url2pathname(f)
             f = f.strip('\r')
             f = f.replace("file://", "")
             f = f.replace("'", r"'\''")

@@ -9,7 +9,7 @@
 
 import os
 import sys
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import ftplib
 import datetime
 import gettext
@@ -94,7 +94,7 @@ def get_size_str(size, acc=None, factor=None):
     else:
         thresholds = [_("B"), _("KB"), _("MB"), _("GB")]
     size = float(size)
-    for i in reversed(range(1, len(thresholds))):
+    for i in reversed(list(range(1, len(thresholds)))):
         if size >= factor**i:
             rounded = round(size / factor**i, acc)
             return str(rounded) + thresholds[i]
@@ -130,14 +130,14 @@ class MintSpaceChecker(threading.Thread):
 
     def check(self):
         # Get the maximum allowed self.filesize on the service
-        if self.service.has_key("maxsize"):
+        if "maxsize" in self.service:
             if self.filesize > self.service["maxsize"]:
                 raise FilesizeError(_("File larger than service's maximum"))
 
         # Get the available space left on the service
-        if self.service.has_key("space"):
+        if "space" in self.service:
             try:
-                spaceInfo = urllib.urlopen(self.service["space"]).read()
+                spaceInfo = urllib.request.urlopen(self.service["space"]).read()
                 spaceInfo = spaceInfo.split("/")
                 self.available = int(spaceInfo[0])
                 self.total = int(spaceInfo[1])
@@ -181,7 +181,7 @@ class MintUploader(threading.Thread):
     def _ftp(self, file):
         '''Connection process for FTP services'''
 
-        if not self.service.has_key('port'):
+        if 'port' not in self.service:
             self.service['port'] = 21
         try:
             # Attempting to connect
@@ -218,7 +218,7 @@ class MintUploader(threading.Thread):
 
     def _sftp(self, file):
         '''Connection process for SFTP services'''
-        if not self.service.has_key('port'):
+        if 'port' not in self.service:
             self.service['port'] = 22
         try:
             ssh = paramiko.SSHClient()
@@ -248,8 +248,7 @@ class MintUploader(threading.Thread):
 
     def _scp(self, file):
         '''Connection process for SCP services'''
-
-        if not self.service.has_key('port'):
+        if 'port' not in self.service:
             self.service['port'] = 22
 
         try:
@@ -263,13 +262,12 @@ class MintUploader(threading.Thread):
             if self.service['pass']:
                 scp.expect('.*password:*')
                 scp.sendline(self.service['pass'])
-
+            self.progress("hihihi")
             self.progress(self.service['type'] + " " + _("connection successfully established"))
 
             scp.timeout = None
             self.pct(0)
             received = scp.expect(['.*100\%.*', '.*password:.*', pexpect.EOF])
-
             if received == 1:
                 scp.sendline(' ')
                 raise ConnectionError(_("This service requires a password."))
@@ -282,7 +280,7 @@ class MintUploader(threading.Thread):
                 pass
 
     def progress(self, message):
-        print message
+        print(message)
 
     def pct(self, so_far, total=None):
         if not total:
@@ -302,7 +300,7 @@ class MintUploader(threading.Thread):
         self.pct(self.filesize)
         sys.stdout.write("\n")
         # Print URL
-        if self.service.has_key('url'):
+        if 'url' in self.service:
             url = self.service['url'].replace('<FILE>', self.name)
             self.url = url.replace(' ', '%20')
             self.progress(_("URL:") + " " + self.url)
@@ -327,7 +325,7 @@ def read_services():
     '''Get all defined services'''
 
     services = []
-    for loc, path in config_paths.iteritems():
+    for loc, path in config_paths.items():
         os.system("mkdir -p " + path)
         for file in os.listdir(path):
             try:
@@ -344,12 +342,12 @@ config = ConfigObj(CONFIGFILE_GLOBAL)
 if os.path.exists(CONFIGFILE_USER):
     config.merge(ConfigObj(CONFIGFILE_USER))
 
-if not config.has_key('paths'):
-    print _("%(1)s is not set in the config file found under %(2)s or %(3)s") % {'1': 'paths', '2': CONFIGFILE_GLOBAL, '3': CONFIGFILE_USER}
+if 'paths' not in config:
+    print(_("%(1)s is not set in the config file found under %(2)s or %(3)s") % {'1': 'paths', '2': CONFIGFILE_GLOBAL, '3': CONFIGFILE_USER})
     sys.exit(1)
 
-if not config.has_key('defaults'):
-    print _("%(1)s is not set in the config file found under %(2)s or %(3)s") % {'1': 'defaults', '2': CONFIGFILE_GLOBAL, '3': CONFIGFILE_USER}
+if 'defaults' not in config:
+    print(_("%(1)s is not set in the config file found under %(2)s or %(3)s") % {'1': 'defaults', '2': CONFIGFILE_GLOBAL, '3': CONFIGFILE_USER})
     sys.exit(1)
 
 config_paths = config['paths']
@@ -389,7 +387,7 @@ class Service(ConfigObj):
     def _fix(self):
         '''Format values correctly'''
 
-        for k, v in self.iteritems():
+        for k, v in self.items():
             if v:
                 if type(v) is list:
                     self[k] = ','.join(v)
@@ -399,10 +397,10 @@ class Service(ConfigObj):
         if self.filename:
             self['name'] = os.path.basename(self.filename)
 
-        if self.has_key('type'):
+        if 'type' in self:
             self['type'] = self['type'].upper()
 
-        if self.has_key('host'):
+        if 'host' in self:
             h = self['host']
             if h.find(':') >= 0:
                 h = h.split(':')
@@ -411,7 +409,7 @@ class Service(ConfigObj):
 
         ints = ['port', 'maxsize', 'persistence']
         for k in ints:
-            if self.has_key(k):
+            if k in self:
                 self[k] = int(self[k])
 
     def for_upload(self):
@@ -424,13 +422,13 @@ class Service(ConfigObj):
         s['path'] = s['path'].replace('<TIMESTAMP>', timestamp)
 
         # Replace placeholders in url
-        if s.has_key('url'):
+        if 'url' in s:
             url_replace = {
                 '<TIMESTAMP>': timestamp,
                 '<PATH>': s['path']
             }
             url = s['url']
-            for k, v in url_replace.iteritems():
+            for k, v in url_replace.items():
                 url = url.replace(k, v)
             # Must be done after other replaces to function correctly
             url = url.replace(' ', '%20')
