@@ -1,3 +1,10 @@
+mintupload (4.1.7) ulyana; urgency=medium
+
+  [ Michael Webster ]
+  * all: Use python3.
+
+ -- Clement Lefebvre <root@linuxmint.com>  Fri, 03 Apr 2020 12:07:38 +0100
+
 mintupload (4.1.6) tricia; urgency=medium
 
   * Switch tray to symbolic
