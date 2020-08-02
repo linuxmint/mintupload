@@ -90,6 +90,18 @@ class MainClass:
 
 class DropZone:
 
+    DROPZONE_CSS = b'''
+    .dropzone {
+        margin: 1em;
+        border-width: 3px;
+        border-style: dashed;
+        border-radius: 1em;
+    }
+    .dropzone.drag-hover {
+        border-color: #86be43;
+    }
+    '''
+
     def __init__(self, service, drop_zones):
         self.service = service
         self.drop_zones = drop_zones
@@ -97,39 +109,43 @@ class DropZone:
 
         TARGET_TYPE_TEXT = 80
 
-        self.w.drag_dest_set(
-            Gtk.DestDefaults.ALL,  # Motion, Highlight, Drop
-            [Gtk.TargetEntry.new("text/uri-list", 0, TARGET_TYPE_TEXT)],
-            Gdk.DragAction.MOVE | Gdk.DragAction.COPY
-        )
-
-        self.w.connect('drag-motion', self.motion_cb)
-        self.w.connect('drag-drop', self.drop_cb)
-        self.w.connect('drag-data-received', self.drop_data_received_cb)
-        self.w.connect('destroy', self.destroy_cb)
-
         self.w.set_icon_name(SYSTRAY_ICON)
         self.w.set_title(self.service['name'])
         self.w.set_keep_above(True)
-        self.w.set_type_hint(Gdk.WindowTypeHint.UTILITY)
         self.w.set_skip_pager_hint(True)
         self.w.set_skip_taskbar_hint(True)
         self.w.stick()
 
-        display = Gdk.Display.get_default()
-        (screen, x, y, mods) = display.get_pointer()
-        self.w.move(x-50, y-50)
-
         self.label = Gtk.Label()
-        self.label.set_text("<small>" + _("Drag &amp; Drop here to upload to %s") % self.service['name'] + "</small>")
+        self.label.set_text(_("Drag &amp; Drop here to upload to %s") % self.service['name'])
         self.label.set_line_wrap(True)
         self.label.set_use_markup(True)
         self.label.set_width_chars(20)
+
+        # add dashed border around label
+        css_provider = Gtk.CssProvider()
+        css_provider.load_from_data(self.DROPZONE_CSS)
+        style_ctx = self.label.get_style_context()
+        style_ctx.add_class("dropzone")
+        style_ctx.add_provider(css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+
+        self.label.drag_dest_set(
+            Gtk.DestDefaults.ALL ^ Gtk.DestDefaults.HIGHLIGHT,  # Motion and Drop but no Highlight (done manually)
+            [Gtk.TargetEntry.new("text/uri-list", 0, TARGET_TYPE_TEXT)],
+            Gdk.DragAction.MOVE | Gdk.DragAction.COPY
+        )
+
+        self.label.connect('drag-motion', self.motion_cb)
+        self.label.connect('drag-leave', self.leave_cb)
+        self.label.connect('drag-drop', self.drop_cb)
+        self.label.connect('drag-data-received', self.drop_data_received_cb)
+        self.label.connect('destroy', self.destroy_cb)
+
         self.w.add(self.label)
 
-        self.w.set_default_size(100, 50)
+        self.w.set_default_size(350, 200)
 
-        if self.w.is_composited():
+        if Gdk.Screen.get_default().is_composited():
             self.w.set_opacity(0.5)
 
         self.w.show_all()
@@ -140,6 +156,11 @@ class DropZone:
 
     def motion_cb(self, wid, context, x, y, time):
         Gdk.drag_status(context, Gdk.DragAction.COPY, time)
+        self.label.get_style_context().add_class("drag-hover")
+        return True
+
+    def leave_cb(self, wid, context, time):
+        self.label.get_style_context().remove_class("drag-hover")
         return True
 
     def drop_cb(self, wid, context, x, y, time):
