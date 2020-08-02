@@ -49,11 +49,11 @@ class MainClass:
         self.menu = Gtk.Menu()
         services_menuitem = Gtk.MenuItem()
         title = Gtk.Label()
-        title.set_text("<b><span foreground=\"grey\">" + _("Services:") + "</span></b>")
-        title.set_justify(Gtk.Justification.LEFT)
-        title.set_alignment(0, 0.5)
+        title.set_text("<b>" + _("Services:") + "</b>")
+        title.set_xalign(0)
         title.set_use_markup(True)
         services_menuitem.add(title)
+        services_menuitem.set_sensitive(False)
         self.menu.append(services_menuitem)
 
         for service in self.services:
@@ -63,16 +63,13 @@ class MainClass:
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
-        upload_manager_menuitem = Gtk.MenuItem(_("Upload manager..."))
+        upload_manager_menuitem = Gtk.MenuItem(label=_("Upload manager..."))
         upload_manager_menuitem.connect('activate', self.launch_manager)
         self.menu.append(upload_manager_menuitem)
 
         self.menu.append(Gtk.SeparatorMenuItem())
 
-        menu_item = Gtk.MenuItem()
-        menu_item = Gtk.ImageMenuItem(Gtk.STOCK_CLOSE)
-        menu_item.set_use_stock(True)
-        menu_item.set_label(_("Quit"))
+        menu_item = Gtk.MenuItem(label=_("Quit"))
         menu_item.connect('activate', self.quit_cb)
         self.menu.append(menu_item)
         self.menu.show_all()
