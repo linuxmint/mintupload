@@ -144,11 +144,10 @@ class DropZone:
         self.w.add(self.label)
 
         self.w.set_default_size(350, 200)
+        self.w.show_all()
 
         if Gdk.Screen.get_default().is_composited():
-            self.w.set_opacity(0.5)
-
-        self.w.show_all()
+            self.w.set_opacity(0.7)
 
     def show(self):
         self.w.show_all()
