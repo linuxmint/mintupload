@@ -92,13 +92,9 @@ class DropZone:
 
     DROPZONE_CSS = b'''
     .dropzone {
-        margin: 1em;
         border-width: 3px;
         border-style: dashed;
         border-radius: 1em;
-    }
-    .dropzone.drag-hover {
-        border-color: #86be43;
     }
     '''
 
@@ -116,7 +112,7 @@ class DropZone:
         self.w.set_skip_taskbar_hint(True)
         self.w.stick()
 
-        self.label = Gtk.Label()
+        self.label = Gtk.Label(margin=10)
         self.label.set_text(_("Drag &amp; Drop here to upload to %s") % self.service['name'])
         self.label.set_line_wrap(True)
         self.label.set_use_markup(True)
@@ -125,23 +121,23 @@ class DropZone:
         # add dashed border around label
         css_provider = Gtk.CssProvider()
         css_provider.load_from_data(self.DROPZONE_CSS)
-        style_ctx = self.label.get_style_context()
+        self.box = Gtk.Box(margin=10)
+        style_ctx = self.box.get_style_context()
         style_ctx.add_class("dropzone")
         style_ctx.add_provider(css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
-        self.label.drag_dest_set(
-            Gtk.DestDefaults.ALL ^ Gtk.DestDefaults.HIGHLIGHT,  # Motion and Drop but no Highlight (done manually)
+        self.box.drag_dest_set(
+            Gtk.DestDefaults.ALL,
             [Gtk.TargetEntry.new("text/uri-list", 0, TARGET_TYPE_TEXT)],
             Gdk.DragAction.MOVE | Gdk.DragAction.COPY
         )
 
-        self.label.connect('drag-motion', self.motion_cb)
-        self.label.connect('drag-leave', self.leave_cb)
-        self.label.connect('drag-drop', self.drop_cb)
-        self.label.connect('drag-data-received', self.drop_data_received_cb)
-        self.label.connect('destroy', self.destroy_cb)
+        self.box.connect('drag-drop', self.drop_cb)
+        self.box.connect('drag-data-received', self.drop_data_received_cb)
+        self.box.connect('destroy', self.destroy_cb)
 
-        self.w.add(self.label)
+        self.box.set_center_widget(self.label)
+        self.w.add(self.box)
 
         self.w.set_default_size(300, 100)
         self.w.show_all()
@@ -152,15 +148,6 @@ class DropZone:
     def show(self):
         self.w.show_all()
         self.w.present()
-
-    def motion_cb(self, wid, context, x, y, time):
-        Gdk.drag_status(context, Gdk.DragAction.COPY, time)
-        self.label.get_style_context().add_class("drag-hover")
-        return True
-
-    def leave_cb(self, wid, context, time):
-        self.label.get_style_context().remove_class("drag-hover")
-        return True
 
     def drop_cb(self, wid, context, x, y, time):
         context.finish(True, False, time)
