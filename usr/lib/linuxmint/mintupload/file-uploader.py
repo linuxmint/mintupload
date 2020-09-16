@@ -143,7 +143,7 @@ class DropZone:
 
         self.w.add(self.label)
 
-        self.w.set_default_size(350, 200)
+        self.w.set_default_size(300, 100)
         self.w.show_all()
 
         if Gdk.Screen.get_default().is_composited():
