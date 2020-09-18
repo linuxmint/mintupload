@@ -96,6 +96,9 @@ class DropZone:
         border-style: dashed;
         border-radius: 1em;
     }
+    .dropzone:drop(active) {
+        border-style: solid;
+    }
     '''
 
     def __init__(self, service, drop_zones):
