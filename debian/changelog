@@ -1,3 +1,20 @@
+mintupload (4.1.9) ulyssa; urgency=medium
+
+  [ okaestne ]
+  * remove some Gtk warnings
+  * add .gitignore
+  * Add COPYING
+  * Dropzone UI rework
+  * fix opacity of dropzone window, less opaque though
+  * shrink the dropzone window a bit
+  * dropzone: remove custom drag-active border color
+  * [UI] dropzone: set solid border-style when active
+
+  [ Clement Lefebvre ]
+  * Improve the look of the manager UI
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 30 Nov 2020 15:16:31 +0000
+
 mintupload (4.1.8) ulyana; urgency=medium
 
   * l10n: Generate files
