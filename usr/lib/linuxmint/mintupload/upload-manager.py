@@ -42,7 +42,6 @@ class ManagerWindow:
 
         self.reload_services(treeview_services)
 
-        self.builder.get_object("button_close").connect("clicked", Gtk.main_quit)
         self.builder.get_object("toolbutton_add").connect("clicked", self.add_service, treeview_services)
         self.builder.get_object("toolbutton_edit").connect("clicked", self.edit_service_from_button, treeview_services)
         self.builder.get_object("toolbutton_remove").connect("clicked", self.remove_service, treeview_services)
