@@ -1,3 +1,9 @@
+mintupload (4.2.0) uma; urgency=medium
+
+  * Make the manager window a singleton
+
+ -- Clement Lefebvre <root@linuxmint.com>  Wed, 26 May 2021 11:27:20 +0100
+
 mintupload (4.1.9) ulyssa; urgency=medium
 
   [ okaestne ]
