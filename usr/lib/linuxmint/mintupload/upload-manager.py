@@ -6,7 +6,7 @@ import string
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 
 from mintupload_core import *
 
@@ -16,17 +16,33 @@ gettext.install("mintupload", "/usr/share/linuxmint/locale")
 # Location of the ui file
 UI_FILE = "/usr/share/linuxmint/mintupload/manager_window.ui"
 
+class MyApplication(Gtk.Application):
+    # Main initialization routine
+    def __init__(self, application_id, flags):
+        Gtk.Application.__init__(self, application_id=application_id, flags=flags)
+        self.connect("activate", self.activate)
+
+    def activate(self, application):
+        windows = self.get_windows()
+        if (len(windows) > 0):
+            window = windows[0]
+            window.present()
+            window.show()
+        else:
+            window = ManagerWindow(self)
+            self.add_window(window.window)
+            window.window.show()
 
 class ManagerWindow:
 
-    def __init__(self):
+    def __init__(self, application):
+        self.application = application
         self.builder = Gtk.Builder()
         self.builder.add_from_file(UI_FILE)
 
-        self.manager_window = self.builder.get_object("manager_window")
-        self.manager_window.set_title(_("Upload Manager"))
-        self.manager_window.set_icon_name(ICON)
-        self.manager_window.connect("delete_event", Gtk.main_quit)
+        self.window = self.builder.get_object("manager_window")
+        self.window.set_title(_("Upload Manager"))
+        self.window.set_icon_name(ICON)
 
         treeview_services = self.builder.get_object("treeview_services")
 
@@ -70,7 +86,7 @@ class ManagerWindow:
 
     def open_about(self, widget):
         dlg = Gtk.AboutDialog()
-        dlg.set_transient_for(self.manager_window)
+        dlg.set_transient_for(self.window)
         dlg.set_title(_("About") + " - mintupload")
         dlg.set_version("__DEB_VERSION__")
         dlg.set_program_name("mintupload")
@@ -108,7 +124,7 @@ class ManagerWindow:
 
     def add_service(self, widget, treeview_services):
         dialog = Gtk.MessageDialog(None, Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT, Gtk.MessageType.QUESTION, Gtk.ButtonsType.OK_CANCEL, None)
-        dialog.set_transient_for(self.manager_window)
+        dialog.set_transient_for(self.window)
         dialog.set_title(_("Upload Manager"))
         dialog.set_icon_name(ICON)
         dialog.set_border_width(6)
@@ -195,7 +211,7 @@ class ManagerWindow:
         file = config_paths['user'] + sname
 
         dialog_edit_service = self.builder.get_object("dialog_edit_service")
-        dialog_edit_service.set_transient_for(self.manager_window)
+        dialog_edit_service.set_transient_for(self.window)
         dialog_edit_service.set_title(_("%s Properties") % sname)
         dialog_edit_service.set_icon_name(ICON)
 
@@ -313,5 +329,6 @@ class ManagerWindow:
     def close_window(self, widget, window):
         window.hide()
 
-window = ManagerWindow()
-Gtk.main()
+if __name__ == "__main__":
+    application = MyApplication("com.linuxmint.mintupload", Gio.ApplicationFlags.FLAGS_NONE)
+    application.run()
