@@ -6,6 +6,7 @@ import gettext
 import time
 import threading
 import urllib.request, urllib.parse, urllib.error
+import shlex
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -170,8 +171,8 @@ class DropZone:
             f = f.replace("'", r"'\''")
             f = "'" + f + "'"
             filenames.append(f)
-
-        os.system("mintupload \"" + self.service['name'] + "\" " + " ".join(filenames) + " &")
+        filenames_ = " ".join(filenames)
+        os.system(f"mintupload {shlex.quote(self.service['name'])} {shlex.quote(filenames_)} &")
 
     def destroy_cb(self, wid):
         del self.drop_zones[self.service['name']]

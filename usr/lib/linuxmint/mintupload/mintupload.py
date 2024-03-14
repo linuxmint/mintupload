@@ -5,6 +5,8 @@ import os
 import time
 import traceback
 import gettext
+import shlex
+
 try:
     import gi
     gi.require_version("Gtk", "3.0")
@@ -236,7 +238,7 @@ if __name__ == "__main__":
 
     if service is None:
         print("Unknown service: " + service_name)
-        os.system("notify-send \"" + _("Unknown service: %s") % service_name + "\"")
+        os.system(f"notify-send 'Unknown service:' {shlex.quote(service_name)}")
     else:
         filenames = sys.argv[2:]
 

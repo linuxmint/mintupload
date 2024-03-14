@@ -17,6 +17,8 @@ import paramiko
 import pexpect
 import threading
 import gi
+import shlex
+
 gi.require_version('Notify', '0.7')
 from gi.repository import Notify
 
@@ -370,11 +372,11 @@ class Service(ConfigObj):
         self._fix()
 
     def remove(self):
-        os.system("rm '" + self.filename + "'")
+        os.system(f"rm {shlex.quote(self.filename)}")
 
     def move(self, newname, force=False):
         if force or not os.path.exists(newname):
-            os.system("mv '" + self.filename + "' '" + newname + "'")
+            os.system(f"mv  {shlex.quote(self.filename)} {shlex.quote(newname)}")
             self.filename = newname
 
     def copy(self, newname, force=False):
