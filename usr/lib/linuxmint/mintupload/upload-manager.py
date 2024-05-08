@@ -3,6 +3,7 @@
 import os
 import gettext
 import string
+import shlex
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -297,7 +298,7 @@ class ManagerWindow:
 
     def check_connection(self, widget, file):
         service = Service(file)
-        os.system("mintupload \"" + service['name'] + "\" /usr/share/linuxmint/mintupload/mintupload.readme &")
+        os.system(f"mintupload {shlex.quote(service['name'])} /usr/share/linuxmint/mintupload/mintupload.readme &")
 
     def get_port_for_service(self, type):
         num = "21" if type in ("Mint", "FTP") else "22"
