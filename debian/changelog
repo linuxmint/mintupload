@@ -1,3 +1,10 @@
+mintupload (4.2.1) wilma; urgency=medium
+
+  [ Vasanth R ]
+  * fix: Patch for command injection vulnerability (#42) (#43)
+
+ -- Clement Lefebvre <root@linuxmint.com>  Tue, 11 Jun 2024 13:47:57 +0100
+
 mintupload (4.2.0) uma; urgency=medium
 
   * Make the manager window a singleton
