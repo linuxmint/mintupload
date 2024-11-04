@@ -172,7 +172,7 @@ class DropZone:
             f = "'" + f + "'"
             filenames.append(f)
         filenames_ = " ".join(filenames)
-        os.system(f"mintupload {shlex.quote(self.service['name'])} {shlex.quote(filenames_)} &")
+        os.system(f"mintupload {shlex.quote(self.service['name'])} {filenames_} &")
 
     def destroy_cb(self, wid):
         del self.drop_zones[self.service['name']]
