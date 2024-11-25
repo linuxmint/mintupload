@@ -1,3 +1,9 @@
+mintupload (4.2.2) xia; urgency=medium
+
+  * Fix regression in 4.2.1
+
+ -- Clement Lefebvre <root@linuxmint.com>  Mon, 25 Nov 2024 14:45:45 +0000
+
 mintupload (4.2.1) wilma; urgency=medium
 
   [ Vasanth R ]
