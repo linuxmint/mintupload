@@ -224,7 +224,8 @@ class MintUploader(threading.Thread):
             self.service['port'] = 22
         try:
             ssh = paramiko.SSHClient()
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            ssh.load_system_host_keys()
+            ssh.set_missing_host_key_policy(paramiko.RejectPolicy())
             key_filename = os.path.expanduser("~/.ssh/id_rsa")
             if os.path.exists(key_filename):
                 ssh.connect(self.service['host'], username=self.service['user'], password=self.service['pass'], port=self.service['port'], key_filename=key_filename)
