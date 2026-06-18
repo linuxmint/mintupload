@@ -137,7 +137,6 @@ class DropZone:
             Gdk.DragAction.MOVE | Gdk.DragAction.COPY
         )
 
-        self.box.connect('drag-drop', self.drop_cb)
         self.box.connect('drag-data-received', self.drop_data_received_cb)
         self.box.connect('destroy', self.destroy_cb)
 
@@ -153,10 +152,6 @@ class DropZone:
     def show(self):
         self.w.show_all()
         self.w.present()
-
-    def drop_cb(self, wid, context, x, y, time):
-        context.finish(True, False, time)
-        return True
 
     def drop_data_received_cb(self, widget, context, x, y, selection, targetType, time):
         data = selection.get_data().decode()
