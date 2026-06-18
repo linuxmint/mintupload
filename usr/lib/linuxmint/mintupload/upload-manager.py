@@ -7,7 +7,7 @@ import shlex
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gio
+from gi.repository import Gtk, Gio, GLib
 
 from mintupload_core import *
 
@@ -44,6 +44,7 @@ class ManagerWindow:
         self.window = self.builder.get_object("manager_window")
         self.window.set_title(_("Upload Manager"))
         self.window.set_icon_name(ICON)
+        GLib.set_prgname("mintupload")
 
         treeview_services = self.builder.get_object("treeview_services")
 

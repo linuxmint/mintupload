@@ -27,6 +27,7 @@ class MainClass:
         self.services = None
 
         self.build_services_menu()
+        GLib.set_prgname("mintupload")
         # Refresh list of services in the menu every 2 seconds
         GLib.timeout_add_seconds(2, self.reload_services)
 
